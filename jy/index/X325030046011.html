@@ -228,9 +228,9 @@
     <tr><td class="bp_td_left" >产品名称：盘圆</td><td class="bp_td_right">班组：A</td></tr>
    <tr><td class="bp_td_left">入库日期：20250318</td><td class="bp_td_right">批次：<span id="batchNumberValue">X325030046011</span></td></tr>
     <tr><td class="bp_td_left" >执行标准：GB 1499.1-2024</td><td class="bp_td_right">钢种：HPB300</td></tr>
-    <tr><td class="bp_td_left">支数：0</td><td class="bp_td_right">规格：Φ8mm</td></tr>
+    <tr><td class="bp_td_left">支数：0</td><td class="bp_td_right">规格：Φ6mm</td></tr>
     <tr><td class="bp_td_left">长度/宽度：0m</td> <td class="bp_td_right"> 捆号：<span id="bundleNumber">—</span> </td></tr>
-    <tr><td class="bp_td_left">重量：2000</td><td class="bp_td_right">炉号：25803107</td></tr>
+    <tr><td class="bp_td_left">重量：2000</td><td class="bp_td_right">炉号：25802267</td></tr>
 
 </table>
 
@@ -313,7 +313,6 @@
 
     <input type="hidden" id="luhao" name="luhao">
 
-	
 <script>
 // 复用：从 URL 中获取指定 name 的参数值
 function getQueryParam(name) {
@@ -321,95 +320,89 @@ function getQueryParam(name) {
     return params.get(name);
 }
 
-// 检查文件是否存在
+// 检查文件是否存在 (保持原始功能，简化错误处理)
 async function checkFileExists(url) {
     try {
         const response = await fetch(url, { method: 'HEAD' });
         return response.ok;
     } catch (error) {
-        console.error("Error checking file existence:", error);
+        // 不向用户显示错误，但可以在控制台记录以供调试
+        console.error("Error checking file existence:", url, error);
         return false;
     }
 }
 
 document.addEventListener('DOMContentLoaded', async function() {
-
-    // --- 处理捆号逻辑 (增加 KH 值范围校验，不符范围则显示 "不存在") ---
-    // 1. 定义 KH 允许的数值范围 (闭区间)
-    const minKhValue = 1;  // 对应 "001"
-    const maxKhValue = 20; // 对应 "010"
-
-    // 2. 获取最终要显示捆号的那个 HTML 元素
+    // --- 处理捆号逻辑 (带范围校验 - 保持不变) ---
     const bundleNumberDisplayElement = document.getElementById('bundleNumber');
+    const batchNumberElement = document.getElementById('batchNumberValue');
+    const khFromUrl = getQueryParam('kh'); // 获取 kh 参数值
 
-    // 3. 检查显示捆号的元素是否存在 (基础防护)
-    if (bundleNumberDisplayElement) {
-        // 4. 从当前页面的 URL 中获取 'kh' 参数的值
-        const khFromUrl = getQueryParam('kh');
-        let finalBundleNumber = ''; // 用于存储最终要显示的捆号，初始为空
+    let displayBundleNumber = '不存在'; // 默认显示“不存在”
 
-        // 5. 核心判断：khFromUrl 必须存在且其数值在指定范围内
-        if (khFromUrl) { // 首先确保 kh 参数存在且不为空字符串
-            const khNumeric = parseInt(khFromUrl, 10); // 尝试将 kh 值转换为整数
-
-            // 检查转换结果是否是有效数字，并且是否在定义的范围内
-            if (!isNaN(khNumeric) && khNumeric >= minKhValue && khNumeric <= maxKhValue) {
-                // 条件满足：kh 存在, 是有效数字, 且在 1 到 10 之间
-                const batchNumberElement = document.getElementById('batchNumberValue');
-                const batchNumber = batchNumberElement ? batchNumberElement.textContent : '';
-                // 组合批次号和 URL 中的原始 kh 值 (保留前导零)
-                finalBundleNumber = batchNumber + khFromUrl;
+    // 检查 bundleNumberDisplayElement 和 batchNumberElement 是否存在 (基础防护)
+    if (bundleNumberDisplayElement && batchNumberElement) {
+        // 1. 检查 khFromUrl 是否存在且不为空
+        if (khFromUrl) {
+            // 2. 检查 khFromUrl 是否是恰好三位数字
+            if (/^\d{3}$/.test(khFromUrl)) {
+                // 3. 将其转换为数字并检查范围 (1 到 30)
+                const numericKh = parseInt(khFromUrl, 10); // 使用基数 10
+                if (numericKh >= 1 && numericKh <= 30) {
+                    // --- 条件全部满足 ---
+                    const batchNumber = batchNumberElement.textContent; // 获取批次号
+                    displayBundleNumber = batchNumber + khFromUrl;
+                }
+                // else: 数字不在 1-30 范围内, displayBundleNumber 保持 '不存在'
             }
-            // else: kh 不是数字或数字不在范围内，finalBundleNumber 保持为 ''
+            // else: kh 不是三位数字, displayBundleNumber 保持 '不存在'
         }
-        // else: kh 参数不存在或为空, finalBundleNumber 保持为 ''
+        // else: kh 不存在或为空, displayBundleNumber 保持 '不存在'
 
-        // 6. 更新页面上的捆号显示
-        // 如果 finalBundleNumber 不为空 (即拼接成功)，则显示拼接结果
-        // 否则 (finalBundleNumber 为空字符串)，显示 "不存在"
-        bundleNumberDisplayElement.textContent = finalBundleNumber || '不存在';
+        // 更新页面上的捆号显示
+        bundleNumberDisplayElement.textContent = displayBundleNumber;
+
+    } else {
+        // 如果必要的 HTML 元素缺失，在控制台打印错误
+        console.error("Required elements for bundle number ('bundleNumber' or 'batchNumberValue') not found.");
+        if(bundleNumberDisplayElement) {
+           // 避免修改页面显示，只在控制台报错
+           // bundleNumberDisplayElement.textContent = '错误：页面元素缺失';
+        }
     }
     // --- 捆号逻辑结束 ---
 
-
-    // --- 动态设置“质保书”链接 (保持不变) ---
+    // --- 动态设置“质保书”链接 (恢复到原始逻辑，不做用户提示修改) ---
     const pdfName = getQueryParam('pdf'); // URL 参数名为 pdf
     const pdfLinkElement = document.getElementById('pdfLink');
 
-    if (pdfLinkElement) { // 确保链接元素存在
+    // 检查 pdfLinkElement 是否存在 (基础防护)
+    if (pdfLinkElement) {
         if (pdfName) {
             const pdfUrl = `../pdf/${pdfName}.pdf`;
+             // 使用 try/catch 保证 await 不会因网络错误等中断脚本执行
             try {
-                const fileExists = await checkFileExists(pdfUrl);
+                 const fileExists = await checkFileExists(pdfUrl);
 
-                if (fileExists) {
-                    pdfLinkElement.href = pdfUrl;
-                } else {
-                    console.warn(`PDF file not found: ${pdfUrl}`);
-                    pdfLinkElement.textContent = '质保书文件不存在';
-                    pdfLinkElement.href = '#';
-                    pdfLinkElement.style.pointerEvents = 'none';
-                    pdfLinkElement.style.color = 'grey';
-                    pdfLinkElement.style.textDecoration = 'line-through';
-                }
+                 if (fileExists) {
+                     pdfLinkElement.href = pdfUrl;
+                 } else {
+                     pdfLinkElement.href = ''; // 文件不存在，设置 href 为空 (原始行为)
+                     // 不修改 textContent 或 style
+                 }
             } catch (error) {
-                console.error("Error processing PDF link:", error);
-                pdfLinkElement.textContent = '检查质保书出错';
-                pdfLinkElement.href = '#';
-                pdfLinkElement.style.pointerEvents = 'none';
-                pdfLinkElement.style.color = 'grey';
+                 // 发生错误时也设置 href 为空
+                 pdfLinkElement.href = '';
+                 console.error("Error during PDF check/link setup:", error); // 仅控制台记录
             }
         } else {
-             pdfLinkElement.textContent = '未指定质保书';
-             pdfLinkElement.href = '#';
-             pdfLinkElement.style.pointerEvents = 'none';
-             pdfLinkElement.style.color = 'grey';
+             pdfLinkElement.href = ''; // pdf 参数未提供，设置 href 为空 (原始行为)
+             // 不修改 textContent 或 style
         }
     } else {
-        console.error("Element with id 'pdfLink' not found.");
+        console.error("PDF link element ('pdfLink') not found."); // 仅控制台记录
     }
     // --- 质保书逻辑结束 ---
-
 });
 </script>
     </body>
