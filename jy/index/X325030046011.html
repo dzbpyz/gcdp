@@ -348,12 +348,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             if (/^\d{3}$/.test(khFromUrl)) {
                 // 3. 将其转换为数字并检查范围 (1 到 30)
                 const numericKh = parseInt(khFromUrl, 10); // 使用基数 10
-                if (numericKh >= 1 && numericKh <= 30) {
+                if (numericKh >= 1 && numericKh <= 20) {
                     // --- 条件全部满足 ---
                     const batchNumber = batchNumberElement.textContent; // 获取批次号
                     displayBundleNumber = batchNumber + khFromUrl;
                 }
-                // else: 数字不在 1-30 范围内, displayBundleNumber 保持 '不存在'
+                // else: 数字不在 1-20 范围内, displayBundleNumber 保持 '不存在'
             }
             // else: kh 不是三位数字, displayBundleNumber 保持 '不存在'
         }
