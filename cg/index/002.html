@@ -91,7 +91,7 @@
 									捆&nbsp;&nbsp;号：
 								</td>
 								<td style="text-align: center">
-									<input id="BINGDING_NUMBER" name="BINGDING_NUMBER" class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value=" "/>
+									<input id="BINGDING_NUMBER" name="BINGDING_NUMBER" class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value="螺纹钢"/>
 								</td>
 								<td style="text-align: center;font-size:20px;">
 									材&nbsp;&nbsp;质：
@@ -388,33 +388,24 @@
 
 <script type="text/javascript">
 mini.parse();
-	<script>
-    // 假设已有页面初始化逻辑
-    mini.parse(); // 或其他初始化函数
-    
-    // 在页面加载完成后执行以下代码
-    (function() {
-        // 解析 URL 查询参数
-        var params = new URLSearchParams(window.location.search);
-        // 获取名为 'kh' 的参数值
-        var khValue = params.get('kh');
-        // 获取输入框元素（ID 为 BINGDING_NUMBER）
-        var input = document.getElementById('BINGDING_NUMBER');
-        if (input) {
-            if (khValue !== null) {
-                // 如果参数存在，赋值给输入框
-                input.value = khValue;
-            } else {
-                // 如果参数不存在，确保输入框为空
-                input.value = '';
-            }
-        }
-    })();
-    
-    // ... 其余脚本逻辑 ...
+search();
+	<script type="text/javascript">
+  // 页面组件解析完成后，先执行原有逻辑
+  mini.parse();
+  search();
+
+  // 再解析 URL 参数 kh，并赋值给捆号字段
+  (function() {
+    // 利用 URLSearchParams 读取 ?kh=001 之类的参数
+    var params = new URLSearchParams(window.location.search);
+    var kh = params.get('kh');
+    if (kh) {
+      // 如果 kh 存在，就把它写入到 mini 组件 BINGDING_NUMBER
+      mini.get("BINGDING_NUMBER").setValue(kh);
+    }
+  })();
 </script>
 
-search();
  function showDialogwuli() {
 
    var key = GetDatakey();
@@ -451,6 +442,10 @@ search();
 } 
 
 // 显示dialog的函数
+	
+	
+	
+	
 function showDialoghuaxue() {
 
    var key = GetDatakey();
