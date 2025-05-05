@@ -363,41 +363,74 @@
 
 
 <!-- ########## START: UPDATED SCRIPT BLOCK WITH DEBUG LOGS ########## -->
+<!-- ... (head and body content before script) ... -->
+
+<!-- ########## START: UPDATED SCRIPT BLOCK WITH DEBUG LOGS and $(document).ready() WRAPPER ########## -->
 <script type="text/javascript">
-    // --- Function to get URL parameters ---
-    function getUrlParameter(name) {
+
+    // Wrap the initialization and main logic inside jQuery's document ready
+    $(document).ready(function() {
+        // Log: Document Ready イベント発火
+        console.log("[Debug] $(document).ready() fired.");
+
+        // --- Function to get URL parameters ---
+        // (Function definition remains the same)
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            var value = results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            console.log(`[Debug] getUrlParameter('${name}') called inside ready. location.search: "${location.search}", result: "${value}"`);
+            return value;
+        }
+
+        // Initialize MiniUI components FIRST
+        try {
+            mini.parse(); // Now 'mini' should be defined if boot.js loaded correctly
+            // Log: MiniUI 初期化完了
+            console.log("[Debug] mini.parse() completed inside ready.");
+        } catch (e) {
+            console.error("[Debug] Error during mini.parse() inside ready:", e);
+            alert("MiniUI 初始化失败，请检查 boot.js 是否正确加载。错误信息：" + e);
+            return; // Stop further execution if mini.parse fails
+        }
+
+        // --- Call the search function to load initial data ---
+        // Log: search() 呼び出し
+        console.log("[Debug] Calling search() function inside ready...");
+        search(); // Initiate data loading
+
+        // --- Other functions need to be accessible, so define them outside if needed,
+        // --- or ensure they are called only after initialization ---
+        // For simplicity, keep function definitions accessible globally below,
+        // but ensure they are *called* only after ready state.
+
+    }); // --- End of $(document).ready() ---
+
+
+    // --- Function Definitions (can be outside document.ready for global access if needed by HTML onclick etc.) ---
+
+    function getUrlParameter(name) { // Redefine outside for potential global use, or keep inside ready if only used there
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
         var results = regex.exec(location.search);
-        // Use decodeURIComponent to handle encoded characters
         var value = results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        // Log: パラメータ取得試行と結果
-        console.log(`[Debug] getUrlParameter('${name}') called. location.search: "${location.search}", result: "${value}"`);
+        // Optional: remove log from here if already logged inside ready
+        // console.log(`[Debug] Global getUrlParameter('${name}') called. location.search: "${location.search}", result: "${value}"`);
         return value;
     }
 
-    // Initialize MiniUI components FIRST
-    try {
-        mini.parse();
-        // Log: MiniUI 初期化完了
-        console.log("[Debug] mini.parse() completed.");
-    } catch (e) {
-        console.error("[Debug] Error during mini.parse():", e);
-    }
-
-
-    // --- Call the search function to load initial data ---
-    // Log: search() 呼び出し
-    console.log("[Debug] Calling search() function...");
-    search(); // Initiate data loading
-
-    // --- Existing Functions ---
-
      function showDialogwuli() {
        console.log("[Debug] showDialogwuli() called.");
-       var key = GetDatakey(); // Assuming GetDatakey returns needed context
+       var key = GetDatakey();
+       // Ensure mini object is available before using mini.get() inside AJAX callbacks too
+       if (typeof mini === 'undefined') {
+           console.error("[Debug] showDialogwuli: mini object not available!");
+           alert("MiniUI尚未准备就绪。");
+           return;
+       }
        $.ajax({
-                 url: "/erwm_new/lx/jiekou.do", // Make sure this path is correct relative to your domain
+                 url: "/erwm_new/lx/jiekou.do",
                  type: 'post',
                  data: { key: key, actiondes :'wuli'},
                  cache: false,
@@ -406,13 +439,10 @@
                     console.log("[Debug] showDialogwuli() AJAX success. Response:", text);
                     try {
                         var cleanedText = text.trim();
-                        if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) {
-                            cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                        }
-                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) {
-                           cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                        }
+                        if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
+                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
                         cleanedText = cleanedText.replace(/\\"/g, '"');
+                         if (!cleanedText) { console.warn("[Debug] showDialogwuli: Cleaned response text is empty."); return; }
                         var m = JSON.parse(cleanedText);
                         console.log("[Debug] Parsed wuli data:", m);
 
@@ -424,20 +454,16 @@
                         mini.get("coldbendresult").setValue(m.COLDBENDRESULT || '');
 
                         var dialog = mini.get("wuliDialog");
-                        if (dialog) {
-                            dialog.show();
-                        } else {
-                             console.error("[Debug] wuliDialog not found.");
-                        }
+                        if (dialog) { dialog.show(); } else { console.error("[Debug] wuliDialog not found."); }
                      } catch (e) {
                          console.error("[Debug] Error parsing/setting wuli data:", e);
                          console.error("[Debug] Original wuli response text:", text);
-                         alert("解析物理性能数据时出错，请检查控制台日志。"); // User feedback
+                         alert("解析物理性能数据时出错，请检查控制台日志。");
                      }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error("[Debug] showDialogwuli() AJAX Error:", textStatus, errorThrown, jqXHR.responseText);
-                    alert("请求物理性能数据失败，请检查网络连接或稍后重试。"); // User feedback
+                    alert("请求物理性能数据失败，请检查网络连接或稍后重试。");
                 }
             });
     }
@@ -445,6 +471,11 @@
     function showDialoghuaxue() {
        console.log("[Debug] showDialoghuaxue() called.");
        var key = GetDatakey();
+        if (typeof mini === 'undefined') {
+           console.error("[Debug] showDialoghuaxue: mini object not available!");
+            alert("MiniUI尚未准备就绪。");
+           return;
+       }
        $.ajax({
                  url: "/erwm_new/lx/jiekou.do",
                  type: 'post',
@@ -455,13 +486,10 @@
                    console.log("[Debug] showDialoghuaxue() AJAX success. Response:", text);
                    try {
                         var cleanedText = text.trim();
-                         if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) {
-                            cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                        }
-                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) {
-                            cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                        }
+                        if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
+                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
                         cleanedText = cleanedText.replace(/\\"/g, '"');
+                         if (!cleanedText) { console.warn("[Debug] showDialoghuaxue: Cleaned response text is empty."); return; }
                         var m = JSON.parse(cleanedText);
                         console.log("[Debug] Parsed huaxue data:", m);
 
@@ -473,20 +501,16 @@
                         mini.get("ceq").setValue(m.CEQ || '');
 
                         var dialog = mini.get("huaxueDialog");
-                        if (dialog) {
-                            dialog.show();
-                        } else {
-                            console.error("[Debug] huaxueDialog not found.");
-                        }
+                        if (dialog) { dialog.show(); } else { console.error("[Debug] huaxueDialog not found."); }
                     } catch (e) {
                          console.error("[Debug] Error parsing/setting huaxue data:", e);
                          console.error("[Debug] Original huaxue response text:", text);
-                         alert("解析化学成分数据时出错，请检查控制台日志。"); // User feedback
+                         alert("解析化学成分数据时出错，请检查控制台日志。");
                     }
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error("[Debug] showDialoghuaxue() AJAX Error:", textStatus, errorThrown, jqXHR.responseText);
-                    alert("请求化学成分数据失败，请检查网络连接或稍后重试。"); // User feedback
+                    alert("请求化学成分数据失败，请检查网络连接或稍后重试。");
                 }
             });
     }
@@ -494,63 +518,54 @@
     function online_print(){
         var link = document.getElementById("online_print_link");
         if(link) {
-            // Log
             console.log("[Debug] Clicking online_print_link");
             link.click();
-        } else {
-            console.error("[Debug] Online print link not found");
-        }
+        } else { console.error("[Debug] Online print link not found"); }
     }
 
     function online_fankui(){
         var link = document.getElementById("online_fankui_link");
          if(link) {
-            // Log
             console.log("[Debug] Clicking online_fankui_link");
             link.click();
-        } else {
-            console.error("[Debug] Online fankui link not found");
-        }
+        } else { console.error("[Debug] Online fankui link not found"); }
     }
 
     function search() {
-      var key = GetDatakey(); // Assuming this provides necessary context
-      // Log: search開始とキー
+      var key = GetDatakey();
       console.log("[Debug] search() started. Key for AJAX:", key);
+       if (typeof mini === 'undefined' || typeof $ === 'undefined') {
+           console.error("[Debug] search: mini or $ (jQuery) not available!");
+            alert("页面脚本尚未准备就绪。");
+           return;
+       }
       $.ajax({
-                 url: "/erwm_new/lx/jiekou.do", // Verify this path is correct
+                 url: "/erwm_new/lx/jiekou.do",
                  type: 'post',
                  data: { key: key, actiondes :'getybgl'},
-                 cache: false, // Keep cache false for debugging
-                 dataType: 'text', // Expect text, parse manually
+                 cache: false,
+                 dataType: 'text',
                  success: function (text) {
-                    // Log: AJAX成功とレスポンス
                     console.log("[Debug] search() AJAX success. Response text:", text);
                     try {
                         var cleanedText = text.trim();
-                         if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) {
-                            cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                        }
-                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) {
-                           cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                        }
+                        if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
+                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
                         cleanedText = cleanedText.replace(/\\"/g, '"');
 
-                        // Check if cleanedText is empty before parsing
                         if (!cleanedText) {
                              console.warn("[Debug] search() AJAX success but response text is empty after cleaning.");
-                             // Handle empty response case if necessary, e.g., show default values or an error
-                             return; // Exit success callback early if no data
+                             // Maybe display a "not found" message or default values
+                             mini.get("BINGDING_NUMBER").setValue("未找到数据"); // Example
+                             return;
                         }
 
                         var m = JSON.parse(cleanedText);
-                        // Log: パース後のデータ
                         console.log("[Debug] Parsed AJAX data (m):", m);
 
                         // Set values from AJAX response first
                         mini.get("ITEM_NAME").setValue(m.ITEM_NAME || '');
                         var ajaxBingdingNumber = m.BINGDING_NUMBER || '';
-                        // Log: AJAXからの値
                         console.log(`[Debug] Value from AJAX for BINGDING_NUMBER: "${ajaxBingdingNumber}"`);
                         mini.get("BINGDING_NUMBER").setValue(ajaxBingdingNumber);
                         console.log(`[Debug] Set BINGDING_NUMBER from AJAX value.`);
@@ -561,148 +576,119 @@
                         mini.get("THEORE_WEIGHT").setValue(m.THEORE_WEIGHT || '');
                         mini.get("ACTUA_WEIGHT").setValue(m.ACTUA_WEIGHT || '');
                         mini.get("BIRTH_DATE").setValue(m.BIRTH_DATE || '');
-                        // Set LOT_NUMBER from AJAX too, important for addPlan
                          mini.get("LOT_NUMBER").setValue(m.LOT_NUMBER || '');
                          console.log(`[Debug] Set LOT_NUMBER from AJAX value: "${m.LOT_NUMBER || ''}"`);
 
-
-                        // --- Now, try to override with URL parameter ---
-                        // Log: URLパラメータ処理開始
+                        // --- Override with URL parameter ---
                         console.log("[Debug] Attempting to get 'kh' URL parameter inside AJAX success...");
-                        var khValue = getUrlParameter('kh');
-                        // Log: 取得したkhの値
+                        var khValue = getUrlParameter('kh'); // Use the global function or define it inside ready
                         console.log(`[Debug] URL parameter 'kh' value found: "${khValue}"`);
 
-                        if (khValue) { // Check if khValue is not empty string
+                        if (khValue) {
                             var bingdingNumberInput = mini.get("BINGDING_NUMBER");
                             if (bingdingNumberInput) {
-                                // Log: MiniUIオブジェクト確認
                                 console.log("[Debug] Found BINGDING_NUMBER input object via mini.get().");
-                                // Log: 設定前の値確認
                                 console.log(`[Debug] BINGDING_NUMBER value BEFORE setting from URL: "${bingdingNumberInput.getValue()}"`);
                                 bingdingNumberInput.setValue(khValue);
-                                // Log: URLから設定試行
                                 console.log(`[Debug] Attempted to set BINGDING_NUMBER from URL parameter 'kh' to: "${khValue}"`);
-                                // Log: 設定後の値確認 ★★★ ここが重要 ★★★
                                 console.log(`[Debug] BINGDING_NUMBER value AFTER setting from URL: "${bingdingNumberInput.getValue()}"`);
                             } else {
-                                // Log: MiniUIオブジェクトが見つからないエラー
                                 console.error("[Debug] Could not find mini.get('BINGDING_NUMBER') inside AJAX success.");
                             }
                         } else {
-                             // Log: khパラメータがない場合
                              console.log("[Debug] URL parameter 'kh' is empty or not found. No override.");
                         }
 
                     } catch (e) {
-                        // Log: AJAX処理中のエラー
                         console.error("[Debug] Error processing search() AJAX success callback:", e);
                         console.error("[Debug] Original search response text:", text);
-                         alert("解析产品基本信息时出错，请检查控制台日志。"); // User feedback
+                         alert("解析产品基本信息时出错，请检查控制台日志。");
                     }
                  },
                  error: function (jqXHR, textStatus, errorThrown) {
-                     // Log: AJAXエラー
                      console.error("[Debug] search() AJAX Error:", textStatus, errorThrown, jqXHR.responseText);
-                      alert("请求产品基本信息失败，请检查网络连接或稍后重试。"); // User feedback
+                      alert("请求产品基本信息失败，请检查网络连接或稍后重试。");
                  }
              });
-             // Log: AJAXリクエスト送信完了
              console.log("[Debug] search() AJAX request sent.");
     }
 
     function GetDatakey() {
-       // This function's purpose is unclear from context.
-       // Original code used it to get form data for the 'key' parameter in AJAX.
-       // Let's keep that logic but add checks.
        console.log("[Debug] GetDatakey() called.");
-       var key = ""; // Default value
+       var key = "";
+        if (typeof mini === 'undefined') {
+            console.error("[Debug] GetDatakey: mini object not available!");
+            return ""; // Return empty if mini is not ready
+        }
        try {
-           var searchkeyForm = new mini.Form("#searchkey"); // Ensure the selector points to the form ID
-           if (searchkeyForm) {
-               var formData = searchkeyForm.getData(true); // Get formatted form data
-               // What exactly does the server expect for 'key'?
-               // Option 1: The entire form data JSON encoded?
-               // key = mini.encode(formData);
-
-               // Option 2: Just the value of a specific field, like LOT_NUMBER?
-               // key = formData.LOT_NUMBER || ''; // Or maybe another field?
-
-               // Option 3: The value comes from the URL path itself? (e.g., '001' in /index/001)
-               // If so, we need to extract it from window.location.pathname
-               var pathParts = window.location.pathname.split('/');
-               // Example: If URL is /cg/index/001, pathParts might be ["", "cg", "index", "001"]
-               // Get the last non-empty part as a potential key
-               for (var i = pathParts.length - 1; i >= 0; i--) {
-                   if (pathParts[i]) {
-                       key = pathParts[i];
-                       break;
-                   }
+           // Option 1: Use key from URL Path (based on previous analysis)
+           var pathParts = window.location.pathname.split('/');
+           for (var i = pathParts.length - 1; i >= 0; i--) {
+               if (pathParts[i]) {
+                   key = pathParts[i];
+                   break;
                }
-                console.log("[Debug] GetDatakey determined key from URL path:", key);
+           }
+           console.log("[Debug] GetDatakey determined key from URL path:", key);
 
+           // Option 2: If key should come from form data (uncomment if needed)
+           /*
+           var searchkeyForm = new mini.Form("#searchkey");
+           if (searchkeyForm) {
+               var formData = searchkeyForm.getData(true);
+               key = mini.encode(formData); // Or maybe just a specific field like formData.LOT_NUMBER ?
+               console.log("[Debug] GetDatakey created key from form:", key);
            } else {
                 console.error("[Debug] GetDatakey: Could not find form with ID #searchkey");
            }
+           */
        } catch(e) {
             console.error("[Debug] Error in GetDatakey:", e);
        }
-       console.log("[Debug] GetDatakey returning:", key); // Log the final key being returned
-       return key; // Return the determined key
+       console.log("[Debug] GetDatakey returning:", key);
+       return key;
     }
 
 
     function addPlan() {
-        // Log
         console.log("[Debug] addPlan() called.");
+        if (typeof mini === 'undefined') {
+           console.error("[Debug] addPlan: mini object not available!");
+            alert("MiniUI尚未准备就绪。");
+           return;
+       }
         var zlzmsbhInput = mini.get("ZLZMSBH");
         var fhdateInput = mini.get("FHDATE");
-        var lotNumberInput = mini.get("LOT_NUMBER"); // Ensure LOT_NUMBER is set by search()
+        var lotNumberInput = mini.get("LOT_NUMBER");
 
         if (!zlzmsbhInput || !fhdateInput || !lotNumberInput) {
             mini.alert("页面组件加载不完整，请刷新重试。");
-            // Log
             console.error("[Debug] addPlan(): Missing required input components.");
             return;
         }
 
         var zlzmsbhValue = zlzmsbhInput.getValue();
-        var fhdateValue = fhdateInput.getFormValue(); // Use getFormValue for date format yyyy-MM-dd
-        var lotNumberValue = lotNumberInput.getValue(); // Get value set by search()
-        // Log
+        var fhdateValue = fhdateInput.getFormValue();
+        var lotNumberValue = lotNumberInput.getValue();
         console.log(`[Debug] addPlan() values - ZLZMSBH: "${zlzmsbhValue}", FHDATE: "${fhdateValue}", LOT_NUMBER: "${lotNumberValue}"`);
 
-        if (!zlzmsbhValue) { // Check for empty string
-            mini.alert("请填写质量证明书编号");
-            return;
-        }
-        // Check if date is selected and valid
-        if (!fhdateValue || fhdateValue === "null") { // Check for empty or "null" string
-            mini.alert("请填写有效的发货日期");
-            return;
-        }
-        // Check if lot number is available (should be set by search() now)
-        if (!lotNumberValue) {
-            mini.alert("批次编号缺失，无法查询。");
-             console.warn("[Debug] addPlan(): LOT_NUMBER is empty.");
-            return;
-        }
+        if (!zlzmsbhValue) { mini.alert("请填写质量证明书编号"); return; }
+        if (!fhdateValue || fhdateValue === "null") { mini.alert("请填写有效的发货日期"); return; }
+        if (!lotNumberValue) { mini.alert("批次编号缺失，无法查询。"); console.warn("[Debug] addPlan(): LOT_NUMBER is empty."); return; }
 
-        // Navigate to the results page
-        // Make sure the base path '/erwm_new/jsp/' is correct for your environment
         var targetUrl = '/erwm_new/jsp/zmscx.jsp?ZLZMSBH=' + encodeURIComponent(zlzmsbhValue)
                                 + '&LOT_NUMBER=' + encodeURIComponent(lotNumberValue)
                                 + '&FHDATE=' + encodeURIComponent(fhdateValue);
-        // Log
         console.log("[Debug] Navigating to:", targetUrl);
-        window.location.href = targetUrl; // Use href for navigation
+        window.location.href = targetUrl;
     }
 
-    // Add a final log to indicate script execution finished
-    console.log("[Debug] All initial script execution finished.");
+    // Add a final log inside ready to indicate script execution reached the end of the ready block
+    console.log("[Debug] End of $(document).ready() block reached.");
 
 </script>
-<!-- ########## END: UPDATED SCRIPT BLOCK WITH DEBUG LOGS ########## -->
+<!-- ########## END: UPDATED SCRIPT BLOCK ########## -->
 
 </body>
 </html>
+
