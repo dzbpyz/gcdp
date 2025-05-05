@@ -69,7 +69,6 @@
 							 <tr>
 								<td style="text-align: center;font-size:20px;">
 									产品名称：
-									<!-- 产<span style="letter-spacing:14px;"> </span>品<span style="letter-spacing:14px;"> </span>名<span style="letter-spacing:14px;"> </span>称： -->
 								</td>
 
 								<td colspan="3" >
@@ -81,7 +80,7 @@
 									批次编号：
 								</td>
 								<td colspan="3" >
-									<input id="LOT_NUMBER" name="LOT_NUMBER"  style="text-align: center;width: 100% " class="mini-textbox asLabel" readOnly="true"  style="text-align: center; " value="151010"/>
+									<input id="LOT_NUMBER" name="LOT_NUMBER"  style="text-align: center;width: 100% " class="mini-textbox asLabel" readOnly="true"  style="text-align: center; " value=""/> <!-- Initial value empty, will be set by AJAX -->
 								</td>
 							</tr>
 
@@ -90,8 +89,8 @@
 									捆  号：
 								</td>
 								<td style="text-align: center">
-                                    <!-- 注意：这里的 value 初始值会被下面的 JS 覆盖（如果 URL 参数存在） -->
-									<input id="BINGDING_NUMBER" name="BINGDING_NUMBER" class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value=" "/>
+                                    <!-- Initial value will be potentially set by AJAX then URL param -->
+									<input id="BINGDING_NUMBER" name="BINGDING_NUMBER" class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value="加载中..."/>
 								</td>
 								<td style="text-align: center;font-size:20px;">
 									材  质：
@@ -181,7 +180,6 @@
 							</tr>
 							<tr>
 								<td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a  id = "online_print_link" href="http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do" target="_blank">http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do</a></td>
-                                <!-- Changed id to avoid conflict with function name -->
 							</tr>
 							<tr>
 								<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品问题反馈</td>
@@ -194,17 +192,12 @@
 							</tr>
 							<tr>
 								<td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a id="online_fankui_link" href="http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm" target="_blank">http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm</a></td>
-                                <!-- Changed id to avoid conflict with function name -->
 							</tr>
 
 							<tr>
 								<td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="化学成分" onclick="showDialoghuaxue()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size: 10px;font-size:26px;font-family: 宋体;border:#ccc" /></td>
 								<td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="物理性能" onclick="showDialogwuli()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size: 10px;font-size:26px;font-family: 宋体;border:#ccc" /></td>
 							</tr>
-
-
-							<!-- Removed closing </tr> tag here as it was misplaced -->
-
 
 							<tr>
 								<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">企业简介——河钢承钢</td>
@@ -276,10 +269,10 @@
 <!-- 定义dialog模板 -->
 <div id="huaxueDialog" class="mini-window" title="化学成分%" style="width:600px;height:300px;display:none;">
     <div style="padding:10px;">
-        <table border="1" style="width:100%"> <!-- Added width:100% for better layout -->
+        <table border="1" style="width:100%">
             <tr>
-               <th style="text-align: center;font-size:25px;">项目</th> <!-- Changed td to th for header -->
-               <th style="text-align: center;font-size:25px;">结果</th> <!-- Changed td to th for header -->
+               <th style="text-align: center;font-size:25px;">项目</th>
+               <th style="text-align: center;font-size:25px;">结果</th>
             </tr>
             <tr>
                  <td style="text-align: center;font-size:20px;">C</td>
@@ -321,12 +314,12 @@
     </div>
 </div>
 
-<div id="wuliDialog" class="mini-window" title="物理性能" style="width:600px;height:300px;display:none;"> <!-- Removed % from title -->
+<div id="wuliDialog" class="mini-window" title="物理性能" style="width:600px;height:300px;display:none;">
     <div style="padding:10px;">
-        <table border="1" style="width:100%"> <!-- Added width:100% for better layout -->
+        <table border="1" style="width:100%">
             <tr>
-               <th style="text-align: center;font-size:25px;">项目</th> <!-- Changed td to th for header -->
-               <th style="text-align: center;font-size:25px;">结果</th> <!-- Added missing header -->
+               <th style="text-align: center;font-size:25px;">项目</th>
+               <th style="text-align: center;font-size:25px;">结果</th>
             </tr>
             <tr>
                  <td style="text-align: center;font-size:20px;">rm/MPA</td>
@@ -347,13 +340,13 @@
                  </td>
             </tr>
              <tr>
-                 <td style="text-align: center;font-size:20px;">ROm/ROeL</td> <!-- Label seems technical, kept as is -->
+                 <td style="text-align: center;font-size:20px;">ROm/ROeL</td>
                  <td style="text-align: center;font-size:20px;" >
                      <input id="coldbend" name="COLDBEND" style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
                  </td>
             </tr>
              <tr>
-                 <td style="text-align: center;font-size:20px;">ROeL/ReL</td> <!-- Label seems technical, kept as is -->
+                 <td style="text-align: center;font-size:20px;">ROeL/ReL</td>
                  <td style="text-align: center;font-size:20px;" >
                      <input id="inflection" name="INFLECTION" style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
                  </td>
@@ -369,178 +362,198 @@
 </div>
 
 
+<!-- ########## START: UPDATED SCRIPT BLOCK WITH DEBUG LOGS ########## -->
 <script type="text/javascript">
-    mini.parse(); // Initialize MiniUI components
-
-    // --- NEW CODE START: Function to get URL parameters ---
+    // --- Function to get URL parameters ---
     function getUrlParameter(name) {
         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
         var results = regex.exec(location.search);
-        // Use decodeURIComponent to handle encoded characters like %20 for space
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        // Use decodeURIComponent to handle encoded characters
+        var value = results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        // Log: パラメータ取得試行と結果
+        console.log(`[Debug] getUrlParameter('${name}') called. location.search: "${location.search}", result: "${value}"`);
+        return value;
     }
-    // --- NEW CODE END ---
+
+    // Initialize MiniUI components FIRST
+    try {
+        mini.parse();
+        // Log: MiniUI 初期化完了
+        console.log("[Debug] mini.parse() completed.");
+    } catch (e) {
+        console.error("[Debug] Error during mini.parse():", e);
+    }
+
 
     // --- Call the search function to load initial data ---
-    search();
-
-    // --- NEW CODE START: Get 'kh' parameter and update the input ---
-    // This runs *after* search() is called, potentially overriding the value from AJAX if needed
-    // Or move this logic inside the success callback of search() if you want it strictly after AJAX loads
-    var khValue = getUrlParameter('kh');
-    if (khValue) { // Check if khValue is not empty
-        var bingdingNumberInput = mini.get("BINGDING_NUMBER");
-        if (bingdingNumberInput) {
-            bingdingNumberInput.setValue(khValue);
-            console.log("Set BINGDING_NUMBER from URL parameter 'kh':", khValue); // Optional log
-        }
-    }
-    // --- NEW CODE END ---
-
+    // Log: search() 呼び出し
+    console.log("[Debug] Calling search() function...");
+    search(); // Initiate data loading
 
     // --- Existing Functions ---
 
      function showDialogwuli() {
-       var key = GetDatakey();
+       console.log("[Debug] showDialogwuli() called.");
+       var key = GetDatakey(); // Assuming GetDatakey returns needed context
        $.ajax({
-                 url: "/erwm_new/lx/jiekou.do",
+                 url: "/erwm_new/lx/jiekou.do", // Make sure this path is correct relative to your domain
                  type: 'post',
-                    data: { key: key, actiondes :'wuli'},
-                    cache: false,
-                    dataType: 'text', // Explicitly expect text
-                    success: function (text) {
-                        try {
-                            // Attempt to remove potential surrounding quotes or brackets if present
-                            var cleanedText = text;
-                            if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) {
-                                cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                            }
-                            if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) {
-                                cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                            }
-                            // Replace escaped quotes if necessary (adjust based on actual server response)
-                            cleanedText = cleanedText.replace(/\\"/g, '"');
+                 data: { key: key, actiondes :'wuli'},
+                 cache: false,
+                 dataType: 'text',
+                 success: function (text) {
+                    console.log("[Debug] showDialogwuli() AJAX success. Response:", text);
+                    try {
+                        var cleanedText = text.trim();
+                        if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) {
+                            cleanedText = cleanedText.substring(1, cleanedText.length - 1);
+                        }
+                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) {
+                           cleanedText = cleanedText.substring(1, cleanedText.length - 1);
+                        }
+                        cleanedText = cleanedText.replace(/\\"/g, '"');
+                        var m = JSON.parse(cleanedText);
+                        console.log("[Debug] Parsed wuli data:", m);
 
-                            // Use JSON.parse for safety instead of eval
-                            var m = JSON.parse(cleanedText);
+                        mini.get("tensilestrength").setValue(m.TENSILESTRENGTH || '');
+                        mini.get("yieldstrength").setValue(m.YIELDSTRENGTH || '');
+                        mini.get("agtstrength").setValue(m.AGTSTRENGTH || '');
+                        mini.get("coldbend").setValue(m.COLDBEND || '');
+                        mini.get("inflection").setValue(m.INFLECTION || '');
+                        mini.get("coldbendresult").setValue(m.COLDBENDRESULT || '');
 
-                            mini.get("tensilestrength").setValue(m.TENSILESTRENGTH || ''); // Use || '' as fallback
-                            mini.get("yieldstrength").setValue(m.YIELDSTRENGTH || '');
-                            mini.get("agtstrength").setValue(m.AGTSTRENGTH || '');
-                            mini.get("coldbend").setValue(m.COLDBEND || '');
-                            mini.get("inflection").setValue(m.INFLECTION || '');
-                            mini.get("coldbendresult").setValue(m.COLDBENDRESULT || '');
-
-                            var dialog = mini.get("wuliDialog");
-                            if (dialog) {
-                                dialog.show();
-                            }
-                         } catch (e) {
-                             console.error("Error parsing wuli data:", e);
-                             console.error("Original response text:", text);
-                             alert("获取物理性能数据失败或数据格式错误。");
-                         }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error("AJAX Error (wuli):", textStatus, errorThrown, jqXHR.responseText);
-                        alert("请求物理性能数据失败: " + textStatus);
-                    }
-                });
+                        var dialog = mini.get("wuliDialog");
+                        if (dialog) {
+                            dialog.show();
+                        } else {
+                             console.error("[Debug] wuliDialog not found.");
+                        }
+                     } catch (e) {
+                         console.error("[Debug] Error parsing/setting wuli data:", e);
+                         console.error("[Debug] Original wuli response text:", text);
+                         alert("解析物理性能数据时出错，请检查控制台日志。"); // User feedback
+                     }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("[Debug] showDialogwuli() AJAX Error:", textStatus, errorThrown, jqXHR.responseText);
+                    alert("请求物理性能数据失败，请检查网络连接或稍后重试。"); // User feedback
+                }
+            });
     }
 
     function showDialoghuaxue() {
+       console.log("[Debug] showDialoghuaxue() called.");
        var key = GetDatakey();
        $.ajax({
                  url: "/erwm_new/lx/jiekou.do",
                  type: 'post',
-                    data: { key: key, actiondes :'huaxue'},
-                    cache: false,
-                    dataType: 'text', // Explicitly expect text
-                    success: function (text) {
-                       try {
-                            // Attempt to clean and parse JSON safely
-                            var cleanedText = text;
-                             if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) {
-                                cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                            }
-                            if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) {
-                                cleanedText = cleanedText.substring(1, cleanedText.length - 1);
-                            }
-                            cleanedText = cleanedText.replace(/\\"/g, '"');
-
-                            var m = JSON.parse(cleanedText);
-
-                            mini.get("c").setValue(m.C || '');
-                            mini.get("mn").setValue(m.MN || '');
-                            mini.get("si").setValue(m.SI || '');
-                            mini.get("p").setValue(m.P || '');
-                            mini.get("s").setValue(m.S || '');
-                            mini.get("ceq").setValue(m.CEQ || '');
-
-                            var dialog = mini.get("huaxueDialog");
-                            if (dialog) {
-                                dialog.show();
-                            }
-                        } catch (e) {
-                             console.error("Error parsing huaxue data:", e);
-                             console.error("Original response text:", text);
-                             alert("获取化学成分数据失败或数据格式错误。");
+                 data: { key: key, actiondes :'huaxue'},
+                 cache: false,
+                 dataType: 'text',
+                 success: function (text) {
+                   console.log("[Debug] showDialoghuaxue() AJAX success. Response:", text);
+                   try {
+                        var cleanedText = text.trim();
+                         if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) {
+                            cleanedText = cleanedText.substring(1, cleanedText.length - 1);
                         }
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.error("AJAX Error (huaxue):", textStatus, errorThrown, jqXHR.responseText);
-                        alert("请求化学成分数据失败: " + textStatus);
+                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) {
+                            cleanedText = cleanedText.substring(1, cleanedText.length - 1);
+                        }
+                        cleanedText = cleanedText.replace(/\\"/g, '"');
+                        var m = JSON.parse(cleanedText);
+                        console.log("[Debug] Parsed huaxue data:", m);
+
+                        mini.get("c").setValue(m.C || '');
+                        mini.get("mn").setValue(m.MN || '');
+                        mini.get("si").setValue(m.SI || '');
+                        mini.get("p").setValue(m.P || '');
+                        mini.get("s").setValue(m.S || '');
+                        mini.get("ceq").setValue(m.CEQ || '');
+
+                        var dialog = mini.get("huaxueDialog");
+                        if (dialog) {
+                            dialog.show();
+                        } else {
+                            console.error("[Debug] huaxueDialog not found.");
+                        }
+                    } catch (e) {
+                         console.error("[Debug] Error parsing/setting huaxue data:", e);
+                         console.error("[Debug] Original huaxue response text:", text);
+                         alert("解析化学成分数据时出错，请检查控制台日志。"); // User feedback
                     }
-                });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error("[Debug] showDialoghuaxue() AJAX Error:", textStatus, errorThrown, jqXHR.responseText);
+                    alert("请求化学成分数据失败，请检查网络连接或稍后重试。"); // User feedback
+                }
+            });
     }
 
     function online_print(){
-        // Use the modified ID for the link
         var link = document.getElementById("online_print_link");
         if(link) {
+            // Log
+            console.log("[Debug] Clicking online_print_link");
             link.click();
         } else {
-            console.error("Online print link not found");
+            console.error("[Debug] Online print link not found");
         }
     }
 
     function online_fankui(){
-        // Use the modified ID for the link
         var link = document.getElementById("online_fankui_link");
          if(link) {
+            // Log
+            console.log("[Debug] Clicking online_fankui_link");
             link.click();
         } else {
-            console.error("Online fankui link not found");
+            console.error("[Debug] Online fankui link not found");
         }
     }
 
     function search() {
-      var key = GetDatakey();
-       $.ajax({
-                 url: "/erwm_new/lx/jiekou.do",
+      var key = GetDatakey(); // Assuming this provides necessary context
+      // Log: search開始とキー
+      console.log("[Debug] search() started. Key for AJAX:", key);
+      $.ajax({
+                 url: "/erwm_new/lx/jiekou.do", // Verify this path is correct
                  type: 'post',
                  data: { key: key, actiondes :'getybgl'},
-                 cache: false,
-                 dataType: 'text', // Expect text, parse manually for safety
+                 cache: false, // Keep cache false for debugging
+                 dataType: 'text', // Expect text, parse manually
                  success: function (text) {
+                    // Log: AJAX成功とレスポンス
+                    console.log("[Debug] search() AJAX success. Response text:", text);
                     try {
-                        // Attempt to clean and parse JSON safely
-                        var cleanedText = text;
-                        if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) {
+                        var cleanedText = text.trim();
+                         if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) {
                             cleanedText = cleanedText.substring(1, cleanedText.length - 1);
                         }
-                         if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) {
-                            cleanedText = cleanedText.substring(1, cleanedText.length - 1);
+                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) {
+                           cleanedText = cleanedText.substring(1, cleanedText.length - 1);
                         }
                         cleanedText = cleanedText.replace(/\\"/g, '"');
 
-                        var m = JSON.parse(cleanedText);
+                        // Check if cleanedText is empty before parsing
+                        if (!cleanedText) {
+                             console.warn("[Debug] search() AJAX success but response text is empty after cleaning.");
+                             // Handle empty response case if necessary, e.g., show default values or an error
+                             return; // Exit success callback early if no data
+                        }
 
+                        var m = JSON.parse(cleanedText);
+                        // Log: パース後のデータ
+                        console.log("[Debug] Parsed AJAX data (m):", m);
+
+                        // Set values from AJAX response first
                         mini.get("ITEM_NAME").setValue(m.ITEM_NAME || '');
-                        // Don't set BINGDING_NUMBER here if URL param should always win
-                        // Or set it, and let the code outside this function override it if kh param exists
-                        mini.get("BINGDING_NUMBER").setValue(m.BINGDING_NUMBER || ''); // Set default from AJAX
+                        var ajaxBingdingNumber = m.BINGDING_NUMBER || '';
+                        // Log: AJAXからの値
+                        console.log(`[Debug] Value from AJAX for BINGDING_NUMBER: "${ajaxBingdingNumber}"`);
+                        mini.get("BINGDING_NUMBER").setValue(ajaxBingdingNumber);
+                        console.log(`[Debug] Set BINGDING_NUMBER from AJAX value.`);
                         mini.get("MATER_CATE").setValue(m.MATER_CATE || '');
                         mini.get("SEPEC").setValue(m.SEPEC || '');
                         mini.get("LENGTHE").setValue(m.LENGTHE || '');
@@ -548,104 +561,148 @@
                         mini.get("THEORE_WEIGHT").setValue(m.THEORE_WEIGHT || '');
                         mini.get("ACTUA_WEIGHT").setValue(m.ACTUA_WEIGHT || '');
                         mini.get("BIRTH_DATE").setValue(m.BIRTH_DATE || '');
+                        // Set LOT_NUMBER from AJAX too, important for addPlan
+                         mini.get("LOT_NUMBER").setValue(m.LOT_NUMBER || '');
+                         console.log(`[Debug] Set LOT_NUMBER from AJAX value: "${m.LOT_NUMBER || ''}"`);
 
-                        // --- OPTIONAL: If URL param should ONLY override after AJAX success, move the check here ---
-                        /*
+
+                        // --- Now, try to override with URL parameter ---
+                        // Log: URLパラメータ処理開始
+                        console.log("[Debug] Attempting to get 'kh' URL parameter inside AJAX success...");
                         var khValue = getUrlParameter('kh');
-                        if (khValue) {
+                        // Log: 取得したkhの値
+                        console.log(`[Debug] URL parameter 'kh' value found: "${khValue}"`);
+
+                        if (khValue) { // Check if khValue is not empty string
                             var bingdingNumberInput = mini.get("BINGDING_NUMBER");
                             if (bingdingNumberInput) {
+                                // Log: MiniUIオブジェクト確認
+                                console.log("[Debug] Found BINGDING_NUMBER input object via mini.get().");
+                                // Log: 設定前の値確認
+                                console.log(`[Debug] BINGDING_NUMBER value BEFORE setting from URL: "${bingdingNumberInput.getValue()}"`);
                                 bingdingNumberInput.setValue(khValue);
-                                console.log("Set BINGDING_NUMBER from URL parameter 'kh' after AJAX:", khValue);
+                                // Log: URLから設定試行
+                                console.log(`[Debug] Attempted to set BINGDING_NUMBER from URL parameter 'kh' to: "${khValue}"`);
+                                // Log: 設定後の値確認 ★★★ ここが重要 ★★★
+                                console.log(`[Debug] BINGDING_NUMBER value AFTER setting from URL: "${bingdingNumberInput.getValue()}"`);
+                            } else {
+                                // Log: MiniUIオブジェクトが見つからないエラー
+                                console.error("[Debug] Could not find mini.get('BINGDING_NUMBER') inside AJAX success.");
                             }
+                        } else {
+                             // Log: khパラメータがない場合
+                             console.log("[Debug] URL parameter 'kh' is empty or not found. No override.");
                         }
-                        */
-                        // --- END OPTIONAL MOVE ---
 
                     } catch (e) {
-                        console.error("Error parsing getybgl data:", e);
-                        console.error("Original response text:", text);
-                        alert("获取产品基本信息失败或数据格式错误。");
+                        // Log: AJAX処理中のエラー
+                        console.error("[Debug] Error processing search() AJAX success callback:", e);
+                        console.error("[Debug] Original search response text:", text);
+                         alert("解析产品基本信息时出错，请检查控制台日志。"); // User feedback
                     }
                  },
                  error: function (jqXHR, textStatus, errorThrown) {
-                     console.error("AJAX Error (getybgl):", textStatus, errorThrown, jqXHR.responseText);
-                     alert("请求产品基本信息失败: " + textStatus);
+                     // Log: AJAXエラー
+                     console.error("[Debug] search() AJAX Error:", textStatus, errorThrown, jqXHR.responseText);
+                      alert("请求产品基本信息失败，请检查网络连接或稍后重试。"); // User feedback
                  }
              });
+             // Log: AJAXリクエスト送信完了
+             console.log("[Debug] search() AJAX request sent.");
     }
 
     function GetDatakey() {
-       var searchkey = new mini.Form("#searchkey"); // Pass selector to Form constructor
-       var o = searchkey.getData(true); // Pass true to format data
-       // The endpoint might expect a specific structure, just sending 'key' might be enough
-       // var json = mini.encode([o]); // This wraps it in an array, might not be needed
-       // Assuming the server expects the 'key' param as built in the original AJAX calls.
-       // Let's create a simple key if that's what the server expects based on other calls.
-       // If the server truly expects a complex JSON string for 'key', adjust this.
-       // For now, returning null as the AJAX calls construct the data object directly.
-       // Update: The original AJAX calls create the 'key' data from the form.
-       // GetDatakey seems intended to serialize the *whole* form, let's keep it, but ensure form ID is correct.
-       var json = mini.encode(o); // Encode the object directly
-       return json; // This might need adjustment based on what /erwm_new/lx/jiekou.do expects for the 'key' parameter
-                     // Often, only specific fields are needed, not the whole form.
-                     // The existing code seems to use this function only to build the data object inside ajax calls,
-                     // so perhaps this function isn't strictly necessary as implemented. Let's refine the AJAX calls instead.
+       // This function's purpose is unclear from context.
+       // Original code used it to get form data for the 'key' parameter in AJAX.
+       // Let's keep that logic but add checks.
+       console.log("[Debug] GetDatakey() called.");
+       var key = ""; // Default value
+       try {
+           var searchkeyForm = new mini.Form("#searchkey"); // Ensure the selector points to the form ID
+           if (searchkeyForm) {
+               var formData = searchkeyForm.getData(true); // Get formatted form data
+               // What exactly does the server expect for 'key'?
+               // Option 1: The entire form data JSON encoded?
+               // key = mini.encode(formData);
 
-                     // Let's revert GetDatakey to its original simple form if it's just a placeholder
-                     // or if the key data is built directly in the $.ajax call.
-                     // Given the usage, it seems like it might be intended to return a specific identifier,
-                     // but the implementation tries to serialize the form. Let's assume the $.ajax
-                     // data construction `data: { key: key, actiondes :'...'} ` is correct and `key`
-                     // variable is populated correctly elsewhere (though it's not shown how).
-                     // If 'key' should come from a specific input, we need that logic.
-                     // Let's assume 'key' is globally available or derived differently for now.
-                     // Returning an empty object as a placeholder. Modify if needed.
-       return {}; // Placeholder, adjust if GetDatakey has a real purpose
+               // Option 2: Just the value of a specific field, like LOT_NUMBER?
+               // key = formData.LOT_NUMBER || ''; // Or maybe another field?
+
+               // Option 3: The value comes from the URL path itself? (e.g., '001' in /index/001)
+               // If so, we need to extract it from window.location.pathname
+               var pathParts = window.location.pathname.split('/');
+               // Example: If URL is /cg/index/001, pathParts might be ["", "cg", "index", "001"]
+               // Get the last non-empty part as a potential key
+               for (var i = pathParts.length - 1; i >= 0; i--) {
+                   if (pathParts[i]) {
+                       key = pathParts[i];
+                       break;
+                   }
+               }
+                console.log("[Debug] GetDatakey determined key from URL path:", key);
+
+           } else {
+                console.error("[Debug] GetDatakey: Could not find form with ID #searchkey");
+           }
+       } catch(e) {
+            console.error("[Debug] Error in GetDatakey:", e);
+       }
+       console.log("[Debug] GetDatakey returning:", key); // Log the final key being returned
+       return key; // Return the determined key
     }
 
 
     function addPlan() {
+        // Log
+        console.log("[Debug] addPlan() called.");
         var zlzmsbhInput = mini.get("ZLZMSBH");
         var fhdateInput = mini.get("FHDATE");
-        var lotNumberInput = mini.get("LOT_NUMBER"); // Get lot number field
+        var lotNumberInput = mini.get("LOT_NUMBER"); // Ensure LOT_NUMBER is set by search()
 
         if (!zlzmsbhInput || !fhdateInput || !lotNumberInput) {
             mini.alert("页面组件加载不完整，请刷新重试。");
+            // Log
+            console.error("[Debug] addPlan(): Missing required input components.");
             return;
         }
 
         var zlzmsbhValue = zlzmsbhInput.getValue();
         var fhdateValue = fhdateInput.getFormValue(); // Use getFormValue for date format yyyy-MM-dd
-        var lotNumberValue = lotNumberInput.getValue(); // Get the value of LOT_NUMBER
+        var lotNumberValue = lotNumberInput.getValue(); // Get value set by search()
+        // Log
+        console.log(`[Debug] addPlan() values - ZLZMSBH: "${zlzmsbhValue}", FHDATE: "${fhdateValue}", LOT_NUMBER: "${lotNumberValue}"`);
 
-
-        if (zlzmsbhValue == "") {
-         	mini.alert("请填写质量证明书编号");
-         	return;
-       	}
-
-       	// Check if date is selected and valid
-       	if (fhdateValue == "" || fhdateValue == null || fhdateValue == "null") { // Added null check
-         	mini.alert("请填写有效的发货日期");
-         	return;
-       	}
-
-        // Check if lot number is available (it's readOnly, but check anyway)
-        if (lotNumberValue == "") {
+        if (!zlzmsbhValue) { // Check for empty string
+            mini.alert("请填写质量证明书编号");
+            return;
+        }
+        // Check if date is selected and valid
+        if (!fhdateValue || fhdateValue === "null") { // Check for empty or "null" string
+            mini.alert("请填写有效的发货日期");
+            return;
+        }
+        // Check if lot number is available (should be set by search() now)
+        if (!lotNumberValue) {
             mini.alert("批次编号缺失，无法查询。");
+             console.warn("[Debug] addPlan(): LOT_NUMBER is empty.");
             return;
         }
 
-
-       	// Navigate to the results page
-        // Ensure the base path is correct for your deployment
-        window.location.href ='/erwm_new/jsp/zmscx.jsp?ZLZMSBH=' + encodeURIComponent(zlzmsbhValue)
+        // Navigate to the results page
+        // Make sure the base path '/erwm_new/jsp/' is correct for your environment
+        var targetUrl = '/erwm_new/jsp/zmscx.jsp?ZLZMSBH=' + encodeURIComponent(zlzmsbhValue)
                                 + '&LOT_NUMBER=' + encodeURIComponent(lotNumberValue)
                                 + '&FHDATE=' + encodeURIComponent(fhdateValue);
-
+        // Log
+        console.log("[Debug] Navigating to:", targetUrl);
+        window.location.href = targetUrl; // Use href for navigation
     }
+
+    // Add a final log to indicate script execution finished
+    console.log("[Debug] All initial script execution finished.");
+
 </script>
+<!-- ########## END: UPDATED SCRIPT BLOCK WITH DEBUG LOGS ########## -->
 
 </body>
 </html>
