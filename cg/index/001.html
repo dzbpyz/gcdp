@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
  <style type="text/css">
-
-
+ 
+ 
     .asLabel .mini-textbox-border,
-
+  
     .asLabel .mini-textbox-input
       {
       	 /*  width:255px; */
@@ -23,7 +23,7 @@
     }
     .asLabel .mini-textboxlist-item
     {
-    }
+    }    
     td
     {
     	font-family: 宋体;
@@ -32,120 +32,104 @@
     </style>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <!-- 确保 boot.js 路径正确 -->
-    <script src="../static/js/boot.js" type="text/javascript"></script>
-    <!-- 确保 base.css 路径正确 -->
+    <script src="../static/js/boot.js" type="text/javascript"></script> 
     <link href="../static/css/base.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-
+	
 		<div size="100%" showcollapsebutton="true"  style="border:10px solid #000">
-
+				
 				   <form id="searchkey" method="post">
 				   		<table  border="0" cellpadding="0" cellspacing="0">
 				   	    <tr>
 				   	    	 <td>
-
-							 <img align="absmiddle" src="../static/picture/logo.png" style="text-align:left;"  />
-
+							
+							 <img align="absmiddle" src="../static/picture/logo.png" style="text-align:left;"  />  
+							
 							 </td>
-
+							 
 							 <td colspan="4" style="text-align: center; ">
-
-
+							
+							
 							<font style="font-size:30px;vertical-align:middle;font-weight :bold;"   >河钢股份有限公司承钢分公司</font>
-							</td>
-
+							</td> 
+				   	    
 				   	    </tr>
-
+				   	    
 				   	    </table>
-
+				   
 						<table class="mtable" border="0" cellpadding="1" cellspacing="2" >
-
-
+							
+							
 							<tr>
-							<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品基本信息</td>
+							<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品基本信息</td> 
 							</tr>
 							 <tr>
 								<td style="text-align: center;font-size:20px;">
 									产品名称：
+									<!-- 产<span style="letter-spacing:14px;"> </span>品<span style="letter-spacing:14px;"> </span>名<span style="letter-spacing:14px;"> </span>称： -->
 								</td>
-
-								<td colspan="3" >
-									<input id="ITEM_NAME" name="ITEM_NAME"  class="mini-textbox asLabel" readOnly="true" style="text-align: center;"  value="螺纹钢" />
-								</td>
+							
+								<td colspan="3" >螺纹钢 </td>
 							</tr>
-							<tr>
+							<tr>								
 								<td style="font-size:20px;">
 									批次编号：
 								</td>
-								<td colspan="3" >
-									<input id="LOT_NUMBER" name="LOT_NUMBER"  style="text-align: center;width: 100% " class="mini-textbox asLabel" readOnly="true"  style="text-align: center; " value=""/> <!-- Initial value empty, will be set by AJAX -->
-								</td>
-							</tr>
-
+								
+								<td colspan="3" >25Y202188G20250219062635 </td>							
+							</tr> 
+							
 							<tr>
 								<td style="text-align: center;font-size:20px;">
 									捆  号：
-								</td>
-								<td style="text-align: center">
-                                    <!-- Initial value will be potentially set by AJAX then URL param -->
-									<input id="BINGDING_NUMBER" name="BINGDING_NUMBER" class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value="加载中..."/>
-								</td>
+							  </td>
+								<td style="text-align: center" id="bundleNumberValueCell"> <!-- ID ADDED HERE -->
+                                 B-26 </td>
 								<td style="text-align: center;font-size:20px;">
 									材  质：
-								</td>
-								<td style="text-align: center">
-									<input id="MATER_CATE" name="MATER_CATE"  class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value="螺纹钢"/>
-								</td>
+							  </td>
+								<td style="text-align: center">HRB400E </td>
 							</tr>
 							<tr>
 								<td style="text-align: center;font-size:20px;">
 									规  格：
-								</td>
-								<td style="text-align: center">
-									<input id="SEPEC" name="SEPEC" class="mini-textbox asLabel" readOnly="true"  style="text-align: center; " value="螺纹钢"/>
-								</td>
+							  </td>
+								<td style="text-align: center">   Φ14 </td>
 								<td style="text-align: center;font-size:20px;">
 									支  数：
-								</td>
-								<td style="text-align: center">
-									<input id="ELE_NUMBER" name="ELE_NUMBER"  class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value="螺纹钢"/>
-								</td>
+							  </td>
+								<td style="text-align: center">220 </td>
 							</tr>
-
+						
 							<tr>
 								<td style="text-align: center;font-size:20px;">
 									长  度(m)：
-								</td>
-								<td style="text-align: center">
-									<input id="LENGTHE" name="LENGTHE" class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value="螺纹钢"/>
-								</td>
+							  </td>
+								<td style="text-align: center"> 12</td>
 								<td style="text-align: center;font-size:20px;">
 									理  重(kg)：
-								</td>
-								<td style="text-align: center">
-									<input id="THEORE_WEIGHT" name="THEORE_WEIGHT"  class="mini-textbox asLabel" readOnly="true" value="2515" style="text-align: center;"/>
-								</td>
+							  </td>
+								<td style="text-align: center">3194 </td>
 							</tr>
 							<tr>
 								<td style="text-align: center;font-size:20px;">
 									实  重(kg)：
 								</td>
-								<td style="text-align: center">
-									<input id="ACTUA_WEIGHT" name="ACTUA_WEIGHT" class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value="螺纹钢"/>
+								<td style="text-align: center; min-width: 200px;">
+								   3108
 								</td>
 								<td style="text-align: center;font-size:20px;">
 									产出日期：
 								</td>
-								<td style="text-align: center">
-									<input id="BIRTH_DATE" name="BIRTH_DATE" class="mini-textbox asLabel" readOnly="true"  style="text-align: center;" value="螺纹钢"/>
+								<td style="text-align: center; min-width: 200px;">
+								   2025-02-19
 								</td>
 							</tr>
-
-
+						
+							
 							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品质量证明书查验及在线打印</td>
+								<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品质量证明书查验及在线打印</td> 
 							</tr>
 							<tr>
 							<td colspan="1" style="text-align: right;font-size:20px;">
@@ -156,7 +140,7 @@
 							</td>
 							<td rowspan="2" style="text-align: left;">
 							<!-- <input type="button" value="查 询" onclick="addPlan()"  style="width: 120px;height:100%;background: #2e9be2;color:#fff;font-size: 20px;font-family: 宋体;border:#ccc" /> -->
-							<img src="../static/picture/chaxun.jpg" onclick="addPlan()" />
+							<img src="../static/picture/chaxun.jpg" onclick="addPlan()" /> 
 							</td>
 							</tr>
 							<tr>
@@ -168,41 +152,46 @@
 							</td>
 							</tr>
 							<tr>
-
-								<td colspan="2" style="font-size:15px;color:red;border-right:none"></td>
+								
+								<td colspan="2" style="font-size:15px;color:red;border-right:none"></td> 
 								<td colspan="2" style="font-size:15px;color:red;border-left:none">※请输入所持证明书信息查验</td>
 							</tr>
 							<tr>
 								<td  colspan="1" style="text-align: right;font-size:20px;height:40px;border-bottom:none;border-right:none">
 									质量证明书打印：
 								</td>
-								<td colspan="3" style="text-align: center;border-bottom:none;border-left:none"><input type="button" value="在线打印入口" onclick="online_print()"  style="width: 320px;height:100%;background: #2e9be2;color:#fff;font-size: 20px;font-family: 宋体;border:#ccc" />   请联系客服经理获取打印权限</td>
+								<td colspan="3" style="text-align: center;border-bottom:none;border-left:none"><input type="button" value="在线打印入口" onclick="online_print()"  style="width: 320px;height:100%;background: #2e9be2;color:#fff;font-size: 20px;font-family: 宋体;border:#ccc" />   请联系客服经理获取打印权限</td>							
 							</tr>
 							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a  id = "online_print_link" href="http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do" target="_blank">http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do</a></td>
+								<td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a  id = "online_print_link" href="http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do" target="_blank">http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do</a></td> 
+                                <!-- Note: Changed id from "online_print" to "online_print_link" to avoid conflict with function name if any, and for clarity. JS function online_print() targets this. -->
 							</tr>
 							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品问题反馈</td>
+								<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品问题反馈</td> 
 							</tr>
 							<tr>
 								<td colspan="4" style="font-weight:bold;font-size:16px;height:40px;text-align: center;border-bottom:none">欢迎使用河钢客户服务中心信息反馈系统  
 								<!-- <input type="button" value="点击跳转" onclick="online_fankui()"  style="width: 150px;height:95%;background: #2e9be2;color:#fff;font-size: 20px;font-family: 宋体;border:#ccc" /> -->
 								<img src="../static/picture/fankui.jpg" onclick="online_fankui()">
-								</td>
+								</td> 
 							</tr>
 							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a id="online_fankui_link" href="http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm" target="_blank">http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm</a></td>
+								<td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a id="online_fankui_link" href="http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm" target="_blank">http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm</a></td> 
+                                <!-- Note: Changed id from "online_fankui" to "online_fankui_link" for clarity. JS function online_fankui() targets this. -->
 							</tr>
-
+							
+							<tr>							
+								<td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="化学成分" onclick="showDialoghuaxue()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size: 10px;font-size:26px;font-family: 宋体;border:#ccc" /></td>							
+								<td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="物理性能" onclick="showDialogwuli()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size: 10px;font-size:26px;font-family: 宋体;border:#ccc" /></td>							
+							</tr>
+							
+							<!-- <tr> 这个tr是多余的，且没有闭合，已删除 -->
+							
+							
 							<tr>
-								<td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="化学成分" onclick="showDialoghuaxue()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size: 10px;font-size:26px;font-family: 宋体;border:#ccc" /></td>
-								<td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="物理性能" onclick="showDialogwuli()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size: 10px;font-size:26px;font-family: 宋体;border:#ccc" /></td>
+								<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">企业简介——河钢承钢</td> 
 							</tr>
-
-							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">企业简介——河钢承钢</td>
-							</tr>
-
+							
 							<tr>
 								<td colspan="4" style="text-indent: 2em;text-align: justify;border-bottom:none;border-top:none" > 河钢集团有限公司（简称“河钢集团”、“河钢”）于2008年6月30日组建成立，拥有直属子分公司20余家，目前已经发展成为以钢铁为主业，矿山资源、金融服务、装备制造、现代物流等相关产业协同发展的产业格局。2019年居世界500强第214位。目前，集团具备5000万吨世界先进装备水平、国内领先节能环保水平的钢铁产能。
                             	</td>
@@ -213,482 +202,364 @@
                             </tr>
 							<tr>
 								<td colspan="4" style="text-indent: 2em;text-align: justify;border-bottom:none;border-top:none" > 自二十世纪九十年代以来，河钢承钢不断加强了管理，严格按照管理体系标准，建立了质量、测量、能源、环境、职业健康安全、两化融合、知识产权管理体系，并以此持续改进管理。
-								</td>
+								</td> 
 							</tr>
 							<tr>
-								<td colspan="4" style="text-indent: 2em;text-align: justify;border-top:none" > 河钢承钢含钒合金钢铁产品包括含钒棒、线、板、带四大系列，具有强度高、韧性好、耐腐蚀、易焊接、深冲性优等优良特性，多个产品被评为全国冶金产品实物质量金杯奖、冶金行业品质卓越产品、河北省名牌产品。河钢承钢是“燕山牌”螺纹钢产品的源产地，其生产的Φ6～Φ50mm全规格、全等级含钒高强螺纹钢筋产品全部荣获全国冶金产品实物质量“金杯奖”，产品广泛应用于国内外标志性建筑、超高层建筑、核电、大跨度桥梁、高铁等工程项目。</td>
+								<td colspan="4" style="text-indent: 2em;text-align: justify;border-top:none" > 河钢承钢含钒合金钢铁产品包括含钒棒、线、板、带四大系列，具有强度高、韧性好、耐腐蚀、易焊接、深冲性优等优良特性，多个产品被评为全国冶金产品实物质量金杯奖、冶金行业品质卓越产品、河北省名牌产品。河钢承钢是“燕山牌”螺纹钢产品的源产地，其生产的Φ6～Φ50mm全规格、全等级含钒高强螺纹钢筋产品全部荣获全国冶金产品实物质量“金杯奖”，产品广泛应用于国内外标志性建筑、超高层建筑、核电、大跨度桥梁、高铁等工程项目。</td> 
 							</tr>
 							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none ">企业荣誉</td>
-							</tr>
-							<tr>
-							<td colspan="4" style="text-indent: 2em;border-top:none" >
-							<img src="../static/picture/qyry.png" /></td>
-							</tr>
-							<tr>
-							<td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none">产品范围</td>
+								<td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none ">企业荣誉</td> 
 							</tr>
 							<tr>
 							<td colspan="4" style="text-indent: 2em;border-top:none" >
-							<img src="../static/picture/cpfw.png" /></td>
+							<img src="../static/picture/qyry.png" /></td> 
 							</tr>
 							<tr>
-							<td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none;">联系我们</td>
+							<td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none">产品范围</td> 
 							</tr>
 							<tr>
-							<td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" >
+							<td colspan="4" style="text-indent: 2em;border-top:none" >
+							<img src="../static/picture/cpfw.png" /></td> 
+							</tr>
+							<tr>
+							<td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none;">联系我们</td> 
+							</tr>
+							<tr>
+							<td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" > 
 							<img align="absmiddle" src="../static/picture/hbis.png"  />
 							</td>
 							</tr>
 							<tr>
-							<td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" >
+							<td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" > 
 							地址：河北省承德市双滦区滦河镇钢城路1号
 							</td>
-							</tr>
+							</tr> 
 							<tr>
-							<td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" >
+							<td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" > 
 							网址：http：//www.cdsteel.cn
-							</td>
-							</tr>
+							</td> 
+							</tr> 
 							<tr>
-							<td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" >
+							<td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" > 
 							服务电话：+86-0314-4078888 客服专线：400-188-8286
-							</td>
-							</tr>
-
-
+							</td> 
+							</tr> 
+							
+							
                             <tr>
 							<td colspan="4" style="font-size:15px;" >
-							<img src="../static/picture/hbisewm.png" /></td>
+							<img src="../static/picture/hbisewm.png" /></td> 
 							</tr>
 						</table>
 						</form>
-
+				
 		</div>
-
+		
 <!-- 定义dialog模板 -->
+
 <div id="huaxueDialog" class="mini-window" title="化学成分%" style="width:600px;height:300px;display:none;">
     <div style="padding:10px;">
-        <table border="1" style="width:100%">
-            <tr>
-               <th style="text-align: center;font-size:25px;">项目</th>
-               <th style="text-align: center;font-size:25px;">结果</th>
-            </tr>
-            <tr>
-                 <td style="text-align: center;font-size:20px;">C</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="c" name="C"   style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">Mn</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="mn" name="MN"  style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">Si</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="si" name="SI"   style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">P</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="p" name="P"  style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">S</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="s" name="S"  style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">Ceq(CEV)</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="ceq" name="CEQ"  style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-        </table>
+  
+    <table border="1">
+        <tr>
+           <th style="text-align: center;font-size:25px;">项目</th> <!-- td changed to th for header cells -->
+           <th style="text-align: center;font-size:25px;">结果</th> <!-- td changed to th for header cells -->
+        </tr>  
+        
+        
+   	
+        
+                     
+        <tr>
+             <td style="text-align: center;font-size:20px;">C</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="c" name="C"   style="text-align: center;width: 15% " class="mini-textbox asLabel" readOnly="true"   />							
+		</td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">Mn</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="mn" name="MN"  style="text-align: center;width: 15% " class="mini-textbox asLabel" readOnly="true"   />						
+			 </td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">Si</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="si" name="SI"   style="text-align: center;width: 15% " class="mini-textbox asLabel" readOnly="true"   />						
+			 </td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">P</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="p" name="P"  style="text-align: center;width: 15% " class="mini-textbox asLabel" readOnly="true"   />						
+			 </td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">S</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="s" name="S"  style="text-align: center;width: 15% " class="mini-textbox asLabel" readOnly="true"   />						
+			 </td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">Ceq(CEV)</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="ceq" name="CEQ"  style="text-align: center;width: 15% " class="mini-textbox asLabel" readOnly="true"   />							
+			 </td>
+        </tr>
+    </table>
+  
+	
+	
     </div>
 </div>
 
-<div id="wuliDialog" class="mini-window" title="物理性能" style="width:600px;height:300px;display:none;">
+
+<div id="wuliDialog" class="mini-window" title="物理性能%" style="width:600px;height:300px;display:none;">
     <div style="padding:10px;">
-        <table border="1" style="width:100%">
-            <tr>
-               <th style="text-align: center;font-size:25px;">项目</th>
-               <th style="text-align: center;font-size:25px;">结果</th>
-            </tr>
-            <tr>
-                 <td style="text-align: center;font-size:20px;">rm/MPA</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="tensilestrength" name="TENSILESTRENGTH"  style="text-align: center;"  class="mini-textbox asLabel" readOnly="true"   />
-                </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">ReL(RP0.2)/Mp</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="yieldstrength" name="YIELDSTRENGTH" style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">Agt% </td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="agtstrength" name="AGTSTRENGTH"  style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">ROm/ROeL</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="coldbend" name="COLDBEND" style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">ROeL/ReL</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="inflection" name="INFLECTION" style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-             <tr>
-                 <td style="text-align: center;font-size:20px;">冷弯结果</td>
-                 <td style="text-align: center;font-size:20px;" >
-                     <input id="coldbendresult" name="COLDBENDRESULT" style="text-align: center;" class="mini-textbox asLabel" readOnly="true"   />
-                 </td>
-            </tr>
-        </table>
+  
+    <table border="1">
+        <tr>
+           <th style="text-align: center;font-size:25px;">项目</th> <!-- td changed to th for header cells -->
+           <th style="text-align: center;font-size:25px;">结果</th> <!-- Added missing header cell -->
+        </tr>  
+        
+        
+   	
+       
+                     
+        <tr>
+             <td style="text-align: center;font-size:20px;">rm/MPA</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="tensilestrength" name="TENSILESTRENGTH"  style="text-align: center; width: 30% "  class="mini-textbox asLabel" readOnly="true"   />							
+		</td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">ReL(RP0.2)/Mp</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="yieldstrength" name="YIELDSTRENGTH" style="text-align: center; width: 30% " class="mini-textbox asLabel" readOnly="true"   />						
+			 </td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">Agt% </td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="agtstrength" name="AGTSTRENGTH"  style="text-align: center;width: 30% " class="mini-textbox asLabel" readOnly="true"   />						
+			 </td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">ROm/ROeL</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="coldbend" name="COLDBEND" style="text-align: center;width: 30% " class="mini-textbox asLabel" readOnly="true"   />						
+			 </td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">ROeL/ReL</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="inflection" name="INFLECTION" style="text-align: center;width: 30% " class="mini-textbox asLabel" readOnly="true"   />						
+			 </td>
+        </tr>
+         <tr>
+             <td style="text-align: center;font-size:20px;">冷弯结果</td>
+             <td style="text-align: center;font-size:20px;" >
+			 <input id="coldbendresult" name="COLDBENDRESULT" style="text-align: center;width: 30% " class="mini-textbox asLabel" readOnly="true"   />							
+			 </td>
+        </tr>
+    </table>
+  
+	
+	
     </div>
 </div>
 
-
-<!-- ########## START: UPDATED SCRIPT BLOCK WITH DEBUG LOGS ########## -->
-<!-- ... (head and body content before script) ... -->
-
-<!-- ########## START: UPDATED SCRIPT BLOCK WITH DEBUG LOGS and $(document).ready() WRAPPER ########## -->
 <script type="text/javascript">
+// mini.parse(); // Moved call to after function definitions
+// search(); // Moved call to after function definitions
 
-    // Wrap the initialization and main logic inside jQuery's document ready
-    $(document).ready(function() {
-        // Log: Document Ready イベント発火
-        console.log("[Debug] $(document).ready() fired.");
+ function showDialogwuli() {
 
-        // --- Function to get URL parameters ---
-        // (Function definition remains the same)
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            var value = results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-            console.log(`[Debug] getUrlParameter('${name}') called inside ready. location.search: "${location.search}", result: "${value}"`);
-            return value;
-        }
-
-        // Initialize MiniUI components FIRST
-        try {
-            mini.parse(); // Now 'mini' should be defined if boot.js loaded correctly
-            // Log: MiniUI 初期化完了
-            console.log("[Debug] mini.parse() completed inside ready.");
-        } catch (e) {
-            console.error("[Debug] Error during mini.parse() inside ready:", e);
-            alert("MiniUI 初始化失败，请检查 boot.js 是否正确加载。错误信息：" + e);
-            return; // Stop further execution if mini.parse fails
-        }
-
-        // --- Call the search function to load initial data ---
-        // Log: search() 呼び出し
-        console.log("[Debug] Calling search() function inside ready...");
-        search(); // Initiate data loading
-
-        // --- Other functions need to be accessible, so define them outside if needed,
-        // --- or ensure they are called only after initialization ---
-        // For simplicity, keep function definitions accessible globally below,
-        // but ensure they are *called* only after ready state.
-
-    }); // --- End of $(document).ready() ---
-
-
-    // --- Function Definitions (can be outside document.ready for global access if needed by HTML onclick etc.) ---
-
-    function getUrlParameter(name) { // Redefine outside for potential global use, or keep inside ready if only used there
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-        var results = regex.exec(location.search);
-        var value = results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        // Optional: remove log from here if already logged inside ready
-        // console.log(`[Debug] Global getUrlParameter('${name}') called. location.search: "${location.search}", result: "${value}"`);
-        return value;
-    }
-
-     function showDialogwuli() {
-       console.log("[Debug] showDialogwuli() called.");
-       var key = GetDatakey();
-       // Ensure mini object is available before using mini.get() inside AJAX callbacks too
-       if (typeof mini === 'undefined') {
-           console.error("[Debug] showDialogwuli: mini object not available!");
-           alert("MiniUI尚未准备就绪。");
-           return;
-       }
-       $.ajax({
-                 url: "/erwm_new/lx/jiekou.do",
-                 type: 'post',
-                 data: { key: key, actiondes :'wuli'},
-                 cache: false,
-                 dataType: 'text',
-                 success: function (text) {
-                    console.log("[Debug] showDialogwuli() AJAX success. Response:", text);
-                    try {
-                        var cleanedText = text.trim();
-                        if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
-                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
-                        cleanedText = cleanedText.replace(/\\"/g, '"');
-                         if (!cleanedText) { console.warn("[Debug] showDialogwuli: Cleaned response text is empty."); return; }
-                        var m = JSON.parse(cleanedText);
-                        console.log("[Debug] Parsed wuli data:", m);
-
-                        mini.get("tensilestrength").setValue(m.TENSILESTRENGTH || '');
-                        mini.get("yieldstrength").setValue(m.YIELDSTRENGTH || '');
-                        mini.get("agtstrength").setValue(m.AGTSTRENGTH || '');
-                        mini.get("coldbend").setValue(m.COLDBEND || '');
-                        mini.get("inflection").setValue(m.INFLECTION || '');
-                        mini.get("coldbendresult").setValue(m.COLDBENDRESULT || '');
-
-                        var dialog = mini.get("wuliDialog");
-                        if (dialog) { dialog.show(); } else { console.error("[Debug] wuliDialog not found."); }
-                     } catch (e) {
-                         console.error("[Debug] Error parsing/setting wuli data:", e);
-                         console.error("[Debug] Original wuli response text:", text);
-                         alert("解析物理性能数据时出错，请检查控制台日志。");
-                     }
+   var key = GetDatakey();
+   $.ajax({
+             url: "/erwm_new/lx/jiekou.do",
+             type: 'post',
+                data: { key: key,actiondes :'wuli'},
+                cache: false,
+                success: function (text) 
+                {  
+   
+                      var c=text.substr(1,text.length-2);
+                      var m=  eval('('+c+')');  
+                     
+            
+                     mini.get("tensilestrength").setValue(m.TENSILESTRENGTH);
+                        mini.get("yieldstrength").setValue(m.YIELDSTRENGTH);
+                          mini.get("agtstrength").setValue(m.AGTSTRENGTH);
+                            mini.get("coldbend").setValue(m.COLDBEND);
+                              mini.get("inflection").setValue(m.INFLECTION);
+                                mini.get("coldbendresult").setValue(m.COLDBENDRESULT); 
+                      
+             
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("[Debug] showDialogwuli() AJAX Error:", textStatus, errorThrown, jqXHR.responseText);
-                    alert("请求物理性能数据失败，请检查网络连接或稍后重试。");
+                    alert(jqXHR.responseText); 
                 }
-            });
-    }
+            });  
 
-    function showDialoghuaxue() {
-       console.log("[Debug] showDialoghuaxue() called.");
-       var key = GetDatakey();
-        if (typeof mini === 'undefined') {
-           console.error("[Debug] showDialoghuaxue: mini object not available!");
-            alert("MiniUI尚未准备就绪。");
-           return;
-       }
-       $.ajax({
-                 url: "/erwm_new/lx/jiekou.do",
-                 type: 'post',
-                 data: { key: key, actiondes :'huaxue'},
-                 cache: false,
-                 dataType: 'text',
-                 success: function (text) {
-                   console.log("[Debug] showDialoghuaxue() AJAX success. Response:", text);
-                   try {
-                        var cleanedText = text.trim();
-                        if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
-                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
-                        cleanedText = cleanedText.replace(/\\"/g, '"');
-                         if (!cleanedText) { console.warn("[Debug] showDialoghuaxue: Cleaned response text is empty."); return; }
-                        var m = JSON.parse(cleanedText);
-                        console.log("[Debug] Parsed huaxue data:", m);
+    var dialog = mini.get("wuliDialog"); // 获取dialog对象
+    if (dialog) {
+        dialog.show(); // 显示dialog
+    } 
+} 
 
-                        mini.get("c").setValue(m.C || '');
-                        mini.get("mn").setValue(m.MN || '');
-                        mini.get("si").setValue(m.SI || '');
-                        mini.get("p").setValue(m.P || '');
-                        mini.get("s").setValue(m.S || '');
-                        mini.get("ceq").setValue(m.CEQ || '');
+// 显示dialog的函数
+function showDialoghuaxue() {
 
-                        var dialog = mini.get("huaxueDialog");
-                        if (dialog) { dialog.show(); } else { console.error("[Debug] huaxueDialog not found."); }
-                    } catch (e) {
-                         console.error("[Debug] Error parsing/setting huaxue data:", e);
-                         console.error("[Debug] Original huaxue response text:", text);
-                         alert("解析化学成分数据时出错，请检查控制台日志。");
-                    }
+   var key = GetDatakey();
+   $.ajax({
+             url: "/erwm_new/lx/jiekou.do",
+             type: 'post',
+                data: { key: key,actiondes :'huaxue'},
+                cache: false,
+                success: function (text) 
+                {  
+   
+                      var c=text.substr(1,text.length-2);
+                      var m=  eval('('+c+')');               
+                      mini.get("c").setValue(m.C);
+                      mini.get("mn").setValue(m.MN);
+                      mini.get("si").setValue(m.SI);
+                      mini.get("p").setValue(m.P);
+                      mini.get("s").setValue(m.S);
+                      mini.get("ceq").setValue(m.CEQ);
+                      
+             
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    console.error("[Debug] showDialoghuaxue() AJAX Error:", textStatus, errorThrown, jqXHR.responseText);
-                    alert("请求化学成分数据失败，请检查网络连接或稍后重试。");
+                    alert(jqXHR.responseText); 
                 }
-            });
-    }
+            });  
 
-    function online_print(){
-        var link = document.getElementById("online_print_link");
-        if(link) {
-            console.log("[Debug] Clicking online_print_link");
-            link.click();
-        } else { console.error("[Debug] Online print link not found"); }
-    }
+    var dialog = mini.get("huaxueDialog"); // 获取dialog对象
+    if (dialog) {
+        dialog.show(); // 显示dialog
+    } 
+}
+function online_print(){
+	document.getElementById("online_print_link").click(); // ID updated to match link
+}
 
-    function online_fankui(){
-        var link = document.getElementById("online_fankui_link");
-         if(link) {
-            console.log("[Debug] Clicking online_fankui_link");
-            link.click();
-        } else { console.error("[Debug] Online fankui link not found"); }
-    }
+function online_fankui(){
+	document.getElementById("online_fankui_link").click(); // ID updated to match link
+}
 
-    function search() {
-      var key = GetDatakey();
-      console.log("[Debug] search() started. Key for AJAX:", key);
-       if (typeof mini === 'undefined' || typeof $ === 'undefined') {
-           console.error("[Debug] search: mini or $ (jQuery) not available!");
-            alert("页面脚本尚未准备就绪。");
-           return;
-       }
-      $.ajax({
-                 url: "/erwm_new/lx/jiekou.do",
-                 type: 'post',
-                 data: { key: key, actiondes :'getybgl'},
-                 cache: false,
-                 dataType: 'text',
-                 success: function (text) {
-                    console.log("[Debug] search() AJAX success. Response text:", text);
-                    try {
-                        var cleanedText = text.trim();
-                        if (cleanedText.startsWith('"') && cleanedText.endsWith('"')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
-                        if (cleanedText.startsWith('[') && cleanedText.endsWith(']')) { cleanedText = cleanedText.substring(1, cleanedText.length - 1); }
-                        cleanedText = cleanedText.replace(/\\"/g, '"');
+// **** 新增函数定义 ****
+function updateBundleNumberFromURL() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const khValue = urlParams.get('kh'); // 获取名为 'kh' 的URL参数
 
-                        if (!cleanedText) {
-                             console.warn("[Debug] search() AJAX success but response text is empty after cleaning.");
-                             // Maybe display a "not found" message or default values
-                             mini.get("BINGDING_NUMBER").setValue("未找到数据"); // Example
-                             return;
-                        }
+        const bundleCell = document.getElementById('bundleNumberValueCell');
+        
+        if (bundleCell) {
+            const staticPrefix = "B-26"; // 这是HTML中硬编码的第一部分
 
-                        var m = JSON.parse(cleanedText);
-                        console.log("[Debug] Parsed AJAX data (m):", m);
-
-                        // Set values from AJAX response first
-                        mini.get("ITEM_NAME").setValue(m.ITEM_NAME || '');
-                        var ajaxBingdingNumber = m.BINGDING_NUMBER || '';
-                        console.log(`[Debug] Value from AJAX for BINGDING_NUMBER: "${ajaxBingdingNumber}"`);
-                        mini.get("BINGDING_NUMBER").setValue(ajaxBingdingNumber);
-                        console.log(`[Debug] Set BINGDING_NUMBER from AJAX value.`);
-                        mini.get("MATER_CATE").setValue(m.MATER_CATE || '');
-                        mini.get("SEPEC").setValue(m.SEPEC || '');
-                        mini.get("LENGTHE").setValue(m.LENGTHE || '');
-                        mini.get("ELE_NUMBER").setValue(m.ELE_NUMBER || '');
-                        mini.get("THEORE_WEIGHT").setValue(m.THEORE_WEIGHT || '');
-                        mini.get("ACTUA_WEIGHT").setValue(m.ACTUA_WEIGHT || '');
-                        mini.get("BIRTH_DATE").setValue(m.BIRTH_DATE || '');
-                         mini.get("LOT_NUMBER").setValue(m.LOT_NUMBER || '');
-                         console.log(`[Debug] Set LOT_NUMBER from AJAX value: "${m.LOT_NUMBER || ''}"`);
-
-                        // --- Override with URL parameter ---
-                        console.log("[Debug] Attempting to get 'kh' URL parameter inside AJAX success...");
-                        var khValue = getUrlParameter('kh'); // Use the global function or define it inside ready
-                        console.log(`[Debug] URL parameter 'kh' value found: "${khValue}"`);
-
-                        if (khValue) {
-                            var bingdingNumberInput = mini.get("BINGDING_NUMBER");
-                            if (bingdingNumberInput) {
-                                console.log("[Debug] Found BINGDING_NUMBER input object via mini.get().");
-                                console.log(`[Debug] BINGDING_NUMBER value BEFORE setting from URL: "${bingdingNumberInput.getValue()}"`);
-                                bingdingNumberInput.setValue(khValue);
-                                console.log(`[Debug] Attempted to set BINGDING_NUMBER from URL parameter 'kh' to: "${khValue}"`);
-                                console.log(`[Debug] BINGDING_NUMBER value AFTER setting from URL: "${bingdingNumberInput.getValue()}"`);
-                            } else {
-                                console.error("[Debug] Could not find mini.get('BINGDING_NUMBER') inside AJAX success.");
-                            }
-                        } else {
-                             console.log("[Debug] URL parameter 'kh' is empty or not found. No override.");
-                        }
-
-                    } catch (e) {
-                        console.error("[Debug] Error processing search() AJAX success callback:", e);
-                        console.error("[Debug] Original search response text:", text);
-                         alert("解析产品基本信息时出错，请检查控制台日志。");
-                    }
-                 },
-                 error: function (jqXHR, textStatus, errorThrown) {
-                     console.error("[Debug] search() AJAX Error:", textStatus, errorThrown, jqXHR.responseText);
-                      alert("请求产品基本信息失败，请检查网络连接或稍后重试。");
-                 }
-             });
-             console.log("[Debug] search() AJAX request sent.");
-    }
-
-    function GetDatakey() {
-       console.log("[Debug] GetDatakey() called.");
-       var key = "";
-        if (typeof mini === 'undefined') {
-            console.error("[Debug] GetDatakey: mini object not available!");
-            return ""; // Return empty if mini is not ready
+            if (khValue !== null && khValue.trim() !== "") {
+                // 如果kh参数存在且不为空，则组合显示
+                bundleCell.innerHTML = "   " + staticPrefix + khValue + " ";
+            } else {
+                // 如果kh参数不存在或为空，则只显示静态前缀 (或者您可以定义其他默认行为)
+                bundleCell.innerHTML = "   " + staticPrefix + "  <em style='font-size:smaller;color:grey;'>(动态部分缺失)</em>";
+                console.warn("URL parameter 'kh' not found or is empty. Displaying static bundle prefix.");
+            }
+        } else {
+            console.error("Element with ID 'bundleNumberValueCell' not found.");
         }
-       try {
-           // Option 1: Use key from URL Path (based on previous analysis)
-           var pathParts = window.location.pathname.split('/');
-           for (var i = pathParts.length - 1; i >= 0; i--) {
-               if (pathParts[i]) {
-                   key = pathParts[i];
-                   break;
-               }
-           }
-           console.log("[Debug] GetDatakey determined key from URL path:", key);
-
-           // Option 2: If key should come from form data (uncomment if needed)
-           /*
-           var searchkeyForm = new mini.Form("#searchkey");
-           if (searchkeyForm) {
-               var formData = searchkeyForm.getData(true);
-               key = mini.encode(formData); // Or maybe just a specific field like formData.LOT_NUMBER ?
-               console.log("[Debug] GetDatakey created key from form:", key);
-           } else {
-                console.error("[Debug] GetDatakey: Could not find form with ID #searchkey");
-           }
-           */
-       } catch(e) {
-            console.error("[Debug] Error in GetDatakey:", e);
-       }
-       console.log("[Debug] GetDatakey returning:", key);
-       return key;
+    } catch (e) {
+        console.error("Error updating bundle number:", e);
+        // 确保即使此功能出错，页面其他部分也能尝试加载
+        const bundleCell = document.getElementById('bundleNumberValueCell');
+        if(bundleCell) {
+            bundleCell.innerHTML += " <em style='font-size:smaller;color:red;'>(更新错误)</em>";
+        }
     }
-
-
-    function addPlan() {
-        console.log("[Debug] addPlan() called.");
-        if (typeof mini === 'undefined') {
-           console.error("[Debug] addPlan: mini object not available!");
-            alert("MiniUI尚未准备就绪。");
-           return;
-       }
-        var zlzmsbhInput = mini.get("ZLZMSBH");
-        var fhdateInput = mini.get("FHDATE");
-        var lotNumberInput = mini.get("LOT_NUMBER");
-
-        if (!zlzmsbhInput || !fhdateInput || !lotNumberInput) {
-            mini.alert("页面组件加载不完整，请刷新重试。");
-            console.error("[Debug] addPlan(): Missing required input components.");
-            return;
+}
+// **** 结束新增函数定义 ****
+	
+function search()
+{
+  var key = GetDatakey();
+   $.ajax({
+             url: "/erwm_new/lx/jiekou.do",
+          type: 'post',
+                data: { key: key,actiondes :'getybgl'},
+                cache: false,
+                success: function (text) 
+                {  
+   
+                      var c=text.substr(1,text.length-2);
+                      var m=  eval('('+c+')');
+               
+                mini.get("ITEM_NAME").setValue(m.ITEM_NAME);
+                // mini.get("BINGDING_NUMBER").setValue(m.BINGDING_NUMBER); // This line would conflict if we were setting bundle number here.
+                mini.get("MATER_CATE").setValue(m.MATER_CATE);
+                mini.get("SEPEC").setValue(m.SEPEC);
+                mini.get("LENGTHE").setValue(m.LENGTHE);
+                mini.get("ELE_NUMBER").setValue(m.ELE_NUMBER);
+                mini.get("THEORE_WEIGHT").setValue(m.THEORE_WEIGHT);
+                // mini.get("ACTUA_WEIGHT").setValue(m.ACTUA_WEIGHT); // Deleted input
+                // mini.get("BIRTH_DATE").setValue(m.BIRTH_DATE); // Deleted input
+               
+               /*  mini.get("YIELD_STRENGTH").setValue(m.YIELD_STRENGTH);
+                mini.get("TENSILE_STRENGTH").setValue(m.TENSILE_STRENGTH);  
+                mini.get("AGT_STRENGTH").setValue(m.AGT_STRENGTH);
+                mini.get("YIELD_RATE").setValue(m.YIELD_RATE);
+                mini.get("COLD_BEND").setValue(m.COLD_BEND);
+                mini.get("INFLECTION").setValue(m.INFLECTION);
+                mini.get("CREATE_DATE").setValue(m.CREATE_DATE); */
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert(jqXHR.responseText); 
+                }
+            });     
+}
+function GetDatakey() 
+{  
+   var searchkey = new mini.Form("searchkey");
+   var o = searchkey.getData(); 
+   var json = mini.encode([o]);
+   return json;
+}
+function addPlan() 
+		{
+		if(mini.get("ZLZMSBH").getValue()=="")
+       	{
+         	mini.alert("请填写质量证明书编号");
+         	return;
+       	}
+    
+       else	if(mini.get("FHDATE").getValue()==""||mini.get("FHDATE").getValue()=="null")
+       		{
+         	mini.alert("请填写发货日期");
+         	return;
+       	}
+       	else
+       	{
+       	    var ab=mini.get("ZLZMSBH").getValue();
+            // 注意: LOT_NUMBER 在原始HTML的form中似乎没有对应的input元素叫 "LOT_NUMBER"
+            // 如果需要LOT_NUMBER, 请确保form中有一个 <input name="LOT_NUMBER" ... />
+            // 或者从其他地方获取此值。当前代码中 mini.get("LOT_NUMBER") 可能会返回null或错误
+            // 假设您确实有一个名为 LOT_NUMBER 的 miniui 控件，或者此处的逻辑您会自行调整
+       	    var bc=mini.get("LOT_NUMBER") ? mini.get("LOT_NUMBER").getValue() : ""; 
+       	    
+       	    var da=mini.get("FHDATE").getFormValue();
+         	window.location='/erwm_new/jsp/zmscx.jsp?ZLZMSBH='+ab+'&LOT_NUMBER='+bc+'&FHDATE='+da;
+           
+        }
         }
 
-        var zlzmsbhValue = zlzmsbhInput.getValue();
-        var fhdateValue = fhdateInput.getFormValue();
-        var lotNumberValue = lotNumberInput.getValue();
-        console.log(`[Debug] addPlan() values - ZLZMSBH: "${zlzmsbhValue}", FHDATE: "${fhdateValue}", LOT_NUMBER: "${lotNumberValue}"`);
-
-        if (!zlzmsbhValue) { mini.alert("请填写质量证明书编号"); return; }
-        if (!fhdateValue || fhdateValue === "null") { mini.alert("请填写有效的发货日期"); return; }
-        if (!lotNumberValue) { mini.alert("批次编号缺失，无法查询。"); console.warn("[Debug] addPlan(): LOT_NUMBER is empty."); return; }
-
-        var targetUrl = '/erwm_new/jsp/zmscx.jsp?ZLZMSBH=' + encodeURIComponent(zlzmsbhValue)
-                                + '&LOT_NUMBER=' + encodeURIComponent(lotNumberValue)
-                                + '&FHDATE=' + encodeURIComponent(fhdateValue);
-        console.log("[Debug] Navigating to:", targetUrl);
-        window.location.href = targetUrl;
-    }
-
-    // Add a final log inside ready to indicate script execution reached the end of the ready block
-    console.log("[Debug] End of $(document).ready() block reached.");
+// 调用顺序:
+mini.parse();                 // 1. 初始化miniUI控件
+updateBundleNumberFromURL();  // 2. 更新捆号 (新增)
+search();                     // 3. 执行页面初始搜索逻辑
 
 </script>
-<!-- ########## END: UPDATED SCRIPT BLOCK ########## -->
-
 </body>
 </html>
-
