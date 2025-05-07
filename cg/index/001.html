@@ -239,9 +239,6 @@
 
 
 <script type="text/javascript">
-mini.parse();
-// search(); // 如果您取消注释这一行，请确保 search() 函数已定义。
-
 // 获取URL参数并更新捆号值的函数
 function updateKhFromUrl() {
     const urlParams = new URLSearchParams(window.location.search); // 解析URL查询参数
@@ -256,7 +253,7 @@ function updateKhFromUrl() {
     // 如果 khParamValue 为 null (URL中没有 kh 参数)，单元格将保留其默认值 "B-26"
 }
 
-// 页面加载时，在 mini.parse() 之后调用该函数
+
 updateKhFromUrl();
 
 
