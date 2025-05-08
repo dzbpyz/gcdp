@@ -102,7 +102,7 @@
         }
 
         .contact-list {
-            font-size: 18px;
+            font-size: 15px;
             margin-left: 10px;
             margin-top: 10px;
             line-height: 2;
@@ -260,9 +260,7 @@
 
 <body>
     <div class="header">
-        <!-- MODIFIED PART START -->
         <a href="#" id="zbsPdfLink">点击搜索质保书</a>
-        <!-- MODIFIED PART END -->
     </div>
 
     <div class="section">
@@ -280,9 +278,9 @@
                 <div class="flex-cell flex-35">批次号</div>
                 <div class="flex-cell flex-65">20203542BC1</div>
             </div>
-             <div class="flex-row">
+          <div class="flex-row">
                 <div class="flex-cell flex-35">捆（卷）号</div>
-                <div class="flex-cell flex-65" id="kunJuanHaoValue">20</div>
+                <div class="flex-cell flex-65" id="kunJuanHaoValue">01</div>
             </div>
             <div class="flex-row">
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">牌号</div>
@@ -369,7 +367,7 @@
             </div>
             <div class="performance-row">
                 <div class="performance-cell">1.13,1.12,1.13</div>
-                <div class="performance-cell">1.35,1.35,1.34</div> <!-- Corrected a small typo here from your original -->
+                <div class="performance-cell">1.35,1.35,1.34</div>
                 <div class="performance-cell">合格,合格</div>
             </div>
             <div class="performance-row">
@@ -425,35 +423,32 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT ADDED HERE -->
+    <!-- JAVASCRIPT MODIFIED HERE -->
       <script>
         document.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search); // Define urlParams once
 
-            // --- MODIFICATION START: Handle 'kh' parameter for 捆（卷）号 ---
+            // --- Handle 'kh' parameter for 捆（卷）号 (unchanged) ---
             const khValue = urlParams.get('kh');
             const kunJuanHaoElement = document.getElementById('kunJuanHaoValue');
 
             if (kunJuanHaoElement && khValue !== null) { // Check if element exists and kh parameter is present
                 kunJuanHaoElement.textContent = khValue;
             }
-            // --- MODIFICATION END ---
+            // --- MODIFICATION END for kh ---
 
-            // --- Existing zbsPdfLink logic (uses the same urlParams) ---
-            const zbsLink = document.getElementById('zbsPdfLink');
-            if (!zbsLink) { // Simplified check, if zbsLink doesn't exist, no need to proceed with its logic
-                // If you want to return early from the whole script if zbsLink is missing:
-                // console.error('zbsPdfLink element not found.');
-                // return;
-                // Or just skip the zbs logic part:
-            } else { // zbsLink exists, proceed with its logic
-                const zbsValue = urlParams.get('zbs'); // Get zbs value
+            // --- PDF Link logic (modified from zbsPdfLink to use 'pdf' parameter) ---
+            const zbsPdfLinkElement = document.getElementById('zbsPdfLink'); // The element ID in HTML is still 'zbsPdfLink'
+            if (!zbsPdfLinkElement) {
+                // console.error('Element with ID "zbsPdfLink" not found.');
+            } else {
+                const pdfParamValue = urlParams.get('pdf'); // MODIFIED: Get 'pdf' parameter value instead of 'zbs'
 
-                if (zbsValue) {
-                    const pdfFileName = zbsValue + '.pdf';
+                if (pdfParamValue) { // MODIFIED: Check for pdfParamValue
+                    const pdfFileName = pdfParamValue + '.pdf'; // MODIFIED: Use pdfParamValue to construct file name
                     const pdfUrl = `../pdf/${pdfFileName}`;
 
-                    zbsLink.addEventListener('click', async function(event) {
+                    zbsPdfLinkElement.addEventListener('click', async function(event) {
                         event.preventDefault();
                         try {
                             const response = await fetch(pdfUrl, { method: 'HEAD' });
@@ -469,9 +464,10 @@
                         }
                     });
                 } else {
-                    zbsLink.addEventListener('click', function(event) {
+                    // 'pdf' parameter is missing
+                    zbsPdfLinkElement.addEventListener('click', function(event) {
                         event.preventDefault();
-                        console.warn('URL parameter "zbs" is missing.');
+                        console.warn('URL parameter "pdf" is missing.'); // MODIFIED: Updated warning message
                         window.location.reload();
                     });
                 }
