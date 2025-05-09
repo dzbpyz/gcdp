@@ -3,15 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <!-- ADDED: Viewport meta tag for responsiveness -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>质保书</title>
     <style>
         body {
             font-family: "Microsoft YaHei", Arial, sans-serif;
+            /* background: #f8f8f8; */
             margin: 0;
             padding: 0;
-            background: #f8f8f8; /* Re-added for overall page background consistency */
         }
 
         .header {
@@ -23,12 +21,13 @@
             border-radius: 8px;
             margin: 20px 10px 30px 10px;
         }
+        /* Added style for the link inside header */
         .header a {
             color: #fff;
-            text-decoration: none;
+            text-decoration: none; /* Optional: remove underline */
         }
         .header a:hover {
-            text-decoration: underline;
+            text-decoration: underline; /* Optional: underline on hover */
         }
 
         .section {
@@ -61,21 +60,37 @@
             vertical-align: middle;
         }
 
-        /* Styles for standard HTML tables */
         table {
             border-collapse: collapse;
             width: 100%;
         }
 
+        .custom-table .table-header {
+            background: #fff;
+            color: #222;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            text-align: left;
+            padding: 10px 0 6px 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
         th,
         td {
-            border: 1px solid #000; /* Changed from just 'solid' to 'solid #000' for clarity */
+            border: 1px solid ;
             padding: 8px 10px;
             text-align: center;
             font-size: 15px;
         }
 
         th {
+            /* background: #f5f7fa; */
             font-weight: bold;
         }
 
@@ -93,55 +108,90 @@
             line-height: 2;
         }
 
-        /* Triple-line table styles (if used, currently not in active HTML) */
-        .triple-line-table, .triple-line-table-v2 {
+        /* .section-title rule is duplicated, can be removed if identical, keeping one */
+        /* .section rule is duplicated, can be removed if identical, keeping one */
+
+        .triple-line-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 10px;
             background: #fff;
         }
-        .triple-line-table th, .triple-line-table td,
-        .triple-line-table-v2 th, .triple-line-table-v2 td {
+
+        .triple-line-table th,
+        .triple-line-table td {
             border: none;
             padding: 8px 12px;
             font-size: 16px;
             text-align: left;
         }
-        .triple-line-table th, .triple-line-table-v2 th {
+
+        .triple-line-table th {
             font-weight: bold;
             background: none;
             color: #222;
         }
-        .triple-line-table-v2 td {
-            font-weight: normal;
+
+        .triple-line-table-v2 {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            background: #fff;
+            font-size: 16px;
         }
 
-        .bar-wide::before { /* This seems to duplicate .section-title::before functionality */
+        .triple-line-table-v2 th,
+        .triple-line-table-v2 td {
+            border: none;
+            padding: 8px 16px 8px 8px;
+            text-align: left;
+            font-weight: normal;
+            background: none;
+        }
+
+        .triple-line-table-v2 th {
+            font-weight: bold;
+        }
+
+        .section-title[data-bar-width]::before {
+            width: var(--bar-width, 4px);
+        }
+
+        .bar-wide::before {
             content: "";
             display: inline-block;
-            width: 6px;
-            height: 24px;
+            width: 6px;         /* 竖线宽度 */
+            height: 24px;       /* 竖线高度，可根据字体大小调整 */
             background: #409eff;
             border-radius: 2px;
             margin-right: 8px;
             vertical-align: middle;
         }
-
-        /* Flexbox based table styles */
+        .td4, .td5, .td6 {
+            width: 60px;
+            min-width: 60px;
+            max-width: 80px;
+        }
+        .left-35 {
+            width: 35% !important;
+            max-width: 35% !important;
+            min-width: 35% !important;
+        }
+        .right-65 {
+            width: 65% !important;
+            max-width: 65% !important;
+            min-width: 65% !important;
+        }
         .flex-table {
             width: 100%;
             border: 1px solid #000;
             border-radius: 6px;
             background: #fff;
             margin-bottom: 20px;
-            overflow: hidden; /* Added to contain borders with border-radius */
         }
         .flex-row {
             display: flex;
             border-bottom: 1px solid #000;
-        }
-        .flex-row:last-child {
-            border-bottom: none;
         }
         .flex-cell {
             padding: 6px 12px;
@@ -149,7 +199,10 @@
             border-right: 1px solid #000;
             box-sizing: border-box;
             text-align: center;
-            word-break: break-word; /* Allow long words to break */
+        }
+		 /* 标牌信息和边框上下、左右边框距离大小*/
+        .flex-row:last-child {
+            border-bottom: none;
         }
         .flex-cell:last-child {
             border-right: none;
@@ -165,15 +218,21 @@
         .flex-25 {
             flex: 0 0 25%;
         }
-
-        /* Performance table styles (also flexbox based) */
+        .equal-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        .equal-table th,
+        .equal-table td {
+            width: auto;
+            text-align: center;
+        }
         .performance-table {
             width: 100%;
             border: 1px solid #000;
             border-radius: 6px;
             background: #fff;
             margin-bottom: 20px;
-            overflow: hidden; /* Added */
         }
         .performance-row {
             display: flex;
@@ -183,171 +242,27 @@
             border-bottom: none;
         }
         .performance-cell {
-            flex: 1 1 0; /* Distribute space equally by default */
+            flex: 1 1 0;
             padding: 8px 12px;
             font-size: 15px;
             border-right: 1px solid #000;
             box-sizing: border-box;
             text-align: center;
-            word-break: break-word; /* Allow long words to break */
         }
         .performance-cell:last-child {
             border-right: none;
         }
         .performance-cell.th {
             font-weight: bold;
+            /* background: #f5f7fa; */
         }
-
-        /* Product range table specific padding */
-        #product-range-table .flex-cell {
-            padding-top: 3px;
-            padding-bottom: 3px;
-        }
-
-        /* ADDED: Wrapper for horizontally scrollable tables */
-        .table-responsive-wrapper {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-            margin-bottom: 10px; /* Keep consistent margin */
-        }
-        .table-responsive-wrapper table {
-             min-width: 500px; /* Ensure table has a minimum width to make scrolling apparent if needed */
-        }
-
-
-        /* --- ADDED: Media Queries for Responsiveness --- */
-        @media (max-width: 768px) {
-            body {
-                font-size: 14px; /* Slightly smaller base font for mobile */
-            }
-            .header {
-                font-size: 16px;
-                margin: 15px 5px 20px 5px;
-                padding: 12px 0;
-            }
-            .section {
-                margin: 15px 5px;
-                padding: 10px 15px 15px 15px;
-            }
-            .section-title {
-                font-size: 15px;
-                margin-bottom: 12px;
-            }
-            .section-title::before {
-                height: 20px;
-            }
-
-            th, td {
-                font-size: 14px;
-                padding: 6px 8px;
-            }
-            .contact-list div {
-                font-size: 14px;
-            }
-
-            /* Responsive styles for flex-table (标牌信息, 产品范围) */
-            .flex-table .flex-row,
-            #product-range-table .flex-row {
-                flex-direction: column; /* Stack cells vertically */
-                border-bottom: none; /* Row itself won't have bottom border */
-            }
-            .flex-table .flex-cell,
-            #product-range-table .flex-cell {
-                flex-basis: 100% !important; /* Make cell take full width */
-                width: 100% !important;
-                max-width: 100% !important;
-                min-width: 100% !important;
-                text-align: left; /* Align text left for better readability */
-                border-right: none;
-                border-bottom: 1px solid #000; /* Each cell gets a bottom border */
-            }
-            .flex-table .flex-row .flex-cell:last-child,
-            #product-range-table .flex-row .flex-cell:last-child {
-                 /* The last cell within a "stacked group" (original row) */
-                 /* This rule might conflict if a row only has one cell after stacking, the table's :last-child rule handles the very last cell */
-            }
-
-            .flex-table .flex-row:last-child .flex-cell:last-child, /* Very last cell of the table */
-            #product-range-table .flex-row:last-child .flex-cell:last-child {
-                border-bottom: none; /* No border for the absolute last cell of the table */
-            }
-
-            .flex-table .flex-cell.flex-35, /* Label cell */
-            .flex-table .flex-cell.flex-25[style*="font-weight"], /* Label part of 4-column row */
-            #product-range-table .flex-cell.flex-35 {
-                background-color: #f0f0f0; /* Differentiate label */
-                padding-bottom: 4px;
-                border-bottom: none; /* Label cell doesn't need a bottom border if value is next */
-            }
-            .flex-table .flex-cell.flex-65,
-            .flex-table .flex-cell.flex-25:not([style*="font-weight"]), /* Value part of 4-column row */
-            #product-range-table .flex-cell.flex-65 {
-                 padding-top: 4px;
-            }
-
-
-            /* Responsive styles for performance-table (物理性能) */
-            .performance-table .performance-row {
-                flex-direction: column; /* Stack cells vertically */
-                border-bottom: none;
-            }
-            .performance-table .performance-cell {
-                width: 100%; /* Make cell take full width */
-                flex-basis: 100%;
-                text-align: left;
-                border-right: none;
-                border-bottom: 1px solid #000;
-            }
-             .performance-table .performance-row:last-child .performance-cell:last-child {
-                border-bottom: none; /* No border for the absolute last cell */
-            }
-
-            .performance-table .performance-cell.th {
-                background-color: #f0f0f0; /* Differentiate header cells */
-                padding-bottom: 4px;
-                 /* If it's a header for a value directly below it, no bottom border here.
-                    The value cell below will provide the separation. */
-                 border-bottom: none;
-            }
-            /* Handle the specific case "180°弯曲试验 | 合格,合格,合格" where both are .th */
-            /* The current setup will stack them, "合格..." will appear as a value below "180°..." */
-            /* If "合格..." is the last cell in its stacked group and also has .th, it WILL need a border */
-            .performance-table .performance-row > .performance-cell.th:last-child {
-                 /* If a .th is the last cell in its stacked group, it needs its own border */
-                 /* This is slightly complex due to stacking. Let's ensure value cells below headers get borders. */
-            }
-            .performance-table .performance-row > .performance-cell:not(.th) { /* Value cells */
-                padding-top: 4px; /* Add some space if it follows a stacked header */
-            }
-
-             /* Company intro text size */
-            div[style*="font-size:10px"] {
-                font-size: 13px !important; /* Increase for readability on mobile */
-                line-height: 1.7 !important;
-            }
-        }
-
-        @media (max-width: 480px) { /* Even smaller screens */
-            .header {
-                font-size: 15px;
-            }
-            .section-title {
-                font-size: 14px;
-            }
-            .section-title::before {
-                height: 18px;
-                width: 5px;
-            }
-            th, td {
-                font-size: 13px;
-                padding: 5px 6px;
-            }
-            .flex-cell, .performance-cell {
-                padding: 5px 10px;
-                font-size: 14px;
-            }
-        }
-
+		
+		/* --- 专门调整“产品范围”表格单元格的上下内边距 --- */
+#product-range-table .flex-cell {
+    padding-top: 3px;    /* 将上内边距调整为 10px (您可以修改这个值) */
+    padding-bottom: 3px; /* 将下内边距调整为 10px (您可以修改这个值) */
+    /* 左右内边距 (padding-left 和 padding-right) 将保持原样 (即继承自 .flex-cell 的 12px) */
+}
     </style>
 </head>
 
@@ -375,19 +290,19 @@
                 <div class="flex-cell flex-35">捆（卷）号</div>
                 <div class="flex-cell flex-65" id="kunJuanHaoValue">01</div>
             </div>
-            <div class="flex-row"> <!-- This row contains 4 cells -->
+            <div class="flex-row">
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">牌号</div>
                 <div class="flex-cell flex-25">HRB400E</div>
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">规格(mm)</div>
                 <div class="flex-cell flex-25">Φ12</div>
             </div>
-            <div class="flex-row"> <!-- This row contains 4 cells -->
+            <div class="flex-row">
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">理重（kg）</div>
                 <div class="flex-cell flex-25">2984</div>
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">实重（kg）</div>
                 <div class="flex-cell flex-25">2854</div>
             </div>
-            <div class="flex-row"> <!-- This row contains 4 cells -->
+            <div class="flex-row">
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">根数（支）</div>
                 <div class="flex-cell flex-25">280</div>
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">定尺（mm）</div>
@@ -406,37 +321,30 @@
 
     <div class="section">
         <div class="section-title">化学成分</div>
-        <!-- ADDED: Wrapper div for horizontal scroll -->
-        <div class="table-responsive-wrapper">
-            <table style="width:100%;border-collapse:collapse;background:#fff;">
-                <thead> <!-- ADDED THEAD for semantic correctness -->
-                    <tr>
-                        <th>碳C/%</th>
-                        <th>锰Mn/%</th>
-                        <th>硫S/%</th>
-                        <th>磷P/%</th>
-                    </tr>
-                </thead>
-                <tbody> <!-- ADDED TBODY for semantic correctness -->
-                    <tr>
-                        <td>0.241</td>
-                        <td>1.32</td>
-                        <td>0.022</td>
-                        <td>0.031</td>
-                    </tr>
-                    <tr>
-                        <th>硅Si/%</th>
-                        <th>钒V/%</th>
-                        <th colspan="2">碳当量Ceq/%</th>
-                    </tr>
-                    <tr>
-                        <td>0.35</td>
-                        <td>0.001</td>
-                        <td colspan="2">0.461</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table style="width:100%;border-collapse:collapse;background:#fff;">
+            <tr>
+                <th>碳C/%</th>
+                <th>锰Mn/%</th>
+                <th>硫S/%</th>
+                <th>磷P/%</th>
+            </tr>
+            <tr>
+                <td>0.241</td>
+                <td>1.32</td>
+                <td>0.022</td>
+                <td>0.031</td>
+            </tr>
+            <tr>
+                <th>硅Si/%</th>
+                <th>钒V/%</th>
+                <th colspan="2">碳当量Ceq/%</th>
+            </tr>
+            <tr>
+                <td>0.35</td>
+                <td>0.001</td>
+                <td colspan="2">0.461</td>
+            </tr>
+        </table>
     </div>
 
     <div class="section">
@@ -470,45 +378,43 @@
                 <div class="performance-cell">1.35,1.35,1.34</div>
                 <div class="performance-cell">合格,合格</div>
             </div>
-            <div class="performance-row"> <!-- This row has two cells, both designated as 'th' effectively -->
+            <div class="performance-row">
                 <div class="performance-cell th">180°弯曲试验</div>
-                <div class="performance-cell th">合格,合格,合格</div> <!-- This will stack under the first on mobile -->
+                <div class="performance-cell th">合格,合格,合格</div>
             </div>
         </div>
     </div>
 
     <div class="section">
         <div>
-            <!-- CHANGED: Use class for styling instead of inline style for h5 -->
-            <h5 class="section-subtitle">河北唐银钢铁有限公司简介</h5>
+            <h5>河北唐银钢铁有限公司简介</h5>
         </div>
-        <!-- CHANGED: Use class for styling text instead of inline style -->
-        <div class="company-intro-text" style="font-size:10px;line-height:1.8;"> <!-- Keeping inline style for now as it's targeted in JS media query -->
+        <div style="font-size:10px;line-height:1.8;">
             河北唐银钢铁有限公司（简称唐银）是由河北钢铁集团唐钢公司和河北银水集团共同出资组建的大型全流程钢铁联合企业，其中唐钢集团占股51%，银水集团占股49%。公司于2006年10月6日正式成立，2020年积极响应国家环保要求，化简钢铁产能。实行退城搬迁，唐银公司新厂址位于河北省唐山市曹妃甸装备制造园区内，项目总投资为395.36亿元，配套综合原料堆场1座、1500万吨来料高炉2座、100吨转炉2座、265平米带式烧结机2台、4.0×42米链篦机、5.0×35米中球团120万吨。配套定值于棒材、热轧带钢等高强度、高性能、高质量钢材产品，广泛应用于汽车、家电、建筑、包装等传统领域。公司地理位置优越，位于环渤海经济圈内，且可延伸至西北地区，在环渤海和东部沿海深水港布局上位置适中。公司经过16年积累与发展，继承了唐钢及银水公司勇于担当、勤奋务实的优良传统，始终秉承"质量第一，用户至上，合作共赢"的销售理念，竭诚为广大用户提供优质的产品和服务，新厂投产后，我们以客户需求为出发点，在终端直发、产品定制、多模式销售等方面为客户提供更多元化的产品与服务，和谐共赢，并肩前行。
         </div>
     </div>
 
     <div class="section">
-        <div class="section-title">产品范围</div>
-        <div class="flex-table" id="product-range-table">
-            <div class="flex-row">
-                <div class="flex-cell flex-35">产品类型</div>
-                <div class="flex-cell flex-65">产品名称</div>
-            </div>
-            <div class="flex-row">
-                <div class="flex-cell flex-35">棒材</div>
-                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋</div>
-            </div>
-            <div class="flex-row">
-                <div class="flex-cell flex-35">线材</div>
-                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、优质碳素钢、预应力钢丝、钢绞线、普线</div>
-            </div>
-            <div class="flex-row">
-                <div class="flex-cell flex-35">带钢</div>
-                <div class="flex-cell flex-65">碳素结构钢、优质碳素结构钢、低合金高强度结构钢、耐候钢</div>
-            </div>
+    <div class="section-title">产品范围</div>
+    <div class="flex-table" id="product-range-table"> <!-- 添加一个 ID -->
+        <div class="flex-row">
+            <div class="flex-cell flex-35">产品类型</div>
+            <div class="flex-cell flex-65">产品名称</div>
+        </div>
+        <div class="flex-row">
+            <div class="flex-cell flex-35">棒材</div>
+            <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋</div>
+        </div>
+        <div class="flex-row">
+            <div class="flex-cell flex-35">线材</div>
+            <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、优质碳素钢、预应力钢丝、钢绞线、普线</div>
+        </div>
+        <div class="flex-row">
+            <div class="flex-cell flex-35">带钢</div>
+            <div class="flex-cell flex-65">碳素结构钢、优质碳素结构钢、低合金高强度结构钢、耐候钢</div>
         </div>
     </div>
+</div>
 
     <div class="section">
         <div class="section-title">公司地址</div>
@@ -525,22 +431,31 @@
         </div>
     </div>
 
-    <script>
+    <!-- JAVASCRIPT MODIFIED HERE -->
+      <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
+            const urlParams = new URLSearchParams(window.location.search); // Define urlParams once
 
+            // --- Handle 'kh' parameter for 捆（卷）号 (unchanged) ---
             const khValue = urlParams.get('kh');
             const kunJuanHaoElement = document.getElementById('kunJuanHaoValue');
-            if (kunJuanHaoElement && khValue !== null) {
+
+            if (kunJuanHaoElement && khValue !== null) { // Check if element exists and kh parameter is present
                 kunJuanHaoElement.textContent = khValue;
             }
+            // --- MODIFICATION END for kh ---
 
-            const zbsPdfLinkElement = document.getElementById('zbsPdfLink');
-            if (zbsPdfLinkElement) { // Simplified check
-                const pdfParamValue = urlParams.get('pdf');
-                if (pdfParamValue) {
-                    const pdfFileName = pdfParamValue + '.pdf';
+            // --- PDF Link logic (modified from zbsPdfLink to use 'pdf' parameter) ---
+            const zbsPdfLinkElement = document.getElementById('zbsPdfLink'); // The element ID in HTML is still 'zbsPdfLink'
+            if (!zbsPdfLinkElement) {
+                // console.error('Element with ID "zbsPdfLink" not found.');
+            } else {
+                const pdfParamValue = urlParams.get('pdf'); // MODIFIED: Get 'pdf' parameter value instead of 'zbs'
+
+                if (pdfParamValue) { // MODIFIED: Check for pdfParamValue
+                    const pdfFileName = pdfParamValue + '.pdf'; // MODIFIED: Use pdfParamValue to construct file name
                     const pdfUrl = `../pdf/${pdfFileName}`;
+
                     zbsPdfLinkElement.addEventListener('click', async function(event) {
                         event.preventDefault();
                         try {
@@ -549,22 +464,71 @@
                                 window.location.href = pdfUrl;
                             } else {
                                 console.warn(`PDF file not found or inaccessible: ${pdfUrl}, status: ${response.status}`);
-                                window.location.reload(); // Consider a user message instead of just reload
+                                window.location.reload();
                             }
                         } catch (error) {
                             console.error('Error trying to fetch PDF status:', error);
-                            window.location.reload(); // Consider a user message
+                            window.location.reload();
                         }
                     });
                 } else {
+                    // 'pdf' parameter is missing
                     zbsPdfLinkElement.addEventListener('click', function(event) {
                         event.preventDefault();
-                        console.warn('URL parameter "pdf" is missing.');
-                        window.location.reload(); // Consider a user message
+                        console.warn('URL parameter "pdf" is missing.'); // MODIFIED: Updated warning message
+                        window.location.reload();
                     });
                 }
             }
         });
+		  
+	        /* --- 手机端响应式调整 --- */
+        @media (max-width: 600px) {
+            /* 调整 flex 布局表格的单元格左右内边距 */
+            .flex-cell {
+                padding-left: 6px;  /* 减小左内边距 */
+                padding-right: 6px; /* 减小右内边距 */
+                /* 可选：如果文字仍然显得拥挤，可以考虑略微减小字体大小 */
+                /* font-size: 14px; */
+            }
+
+            .performance-cell {
+                padding-left: 6px;  /* 减小左内边距 */
+                padding-right: 6px; /* 减小右内边距 */
+                /* 可选：如果文字仍然显得拥挤，可以考虑略微减小字体大小 */
+                /* font-size: 14px; */
+            }
+
+            /* 调整传统表格的单元格左右内边距 */
+            th,
+            td {
+                padding-left: 5px;  /* 减小左内边距 */
+                padding-right: 5px; /* 减小右内边距 */
+                /* 可选：如果文字仍然显得拥挤，可以考虑略微减小字体大小 */
+                /* font-size: 14px; */
+            }
+
+            /* 可选：如果整体边距也需要调整，可以调整 section 的 padding */
+            .section {
+                margin-left: 5px;
+                margin-right: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            /* 可选：调整标题字体大小以适应小屏幕 */
+            .header {
+                font-size: 16px;
+                margin: 15px 5px 20px 5px;
+            }
+            .section-title {
+                font-size: 15px;
+            }
+            .section-title::before {
+                height: 22px; /* 配合字体大小调整 */
+            }
+        }	  
+		  
     </script>
 </body>
 </html>
