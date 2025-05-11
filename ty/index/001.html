@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>质保书</title>
     <style>
         body {
@@ -10,39 +11,75 @@
             /* background: #f8f8f8; */
             margin: 0;
             padding: 0;
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         .header {
             background: #468cf4;
             color: #fff;
             text-align: center;
-            padding: 10px 0;
-            font-size: 18px;
+            padding: 12px 0;
+            font-size: 14px;
+            margin: 50px 10px 10px 10px;
             border-radius: 8px;
-            margin: 20px 10px 30px 10px;
         }
+        .root{
+            position: absolute;
+            top: 0;
+            background-color: white;
+            width: 100%;
+            height: 110px;
+        }
+
         /* Added style for the link inside header */
         .header a {
             color: #fff;
-            text-decoration: none; /* Optional: remove underline */
+            text-decoration: none;
+            /* Optional: remove underline */
         }
+
         .header a:hover {
-            text-decoration: underline; /* Optional: underline on hover */
+            text-decoration: underline;
+            /* Optional: underline on hover */
         }
 
         .section {
             background: #fff;
-            margin: 20px 10px;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px #eee;
-            padding: 10px 20px 20px 20px;
+            margin: 0px 0px;
+            padding: 10px 15px 15px 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
+
+        .add-margin-top {
+            background: #fff;
+            margin: 0px 0px;
+            margin-top: 15px;
+            box-shadow: 0 2px 8px rgba(102, 102, 102, 0.1);
+            padding: 10px 15px 15px 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
+
+        /* 隐藏 Webkit 浏览器的滚动条 */
+        .section::-webkit-scrollbar {
+            display: none;
         }
 
         .section-title {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 13px;
             color: #222;
-            margin: 10px 0 15px 0;
+            margin: 8px 0 12px 0;
             border: none;
             padding-left: 0;
             display: flex;
@@ -52,17 +89,28 @@
         .section-title::before {
             content: "";
             display: inline-block;
-            width: 6px;
-            height: 24px;
+            width: 4px;
+            height: 20px;
             background: #409eff;
             border-radius: 2px;
-            margin-right: 8px;
+            margin-right: 6px;
             vertical-align: middle;
         }
 
         table {
-            border-collapse: collapse;
             width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #666666;
+            padding: 5px 6px;
+            text-align: center;
+            font-size: 12px;
+            white-space: nowrap;
         }
 
         .custom-table .table-header {
@@ -75,25 +123,6 @@
             padding: 10px 0 6px 4px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-        }
-
-        th,
-        td {
-            border: 1px solid ;
-            padding: 8px 10px;
-            text-align: center;
-            font-size: 15px;
-        }
-
-        th {
-            /* background: #f5f7fa; */
-            font-weight: bold;
-        }
-
         .sub-table th,
         .sub-table td {
             border: none;
@@ -102,10 +131,10 @@
         }
 
         .contact-list {
-            font-size: 15px;
-            margin-left: 10px;
-            margin-top: 10px;
-            line-height: 2;
+            font-size: 12px;
+            margin-left: 8px;
+            margin-top: 8px;
+            line-height: 1.6;
         }
 
         /* .section-title rule is duplicated, can be removed if identical, keeping one */
@@ -160,118 +189,193 @@
         .bar-wide::before {
             content: "";
             display: inline-block;
-            width: 6px;         /* 竖线宽度 */
-            height: 24px;       /* 竖线高度，可根据字体大小调整 */
+            width: 6px;
+            /* 竖线宽度 */
+            height: 24px;
+            /* 竖线高度，可根据字体大小调整 */
             background: #409eff;
             border-radius: 2px;
             margin-right: 8px;
             vertical-align: middle;
         }
-        .td4, .td5, .td6 {
+
+        .td4,
+        .td5,
+        .td6 {
             width: 60px;
             min-width: 60px;
             max-width: 80px;
         }
+
         .left-35 {
             width: 35% !important;
             max-width: 35% !important;
             min-width: 35% !important;
         }
+
         .right-65 {
             width: 65% !important;
             max-width: 65% !important;
             min-width: 65% !important;
         }
+
         .flex-table {
             width: 100%;
-            border: 1px solid #000;
-            border-radius: 6px;
+            border: 1px solid #666666;
             background: #fff;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+
         .flex-row {
             display: flex;
-            border-bottom: 1px solid #000;
+            border-bottom: 1px solid #666666;
         }
+
         .flex-cell {
-            padding: 6px 12px;
-            font-size: 15px;
-            border-right: 1px solid #000;
+            padding: 6px 8px;
+            font-size: 12px;
+            border-right: 1px solid #666666;
             box-sizing: border-box;
             text-align: center;
+            white-space: nowrap;
         }
-		 /* 标牌信息和边框上下、左右边框距离大小*/
+
+        /* 标牌信息和边框上下、左右边框距离大小*/
         .flex-row:last-child {
             border-bottom: none;
         }
+
         .flex-cell:last-child {
             border-right: none;
         }
+
+        .flex-cell[style*="font-weight: 600"] {
+            font-size: 13px !important;
+            font-weight: 600;
+        }
+
         .flex-35 {
             flex: 0 0 35%;
             font-weight: bold;
             color: #000;
+            font-size: 13px;
         }
+
         .flex-65 {
             flex: 0 0 65%;
         }
+
         .flex-25 {
             flex: 0 0 25%;
+            box-sizing: border-box;
+            width: 25%;
+            min-width: 25%;
+            max-width: 25%;
         }
+
         .equal-table {
             table-layout: fixed;
             width: 100%;
         }
+
         .equal-table th,
         .equal-table td {
             width: auto;
             text-align: center;
         }
+
         .performance-table {
             width: 100%;
-            border: 1px solid #000;
-            border-radius: 6px;
+            border: 1px solid #666666;
             background: #fff;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
+
         .performance-row {
             display: flex;
-            border-bottom: 1px solid #000;
+            border-bottom: 1px solid #666666;
         }
+
         .performance-row:last-child {
             border-bottom: none;
         }
+
         .performance-cell {
             flex: 1 1 0;
-            padding: 8px 12px;
-            font-size: 15px;
-            border-right: 1px solid #000;
+            padding: 5px 6px;
+            font-size: 12px;
+            border-right: 1px solid #666666;
             box-sizing: border-box;
             text-align: center;
+            white-space: nowrap;
         }
+
         .performance-cell:last-child {
             border-right: none;
         }
+
         .performance-cell.th {
             font-weight: bold;
             /* background: #f5f7fa; */
         }
-		
-		/* --- 专门调整“产品范围”表格单元格的上下内边距 --- */
-#product-range-table .flex-cell {
-    padding-top: 3px;    /* 将上内边距调整为 10px (您可以修改这个值) */
-    padding-bottom: 3px; /* 将下内边距调整为 10px (您可以修改这个值) */
-    /* 左右内边距 (padding-left 和 padding-right) 将保持原样 (即继承自 .flex-cell 的 12px) */
-}
+
+        /* --- 专门调整"产品范围"表格单元格的上下内边距 --- */
+        #product-range-table .flex-cell {
+            padding-top: 6px;
+            /* 将上内边距调整为 10px (您可以修改这个值) */
+            padding-bottom: 6px;
+            /* 将下内边距调整为 10px (您可以修改这个值) */
+            /* 左右内边距 (padding-left 和 padding-right) 将保持原样 (即继承自 .flex-cell 的 12px) */
+            white-space: normal;
+            word-break: break-all;
+            text-align: left;
+        }
+
+        #product-range-table .flex-cell.flex-35 {
+            text-align: center;
+        }
+
+        /* 调整公司简介部分的样式 */
+        .section h5 {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+        }
+
+        .section div[style*="font-size:10px"] {
+            font-size: 11px !important;
+            line-height: 1.5;
+        }
+
+        /* 调整公司地址和联系电话部分的样式 */
+        .section div[style*="font-size:15px"] {
+            font-size: 12px !important;
+        }
+
+        /* 隐藏 Webkit 浏览器的滚动条 */
+        .section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .flex-table,
+        .performance-table {
+            min-width: 100%;
+            width: auto;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <a href="#" id="zbsPdfLink">点击搜索质保书</a>
+    <div class="root">
+        <div class="header">
+            <a href="#" id="zbsPdfLink">点击搜索质保书</a>
+        </div>
     </div>
 
-    <div class="section">
+    <div class="section add-margin-top" style="margin-top: 120px;">
         <div class="section-title bar-wide">标牌信息</div>
         <div class="flex-table">
             <div class="flex-row">
@@ -286,7 +390,7 @@
                 <div class="flex-cell flex-35">批次号</div>
                 <div class="flex-cell flex-65">20203542BC1</div>
             </div>
-          <div class="flex-row">
+            <div class="flex-row">
                 <div class="flex-cell flex-35">捆（卷）号</div>
                 <div class="flex-cell flex-65" id="kunJuanHaoValue">01</div>
             </div>
@@ -394,35 +498,35 @@
         </div>
     </div>
 
-    <div class="section">
-    <div class="section-title">产品范围</div>
-    <div class="flex-table" id="product-range-table"> <!-- 添加一个 ID -->
-        <div class="flex-row">
-            <div class="flex-cell flex-35">产品类型</div>
-            <div class="flex-cell flex-65">产品名称</div>
-        </div>
-        <div class="flex-row">
-            <div class="flex-cell flex-35">棒材</div>
-            <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋</div>
-        </div>
-        <div class="flex-row">
-            <div class="flex-cell flex-35">线材</div>
-            <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、优质碳素钢、预应力钢丝、钢绞线、普线</div>
-        </div>
-        <div class="flex-row">
-            <div class="flex-cell flex-35">带钢</div>
-            <div class="flex-cell flex-65">碳素结构钢、优质碳素结构钢、低合金高强度结构钢、耐候钢</div>
+    <div class="section add-margin-top">
+        <div class="section-title">产品范围</div>
+        <div class="flex-table" id="product-range-table"> <!-- 添加一个 ID -->
+            <div class="flex-row">
+                <div class="flex-cell flex-35">产品类型</div>
+                <div class="flex-cell flex-65">产品名称</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">棒材</div>
+                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">线材</div>
+                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、优质碳素钢、预应力钢丝、钢绞线、普线</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">带钢</div>
+                <div class="flex-cell flex-65">碳素结构钢、优质碳素结构钢、低合金高强度结构钢、耐候钢</div>
+            </div>
         </div>
     </div>
-</div>
 
-    <div class="section">
+    <div class="section add-margin-top">
         <div class="section-title">公司地址</div>
         <div style="font-size:15px;line-height:1.8;">
             地址：中国河北省唐山市曹妃甸装备制造园区
         </div>
     </div>
-    <div class="section">
+    <div class="section add-margin-top">
         <div class="section-title">联系电话</div>
         <div class="contact-list">
             <div>电话1：0315-5250875</div>
@@ -432,8 +536,8 @@
     </div>
 
     <!-- JAVASCRIPT MODIFIED HERE -->
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search); // Define urlParams once
 
             // --- Handle 'kh' parameter for 捆（卷）号 (unchanged) ---
@@ -456,7 +560,7 @@
                     const pdfFileName = pdfParamValue + '.pdf'; // MODIFIED: Use pdfParamValue to construct file name
                     const pdfUrl = `../pdf/${pdfFileName}`;
 
-                    zbsPdfLinkElement.addEventListener('click', async function(event) {
+                    zbsPdfLinkElement.addEventListener('click', async function (event) {
                         event.preventDefault();
                         try {
                             const response = await fetch(pdfUrl, { method: 'HEAD' });
@@ -473,7 +577,7 @@
                     });
                 } else {
                     // 'pdf' parameter is missing
-                    zbsPdfLinkElement.addEventListener('click', function(event) {
+                    zbsPdfLinkElement.addEventListener('click', function (event) {
                         event.preventDefault();
                         console.warn('URL parameter "pdf" is missing.'); // MODIFIED: Updated warning message
                         window.location.reload();
@@ -481,54 +585,7 @@
                 }
             }
         });
-		  
-	        /* --- 手机端响应式调整 --- */
-        @media (max-width: 600px) {
-            /* 调整 flex 布局表格的单元格左右内边距 */
-            .flex-cell {
-                padding-left: 6px;  /* 减小左内边距 */
-                padding-right: 6px; /* 减小右内边距 */
-                /* 可选：如果文字仍然显得拥挤，可以考虑略微减小字体大小 */
-                /* font-size: 14px; */
-            }
-
-            .performance-cell {
-                padding-left: 6px;  /* 减小左内边距 */
-                padding-right: 6px; /* 减小右内边距 */
-                /* 可选：如果文字仍然显得拥挤，可以考虑略微减小字体大小 */
-                /* font-size: 14px; */
-            }
-
-            /* 调整传统表格的单元格左右内边距 */
-            th,
-            td {
-                padding-left: 5px;  /* 减小左内边距 */
-                padding-right: 5px; /* 减小右内边距 */
-                /* 可选：如果文字仍然显得拥挤，可以考虑略微减小字体大小 */
-                /* font-size: 14px; */
-            }
-
-            /* 可选：如果整体边距也需要调整，可以调整 section 的 padding */
-            .section {
-                margin-left: 5px;
-                margin-right: 5px;
-                padding-left: 10px;
-                padding-right: 10px;
-            }
-
-            /* 可选：调整标题字体大小以适应小屏幕 */
-            .header {
-                font-size: 16px;
-                margin: 15px 5px 20px 5px;
-            }
-            .section-title {
-                font-size: 15px;
-            }
-            .section-title::before {
-                height: 22px; /* 配合字体大小调整 */
-            }
-        }	  
-		  
     </script>
 </body>
+
 </html>
