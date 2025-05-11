@@ -35,7 +35,18 @@
 
         .section {
             background: #fff;
-            margin: 15px 10px;
+            margin: 0px 10px;
+            padding: 10px 15px 15px 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+
+        .add-margin-top {
+            background: #fff;
+            margin: 0px 10px;
+            margin-top: 15px;
             box-shadow: 0 2px 8px rgba(102, 102, 102, 0.1);
             padding: 10px 15px 15px 15px;
             overflow-x: auto;
@@ -275,7 +286,7 @@
     /* 左右内边距 (padding-left 和 padding-right) 将保持原样 (即继承自 .flex-cell 的 12px) */
     white-space: normal;
     word-break: break-all;
-    text-align: center;
+    text-align: left;
 }
 
         #product-range-table .flex-cell.flex-35 {
@@ -298,18 +309,6 @@
             font-size: 12px !important;
         }
 
-        /* 调整表格容器样式，允许横向滚动 */
-        .section {
-            background: #fff;
-            margin: 15px 10px;
-            box-shadow: 0 2px 8px rgba(102, 102, 102, 0.1);
-            padding: 10px 15px 15px 15px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
-        }
-
         /* 隐藏 Webkit 浏览器的滚动条 */
         .section::-webkit-scrollbar {
             display: none;
@@ -327,7 +326,7 @@
         <a href="#" id="zbsPdfLink">点击搜索质保书</a>
     </div>
 
-    <div class="section">
+    <div class="section add-margin-top">
         <div class="section-title bar-wide">标牌信息</div>
         <div class="flex-table">
             <div class="flex-row">
