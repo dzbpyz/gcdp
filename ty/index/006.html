@@ -24,35 +24,50 @@
             margin: 50px 10px 10px 10px;
             border-radius: 8px;
         }
+        .root{
+            position: absolute;
+            top: 0;
+            background-color: white;
+            width: 100%;
+            height: 110px;
+        }
+
         /* Added style for the link inside header */
         .header a {
             color: #fff;
-            text-decoration: none; /* Optional: remove underline */
+            text-decoration: none;
+            /* Optional: remove underline */
         }
+
         .header a:hover {
-            text-decoration: underline; /* Optional: underline on hover */
+            text-decoration: underline;
+            /* Optional: underline on hover */
         }
 
         .section {
             background: #fff;
-            margin: 0px 10px;
+            margin: 0px 0px;
             padding: 10px 15px 15px 15px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
         }
 
         .add-margin-top {
             background: #fff;
-            margin: 0px 10px;
+            margin: 0px 0px;
             margin-top: 15px;
             box-shadow: 0 2px 8px rgba(102, 102, 102, 0.1);
             padding: 10px 15px 15px 15px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
         }
 
         /* 隐藏 Webkit 浏览器的滚动条 */
@@ -89,7 +104,8 @@
             font-size: 14px;
         }
 
-        th, td {
+        th,
+        td {
             border: 1px solid #666666;
             padding: 5px 6px;
             text-align: center;
@@ -173,38 +189,48 @@
         .bar-wide::before {
             content: "";
             display: inline-block;
-            width: 6px;         /* 竖线宽度 */
-            height: 24px;       /* 竖线高度，可根据字体大小调整 */
+            width: 6px;
+            /* 竖线宽度 */
+            height: 24px;
+            /* 竖线高度，可根据字体大小调整 */
             background: #409eff;
             border-radius: 2px;
             margin-right: 8px;
             vertical-align: middle;
         }
-        .td4, .td5, .td6 {
+
+        .td4,
+        .td5,
+        .td6 {
             width: 60px;
             min-width: 60px;
             max-width: 80px;
         }
+
         .left-35 {
             width: 35% !important;
             max-width: 35% !important;
             min-width: 35% !important;
         }
+
         .right-65 {
             width: 65% !important;
             max-width: 65% !important;
             min-width: 65% !important;
         }
+
         .flex-table {
             width: 100%;
             border: 1px solid #666666;
             background: #fff;
             margin-bottom: 15px;
         }
+
         .flex-row {
             display: flex;
             border-bottom: 1px solid #666666;
         }
+
         .flex-cell {
             padding: 6px 8px;
             font-size: 12px;
@@ -213,26 +239,32 @@
             text-align: center;
             white-space: nowrap;
         }
-		 /* 标牌信息和边框上下、左右边框距离大小*/
+
+        /* 标牌信息和边框上下、左右边框距离大小*/
         .flex-row:last-child {
             border-bottom: none;
         }
+
         .flex-cell:last-child {
             border-right: none;
         }
+
         .flex-cell[style*="font-weight: 600"] {
             font-size: 13px !important;
             font-weight: 600;
         }
+
         .flex-35 {
             flex: 0 0 35%;
             font-weight: bold;
             color: #000;
             font-size: 13px;
         }
+
         .flex-65 {
             flex: 0 0 65%;
         }
+
         .flex-25 {
             flex: 0 0 25%;
             box-sizing: border-box;
@@ -240,28 +272,34 @@
             min-width: 25%;
             max-width: 25%;
         }
+
         .equal-table {
             table-layout: fixed;
             width: 100%;
         }
+
         .equal-table th,
         .equal-table td {
             width: auto;
             text-align: center;
         }
+
         .performance-table {
             width: 100%;
             border: 1px solid #666666;
             background: #fff;
             margin-bottom: 15px;
         }
+
         .performance-row {
             display: flex;
             border-bottom: 1px solid #666666;
         }
+
         .performance-row:last-child {
             border-bottom: none;
         }
+
         .performance-cell {
             flex: 1 1 0;
             padding: 5px 6px;
@@ -271,23 +309,27 @@
             text-align: center;
             white-space: nowrap;
         }
+
         .performance-cell:last-child {
             border-right: none;
         }
+
         .performance-cell.th {
             font-weight: bold;
             /* background: #f5f7fa; */
         }
-		
-		/* --- 专门调整"产品范围"表格单元格的上下内边距 --- */
-#product-range-table .flex-cell {
-    padding-top: 6px;    /* 将上内边距调整为 10px (您可以修改这个值) */
-    padding-bottom: 6px; /* 将下内边距调整为 10px (您可以修改这个值) */
-    /* 左右内边距 (padding-left 和 padding-right) 将保持原样 (即继承自 .flex-cell 的 12px) */
-    white-space: normal;
-    word-break: break-all;
-    text-align: left;
-}
+
+        /* --- 专门调整"产品范围"表格单元格的上下内边距 --- */
+        #product-range-table .flex-cell {
+            padding-top: 6px;
+            /* 将上内边距调整为 10px (您可以修改这个值) */
+            padding-bottom: 6px;
+            /* 将下内边距调整为 10px (您可以修改这个值) */
+            /* 左右内边距 (padding-left 和 padding-right) 将保持原样 (即继承自 .flex-cell 的 12px) */
+            white-space: normal;
+            word-break: break-all;
+            text-align: left;
+        }
 
         #product-range-table .flex-cell.flex-35 {
             text-align: center;
@@ -314,19 +356,26 @@
             display: none;
         }
 
-        .flex-table, .performance-table {
+        .flex-table,
+        .performance-table {
             min-width: 100%;
             width: auto;
+        }
+
+        body {
+            background-color: #f4f4f4;
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <a href="#" id="zbsPdfLink">点击搜索质保书</a>
+    <div class="root">
+        <div class="header">
+            <a href="#" id="zbsPdfLink">点击搜索质保书</a>
+        </div>
     </div>
 
-    <div class="section add-margin-top">
+    <div class="section add-margin-top" style="margin-top: 120px;">
         <div class="section-title bar-wide">标牌信息</div>
         <div class="flex-table">
             <div class="flex-row">
@@ -341,7 +390,7 @@
                 <div class="flex-cell flex-35">批次号</div>
                 <div class="flex-cell flex-65">20203542BC1</div>
             </div>
-          <div class="flex-row">
+            <div class="flex-row">
                 <div class="flex-cell flex-35">捆（卷）号</div>
                 <div class="flex-cell flex-65" id="kunJuanHaoValue">01</div>
             </div>
@@ -449,29 +498,29 @@
         </div>
     </div>
 
-    <div class="section">
-    <div class="section-title">产品范围</div>
-    <div class="flex-table" id="product-range-table"> <!-- 添加一个 ID -->
-        <div class="flex-row">
-            <div class="flex-cell flex-35">产品类型</div>
-            <div class="flex-cell flex-65">产品名称</div>
-        </div>
-        <div class="flex-row">
-            <div class="flex-cell flex-35">棒材</div>
-            <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋</div>
-        </div>
-        <div class="flex-row">
-            <div class="flex-cell flex-35">线材</div>
-            <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、优质碳素钢、预应力钢丝、钢绞线、普线</div>
-        </div>
-        <div class="flex-row">
-            <div class="flex-cell flex-35">带钢</div>
-            <div class="flex-cell flex-65">碳素结构钢、优质碳素结构钢、低合金高强度结构钢、耐候钢</div>
+    <div class="section add-margin-top">
+        <div class="section-title">产品范围</div>
+        <div class="flex-table" id="product-range-table"> <!-- 添加一个 ID -->
+            <div class="flex-row">
+                <div class="flex-cell flex-35">产品类型</div>
+                <div class="flex-cell flex-65">产品名称</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">棒材</div>
+                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">线材</div>
+                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、优质碳素钢、预应力钢丝、钢绞线、普线</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">带钢</div>
+                <div class="flex-cell flex-65">碳素结构钢、优质碳素结构钢、低合金高强度结构钢、耐候钢</div>
+            </div>
         </div>
     </div>
-</div>
 
-    <div class="section">
+    <div class="section add-margin-top">
         <div class="section-title">公司地址</div>
         <div style="font-size:15px;line-height:1.8;">
             地址：中国河北省唐山市曹妃甸装备制造园区
@@ -487,8 +536,8 @@
     </div>
 
     <!-- JAVASCRIPT MODIFIED HERE -->
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search); // Define urlParams once
 
             // --- Handle 'kh' parameter for 捆（卷）号 (unchanged) ---
@@ -511,7 +560,7 @@
                     const pdfFileName = pdfParamValue + '.pdf'; // MODIFIED: Use pdfParamValue to construct file name
                     const pdfUrl = `../pdf/${pdfFileName}`;
 
-                    zbsPdfLinkElement.addEventListener('click', async function(event) {
+                    zbsPdfLinkElement.addEventListener('click', async function (event) {
                         event.preventDefault();
                         try {
                             const response = await fetch(pdfUrl, { method: 'HEAD' });
@@ -528,7 +577,7 @@
                     });
                 } else {
                     // 'pdf' parameter is missing
-                    zbsPdfLinkElement.addEventListener('click', function(event) {
+                    zbsPdfLinkElement.addEventListener('click', function (event) {
                         event.preventDefault();
                         console.warn('URL parameter "pdf" is missing.'); // MODIFIED: Updated warning message
                         window.location.reload();
@@ -538,4 +587,5 @@
         });
     </script>
 </body>
+
 </html>
