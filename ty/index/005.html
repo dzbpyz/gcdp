@@ -3,15 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>点击搜索质保书</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>质保书</title>
     <style>
         body {
             font-family: "Microsoft YaHei", Arial, sans-serif;
             /* background: #f8f8f8; */
             margin: 0;
             padding: 0;
-            max-width: 100%;
+		    max-width: 100%;
             overflow-x: hidden;
         }
 
@@ -19,12 +19,20 @@
             background: #468cf4;
             color: #fff;
             text-align: center;
-            /* padding: 16px 0; */
-            height: 35px;
+			height: 35px;
             line-height: 35px;
-            font-size: 16px;
+            padding: 10px 0;
+            font-size: 18px;
             border-radius: 8px;
             margin: 20px 10px 30px 10px;
+        }
+        /* Added style for the link inside header */
+        .header a {
+            color: #fff;
+            text-decoration: none; /* Optional: remove underline */
+        }
+        .header a:hover {
+            text-decoration: underline; /* Optional: underline on hover */
         }
 
         .section {
@@ -37,7 +45,7 @@
 
         .section-title {
             font-weight: bold;
-            font-size: 20px;
+            font-size: 16px;
             color: #222;
             margin: 10px 0 15px 0;
             border: none;
@@ -99,41 +107,14 @@
         }
 
         .contact-list {
-            font-size: 18px;
+            font-size: 15px;
             margin-left: 10px;
             margin-top: 10px;
             line-height: 2;
         }
 
-        .section-title {
-            font-weight: bold;
-            font-size: 20px;
-            color: #222;
-            margin: 10px 0 15px 0;
-            border: none;
-            padding-left: 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .section-title::before {
-            content: "";
-            display: inline-block;
-            width: 6px;
-            height: 24px;
-            background: #409eff;
-            border-radius: 2px;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
-
-        .section {
-            background: #fff;
-            margin: 20px 10px;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px #eee;
-            padding: 10px 20px 20px 20px;
-        }
+        /* .section-title rule is duplicated, can be removed if identical, keeping one */
+        /* .section rule is duplicated, can be removed if identical, keeping one */
 
         .triple-line-table {
             width: 100%;
@@ -218,12 +199,13 @@
             border-bottom: 1px solid #585555;
         }
         .flex-cell {
-            padding: 8px 12px;
+            padding: 6px 12px;
             font-size: 15px;
             border-right: 1px solid #585555;
             box-sizing: border-box;
             text-align: center;
         }
+		 /* 标牌信息和边框上下、左右边框距离大小*/
         .flex-row:last-child {
             border-bottom: none;
         }
@@ -279,36 +261,20 @@
             font-weight: bold;
             /* background: #f5f7fa; */
         }
-
-        @media screen and (max-width: 480px) {
-            .section {
-                margin: 8px;
-                padding: 8px;
-            }
-
-            .section-title {
-                font-size: 16px;
-            }
-
-            .flex-cell, .performance-cell {
-                padding: 6px;
-                font-size: 13px;
-            }
-
-            .contact-list {
-                font-size: 14px;
-            }
-
-            th, td {
-                padding: 4px 6px;
-                font-size: 13px;
-            }
-        }
+		
+		/* --- 专门调整“产品范围”表格单元格的上下内边距 --- */
+#product-range-table .flex-cell {
+    padding-top: 3px;    /* 将上内边距调整为 10px (您可以修改这个值) */
+    padding-bottom: 3px; /* 将下内边距调整为 10px (您可以修改这个值) */
+    /* 左右内边距 (padding-left 和 padding-right) 将保持原样 (即继承自 .flex-cell 的 12px) */
+}
     </style>
 </head>
 
 <body>
-    <div class="header">点击搜索质保书</div>
+    <div class="header">
+        <a href="#" id="zbsPdfLink">点击搜索质保书</a>
+    </div>
 
     <div class="section">
         <div class="section-title bar-wide">标牌信息</div>
@@ -325,9 +291,9 @@
                 <div class="flex-cell flex-35">批次号</div>
                 <div class="flex-cell flex-65">20203542BC1</div>
             </div>
-            <div class="flex-row">
+          <div class="flex-row">
                 <div class="flex-cell flex-35">捆（卷）号</div>
-                <div class="flex-cell flex-65">20</div>
+                <div class="flex-cell flex-65" id="kunJuanHaoValue">01</div>
             </div>
             <div class="flex-row">
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">牌号</div>
@@ -414,7 +380,7 @@
             </div>
             <div class="performance-row">
                 <div class="performance-cell">1.13,1.12,1.13</div>
-                <div class="performance-cell">1.34,1.35,1.34</div>
+                <div class="performance-cell">1.35,1.35,1.34</div>
                 <div class="performance-cell">合格,合格</div>
             </div>
             <div class="performance-row">
@@ -426,34 +392,34 @@
 
     <div class="section">
         <div>
-            <h3>河北唐银钢铁有限公司简介</h3>
+            <h5>河北唐银钢铁有限公司简介</h5>
         </div>
-        <div style="font-size:15px;line-height:1.8;">
+        <div style="font-size:10px;line-height:1.8;">
             河北唐银钢铁有限公司（简称唐银）是由河北钢铁集团唐钢公司和河北银水集团共同出资组建的大型全流程钢铁联合企业，其中唐钢集团占股51%，银水集团占股49%。公司于2006年10月6日正式成立，2020年积极响应国家环保要求，化简钢铁产能。实行退城搬迁，唐银公司新厂址位于河北省唐山市曹妃甸装备制造园区内，项目总投资为395.36亿元，配套综合原料堆场1座、1500万吨来料高炉2座、100吨转炉2座、265平米带式烧结机2台、4.0×42米链篦机、5.0×35米中球团120万吨。配套定值于棒材、热轧带钢等高强度、高性能、高质量钢材产品，广泛应用于汽车、家电、建筑、包装等传统领域。公司地理位置优越，位于环渤海经济圈内，且可延伸至西北地区，在环渤海和东部沿海深水港布局上位置适中。公司经过16年积累与发展，继承了唐钢及银水公司勇于担当、勤奋务实的优良传统，始终秉承"质量第一，用户至上，合作共赢"的销售理念，竭诚为广大用户提供优质的产品和服务，新厂投产后，我们以客户需求为出发点，在终端直发、产品定制、多模式销售等方面为客户提供更多元化的产品与服务，和谐共赢，并肩前行。
         </div>
     </div>
 
     <div class="section">
-        <div class="section-title">产品范围</div>
-        <div class="flex-table">
-            <div class="flex-row">
-                <div class="flex-cell flex-35">产品类型</div>
-                <div class="flex-cell flex-65">产品名称</div>
-            </div>
-            <div class="flex-row">
-                <div class="flex-cell flex-35">棒材</div>
-                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋</div>
-            </div>
-            <div class="flex-row">
-                <div class="flex-cell flex-35">线材</div>
-                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、优质碳素钢、预应力钢丝、钢绞线、普线</div>
-            </div>
-            <div class="flex-row">
-                <div class="flex-cell flex-35">带钢</div>
-                <div class="flex-cell flex-65">碳素结构钢、优质碳素结构钢、低合金高强度结构钢、耐候钢</div>
-            </div>
+    <div class="section-title">产品范围</div>
+    <div class="flex-table" id="product-range-table"> <!-- 添加一个 ID -->
+        <div class="flex-row">
+            <div class="flex-cell flex-35">产品类型</div>
+            <div class="flex-cell flex-65">产品名称</div>
+        </div>
+        <div class="flex-row">
+            <div class="flex-cell flex-35">棒材</div>
+            <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋</div>
+        </div>
+        <div class="flex-row">
+            <div class="flex-cell flex-35">线材</div>
+            <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、优质碳素钢、预应力钢丝、钢绞线、普线</div>
+        </div>
+        <div class="flex-row">
+            <div class="flex-cell flex-35">带钢</div>
+            <div class="flex-cell flex-65">碳素结构钢、优质碳素结构钢、低合金高强度结构钢、耐候钢</div>
         </div>
     </div>
+</div>
 
     <div class="section">
         <div class="section-title">公司地址</div>
@@ -469,6 +435,57 @@
             <div>电话3：0315-5250765</div>
         </div>
     </div>
-</body>
 
+    <!-- JAVASCRIPT MODIFIED HERE -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search); // Define urlParams once
+
+            // --- Handle 'kh' parameter for 捆（卷）号 (unchanged) ---
+            const khValue = urlParams.get('kh');
+            const kunJuanHaoElement = document.getElementById('kunJuanHaoValue');
+
+            if (kunJuanHaoElement && khValue !== null) { // Check if element exists and kh parameter is present
+                kunJuanHaoElement.textContent = khValue;
+            }
+            // --- MODIFICATION END for kh ---
+
+            // --- PDF Link logic (modified from zbsPdfLink to use 'pdf' parameter) ---
+            const zbsPdfLinkElement = document.getElementById('zbsPdfLink'); // The element ID in HTML is still 'zbsPdfLink'
+            if (!zbsPdfLinkElement) {
+                // console.error('Element with ID "zbsPdfLink" not found.');
+            } else {
+                const pdfParamValue = urlParams.get('pdf'); // MODIFIED: Get 'pdf' parameter value instead of 'zbs'
+
+                if (pdfParamValue) { // MODIFIED: Check for pdfParamValue
+                    const pdfFileName = pdfParamValue + '.pdf'; // MODIFIED: Use pdfParamValue to construct file name
+                    const pdfUrl = `../pdf/${pdfFileName}`;
+
+                    zbsPdfLinkElement.addEventListener('click', async function(event) {
+                        event.preventDefault();
+                        try {
+                            const response = await fetch(pdfUrl, { method: 'HEAD' });
+                            if (response.ok) {
+                                window.location.href = pdfUrl;
+                            } else {
+                                console.warn(`PDF file not found or inaccessible: ${pdfUrl}, status: ${response.status}`);
+                                window.location.reload();
+                            }
+                        } catch (error) {
+                            console.error('Error trying to fetch PDF status:', error);
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    // 'pdf' parameter is missing
+                    zbsPdfLinkElement.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        console.warn('URL parameter "pdf" is missing.'); // MODIFIED: Updated warning message
+                        window.location.reload();
+                    });
+                }
+            }
+        });
+    </script>
+</body>
 </html>
