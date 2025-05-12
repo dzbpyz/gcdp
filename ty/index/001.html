@@ -334,7 +334,14 @@
         #product-range-table .flex-cell.flex-35 {
             text-align: center;
         }
-
+          #product-range-table .flex-row:first-child .flex-cell.flex-65 {
+        text-align: center; /* 仅将表头的“产品名称”居中 */
+    }
+		
+		/* --- 请将新规则添加到这里 (或与上方规则合并，见下方优化建议) --- */
+    #product-range-table .flex-row:first-child .flex-cell {
+        font-weight: bold; /* 将表头行的所有单元格（产品类型、产品名称）设为粗体 */
+    }
         /* 调整公司简介部分的样式 */
         .section h5 {
             margin: 0 0 8px 0;
@@ -503,7 +510,7 @@
         <div class="flex-table" id="product-range-table"> <!-- 添加一个 ID -->
             <div class="flex-row">
                 <div class="flex-cell flex-35">产品类型</div>
-                <div class="flex-cell flex-35">产品名称</div>
+                <div class="flex-cell flex-65">产品名称</div>
             </div>
             <div class="flex-row">
                 <div class="flex-cell flex-35">棒材</div>
@@ -532,6 +539,7 @@
             <div>电话1：0315-5250875</div>
             <div>电话2：0315-5250822</div>
             <div>电话3：0315-5250765</div>
+			<div style="height: 1px;"></div> <!-- 1px 可以根据需要调整 -->
         </div>
     </div>
 
