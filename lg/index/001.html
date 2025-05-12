@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN"> <!-- 修改语言为中文 -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,7 +35,7 @@
             background-color: #f2f2f2;
         }
         */
-		
+
 		.root{
             position: absolute;
             top: 0;
@@ -51,34 +51,33 @@
             font-size: 14px;
             margin: 50px 10px 10px 10px;
             border-radius: 8px;}
-			 
-			      /* Added style for the link inside header */
+
+			      /* 为头部链接添加样式 */
         .header a {
             color: #fff;
             text-decoration: none;
-            /* Optional: remove underline */
+            cursor: pointer; /* 添加手型光标，表示可点击 */
         }
 
         .header a:hover {
             text-decoration: underline;
-            /* Optional: underline on hover */
         }
-		
-		
-		
-		
+
+
     </style>
 </head>
 <body>
 	<div class="root">
         <div class="header">
-            <a href="#" id="zbsPdfLink">点击搜索质保书</a>
+            <!-- 初始href设为无操作，防止默认跳转 -->
+            <a href="javascript:void(0);" id="zbsPdfLink">点击搜索质保书</a>
         </div>
     </div>
-	
+
+
    <div class="box">
      <div class="search_box">
-        <div class="search_inner_box">            
+        <div class="search_inner_box">
         </div>
      </div>
      <div class="content_box">
@@ -97,7 +96,7 @@
                        <td style="text-align: center;">批次号</td>
                        <td style="text-align: left;">24307354CD0</td>
                        <td style="text-align: center;">捆(卷)号</td>
-                       <td style="text-align: left;">34</td>
+                       <td style="text-align: left;" id="kunHaoValue">34</td>
                    </tr>
                    <tr>
                        <td style="text-align: center;">牌号</td>
@@ -113,7 +112,7 @@
                    </tr>
                    <tr>
                        <td style="text-align: center;">支数</td>
-                       <td style="text-align: left;">280&nbsp;</td>
+                       <td style="text-align: left;">280 </td>
                        <td style="text-align: center;">定尺</td>
                        <td style="text-align: left;">12000</td>
                    </tr>
@@ -121,17 +120,17 @@
                        <td style="text-align: center;">生产日期</td>
                        <td style="text-align: left;">2024-12-09</td>
                        <td style="text-align: center;">尺寸精度</td>
-                       <td style="text-align: left;">&nbsp;</td>
+                       <td style="text-align: left;"> </td>
                    </tr>
                    <tr>
                        <td style="text-align: center;">发货日期</td>
-                       <td style="text-align: left;">2024-12-09&nbsp;</td>
-                       <td style="text-align: center;">&nbsp;</td>
-                       <td style="text-align: left;">&nbsp;</td>
+                       <td style="text-align: left;">2024-12-09 </td>
+                       <td style="text-align: center;"> </td>
+                       <td style="text-align: left;"> </td>
                    </tr>
                </table>
             </div>
-                       <!-- ... (标牌信息表格代码保持不变) ... -->
+                       <!-- ... (其他表格和内容保持不变) ... -->
 
             <h3 class="table_title">化学成分</h3>
             <div class="table_box">
@@ -157,9 +156,9 @@
                     </tr>
                   <tr>
                         <td style="text-align: center;">0.034</td>
-                        <td style="text-align: center;">&nbsp;</td>
+                        <td style="text-align: center;"> </td>
                         <td style="text-align: center;">0.028</td>
-                        <td style="text-align: center;">0.46</td> 
+                        <td style="text-align: center;">0.46</td>
                         <!-- 新增列 -->
                     </tr>
                 </table>
@@ -178,7 +177,7 @@
                     <tr>
                         <td style="text-align: center;">450,455,460,465</td>
                         <td style="text-align: center;">615,615,625,625</td>
-                        <td style="text-align: center;">&nbsp;</td>
+                        <td style="text-align: center;"> </td>
                     </tr>
                     <tr>
                         <td style="text-align: center;">断面收缩率</td>
@@ -186,7 +185,7 @@
                         <td style="text-align: center;">重量偏差</td>
                     </tr>
                     <tr>
-                        <td style="text-align: center;">&nbsp;</td>
+                        <td style="text-align: center;"> </td>
                         <td style="text-align: center;">13.8,13.1,13.1,13.6</td>
                         <td style="text-align: center;">-4.4</td>
                     </tr>
@@ -207,8 +206,8 @@
                     </tr>
                     <tr>
                         <td style="text-align: center;">合格,合格,合格,合格</td>
-                        <td style="text-align: center;">&nbsp;</td>
-                        <td style="text-align: center;">&nbsp;</td>
+                        <td style="text-align: center;"> </td>
+                        <td style="text-align: center;"> </td>
                     </tr>
                 </table>
             </div>
@@ -257,5 +256,85 @@
         </div>
      </div>
    </div>
+
+   <script>
+       // 定义一个函数，用于设置链接点击时刷新页面
+       function setLinkToRefresh(linkElement) {
+           if (linkElement) {
+               // 移除可能存在的 href 和 target 属性，避免干扰
+               linkElement.removeAttribute('href');
+               linkElement.removeAttribute('target');
+               // 设置 onclick 事件处理器来刷新页面
+               linkElement.onclick = function(event) {
+                   event.preventDefault(); // 阻止任何默认的链接跳转行为
+                   location.reload();    // 重新加载当前页面
+               };
+               console.log("链接行为已设置为：点击时刷新页面。");
+           }
+       }
+
+       // 页面加载完成后执行
+       window.onload = function() {
+           const urlParams = new URLSearchParams(window.location.search);
+
+           // --- 处理 'kh' 参数 (捆号) ---
+           const kunHao = urlParams.get('kh');
+           if (kunHao) {
+               const kunHaoElement = document.getElementById('kunHaoValue');
+               if (kunHaoElement) {
+                   kunHaoElement.textContent = kunHao;
+               }
+           }
+
+           // --- 处理 'pdf' 参数和质保书链接 ---
+           const pdfValue = urlParams.get('pdf'); // 获取 pdf 参数值
+           const pdfLinkElement = document.getElementById('zbsPdfLink'); // 获取链接元素
+
+           // 确保链接元素存在
+           if (pdfLinkElement) {
+               // 如果 URL 中存在 'pdf' 参数
+               if (pdfValue) {
+                   // 构建潜在的 PDF 文件 URL
+                   // 重要：请确保这里的相对路径计算符合您的服务器文件结构
+                   // '../pdf/' 指的是当前 HTML 文件所在目录的上一级目录中的 pdf 文件夹
+                   const targetPdfUrl = `../pdf/${pdfValue}.pdf`; // 假设文件扩展名是 .pdf
+
+                   console.log(`正在检查 PDF 文件是否存在于：${targetPdfUrl}`);
+
+                   // 使用 fetch 发送 HEAD 请求检查文件是否存在，不下载文件内容
+                   fetch(targetPdfUrl, { method: 'HEAD' })
+                       .then(response => {
+                           // response.ok 表示 HTTP 状态码在 200-299 范围内 (表示成功)
+                           if (response.ok) {
+                               // PDF 文件存在
+                               console.log("PDF 文件找到。设置链接指向该文件。");
+                               pdfLinkElement.href = targetPdfUrl;
+                               // 如果希望在新标签页打开 PDF，可以取消下面的注释
+                               // pdfLinkElement.target = "_blank";
+                               // 清除可能存在的 onclick 事件 (防止它执行刷新)
+                               pdfLinkElement.onclick = null;
+                           } else {
+                               // PDF 文件不存在 (例如 404 Not Found) 或其他错误状态码
+                               console.log(`PDF 文件未找到 (状态码: ${response.status})。设置链接为点击刷新。`);
+                               setLinkToRefresh(pdfLinkElement);
+                           }
+                       })
+                       .catch(error => {
+                           // 发生网络错误 (例如服务器无法访问、CORS 跨域问题 - 这里不太可能)
+                           console.error('检查 PDF 文件存在性时出错:', error);
+                           console.log("检查过程中发生错误。设置链接为点击刷新。");
+                           setLinkToRefresh(pdfLinkElement); // 出错也按文件不存在处理
+                       });
+               } else {
+                   // URL 中没有 'pdf' 参数
+                   console.log("URL 中未找到 'pdf' 参数。设置链接为点击刷新。");
+                   setLinkToRefresh(pdfLinkElement);
+               }
+           } else {
+               // 如果没找到 ID 为 'zbsPdfLink' 的元素
+               console.error("未找到 ID 为 'zbsPdfLink' 的链接元素！");
+           }
+       };
+   </script>
 </body>
 </html>
