@@ -17,6 +17,13 @@
             line-height: 50px;
             font-size:15px;
         }
+        /* 为目标表格添加固定布局 */
+        #information, #huaxueTable, #wuliTable {
+            table-layout: fixed;
+            /* 可以添加 word-wrap 来处理可能溢出的长文本 */
+            word-wrap: break-word; /* 或者 overflow-wrap: break-word; */
+        }
+
         /* 可以在这里为表格添加一些基本样式，例如边框，如果需要的话 */
         /*
         .table_box table, .table_box th, .table_box td {
@@ -28,19 +35,50 @@
             background-color: #f2f2f2;
         }
         */
+		
+		.root{
+            position: absolute;
+            top: 0;
+            background-color: white;
+            width: 100%;
+            height: 110px;
+        }
+		 .header {
+            background: #53a2f8;
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            margin: 50px 10px 10px 10px;
+            border-radius: 8px;}
+			 
+			      /* Added style for the link inside header */
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            /* Optional: remove underline */
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+            /* Optional: underline on hover */
+        }
+		
+		
+		
+		
     </style>
 </head>
 <body>
+	<div class="root">
+        <div class="header">
+            <a href="#" id="zbsPdfLink">点击搜索质保书</a>
+        </div>
+    </div>
+	
    <div class="box">
      <div class="search_box">
-        <div class="search_inner_box">
-            <div class="search_btn" id="searchBtn">
-               点击查看质保书
-            </div>
-            <!-- <form class="search_form" action="javascript:void(0);">
-                <input type="search" class="search_input" placeholder="请输入质保书号搜索"
-                />
-            </form> -->
+        <div class="search_inner_box">            
         </div>
      </div>
      <div class="content_box">
@@ -51,117 +89,126 @@
                    <!-- 7行4列表格 -->
                    <tr>
                        <td style="text-align: center;">产品名称</td>
-                       <td style="text-align: left;">数据1-2</td>
-                       <td style="text-align: center;">数据1-3</td>
-                       <td style="text-align: left;">数据1-4</td>
+                       <td style="text-align: left;">热轧带肋钢筋</td>
+                       <td style="text-align: center;">执行标准</td>
+                       <td style="text-align: left;">GB 1499.2-2024</td>
                    </tr>
                    <tr>
                        <td style="text-align: center;">批次号</td>
-                       <td style="text-align: left;">数据2-2</td>
-                       <td style="text-align: center;">数据2-3</td>
-                       <td style="text-align: left;">数据2-4</td>
+                       <td style="text-align: left;">24307354CD0</td>
+                       <td style="text-align: center;">捆(卷)号</td>
+                       <td style="text-align: left;">34</td>
                    </tr>
                    <tr>
                        <td style="text-align: center;">牌号</td>
-                       <td style="text-align: left;">数据3-2</td>
-                       <td style="text-align: center;">数据3-3</td>
-                       <td style="text-align: left;">数据3-4</td>
+                       <td style="text-align: left;">HRB400E</td>
+                       <td style="text-align: center;">规格</td>
+                       <td style="text-align: left;">Φ12</td>
                    </tr>
                    <tr>
                        <td style="text-align: center;">理重(t)</td>
-                       <td style="text-align: left;">数据4-2</td>
-                       <td style="text-align: center;">数据4-3</td>
-                       <td style="text-align: left;">数据4-4</td>
+                       <td style="text-align: left;">2.984</td>
+                       <td style="text-align: center;">实重(t)</td>
+                       <td style="text-align: left;">2.882</td>
                    </tr>
                    <tr>
                        <td style="text-align: center;">支数</td>
-                       <td style="text-align: left;">数据5-2</td>
-                       <td style="text-align: center;">数据5-3</td>
-                       <td style="text-align: left;">数据5-4</td>
+                       <td style="text-align: left;">280&nbsp;</td>
+                       <td style="text-align: center;">定尺</td>
+                       <td style="text-align: left;">12000</td>
                    </tr>
                    <tr>
                        <td style="text-align: center;">生产日期</td>
-                       <td style="text-align: left;">数据6-2</td>
-                       <td style="text-align: center;">数据6-3</td>
-                       <td style="text-align: left;">数据6-4</td>
+                       <td style="text-align: left;">2024-12-09</td>
+                       <td style="text-align: center;">尺寸精度</td>
+                       <td style="text-align: left;">&nbsp;</td>
                    </tr>
                    <tr>
                        <td style="text-align: center;">发货日期</td>
-                       <td style="text-align: left;">数据7-2</td>
-                       <td style="text-align: center;">数据7-3</td>
-                       <td style="text-align: left;">数据7-4</td>
+                       <td style="text-align: left;">2024-12-09&nbsp;</td>
+                       <td style="text-align: center;">&nbsp;</td>
+                       <td style="text-align: left;">&nbsp;</td>
                    </tr>
                </table>
             </div>
+                       <!-- ... (标牌信息表格代码保持不变) ... -->
+
             <h3 class="table_title">化学成分</h3>
             <div class="table_box">
                 <table class="huaxue_table" id="huaxueTable" style="width:100%;">
-                    <!-- 四行三列的表格，文本居中 -->
+                    <!-- 四行四列的表格，文本居中 -->
                     <tr>
-                        <td style="text-align: center;">数据1-1</td>
-                        <td style="text-align: center;">数据1-2</td>
-                        <td style="text-align: center;">数据1-3</td>
+                        <td style="text-align: center;">碳</td>
+                        <td style="text-align: center;">硅</td>
+                        <td style="text-align: center;">锰</td>
+                        <td style="text-align: center;">磷</td> <!-- 新增列 -->
                     </tr>
                     <tr>
-                        <td style="text-align: center;">数据2-1</td>
-                        <td style="text-align: center;">数据2-2</td>
-                        <td style="text-align: center;">数据2-3</td>
+                        <td style="text-align: center;">0.22</td>
+                        <td style="text-align: center;">0.31</td>
+                        <td style="text-align: center;">1.36</td>
+                        <td style="text-align: center;">0.025</td> <!-- 新增列 -->
                     </tr>
                     <tr>
-                        <td style="text-align: center;">数据3-1</td>
-                        <td style="text-align: center;">数据3-2</td>
-                        <td style="text-align: center;">数据3-3</td>
+                        <td style="text-align: center;">硫</td>
+                        <td style="text-align: center;">铬</td>
+                        <td style="text-align: center;">钒</td>
+                        <td style="text-align: center;">碳当量</td> <!-- 新增列 -->
                     </tr>
-                    <tr>
-                        <td style="text-align: center;">数据4-1</td>
-                        <td style="text-align: center;">数据4-2</td>
-                        <td style="text-align: center;">数据4-3</td>
+                  <tr>
+                        <td style="text-align: center;">0.034</td>
+                        <td style="text-align: center;">&nbsp;</td>
+                        <td style="text-align: center;">0.028</td>
+                        <td style="text-align: center;">0.46</td> 
+                        <!-- 新增列 -->
                     </tr>
                 </table>
             </div>
+
+            <!-- ... (物理性能表格代码保持不变) ... -->
             <h3 class="table_title">物理性能</h3>
             <div class="table_box">
                 <table class="wuliTable" id="wuliTable" style="width:100%;">
                     <!-- 8行3列的表格，文本居中显示 -->
                     <tr>
-                        <td style="text-align: center;">数据1-1</td>
-                        <td style="text-align: center;">数据1-2</td>
-                        <td style="text-align: center;">数据1-3</td>
+                        <td style="text-align: center;">屈服强度</td>
+                        <td style="text-align: center;">抗拉强度</td>
+                        <td style="text-align: center;">断后伸长率</td>
                     </tr>
                     <tr>
-                        <td style="text-align: center;">数据2-1</td>
-                        <td style="text-align: center;">数据2-2</td>
-                        <td style="text-align: center;">数据2-3</td>
+                        <td style="text-align: center;">450,455,460,465</td>
+                        <td style="text-align: center;">615,615,625,625</td>
+                        <td style="text-align: center;">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td style="text-align: center;">数据3-1</td>
-                        <td style="text-align: center;">数据3-2</td>
-                        <td style="text-align: center;">数据3-3</td>
+                        <td style="text-align: center;">断面收缩率</td>
+                        <td style="text-align: center;">最大力总延伸率</td>
+                        <td style="text-align: center;">重量偏差</td>
                     </tr>
                     <tr>
-                        <td style="text-align: center;">数据4-1</td>
-                        <td style="text-align: center;">数据4-2</td>
-                        <td style="text-align: center;">数据4-3</td>
+                        <td style="text-align: center;">&nbsp;</td>
+                        <td style="text-align: center;">13.8,13.1,13.1,13.6</td>
+                        <td style="text-align: center;">-4.4</td>
                     </tr>
                     <tr>
-                        <td style="text-align: center;">数据5-1</td>
-                        <td style="text-align: center;">数据5-2</td>
-                        <td style="text-align: center;">数据5-3</td>
+                        <td style="text-align: center;">R0el/Rel</td>
+                        <td style="text-align: center;">R0m/R0el</td>
+                        <td style="text-align: center;">反向弯曲</td>
                     </tr>
                     <tr>
-                        <td style="text-align: center;">数据6-1</td>
-                        <td style="text-align: center;">数据6-2</td>
-                        <td style="text-align: center;">数据6-3</td>
+                        <td style="text-align: center;">1.13,1.14,1.16,1.16</td>
+                        <td style="text-align: center;">1.36,1.36,1.35,1.34</td>
+                        <td style="text-align: center;">合格,合格,合格</td>
                     </tr>
                     <tr>
-                        <td style="text-align: center;">数据7-1</td>
-                        <td style="text-align: center;">数据7-2</td>
-                        <td style="text-align: center;">数据7-3</td>
+                        <td style="text-align: center;">冷弯</td>
+                        <td style="text-align: center;">V型缺口冲击功</td>
+                        <td style="text-align: center;">V型缺口冲击功平均值</td>
                     </tr>
                     <tr>
-                        <td style="text-align: center;">数据8-1</td>
-                        <td style="text-align: center;">数据8-2</td>
-                        <td style="text-align: center;">数据8-3</td>
+                        <td style="text-align: center;">合格,合格,合格,合格</td>
+                        <td style="text-align: center;">&nbsp;</td>
+                        <td style="text-align: center;">&nbsp;</td>
                     </tr>
                 </table>
             </div>
