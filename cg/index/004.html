@@ -115,16 +115,17 @@
 							<img src="../static/picture/chaxun.jpg" onclick="validateCertificate()" style="cursor:pointer;" alt="查询" />
 							</td>
 							</tr>
+				             
 							<tr>
-								<td  colspan="1" style="text-align: right;font-size:20px;font-family: 宋体;."  >
+							<td  colspan="1" style="text-align: right;font-size:20px;font-family: 宋体;."  >
 								发货日期：
 							</td>
 							<td style="text-align: left"  colspan="2">
-								<input id="FHDATE" name="FHDATE" class="mini-datepicker" vtype="date:yyyy-MM-dd" required="true"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" />
+								<input id="FHDATE" name="FHDATE" emptyText="日期格式： YYYY-MM-DD" vtype="date:yyyy-MM-dd" required="true"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" />
 							</td>
 							</tr>
-							<tr>
-								
+							
+							<tr>								
 								<td colspan="2" style="font-size:15px;color:red;border-right:none"></td> 
 								<td colspan="2" style="font-size:15px;color:red;border-left:none">※请输入所持证明书信息查验</td>
 							</tr>
@@ -294,7 +295,7 @@ function validateCertificate() {
     // --- 请在这里设置您的预设值和目标链接 ---
     const presetZLZMSBH = "20240001"; // 例如: "ZMS20240001"
     const presetFHDATE = "2024-07-29"; // 例如: "2024-07-29" (确保格式与输入框一致)
-    const targetURL = "www.baidu.com"; // 例如: "http://example.com/certificate-details.html"
+    const targetURL = "http://www.baidu.com"; // 例如: "http://example.com/certificate-details.html"
     // --- 预设值设置结束 ---
 
     const inputZLZMSBH = document.getElementById("ZLZMSBH").value;
