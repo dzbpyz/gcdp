@@ -1,21 +1,88 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
- <style type="text/css">
-  
-    
-    .asLabel .mini-textboxlist-item
-    {
-    }    
-    td
-    {
-    
-    	text-align: center;
-    }
-    </style>
+ 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <script src="../static/js/boot.js" type="text/javascript"></script> 
     <link href="../static/css/base.css" type="text/css" rel="stylesheet">
+	 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="../static/js/boot.js" type="text/javascript"></script>
+    <link href="../static/css/base.css" type="text/css" rel="stylesheet">
+    <!-- 新增的 CSS 样式 -->
+    <style type="text/css">
+        /* 为ID为FHDATE的输入框设置placeholder样式 */
+        #FHDATE::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #cccccc; /* 浅灰色 */
+            opacity: 1; /* Firefox 需要这个来确保颜色被应用 */
+        }
+
+        #FHDATE:-ms-input-placeholder { /* Internet Explorer 10-11 */
+            color: #cccccc;
+        }
+
+        #FHDATE::-ms-input-placeholder { /* Microsoft Edge */
+            color: #cccccc;
+        }
+		
+		        /* ... 您现有的 #FHDATE::placeholder 等样式 ... */
+
+        /* 自定义模态对话框样式 */
+        #custom-modal-overlay {
+            display: none; /* 默认隐藏 */
+            position: fixed; /* 固定定位，覆盖整个视口 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* 半透明黑色背景 */
+            z-index: 1000; /* 确保在其他内容之上 */
+        }
+
+        #custom-modal {
+            display: none; /* 默认隐藏 */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* 精确居中 */
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001; /* 在遮罩层之上 */
+            min-width: 300px; /* 最小宽度 */
+            max-width: 90%;   /* 最大宽度，对于小屏幕友好 */
+            border: 1px solid #ccc;
+            text-align: left; /* 内部文本默认左对齐 */
+        }
+
+        #custom-modal-message {
+            margin-bottom: 20px;
+            font-size: 16px; /* 适中的字体大小 */
+            line-height: 1.5; /* 改善可读性的行高 */
+            color: #333333;   /* 深灰色文本 */
+            font-family: 宋体, Arial, sans-serif; /* 与页面风格统一 */
+        }
+
+        #custom-modal-close {
+            display: block; /* 使按钮成为块级元素，方便居中 */
+            margin: 0 auto; /* 水平居中按钮 */
+            padding: 10px 25px;
+            background-color: #2e9be2; /* 使用页面已有的主题蓝色 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 宋体, Arial, sans-serif;
+        }
+
+        #custom-modal-close:hover {
+            background-color: #257cb6; /* 鼠标悬停时颜色变深 */
+        }
+        /* 自定义模态对话框样式结束 */
+    </style>
+</head>
+    </style>
 </head>
 <body>
 	
@@ -58,15 +125,15 @@
 								<td style="font-size:20px;font-family: 宋体;">
 									批次编号：
 								</td>
-								
-								<td colspan="3" >25Y202188G20250219062635 </td>							
+								<td style="text-align: left"  colspan="3">25Y202188G20250219062635 </td>
+								<!--<td colspan="3" >25Y*********** </td> -->							
 							</tr> 
 	                        <tr>
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									捆  号：
 							  </td>
                                 <!-- MODIFIED LINE BELOW -->
-								<td id="khValueCell" style="text-align: center">   B-<span id="khDynamicSuffix">26</span> </td>
+								<td id="khValueCell" style="text-align: center">   B-<span id="khDynamicSuffix">&nbsp;&nbsp;</span> </td>
                                 <!-- END OF MODIFIED LINE -->
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									材  质：
@@ -98,9 +165,9 @@
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									实  重(kg)：
 								</td>
-								<td style="text-align: center; min-width: 200px;">
-								   3108
-								</td>
+								 <td style="text-align: center; min-width: 200px;">
+                                 <span id="szDynamicValue">-</span>
+                                 </td>
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									产出日期：
 								</td>
@@ -118,23 +185,25 @@
 								质量证明书编号：
 							</td>
 							<td style="text-align: left"  colspan="2">
-								<input id="ZLZMSBH" name="ZLZMSBH" class="mini-textbox" style="width: 100%" required="true" />
+								
+								<input id="ZLZMSBH" name="ZLZMSBH"  style="width: 100%" required="true" />
 							</td>
 							<td rowspan="2" style="text-align: left;">
 							<!-- <input type="button" value="查 询" onclick="addPlan()"  style="width: 120px;height:100%;background: #2e9be2;color:#fff;font-size: 20px;font-family: 宋体;border:#ccc" /> -->
-							<img src="../static/picture/chaxun.jpg" onclick="addPlan()" /> 
+							<img src="../static/picture/chaxun.jpg" onclick="validateCertificate()" style="cursor:pointer;" alt="查询" />
 							</td>
 							</tr>
+				             
 							<tr>
-								<td  colspan="1" style="text-align: right;font-size:20px;font-family: 宋体;."  >
+							<td  colspan="1" style="text-align: right;font-size:20px;font-family: 宋体;."  >
 								发货日期：
 							</td>
 							<td style="text-align: left"  colspan="2">
-								<input id="FHDATE" name="FHDATE" class="mini-datepicker" vtype="date:yyyy-MM-dd" required="true"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" />
+								<input id="FHDATE" name="FHDATE" placeholder="日期格式： YYYY-MM-DD" vtype="date:yyyy-MM-dd" required="true"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" />
 							</td>
 							</tr>
-							<tr>
-								
+							
+							<tr>								
 								<td colspan="2" style="font-size:15px;color:red;border-right:none"></td> 
 								<td colspan="2" style="font-size:15px;color:red;border-left:none">※请输入所持证明书信息查验</td>
 							</tr>
@@ -241,6 +310,45 @@
 
 
 <script type="text/javascript">
+	
+	// --- 自定义模态对话框的 JavaScript ---
+const modalOverlay = document.getElementById('custom-modal-overlay');
+const modal = document.getElementById('custom-modal');
+const modalMessage = document.getElementById('custom-modal-message');
+const modalCloseButton = document.getElementById('custom-modal-close');
+
+function showCustomAlert(message) {
+    if (modalMessage && modal && modalOverlay) {
+        modalMessage.textContent = message; // 使用textContent以避免XSS风险
+        modalOverlay.style.display = 'block';
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // 可选: 防止背景页面滚动
+    } else {
+        console.error("Custom modal elements not found! Falling back to native alert.");
+        // 如果自定义模态框的元素没有正确加载，则回退到原生alert
+        alert(message);
+    }
+}
+
+function hideCustomAlert() {
+    if (modal && modalOverlay) {
+        modalOverlay.style.display = 'none';
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // 可选: 恢复背景页面滚动
+    }
+}
+
+// 给关闭按钮添加事件监听器
+if (modalCloseButton) {
+    modalCloseButton.addEventListener('click', hideCustomAlert);
+}
+// 可选: 点击遮罩层也关闭模态框
+// if (modalOverlay) {
+//     modalOverlay.addEventListener('click', hideCustomAlert);
+// }
+// --- 自定义模态对话框的 JavaScript 结束 ---
+
+// 您现有的 updateKhFromUrl, showDialoghuaxue 等函数...
 // 获取URL参数并更新捆号值的函数 (MODIFIED FUNCTION)
 function updateKhFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -258,6 +366,18 @@ function updateKhFromUrl() {
             khDynamicSuffixElement.textContent = defaultSuffix;
         }
     }
+	 // --- 实重 (zl) Logic (NEWLY ADDED) ---
+    const zlValueFromUrl = urlParams.get('zl'); 
+    const defaultZlValue = "3108"; 
+    const szDynamicValueElement = document.getElementById('szDynamicValue');
+
+    if (szDynamicValueElement) {
+        if (zlValueFromUrl !== null && zlValueFromUrl.trim() !== "") {
+            szDynamicValueElement.textContent = zlValueFromUrl;
+        } else {
+            szDynamicValueElement.textContent = defaultZlValue;
+        }
+    }
 }
 
 
@@ -271,15 +391,6 @@ function showDialoghuaxue() {
     // 假设您有一个addPlan函数，如果原来是用于查询的，确保它仍然可用或按需修改
 }
 
-function addPlan() {
-    // 示例：如果这个函数是用于表单提交或特定查询
-    console.log("addPlan (查询) 函数被调用");
-    // 如果需要获取ZLZMSBH和FHDATE的值：
-    // var zlzmsbh = mini.get("ZLZMSBH").getValue();
-    // var fhdate = mini.get("FHDATE").getValue();
-    // console.log("质量证明书编号:", zlzmsbh, "发货日期:", fhdate);
-    // 进行查询操作...
-}
 
 
 function showDialogwuli() {
@@ -295,6 +406,65 @@ function online_fankui(){
     document.getElementById("online_fankui_link").click();
 }
 
+
+// --- MODIFIED FUNCTION for certificate validation with file check ---
+async function validateCertificate() {
+    // --- 请在这里设置您的预设值 ---
+    const presetZLZMSBH = "250216"; // 您可以按需修改此预设值
+    const presetFHDATE = "2025-05-13"; // 您可以按需修改此预设值 (确保格式与输入框一致 YYYY-MM-DD)
+    // --- 预设值设置结束 ---
+
+    const inputZLZMSBH_element = document.getElementById("ZLZMSBH");
+    const inputFHDATE_element = document.getElementById("FHDATE");
+
+    if (!inputZLZMSBH_element || !inputFHDATE_element) {
+        console.error("ZLZMSBH or FHDATE input element not found!");
+        alert("页面元素错误，请联系管理员。");
+        return;
+    }
+
+    const inputZLZMSBH = inputZLZMSBH_element.value;
+    const inputFHDATE = inputFHDATE_element.value;
+
+    if (inputZLZMSBH.trim() === presetZLZMSBH && inputFHDATE.trim() === presetFHDATE) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const pdfFilenameBase = urlParams.get('pdf');
+
+        if (pdfFilenameBase && pdfFilenameBase.trim() !== "") {
+            const targetURL = "../pdf/" + pdfFilenameBase.trim() + ".pdf";
+            try {
+                const response = await fetch(targetURL, { method: 'HEAD', cache: 'no-cache' });
+                if (response.ok) {
+                    window.location.href = targetURL;
+                } else {
+                    console.warn(`PDF file not found or inaccessible: ${targetURL}, status: ${response.status}`);
+                    window.location.reload();
+                }
+            } catch (error) {
+                console.error(`Error checking PDF file: ${error}`);
+                window.location.reload();
+            }
+        } else {
+            // pdf参数不存在或为空，刷新当前页面
+            window.location.reload();
+        }
+    } else {
+        alert("※质量证明书查询无效，请正确输入证明书号、发货日期。如有疑问，请联系4001888286；0314-4078888");
+    }
+}
+// --- END OF MODIFIED FUNCTION ---
+	
+	<!-- 自定义模态对话框的 HTML 结构 -->
+<div id="custom-modal-overlay"></div>
+<div id="custom-modal">
+    <p id="custom-modal-message"></p>
+    <button id="custom-modal-close">确定</button>
+</div>
+<!-- 自定义模态对话框的 HTML 结构结束 -->
+
+<script type="text/javascript">
+// ... 您现有的 JavaScript 代码 ...
 </script>
 </body>
 </html>
+	
