@@ -98,11 +98,9 @@
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									实  重(kg)：
 								</td>
-								
-								<td id="shizhongValueCell" style="text-align: center; min-width: 200px;">
-                                  3108
-                                </td>
-								
+								 <td style="text-align: center; min-width: 200px;">
+                                 <span id="szDynamicValue">3108</span>
+                                 </td>
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									产出日期：
 								</td>
@@ -243,49 +241,61 @@
 
 
 <script type="text/javascript">
-// 获取URL参数并更新动态字段值的函数 (MODIFIED FUNCTION)
-function updateDynamicFieldsFromUrl() {
+// 获取URL参数并更新捆号值的函数 (MODIFIED FUNCTION)
+function updateKhFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
+    const khSuffixFromUrl = urlParams.get('kh'); // 获取 'kh' 参数的值，这应该是后缀部分
+    const defaultSuffix = "26"; // 默认的后缀值
 
-    // 1. 更新捆号 (kh)
-    const khSuffixFromUrl = urlParams.get('kh'); // 获取 'kh' 参数的值
-    const defaultKhSuffix = "26"; // 默认的捆号后缀值
     const khDynamicSuffixElement = document.getElementById('khDynamicSuffix'); // 获取包含动态后缀的span元素
 
     if (khDynamicSuffixElement) {
         if (khSuffixFromUrl !== null && khSuffixFromUrl.trim() !== "") {
+            // 如果URL参数存在且不为空字符串
             khDynamicSuffixElement.textContent = khSuffixFromUrl;
         } else {
-            khDynamicSuffixElement.textContent = defaultKhSuffix;
+            // 否则，使用默认后缀
+            khDynamicSuffixElement.textContent = defaultSuffix;
         }
     }
+	 // --- 实重 (zl) Logic (NEWLY ADDED) ---
+    const zlValueFromUrl = urlParams.get('zl'); 
+    const defaultZlValue = "3108"; 
+    const szDynamicValueElement = document.getElementById('szDynamicValue');
 
-    // 2. 更新实重(kg) (zl)
-    const actualWeightFromUrl = urlParams.get('zl'); // 获取 'zl' (重量) 参数的值
-    const defaultActualWeight = "3108"; // 默认的实重值
-    const actual // 注意保留了原有的前导空格
+    if (szDynamicValueElement) {
+        if (zlValueFromUrl !== null && zlValueFromUrl.trim() !== "") {
+            szDynamicValueElement.textContent = zlValueFromUrl;
+        } else {
+            szDynamicValueElement.textContent = defaultZlValue;
         }
     }
 }
 
-// 页面加载时调用函数以更新捆号和实重
-updateValuesFromUrl();
+
+updateKhFromUrl(); // 页面加载时调用函数以更新捆号
 
 
-// 您现有的其他函数
+// 您现有的其他函数 (结构已修正)
 function showDialoghuaxue() {
+    // 在这里添加 showDialoghuaxue 的逻辑
     console.log("showDialoghuaxue 函数被调用");
+    // 假设您有一个addPlan函数，如果原来是用于查询的，确保它仍然可用或按需修改
 }
 
 function addPlan() {
+    // 示例：如果这个函数是用于表单提交或特定查询
     console.log("addPlan (查询) 函数被调用");
+    // 如果需要获取ZLZMSBH和FHDATE的值：
     // var zlzmsbh = mini.get("ZLZMSBH").getValue();
     // var fhdate = mini.get("FHDATE").getValue();
     // console.log("质量证明书编号:", zlzmsbh, "发货日期:", fhdate);
+    // 进行查询操作...
 }
 
 
 function showDialogwuli() {
+    // 在这里添加 showDialogwuli 的逻辑
     console.log("showDialogwuli 函数被调用");
 }
 
