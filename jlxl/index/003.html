@@ -450,38 +450,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // --- START: NEW CODE FOR URL PARAMETERS ---
+    // --- START: CODE FOR URL PARAMETERS (MODIFIED) ---
     function updateValuesFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
 
         // 1. 更新 "捆号"
         const kunhaoParam = urlParams.get('kh');
-        if (kunhaoParam !== null) { // Check for null, as an empty string might be a valid value for some cases
+        // 如果 kunhaoParam 存在且不为空字符串，则更新
+        if (kunhaoParam && kunhaoParam.trim() !== "") {
             const labels = document.querySelectorAll('.product-info-grid .label');
             labels.forEach(label => {
                 if (label.textContent.trim() === '捆号') {
-                    const valueElement = label.nextElementSibling; // Get the next sibling (the value div)
+                    const valueElement = label.nextElementSibling;
                     if (valueElement && valueElement.classList.contains('value')) {
                         valueElement.textContent = kunhaoParam;
                     }
                 }
             });
         }
+        // 如果 kunhaoParam 为 null, undefined 或空字符串, 则不执行更新, 显示 HTML 默认值
 
         // 2. 更新 "重量" 的整数部分
-        // 确保你之前已经将 "重量" 的 value div 修改为:
-        // <div class="value"><span id="weight-integer">3616</span><span id="weight-decimal">.000</span></div>
         const zhongliangParam = urlParams.get('zl');
-        if (zhongliangParam !== null) {
+        // 如果 zhongliangParam 存在且不为空字符串，则更新
+        if (zhongliangParam && zhongliangParam.trim() !== "") {
             const weightIntegerElement = document.getElementById('weight-integer');
             if (weightIntegerElement) {
                 weightIntegerElement.textContent = zhongliangParam;
             }
         }
+        // 如果 zhongliangParam 为 null, undefined 或空字符串, 则不执行更新, 显示 HTML 默认值
     }
 
     updateValuesFromURL(); // Call the function to update values on page load
-    // --- END: NEW CODE FOR URL PARAMETERS ---
+    // --- END: CODE FOR URL PARAMETERS (MODIFIED) ---
 
 });
 </script>
