@@ -271,7 +271,7 @@
                 <div class="label">标准</div><div class="value">GB1499.2-2024</div>
                 <div class="label">规格</div><div class="value">Φ20×12000</div>
                 <div class="label">生产日期</div><div class="value">2025-03-31</div>
-                <div class="label">重量</div><div class="value">3616.000</div>
+                <div class="label">重量</div><div class="value"><span id="weight-integer">3616</span><span id="weight-decimal">.000</span></div>
                 <div class="label">支数</div><div class="value">122</div>
                 <div class="label">客户名称</div><div class="value">0</div>
                 <div class="label">出库日期</div><div class="value"></div>
@@ -449,6 +449,40 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // --- START: NEW CODE FOR URL PARAMETERS ---
+    function updateValuesFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // 1. 更新 "捆号"
+        const kunhaoParam = urlParams.get('kh');
+        if (kunhaoParam !== null) { // Check for null, as an empty string might be a valid value for some cases
+            const labels = document.querySelectorAll('.product-info-grid .label');
+            labels.forEach(label => {
+                if (label.textContent.trim() === '捆号') {
+                    const valueElement = label.nextElementSibling; // Get the next sibling (the value div)
+                    if (valueElement && valueElement.classList.contains('value')) {
+                        valueElement.textContent = kunhaoParam;
+                    }
+                }
+            });
+        }
+
+        // 2. 更新 "重量" 的整数部分
+        // 确保你之前已经将 "重量" 的 value div 修改为:
+        // <div class="value"><span id="weight-integer">3616</span><span id="weight-decimal">.000</span></div>
+        const zhongliangParam = urlParams.get('zl');
+        if (zhongliangParam !== null) {
+            const weightIntegerElement = document.getElementById('weight-integer');
+            if (weightIntegerElement) {
+                weightIntegerElement.textContent = zhongliangParam;
+            }
+        }
+    }
+
+    updateValuesFromURL(); // Call the function to update values on page load
+    // --- END: NEW CODE FOR URL PARAMETERS ---
+
 });
 </script>
 </body>
