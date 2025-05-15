@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品信息 - 建龙西林钢铁有限公司</title>
+    <!-- Assuming JS files are fine and don't need responsive changes themselves -->
+    <script  src="../static/js/chunk-vendors.6e76a143.js"></script>
+    <script  src="../static/js/app.68b94d9b.js"></script>
+    <link href="../static/css/chunk-vendors.f67e7287.css" rel="stylesheet">
+    <link href="../static/css/app.0f946a72.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/989.468aaa16.css">
+    <!-- These chrome-extension scripts are likely injected by browser extensions and not part of the page's core code. -->
+    <!-- <script charset="utf-8" src="chrome-extension://nfbikdkjfjcejddbdcpbafnclkfdhijd/js/btype.js"></script> -->
+    <!-- <script type="text/javascript" charset="utf-8" src="chrome-extension://nfbikdkjfjcejddbdcpbafnclkfdhijd/js/chrome.js"></script> -->
+    <!-- <script src="../static/js/gwdang-notifier-360.min.js" charset="utf-8" type="text/javascript"></script> -->
+    <style type="text/css">
+        /* Base body styles - using the later, more specific one */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            margin: 0;
+            padding: 0; /* Added for consistency */
+            background-color: #f4f4f4; /* 页面浅灰色背景 */
+            color: #333;
+            font-size: 16px; /* Adjusted base font size for desktop */
+            line-height: 1.6; /* Improved readability */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Retained from a later rule for better visual separation */
+        }
+
+        .top-bar { /* Kept styles in case this class is used elsewhere or added later */
+            background-color: #fff;
+            color: #333;
+            padding: 10px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 36px; /* Slightly reduced from 42px */
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+        .top-bar .industrial-internet-logo {
+            background-color: #5b9bd5;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 3px;
+            text-decoration: none;
+            margin-top: 5px;
+            font-size: 0.5em; /* Relative to parent */
+        }
+
+        /* --- Banner/Carousel Styles --- */
+        .banner {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #ccc;
+            position: relative;
+            overflow: hidden;
+        }
+        .carousel-images {
+            position: relative;
+            width: 100%;
+            padding-bottom: calc(100% * 560 / 1420); /* Aspect ratio 1420:560 */
+        }
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.7s ease-in-out;
+        }
+        .carousel-image.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            z-index: 2;
+        }
+        .carousel-dots .dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .carousel-dots .dot.active {
+            background-color: #fff;
+        }
+
+        /* Section and Title Styles - Consolidated and refined */
+        .section, .info-section, .product-images-section { /* Combined similar section stylings */
+            padding: 20px;
+            margin-bottom: 10px; /* 板块之间的间距 */
+            /* border-bottom: 1px solid #eee; Removed, seems some sections have it from title, some don't */
+        }
+        .section:last-child, .product-images-section:last-of-type { /* Ensure last section has no bottom margin if needed */
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 18px; /* Base size */
+            font-weight: bold;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Default for "标牌打印" title */
+            cursor: pointer;
+            position: relative; /* For absolute positioned children like .collapse-icon */
+        }
+        
+        /* Specific for "标牌打印" title structure */
+        .section-title .title-content-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        .section-title .title-icon-left {
+            width: 20px; /* Adjusted for proportion */
+            height: 20px; /* Adjusted for proportion */
+            margin-right: 8px;
+        }
+        .section-title .section-title-text {
+            /* styles for text if needed */
+        }
+        .section-title .toggle-arrow {
+            font-size: 16px;
+            color: #888;
+        }
+
+        /* Specific for "产品图片" title structure */
+        .product-images-section .section-title {
+            justify-content: flex-start; /* Overrides the general space-between */
+        }
+        .product-images-section .section-title .title-icon { /* Red bar icon */
+            display: inline-block;
+            width: 4px;
+            height: 16px; /* Match font height better */
+            background-color: #d9534f;
+            margin-right: 8px;
+        }
+        /* General collapse icon styling - if a common class for other titles */
+        .collapse-icon {
+            margin-left: auto;
+            font-size: 12px;
+            color: #888;
+        }
+        .collapse-icon::before {
+            content: '︿';
+        }
+
+
+        /* Product Info Grid Styles */
+        .product-info-grid {
+            display: grid;
+            /* A more flexible approach for the first column: min content, max 30% or 350px */
+            grid-template-columns: minmax(120px, clamp(120px, 25%, 350px)) 1fr;
+            row-gap: 1px;
+            background-color: #e0e0e0;
+            border: 1px solid #e0e0e0;
+        }
+        .product-info-grid > div {
+            padding: 10px 12px;
+            background-color: #fff;
+            font-family: "SimHei", "黑体", sans-serif;
+            font-size: 16px; /* Adjusted from 18px */
+        }
+        .product-info-grid > div.label {
+            font-weight: 500; /* Was normal, 500 is slightly bolder */
+            color: #555;
+            display: flex; /* For centering, if needed */
+            align-items: center; /* For centering, if needed */
+            justify-content: flex-start; /* Default, changed from center to align with typical tables */
+            text-align: left; /* Default for labels */
+        }
+        .product-info-grid > div.value {
+            text-align: left;
+            color: #333;
+            word-break: break-word; /* Prevent long values from breaking layout */
+        }
+        /* Alternating row colors for product-info-grid */
+        .product-info-grid > div.label:nth-child(4n-3),
+        .product-info-grid > div.label:nth-child(4n-1) { /* First label in pair, Second label in pair */
+             background-color: #f8f9fa; /* Light grey for labels */
+        }
+        .product-info-grid > div.label:nth-child(4n-3) { background-color: #DCDCDC; } /* Example override for very first label in a pair */
+        .product-info-grid > div.label:nth-child(4n-1) { background-color: #ffffff; } /* Example override for second label in a pair */
+
+        .product-info-grid > div.value:nth-child(4n-2),
+        .product-info-grid > div.value:nth-child(4n) { /* First value in pair, Second value in pair */
+            background-color: #ffffff; /* White for values */
+        }
+        .product-info-grid > div.value:nth-child(4n-2) { background-color: #f8f9fa; }
+        .product-info-grid > div.value:nth-child(4n) { background-color: #ffffff; }
+
+
+        /* Customer Notice (styles seem okay, minor tweaks if needed) */
+        .customer-notice {
+            background-color: #f9f9f9;
+            padding: 15px;
+            font-size: 13px; /* Slightly smaller */
+            color: #555;
+            line-height: 1.6;
+        }
+        .customer-notice ol {
+            padding-left: 20px; margin: 0;
+        }
+        .customer-notice li {
+            margin-bottom: 5px;
+        }
+
+        /* Product Image Grid (in product-images-section) */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Two columns by default */
+            gap: 10px;
+        }
+        .image-grid .grid-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #eee;
+            box-sizing: border-box;
+        }
+
+        /* Company related elements */
+        .company-branding { /* This class was present but not used in HTML, styling kept */
+            background: linear-gradient(to bottom, #74abd6, #2980b9);
+            text-align: center;
+            padding: 40px 20px;
+            color: #fff;
+        }
+        .company-branding img.logo { width: 80px; height: auto; margin-bottom: 15px; }
+        .company-branding h1 { font-size: 28px; color: #000; margin: 10px 0 5px 0; font-weight: bold; }
+        .company-branding p { font-size: 16px; color: #333; margin-bottom: 30px; letter-spacing: 1px; }
+
+        .company- { /* This class was present, for an image. Assuming it's a full-width banner-like image */
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+        .company- img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Collapsible content initial state */
+        .collapsible-content.hidden {
+            display: none;
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px; /* Smaller base font for mobile */
+            }
+
+            .top-bar {
+                font-size: 24px; /* Smaller top bar font */
+                padding: 10px 15px;
+            }
+            .top-bar .industrial-internet-logo {
+                font-size: 0.6em; /* Adjust if needed */
+            }
+
+            .section, .info-section, .product-images-section {
+                padding: 15px; /* Reduced padding */
+            }
+
+            .section-title {
+                font-size: 16px; /* Slightly smaller title */
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+            }
+            .section-title .title-icon-left {
+                width: 18px;
+                height: 18px;
+            }
+
+            /* Product Info Grid on mobile: Stack label and value */
+            .product-info-grid {
+                grid-template-columns: 1fr; /* Single column */
+                gap: 1px; /* Keep the line between items */
+            }
+            .product-info-grid > div {
+                padding: 8px 10px;
+                font-size: 14px; /* Smaller font in grid */
+            }
+            .product-info-grid > div.label {
+                justify-content: flex-start; /* Ensure labels are left-aligned */
+                /* background-color: #f0f0f0 !important; /* Consistent background for labels */
+                font-weight: bold; /* Make labels stand out more when stacked */
+            }
+            /* Simplify alternating colors for stacked view */
+            .product-info-grid > div.label,
+            .product-info-grid > div.label:nth-child(4n-3),
+            .product-info-grid > div.label:nth-child(4n-1) {
+                 background-color: #f0f0f0; /* Consistent for all labels */
+            }
+            .product-info-grid > div.value,
+            .product-info-grid > div.value:nth-child(4n-2),
+            .product-info-grid > div.value:nth-child(4n) {
+                background-color: #ffffff; /* Consistent for all values */
+            }
+            .product-info-grid > div.value {
+                /* No specific changes needed other than inheriting from parent */
+            }
+
+
+            .image-grid {
+                grid-template-columns: 1fr; /* Single column for images */
+                gap: 8px;
+            }
+
+            .customer-notice {
+                font-size: 12px;
+                padding: 10px;
+            }
+            .customer-notice ol {
+                padding-left: 15px;
+            }
+
+            .company-branding h1 { font-size: 22px; }
+            .company-branding p { font-size: 14px; }
+        }
+
+        @media (max-width: 480px) { /* Even smaller screens */
+            body {
+                font-size: 13px;
+            }
+            .section-title {
+                font-size: 15px;
+            }
+            .product-info-grid > div {
+                font-size: 13px;
+                padding: 6px 8px;
+            }
+             .product-info-grid > div.label {
+                /* Optional: Add a slight bottom margin if labels and values feel too close */
+                /* margin-bottom: 2px; */
+            }
+            .top-bar {
+                font-size: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="banner">
+        <div class="carousel-images">
+            <img src="../static/images/01.png" alt="Banner Image 1" class="carousel-image active">
+            <img src="../static/images/02.png" alt="Banner Image 2" class="carousel-image">
+        </div>
+        <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section"> <!-- This section wraps "标牌打印" -->
+            <div class="section-title" data-section-name="产品信息">
+                <div class="title-content-wrapper">
+                    <img src="../static/images/下载.png" alt="打印图标" class="title-icon-left">
+                    <span class="section-title-text">标牌打印</span>
+                </div>
+                <span class="toggle-arrow">▲</span>
+            </div>
+            <div class="product-info-grid collapsible-content">
+                <div class="label">产品名称</div><div class="value">螺纹钢</div>
+                <div class="label">产品条码</div><div class="value">TCTOGGLE-XLJG-NEW</div>
+                <div class="label">产品分类</div><div class="value">其他制造业</div>
+                <div class="label">生产许可证</div><div class="value">(黑) XK05-001-00706</div>
+                <div class="label">炉批号</div><div class="value">3138295</div>
+                <div class="label">捆号</div><div class="value">2207</div>
+                <div class="label">熔炼号</div><div class="value">3138295</div>
+                <div class="label">牌号</div><div class="value">HRB400E</div>
+                <div class="label">标准</div><div class="value">GB1499.2-2024</div>
+                <div class="label">规格</div><div class="value">Φ20×12000</div>
+                <div class="label">生产日期</div><div class="value">2025-03-31</div>
+                <div class="label">重量</div><div class="value">3616.000</div>
+                <div class="label">支数</div><div class="value">122</div>
+                <div class="label">客户名称</div><div class="value">0</div>
+                <div class="label">出库日期</div><div class="value"></div>
+                <div class="label">出库车号</div><div class="value"></div>
+                <div class="label">销售热线</div><div class="value">0458-3789405</div>
+                <div class="label">质量咨询</div><div class="value">0458-3788204,3788308</div>
+            </div>
+        </div>
+
+        <section class="product-images-section"> <!-- Changed div to section for semantic consistency -->
+            <h2 class="section-title"> <!-- Changed div to h2 for semantic title -->
+                <span class="title-icon"></span>
+                <span class="section-title-text">产品图片</span> <!-- Added span for consistency -->
+                <!-- Assuming no toggle arrow for this one based on original justify-content: flex-start -->
+            </h2>
+            <div class="image-grid">
+                <div class="grid-item">
+                    <img src="../static/images/03.png" alt="钢筋生产线">
+                </div>
+                <div class="grid-item">
+                    <img src="../static/images/04.png" alt="钢筋捆">
+                </div>
+                <div class="grid-item">
+                    <img src="../static/images/05.png" alt="钢筋网片">
+                </div>
+                <div class="grid-item">
+                    <img src="../static/images/06.png" alt="钢筋细节">
+                </div>
+            </div>
+        </section>
+    </div> <!-- .container 结束 -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Carousel script (existing)
+    const images = document.querySelectorAll('.carousel-image');
+    const dots = document.querySelectorAll('.carousel-dots .dot');
+    const banner = document.querySelector('.banner');
+    let currentIndex = 0;
+    const intervalTime = 3000;
+    let slideInterval;
+
+    function showImage(index) {
+        if (!images || images.length === 0) return;
+        if (index >= images.length) index = 0;
+        if (index < 0) index = images.length - 1;
+
+        images.forEach(img => img.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        if (images[index]) images[index].classList.add('active');
+        if (dots[index]) dots[index].classList.add('active');
+        currentIndex = index;
+    }
+
+    function nextImage() {
+        showImage((currentIndex + 1) % (images.length || 1));
+    }
+
+    function startSlideShow() {
+        clearInterval(slideInterval); // Clear existing interval before starting a new one
+        if (images.length > 1) { // Only start slideshow if there's more than one image
+            slideInterval = setInterval(nextImage, intervalTime);
+        }
+    }
+
+    function stopSlideShow() {
+        clearInterval(slideInterval);
+    }
+
+    if (images.length > 0) {
+        showImage(0);
+        startSlideShow(); // Start initially
+    }
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            if (!isNaN(index)) {
+                stopSlideShow();
+                showImage(index);
+                startSlideShow(); // Restart after manual navigation
+            }
+        });
+    });
+
+    if (banner) {
+        banner.addEventListener('mouseenter', stopSlideShow);
+        banner.addEventListener('mouseleave', startSlideShow);
+    }
+
+    // Collapsible sections script (existing)
+    const sectionTitles = document.querySelectorAll('.section-title');
+
+    sectionTitles.forEach(title => {
+        const content = title.nextElementSibling;
+        const arrow = title.querySelector('.toggle-arrow');
+        const sectionName = title.dataset.sectionName;
+
+        // Only apply to titles that are meant to be collapsible (have an arrow and content)
+        if (!content || !arrow || !content.classList.contains('collapsible-content')) {
+            // If it's the "产品图片" title, it doesn't have an arrow or data-section-name for collapse
+            // So it will be skipped, which is correct.
+            return;
+        }
+
+        // Set initial state based on sectionName (as per original logic)
+        if (sectionName === '产品信息') {
+            content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+            arrow.textContent = '▲';
+        } else if (sectionName === '物理性能' || sectionName === '化学成分') { // Example for other sections if added
+            content.style.display = 'none';
+            arrow.textContent = '▼';
+        } else { // Default for other collapsible sections if any
+            // Check if it should be grid or block
+            content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+            arrow.textContent = '▲';
+        }
+
+        title.addEventListener('click', () => {
+            const isHidden = content.style.display === 'none';
+            if (isHidden) {
+                content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+                arrow.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                arrow.textContent = '▼';
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
