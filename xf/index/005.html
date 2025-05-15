@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品信息 - 建龙西林钢铁有限公司</title>
+    <script src="../static/js/chunk-vendors.6e76a143.js"></ncript>
+    <script src="../static/js/app.68b94d9b.js"></script>
+    <link href="../static/css/chunk-vendors.f67e7287.css" rel="stylesheet">
+    <link href="../static/css/app.0f946a72.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/css/989.468aaa16.css">
+
+    <style type="text/css">
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            font-size: 17px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+        }
+
+        .top-bar { /* ... 保持原样，这里省略 ... */ }
+
+        /* Banner/Carousel Styles */
+        .banner {
+            background-color: #ccc;
+            position: relative;
+            overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto 20px;
+        }
+        .carousel-images { position: relative; width: 100%; padding-bottom: calc(100% * 560 / 1420); }
+        .carousel-image { position: absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; opacity:0; visibility:hidden; transition:opacity .7s ease-in-out; }
+        .carousel-image.active { opacity:1; visibility:visible; z-index:1; }
+        .carousel-dots { position:absolute; bottom:15px; left:50%; transform:translateX(-50%); display:flex; z-index:2; }
+        .carousel-dots .dot { width:10px; height:10px; background:rgba(255,255,255,.5); border-radius:50%; margin:0 5px; cursor:pointer; }
+        .carousel-dots .dot.active { background:#fff; }
+
+        .section { padding:20px; border-bottom:1px solid #eee; }
+        .section:last-child { border-bottom:none; }
+        .section-title { /* ... 原section-title 样式省略 ... */ }
+
+        /* 产品信息网格 */
+        .product-info-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            row-gap:1px;
+            background-color:#e0e0e0;
+            border:1px solid #e0e0e0;
+        }
+        .product-info-grid > div {
+            padding:10px 12px;
+            background-color:#fff;
+        }
+        .product-info-grid > div.label { font-weight:500; color:#555; display:flex; align-items:center; justify-content:center; }
+        .product-info-grid > div.value { text-align:left; color:#333; }
+
+        /* 图片网格 */
+        .image-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; }
+        .grid-item img { width:100%; height:auto; display:block; border:1px solid #eee; box-sizing:border-box; }
+
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            body { font-size: 14px; }
+            .section-title { font-size: 15px; }
+
+            /* 调整产品信息网格：两列自适应 */
+            .product-info-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .product-info-grid > div {
+                padding: 5px 8px;
+            }
+
+            /* 保持图片网格两列显示 */
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="carousel-images">
+            <img src="../static/images/01.png" alt="Banner Image 1" class="carousel-image active">
+            <img src="../static/images/02.png" alt="Banner Image 2" class="carousel-image">
+        </div>
+        <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-title" data-section-name="产品信息">
+                <div class="title-content-wrapper">
+                    <img src="../static/images/下载.png" alt="打印图标" class="title-icon-left">
+                    <span class="section-title-text">标牌打印</span>
+                </div>
+                <span class="toggle-arrow">▲</span>
+            </div>
+            <div class="product-info-grid collapsible-content">
+                <div class="label">产品名称</div><div class="value">螺纹钢</div>
+                <div class="label">产品条码</div><div class="value">TCTOGGLE-XLJG-NEW</div>
+                <div class="label">产品分类</div><div class="value">其他制造业</div>
+                <div class="label">生产许可证</div><div class="value">(黑) XK05-001-00706</div>
+                <div class="label">炉批号</div><div class="value">3138295</div>
+                <div class="label">捆号</div><div class="value">2207</div>
+                <div class="label">熔炼号</div><div class="value">3138295</div>
+                <div class="label">牌号</div><div class="value">HRB400E</div>
+                <div class="label">标准</div><div class="value">GB1499.2-2024</div>
+                <div class="label">规格</div><div class="value">Φ20×12000</div>
+                <div class="label">生产日期</div><div class="value">2025-03-31</div>
+                <div class="label">重量</div><div class="value">3616.000</div>
+                <div class="label">支数</div><div class="value">122</div>
+                <div class="label">客户名称</div><div class="value">0</div>
+                <div class="label">出库日期</div><div class="value"></div>
+                <div class="label">出库车号</div><div class="value"></div>
+                <div class="label">销售热线</div><div class="value">0458-3789405</div>
+                <div class="label">质量咨询</div><div class="value">0458-3788204,3788308</div>
+            </div>
+        </div>
+
+        <section class="product-images-section">
+            <h2 class="section-title">
+                <span class="title-icon"></span>产品图片
+            </h2>
+            <div class="image-grid">
+                <div class="grid-item"><img src="../static/images/03.png" alt="钢筋生产线"></div>
+                <div class="grid-item"><img src="../static/images/04.png" alt="钢筋捆"></div>
+                <div class="grid-item"><img src="../static/images/05.png" alt="钢筋网片"></div>
+                <div class="grid-item"><img src="../static/images/06.png" alt="钢筋细节"></div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 原有轮播和折叠脚本保持不变
+    </script>
+</body>
+</html>
