@@ -5,43 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>产品信息 - 建龙西林钢铁有限公司</title>
-    <!-- Assuming JS files are fine and don't need responsive changes themselves -->
+    <!-- 假设JS文件本身不需要响应式更改 -->
     <script  src="../static/js/chunk-vendors.6e76a143.js"></script>
     <script  src="../static/js/app.68b94d9b.js"></script>
     <link href="../static/css/chunk-vendors.f67e7287.css" rel="stylesheet">
     <link href="../static/css/app.0f946a72.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/css/989.468aaa16.css">
-    <!-- These chrome-extension scripts are likely injected by browser extensions and not part of the page's core code. -->
+    <!-- 以下Chrome扩展脚本通常由浏览器插件注入，并非页面核心代码 -->
     <!-- <script charset="utf-8" src="chrome-extension://nfbikdkjfjcejddbdcpbafnclkfdhijd/js/btype.js"></script> -->
     <!-- <script type="text/javascript" charset="utf-8" src="chrome-extension://nfbikdkjfjcejddbdcpbafnclkfdhijd/js/chrome.js"></script> -->
     <!-- <script src="../static/js/gwdang-notifier-360.min.js" charset="utf-8" type="text/javascript"></script> -->
     <style type="text/css">
-        /* Base body styles - using the later, more specific one */
+        /* 基础 body 样式 */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             margin: 0;
-            padding: 0; /* Added for consistency */
+            padding: 0;
             background-color: #f4f4f4; /* 页面浅灰色背景 */
             color: #333;
-            font-size: 16px; /* Adjusted base font size for desktop */
-            line-height: 1.6; /* Improved readability */
+            font-size: 16px; /* 桌面端基础字号 */
+            line-height: 1.6; /* 改善可读性 */
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Retained from a later rule for better visual separation */
+            background-color: #fff; /* 内容区域白色背景 */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
-        .top-bar { /* Kept styles in case this class is used elsewhere or added later */
+        .top-bar { /* 保留样式以防将来使用 */
             background-color: #fff;
             color: #333;
             padding: 10px 20px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            font-size: 36px; /* Slightly reduced from 42px */
+            font-size: 36px;
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
@@ -54,22 +54,22 @@
             border-radius: 3px;
             text-decoration: none;
             margin-top: 5px;
-            font-size: 0.5em; /* Relative to parent */
+            font-size: 0.5em; /* 相对于父元素 */
         }
 
-        /* --- Banner/Carousel Styles --- */
+        /* --- Banner/轮播图样式 --- */
         .banner {
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
-            background-color: #ccc;
+            background-color: #ccc; /* 图片加载时的占位背景色 */
             position: relative;
             overflow: hidden;
         }
         .carousel-images {
             position: relative;
             width: 100%;
-            padding-bottom: calc(100% * 560 / 1420); /* Aspect ratio 1420:560 */
+            padding-bottom: calc(100% * 560 / 1420); /* 保持宽高比 1420:560 */
         }
         .carousel-image {
             position: absolute;
@@ -107,18 +107,17 @@
             background-color: #fff;
         }
 
-        /* Section and Title Styles - Consolidated and refined */
-        .section, .info-section, .product-images-section { /* Combined similar section stylings */
+        /* 区块和标题样式 - 整合和优化 */
+        .section, .info-section, .product-images-section {
             padding: 20px;
-            margin-bottom: 10px; /* 板块之间的间距 */
-            /* border-bottom: 1px solid #eee; Removed, seems some sections have it from title, some don't */
+            margin-bottom: 10px;
         }
-        .section:last-child, .product-images-section:last-of-type { /* Ensure last section has no bottom margin if needed */
+        .section:last-child, .product-images-section:last-of-type {
             margin-bottom: 0;
         }
 
         .section-title {
-            font-size: 18px; /* Base size */
+            font-size: 18px; /* 基础字号 */
             font-weight: bold;
             color: #333;
             margin-top: 0;
@@ -127,41 +126,41 @@
             border-bottom: 1px solid #eee;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Default for "标牌打印" title */
+            justify-content: space-between; /* “标牌打印”标题默认两端对齐 */
             cursor: pointer;
-            position: relative; /* For absolute positioned children like .collapse-icon */
+            position: relative;
         }
         
-        /* Specific for "标牌打印" title structure */
+        /* “标牌打印”标题结构 */
         .section-title .title-content-wrapper {
             display: flex;
             align-items: center;
         }
         .section-title .title-icon-left {
-            width: 20px; /* Adjusted for proportion */
-            height: 20px; /* Adjusted for proportion */
+            width: 20px;
+            height: 20px;
             margin-right: 8px;
         }
         .section-title .section-title-text {
-            /* styles for text if needed */
+            /* 文本样式（如果需要） */
         }
         .section-title .toggle-arrow {
             font-size: 16px;
             color: #888;
         }
 
-        /* Specific for "产品图片" title structure */
+        /* “产品图片”标题结构 */
         .product-images-section .section-title {
-            justify-content: flex-start; /* Overrides the general space-between */
+            justify-content: flex-start; /* 覆盖通用的两端对齐 */
         }
-        .product-images-section .section-title .title-icon { /* Red bar icon */
+        .product-images-section .section-title .title-icon { /* 红色条形图标 */
             display: inline-block;
             width: 4px;
-            height: 16px; /* Match font height better */
+            height: 16px;
             background-color: #d9534f;
             margin-right: 8px;
         }
-        /* General collapse icon styling - if a common class for other titles */
+        /* 通用折叠图标样式 - 如果其他标题也用 */
         .collapse-icon {
             margin-left: auto;
             font-size: 12px;
@@ -172,55 +171,55 @@
         }
 
 
-        /* Product Info Grid Styles */
+        /* 产品信息网格样式 */
         .product-info-grid {
             display: grid;
-            /* A more flexible approach for the first column: min content, max 30% or 350px */
-            grid-template-columns: minmax(120px, clamp(120px, 25%, 350px)) 1fr;
-            row-gap: 1px;
-            background-color: #e0e0e0;
-            border: 1px solid #e0e0e0;
+            /* 桌面端：第一列宽度灵活，但有最小最大限制 */
+            grid-template-columns: minmax(120px, clamp(120px, 30%, 200px)) 1fr; /* 调整clamp的最大值，使其更适合两列 */
+            row-gap: 1px; /* 行间视觉分割线 */
+            background-color: #e0e0e0; /* 网格线颜色 */
+            border: 1px solid #e0e0e0; /* 外边框 */
         }
         .product-info-grid > div {
             padding: 10px 12px;
             background-color: #fff;
             font-family: "SimHei", "黑体", sans-serif;
-            font-size: 16px; /* Adjusted from 18px */
+            font-size: 16px; /* 桌面端表格内字号 */
         }
         .product-info-grid > div.label {
-            font-weight: 500; /* Was normal, 500 is slightly bolder */
+            font-weight: 500;
             color: #555;
-            display: flex; /* For centering, if needed */
-            align-items: center; /* For centering, if needed */
-            justify-content: flex-start; /* Default, changed from center to align with typical tables */
-            text-align: left; /* Default for labels */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* 标签文本左对齐 */
+            text-align: left;
         }
         .product-info-grid > div.value {
             text-align: left;
             color: #333;
-            word-break: break-word; /* Prevent long values from breaking layout */
+            word-break: break-word; /* 防止长文本破坏布局 */
         }
-        /* Alternating row colors for product-info-grid */
+        /* 产品信息网格交替行背景色 */
         .product-info-grid > div.label:nth-child(4n-3),
-        .product-info-grid > div.label:nth-child(4n-1) { /* First label in pair, Second label in pair */
-             background-color: #f8f9fa; /* Light grey for labels */
+        .product-info-grid > div.label:nth-child(4n-1) {
+             background-color: #f8f9fa;
         }
-        .product-info-grid > div.label:nth-child(4n-3) { background-color: #DCDCDC; } /* Example override for very first label in a pair */
-        .product-info-grid > div.label:nth-child(4n-1) { background-color: #ffffff; } /* Example override for second label in a pair */
+        .product-info-grid > div.label:nth-child(4n-3) { background-color: #DCDCDC; }
+        .product-info-grid > div.label:nth-child(4n-1) { background-color: #ffffff; }
 
         .product-info-grid > div.value:nth-child(4n-2),
-        .product-info-grid > div.value:nth-child(4n) { /* First value in pair, Second value in pair */
-            background-color: #ffffff; /* White for values */
+        .product-info-grid > div.value:nth-child(4n) {
+            background-color: #ffffff;
         }
         .product-info-grid > div.value:nth-child(4n-2) { background-color: #f8f9fa; }
         .product-info-grid > div.value:nth-child(4n) { background-color: #ffffff; }
 
 
-        /* Customer Notice (styles seem okay, minor tweaks if needed) */
+        /* 客户须知 (样式基本OK，按需微调) */
         .customer-notice {
             background-color: #f9f9f9;
             padding: 15px;
-            font-size: 13px; /* Slightly smaller */
+            font-size: 13px;
             color: #555;
             line-height: 1.6;
         }
@@ -231,10 +230,10 @@
             margin-bottom: 5px;
         }
 
-        /* Product Image Grid (in product-images-section) */
+        /* 产品图片网格 (在 product-images-section 内) */
         .image-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two columns by default */
+            grid-template-columns: repeat(2, 1fr); /* 默认两列 */
             gap: 10px;
         }
         .image-grid .grid-item img {
@@ -245,8 +244,8 @@
             box-sizing: border-box;
         }
 
-        /* Company related elements */
-        .company-branding { /* This class was present but not used in HTML, styling kept */
+        /* 公司相关元素 */
+        .company-branding { /* 此类存在但未在HTML中使用，保留样式 */
             background: linear-gradient(to bottom, #74abd6, #2980b9);
             text-align: center;
             padding: 40px 20px;
@@ -256,7 +255,7 @@
         .company-branding h1 { font-size: 28px; color: #000; margin: 10px 0 5px 0; font-weight: bold; }
         .company-branding p { font-size: 16px; color: #333; margin-bottom: 30px; letter-spacing: 1px; }
 
-        .company- { /* This class was present, for an image. Assuming it's a full-width banner-like image */
+        .company- { /* 此类存在，用于图片。假设是全宽类似banner的图片 */
             max-width: 1200px;
             margin: 20px auto;
         }
@@ -266,31 +265,31 @@
             display: block;
         }
 
-        /* Collapsible content initial state */
+        /* 折叠内容初始状态 */
         .collapsible-content.hidden {
             display: none;
         }
 
-        /* --- Media Queries for Responsiveness --- */
-        @media (max-width: 768px) {
+        /* --- 响应式媒体查询 --- */
+        @media (max-width: 768px) { /* 平板和手机 */
             body {
-                font-size: 14px; /* Smaller base font for mobile */
+                font-size: 14px; /* 手机端基础字号 */
             }
 
             .top-bar {
-                font-size: 24px; /* Smaller top bar font */
+                font-size: 24px;
                 padding: 10px 15px;
             }
             .top-bar .industrial-internet-logo {
-                font-size: 0.6em; /* Adjust if needed */
+                font-size: 0.6em;
             }
 
             .section, .info-section, .product-images-section {
-                padding: 15px; /* Reduced padding */
+                padding: 15px 10px; /* 减小左右内边距 */
             }
 
             .section-title {
-                font-size: 16px; /* Slightly smaller title */
+                font-size: 16px;
                 margin-bottom: 10px;
                 padding-bottom: 8px;
             }
@@ -299,39 +298,35 @@
                 height: 18px;
             }
 
-            /* Product Info Grid on mobile: Stack label and value */
+            /* 产品信息网格在手机端：保持两列 */
             .product-info-grid {
-                grid-template-columns: 1fr; /* Single column */
-                gap: 1px; /* Keep the line between items */
+                /* 覆盖桌面端的列宽设置，为手机端指定更合适的两列 */
+                /* 第一列固定宽度（根据最长标签调整），第二列占据剩余空间 */
+                grid-template-columns: 100px 1fr; /* 示例：标签列100px，可根据实际内容调整 */
+                /* 如果希望第一列更有弹性，可以尝试百分比，但需注意内容溢出 */
+                /* grid-template-columns: 35% auto; */
             }
             .product-info-grid > div {
-                padding: 8px 10px;
-                font-size: 14px; /* Smaller font in grid */
+                padding: 8px 8px; /* 减小单元格内边距 */
+                font-size: 13px; /* 减小表格内字号 */
             }
             .product-info-grid > div.label {
-                justify-content: flex-start; /* Ensure labels are left-aligned */
-                /* background-color: #f0f0f0 !important; /* Consistent background for labels */
-                font-weight: bold; /* Make labels stand out more when stacked */
+                font-weight: normal; /* 在两列布局下，标签通常不需要特别加粗 */
+                /* 确保标签文本能正常显示，过长则自动换行 */
+                word-break: break-word; 
+                overflow-wrap: break-word;
             }
-            /* Simplify alternating colors for stacked view */
-            .product-info-grid > div.label,
-            .product-info-grid > div.label:nth-child(4n-3),
-            .product-info-grid > div.label:nth-child(4n-1) {
-                 background-color: #f0f0f0; /* Consistent for all labels */
-            }
-            .product-info-grid > div.value,
-            .product-info-grid > div.value:nth-child(4n-2),
-            .product-info-grid > div.value:nth-child(4n) {
-                background-color: #ffffff; /* Consistent for all values */
-            }
-            .product-info-grid > div.value {
-                /* No specific changes needed other than inheriting from parent */
+             .product-info-grid > div.value {
+                /* 确保值文本能正常显示，过长则自动换行 */
+                word-break: break-word;
+                overflow-wrap: break-word;
             }
 
 
+            /* 产品图片网格在手机端：保持两列 */
             .image-grid {
-                grid-template-columns: 1fr; /* Single column for images */
-                gap: 8px;
+                /* 继承桌面端的 grid-template-columns: repeat(2, 1fr); 即可 */
+                gap: 8px; /* 图片间距可略小 */
             }
 
             .customer-notice {
@@ -346,23 +341,27 @@
             .company-branding p { font-size: 14px; }
         }
 
-        @media (max-width: 480px) { /* Even smaller screens */
+        @media (max-width: 480px) { /* 更小屏幕的手机 */
             body {
-                font-size: 13px;
+                font-size: 13px; /* 进一步减小基础字号 */
             }
             .section-title {
                 font-size: 15px;
             }
+            /* 产品信息网格在更小屏幕 */
+            .product-info-grid {
+                 grid-template-columns: 85px 1fr; /* 示例：标签列进一步减小 */
+            }
             .product-info-grid > div {
-                font-size: 13px;
-                padding: 6px 8px;
+                font-size: 12px; /* 进一步减小表格内字号 */
+                padding: 6px 5px;   /* 进一步减小内边距 */
             }
-             .product-info-grid > div.label {
-                /* Optional: Add a slight bottom margin if labels and values feel too close */
-                /* margin-bottom: 2px; */
-            }
+            
             .top-bar {
                 font-size: 20px;
+            }
+            .image-grid {
+                gap: 5px; /* 图片间距更小 */
             }
         }
 
@@ -382,7 +381,7 @@
     </div>
 
     <div class="container">
-        <div class="section"> <!-- This section wraps "标牌打印" -->
+        <div class="section"> <!-- 此区块包裹“标牌打印” -->
             <div class="section-title" data-section-name="产品信息">
                 <div class="title-content-wrapper">
                     <img src="../static/images/下载.png" alt="打印图标" class="title-icon-left">
@@ -390,7 +389,7 @@
                 </div>
                 <span class="toggle-arrow">▲</span>
             </div>
-            <div class="product-info-grid collapsible-content">
+            <div class="product-info-grid collapsible-content"> <!-- 添加了 collapsible-content 类 -->
                 <div class="label">产品名称</div><div class="value">螺纹钢</div>
                 <div class="label">产品条码</div><div class="value">TCTOGGLE-XLJG-NEW</div>
                 <div class="label">产品分类</div><div class="value">其他制造业</div>
@@ -412,11 +411,11 @@
             </div>
         </div>
 
-        <section class="product-images-section"> <!-- Changed div to section for semantic consistency -->
-            <h2 class="section-title"> <!-- Changed div to h2 for semantic title -->
+        <section class="product-images-section"> <!-- 使用 section 语义化标签 -->
+            <h2 class="section-title"> <!-- 使用 h2 语义化标题 -->
                 <span class="title-icon"></span>
-                <span class="section-title-text">产品图片</span> <!-- Added span for consistency -->
-                <!-- Assuming no toggle arrow for this one based on original justify-content: flex-start -->
+                <span class="section-title-text">产品图片</span> <!-- 添加 span 以保持一致性 -->
+                <!-- 此标题默认不应有折叠箭头 -->
             </h2>
             <div class="image-grid">
                 <div class="grid-item">
@@ -437,7 +436,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Carousel script (existing)
+    // 轮播图脚本 (已存在)
     const images = document.querySelectorAll('.carousel-image');
     const dots = document.querySelectorAll('.carousel-dots .dot');
     const banner = document.querySelector('.banner');
@@ -446,7 +445,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let slideInterval;
 
     function showImage(index) {
-        if (!images || images.length === 0) return;
+        if (!images || images.length === 0) return; // 鲁棒性检查
         if (index >= images.length) index = 0;
         if (index < 0) index = images.length - 1;
 
@@ -459,12 +458,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function nextImage() {
-        showImage((currentIndex + 1) % (images.length || 1));
+        showImage((currentIndex + 1) % (images.length || 1)); // 防止 images.length 为 0 时出错
     }
 
     function startSlideShow() {
-        clearInterval(slideInterval); // Clear existing interval before starting a new one
-        if (images.length > 1) { // Only start slideshow if there's more than one image
+        clearInterval(slideInterval); // 清除现有计时器
+        if (images.length > 1) { // 仅当图片多于一张时启动轮播
             slideInterval = setInterval(nextImage, intervalTime);
         }
     }
@@ -475,7 +474,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (images.length > 0) {
         showImage(0);
-        startSlideShow(); // Start initially
+        startSlideShow(); // 初始启动
     }
 
     dots.forEach(dot => {
@@ -484,7 +483,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isNaN(index)) {
                 stopSlideShow();
                 showImage(index);
-                startSlideShow(); // Restart after manual navigation
+                startSlideShow(); // 手动导航后重启轮播
             }
         });
     });
@@ -494,30 +493,29 @@ document.addEventListener('DOMContentLoaded', function() {
         banner.addEventListener('mouseleave', startSlideShow);
     }
 
-    // Collapsible sections script (existing)
+    // --- 可折叠版块脚本 (已存在) ---
     const sectionTitles = document.querySelectorAll('.section-title');
 
     sectionTitles.forEach(title => {
-        const content = title.nextElementSibling;
+        const content = title.nextElementSibling; // 内容是紧邻的下一个兄弟元素
         const arrow = title.querySelector('.toggle-arrow');
         const sectionName = title.dataset.sectionName;
 
-        // Only apply to titles that are meant to be collapsible (have an arrow and content)
+        // 仅对具有折叠功能（有箭头和指定内容类）的标题应用此逻辑
         if (!content || !arrow || !content.classList.contains('collapsible-content')) {
-            // If it's the "产品图片" title, it doesn't have an arrow or data-section-name for collapse
-            // So it will be skipped, which is correct.
+            // 例如“产品图片”标题没有箭头，也不会被处理，这是正确的
             return;
         }
-
-        // Set initial state based on sectionName (as per original logic)
+        
+        // 根据 sectionName 设置初始状态 (按原逻辑)
+        // "产品信息" 默认展开，其他如 "物理性能", "化学成分" (如果添加) 默认折叠
         if (sectionName === '产品信息') {
             content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
             arrow.textContent = '▲';
-        } else if (sectionName === '物理性能' || sectionName === '化学成分') { // Example for other sections if added
+        } else if (sectionName === '物理性能' || sectionName === '化学成分') { // 其他区块示例
             content.style.display = 'none';
             arrow.textContent = '▼';
-        } else { // Default for other collapsible sections if any
-            // Check if it should be grid or block
+        } else { // 其他可折叠区块的默认状态
             content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
             arrow.textContent = '▲';
         }
