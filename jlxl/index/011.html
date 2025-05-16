@@ -11,7 +11,7 @@
             padding: 0;
             background-color: #f0f2f5;
             color: #333;
-            font-size: 14px;
+            font-size: 17px;
         }
 
         .container {
@@ -21,31 +21,43 @@
         }
 
          .top-bar {
-            background-color: #3a3f44; /* Approximation from image */
-            color: #fff;
-            padding: 10px 20px;
-            display: flex;
-            flex-direction: column; /* Stack flex items vertically */
-            align-items: flex-start; /* Align items to the start of the cross-axis (left) */
-            font-size: 12px;
+          background-color: #fff;      
+          color: #333;                 
+          padding: 10px 20px;
+          display: flex;
+          flex-direction: column; 
+          align-items: flex-start; 
+          font-size: 42px;
+          max-width: 1200px;
+          margin-left: auto;
+          margin-right: auto;
+          box-sizing: border-box;
         }
 
-          .top-bar .industrial-internet-logo {
-            background-color: #5b9bd5; /* Approximation */
-            color: #fff;
-            padding: 5px 10px;
-            border-radius: 3px;
-            text-decoration: none;
-            margin-top: 5px; /* Add some space from the text above */
-        }
+      .top-bar .industrial-internet-logo { /* 此样式类在HTML中未使用，但保留 */
+       background-color: #5b9bd5;
+       color: #fff; 
+       padding: 5px 10px;
+       border-radius: 3px;
+       text-decoration: none;
+       margin-top: 5px;
+      }
+      .top-bar img { /* 确保顶栏图片响应式 */
+        max-width: 100%; 
+        height: auto;
+        margin-top: 5px; 
+      }
 
-        /* --- Banner/Carousel Styles --- */
+
+        /* --- Banner/Carousel Styles (轮播图样式) --- */
         .banner {
-            width: 100%;
-            height: 300px; /* 您可以根据需要调整高度 */
-            background-color: #ccc; /* 图片加载时的占位背景色 */
+            height: 300px;
+            background-color: #ccc; 
             position: relative;
-            overflow: hidden; /* 确保图片不会超出banner范围 */
+            overflow: hidden; 
+            max-width: 1200px;      
+            margin-left: auto;      
+            margin-right: auto;     
         }
 
         .carousel-images {
@@ -60,7 +72,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: fill; /* 修改这里：图片将被拉伸或压缩以填充区域 */
+            object-fit: fill; 
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.7s ease-in-out;
@@ -69,7 +81,7 @@
         .carousel-image.active {
             opacity: 1;
             visibility: visible;
-            z-index: 1; /* 确保活动图片在最上层 */
+            z-index: 1; 
         }
 
         .carousel-dots {
@@ -78,7 +90,7 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            z-index: 2; /* 确保指示点在图片上层 */
+            z-index: 2; 
         }
 
         .carousel-dots .dot {
@@ -111,45 +123,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer; /* 添加鼠标手势，表示可点击 */
+            cursor: pointer; 
         }
         .section-title .toggle-arrow {
             font-size: 16px;
             color: #888;
-            margin-left: 10px; /* 给箭头一些左边距 */
+            margin-left: 10px; 
         }
 
+		
+		.product-info-grid > div { 
+          padding: 10px 12px;
+          background-color: #fff;
+          font-family:  "SimHei", "黑体", sans-serif; 
+          font-size: 18px; 
+		}
 
-        .product-info-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .product-info-table tr {
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .product-info-table tr:last-child {
-            border-bottom: none;
-        }
-
-        .product-info-table td {
-            padding: 10px 8px;
-            font-size: 14px;
-            vertical-align: middle;
-        }
-
-        .product-info-table td:first-child {
-            background-color: #f8f8f8;
-            color: #666;
-            font-weight: normal;
-            text-align: right;
-            width: 120px; /* Adjust as needed */
-        }
-        .product-info-table td:nth-child(2) {
-            color: #333;
-            text-align: left;
-        }
-
+        /* .info-item 和 .product-info-table 的样式保留，以备将来可能使用 */
         .info-item {
             display: flex;
             padding: 8px 0;
@@ -164,13 +154,13 @@
             padding: 10px 8px;
             width: 120px;
             text-align: right;
-            margin-right: 10px; /* Space between label and value bg */
+            margin-right: 10px; 
             flex-shrink: 0;
         }
         .info-item .value {
             padding: 10px 8px;
             flex-grow: 1;
-            background-color: #fff; /* Assuming values are on white if labels are grey */
+            background-color: #fff; 
         }
 
 
@@ -191,107 +181,44 @@
 
         .image-gallery {
             display: flex;
-            justify-content: space-between;
             gap: 10px;
-            padding: 20px;
+            padding: 20px; /* 桌面端内边距 */
+            /* 桌面端的 justify-content: center; 来自HTML内联样式，对于单图有效 */
         }
 
-        .image-gallery img {
-            width: calc(33.333% - 7px); /* Adjust for gap */
+        .image-gallery img { /* 桌面端默认样式, 如果没有内联样式且有多张图，会尝试一行三张 */
+            width: calc(33.333% - 7px); 
             height: auto;
             object-fit: cover;
+            /* HTML中的内联 style="width: auto; max-width: 100%;" 会覆盖这里的 width，使其在桌面端单图时表现良好 */
         }
 
-        .company-branding {
-            background: linear-gradient(to bottom, #74abd6, #2980b9); /* Gradient approximation */
-            text-align: center;
-            padding: 40px 20px;
-            color: #fff;
-        }
-        .company-branding img.logo {
-            width: 80px; /* Adjust as needed */
-            height: auto;
-            margin-bottom: 15px;
-        }
-        .company-branding h1 {
-            font-size: 32px;
-            color: #000; /* Black as in image */
-            margin: 10px 0 5px 0;
-            font-weight: bold;
-        }
-        .company-branding p {
-            font-size: 18px;
-            color: #333; /* Dark grey for English name */
-            margin-bottom: 30px;
-            letter-spacing: 1px;
+        /* 原始CSS中未使用的类 - 保留供参考 */
+        .company-branding, .video-player-mockup { 
+            /* 这些类的样式存在，但未应用于当前HTML元素 */
         }
 
-        .video-player-mockup {
-            background-color: #2c3e50; /* Dark player background */
-            height: 50px; /* Approximate height of controls */
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            color: #ecf0f1; /* Light color for icons/text */
-            font-size: 16px;
-        }
-        .video-player-mockup .play-button {
-            margin-right: 15px;
-            cursor: pointer;
-        }
-        .video-player-mockup .timeline {
-            flex-grow: 1;
-            height: 8px;
-            background-color: #7f8c8d;
-            border-radius: 4px;
-            margin-right: 15px;
-            position: relative;
-        }
-        .video-player-mockup .timeline::before { /* Simulate progress */
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 0%; /* No progress initially */
-            height: 100%;
-            background-color: #bdc3c7;
-            border-radius: 4px;
-        }
-        .video-player-mockup .time-display {
-            margin-right: 15px;
-            font-size: 12px;
-        }
-        .video-player-mockup .controls span {
-            margin-left: 10px;
-            cursor: pointer;
-        }
-
-        /* For the two-column layout in product info (label on left, value on right) */
         .product-info-grid {
             display: grid;
-            grid-template-columns: 350px 1fr; /* Label width based on content, value takes rest */
-            row-gap: 1px; /* Simulates border */
-            background-color: #e0e0e0; /* Grid line color */
-            border: 1px solid #e0e0e0; /* Outer border */
-            /* margin-top: 15px; 如果标题有 margin-bottom，JS会处理，或者这里直接加 */
+            grid-template-columns: 350px 1fr; /* 标签列宽350px，值列占据剩余空间 */
+            row-gap: 1px; 
+            background-color: #e0e0e0; 
+            border: 1px solid #e0e0e0; 
         }
-        .product-info-grid > div {
-            padding: 10px 12px;
-            background-color: #fff;
-        }
+        /* .product-info-grid > div 的样式在前面已定义，并且由于 font-family 更具体 */
         .product-info-grid > div.label {
             font-weight: 500;
             color: #555;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: center; /* 桌面端标签居中 */
         }
         .product-info-grid > div.value {
             text-align: left;
             color: #333;
         }
 		
-		/* --- START: Added styles for alternating row colors in product-info-grid --- */
+		/* product-info-grid 中交替行颜色 */
         .product-info-grid > div.label:nth-child(4n-3) {
             background-color: #DCDCDC;
         }
@@ -304,27 +231,132 @@
         .product-info-grid > div.value:nth-child(4n) {
             background-color: #ffffff;
         }
-        /* --- END: Added styles for alternating row colors in product-info-grid --- */
 
-        /* 可选: 用于初始隐藏内容的样式 (JS 会直接控制 display) */
         .collapsible-content.hidden {
             display: none;
         }
 
+		.company- { /* 页面底部图片容器 */
+            max-width: 1200px; 
+            margin: 20px auto; 
+        }
+
+        .company- img {
+            width: 100%;   
+            height: auto;   
+            display: block; 
+        }
+
+        /* --- START: Mobile Specific Styles (移动端特定样式) --- */
+        @media (max-width: 768px) { /* 当屏幕宽度小于等于768px时应用这些样式 */
+            body {
+                font-size: 15px; /* 移动端基础字体稍小 */
+            }
+
+            .top-bar {
+                font-size: 20px; /* 减小顶栏文字大小 */
+                padding: 10px 15px; /* 调整顶栏内边距 */
+            }
+             .top-bar img {
+                max-height: 30px; /* 控制移动端Logo大小 */
+            }
+
+
+            .banner {
+                height: 200px; /* 移动端轮播图高度减小 */
+            }
+
+            .section {
+                padding: 15px 10px; /* 减小区块的左右内边距 */
+            }
+
+            .section-title {
+                font-size: 16px; /* 减小区块标题字号 */
+                margin-bottom: 10px;
+            }
+
+            .product-info-grid {
+                grid-template-columns: 100px 1fr; /* 标签列宽度调整为100px，值列占据剩余空间，以在手机上保持两列 */
+            }
+
+            .product-info-grid > div { /* 移动端表格单元格通用样式 */
+                padding: 8px 5px;   /* 减少单元格的内边距，特别是左右边距 */
+                font-size: 14px;    /* 减小单元格内字体大小 */
+            }
+            
+            .product-info-grid > div.label {
+                 justify-content: flex-start; /* 标签文本左对齐 */
+                 text-align: left;
+                 padding-left: 8px; /* 确保标签有一些左内边距 */
+                 word-break: break-word; /* 允许长标签文字换行 */
+            }
+            .product-info-grid > div.value {
+                 word-break: break-all; /* 允许长内容（如条码）在任意字符处换行 */
+                 padding-left: 8px; /* 值列也增加一些左内边距 */
+            }
+
+            .customer-notice {
+                font-size: 11px;
+                padding: 10px;
+            }
+            .customer-notice ol {
+                padding-left: 15px;
+            }
+
+            /* --- 图片库移动端样式调整 --- */
+            .image-gallery {
+                padding: 15px 10px; /* 移动端图片库自身的内边距 */
+                flex-wrap: wrap; /* 允许图片换行（如果有多张） */
+                gap: 10px; /* 图片之间的间隙 */
+                /* 默认情况下，内容从左开始排列，适用于多图场景。*/
+                /* HTML 内联的 justify-content: center 会被下面的 :has 选择器或通用 !important 覆盖 */
+                justify-content: flex-start !important; 
+            }
+
+            /* 如果图片库（.image-gallery）中只有一张图片（img:only-child），*/
+            /* 则让其父容器（.image-gallery）的内容居中。*/
+            /* 这主要影响图片本身宽度不是100%的情况。如果图片宽度是100%，居中和靠左看起来一样。*/
+            .image-gallery:has(img:only-child) {
+                justify-content: center !important;
+            }
+
+            .image-gallery img {
+                /* 通用规则: 移动端默认目标是一行两张图片（如果有多张图） */
+                width: calc(50% - 5px) !important; /* 每张图片宽度为容器的50%减去一半的间隙 */
+                max-width: none !important; /* 覆盖HTML内联的 max-width，确保宽度计算生效 */     
+                margin-bottom: 10px; /* 图片之间的垂直间距（如果换行） */           
+                height: auto; /* 保持原始宽高比 */
+                object-fit: cover; /* 图片填充方式，cover 通常效果较好，避免图片变形 */
+            }
+
+            /* 特殊规则: 如果图片库（.image-gallery）中只有一张图片（img:only-child） */
+            /* 则让这张图片宽度占满其父容器（.image-gallery 的内容区域） */
+            .image-gallery img:only-child {
+                width: 100% !important; 
+                /* 当只有一张图片且宽度为100%时，它自然会填满行，无需额外处理右边距或对齐 */
+            }
+            /* --- 图片库移动端样式调整结束 --- */
+
+            .company- { /* 底部图片容器的移动端样式 */
+                margin: 15px auto;
+                padding: 0 10px; /* 如果图片可能触碰边缘，增加一些左右内边距 */
+            }
+        }
+        /* --- END: Mobile Specific Styles --- */
     </style>
 </head>
 <body>
     <div class="top-bar">
-        <span>88.210.88/XG-3138295-2207</span>
-        <a href="#" class="industrial-internet-logo">国家工业互联网标识</a>
+       <span style="font-weight: bold;">88.210.88/XG-3138295-2207</span>
+		<img src="../image/06.png" alt="公司标志"> <!-- 为图片添加alt属性 -->     
     </div>
 
     <div class="banner">
         <div class="carousel-images">
-            <img src="../image/01.png" alt="Banner Image 1" class="carousel-image active">
-            <img src="../image/02.jpg" alt="Banner Image 2" class="carousel-image">
-            <img src="../image/03.jpg" alt="Banner Image 3" class="carousel-image">
-            <img src="../image/04.jpg" alt="Banner Image 4" class="carousel-image">
+            <img src="../image/01.png" alt="轮播图 1" class="carousel-image active">
+            <img src="../image/02.jpg" alt="轮播图 2" class="carousel-image">
+            <img src="../image/03.jpg" alt="轮播图 3" class="carousel-image">
+            <img src="../image/04.jpg" alt="轮播图 4" class="carousel-image">
         </div>
         <div class="carousel-dots">
             <span class="dot active" data-index="0"></span>
@@ -337,7 +369,7 @@
     <div class="container">
         <div class="section">
             <div class="section-title" data-section-name="产品信息">产品信息 <span class="toggle-arrow">▲</span></div>
-            <div class="product-info-grid collapsible-content"> <!-- 添加了 collapsible-content 类 -->
+            <div class="product-info-grid collapsible-content"> 
                 <div class="label">产品名称</div><div class="value">螺纹钢</div>
                 <div class="label">产品条码</div><div class="value">TCTOGGLE-XLJG-NEW</div>
                 <div class="label">产品分类</div><div class="value">其他制造业</div>
@@ -359,7 +391,9 @@
                 <div class="label">致顾客</div>
                 <div class="value customer-notice">
                     <ol>
-                        <li>1.标识信息必须通过国家标识解析网站上进行统一查询，网站的质检信息代表《产品合格证》。 2.质量异议请持证明书与经销商联系处理，来函请提供证明书编号、产品名称、牌号、规格、熔炼号等信息。 3.请注意核对钢材实物上的标牌和标识与产品标识系统所示信息是否一致，谨防假冒。</li>
+                        <li>1.标识信息必须通过国家标识解析网站上进行统一查询，网站的质检信息代表《产品合格证》。</li>
+                        <li>2.质量异议请持证明书与经销商联系处理，来函请提供证明书编号、产品名称、牌号、规格、熔炼号等信息。</li>
+                        <li>3.请注意核对钢材实物上的标牌和标识与产品标识系统所示信息是否一致，谨防假冒。</li>
                     </ol>
                 </div>
             </div>
@@ -367,8 +401,7 @@
 
         <div class="section">
             <div class="section-title" data-section-name="物理性能">物理性能 <span class="toggle-arrow">▼</span></div>
-            <!-- 物理性能内容, 移除了多余的内嵌 .section -->
-            <div class="product-info-grid collapsible-content"> <!-- 添加了 collapsible-content 类 -->
+            <div class="product-info-grid collapsible-content"> 
                 <div class="label">产品名称</div><div class="value">螺纹钢</div>
                 <div class="label">产品条码</div><div class="value">TCTOGGLE-XLJG-NEW</div>
                 <div class="label">产品分类</div><div class="value">其他制造业</div>
@@ -382,8 +415,7 @@
 		
         <div class="section">
             <div class="section-title" data-section-name="化学成分">化学成分<span class="toggle-arrow">▼</span></div>
-            <!-- 化学成分内容, 移除了多余的内嵌 .section -->
-            <div class="product-info-grid collapsible-content"> <!-- 添加了 collapsible-content 类 -->
+            <div class="product-info-grid collapsible-content"> 
                 <div class="label">产品名称</div><div class="value">螺纹钢</div>
                 <div class="label">产品条码</div><div class="value">TCTOGGLE-XLJG-NEW</div>
                 <div class="label">产品分类</div><div class="value">其他制造业</div>
@@ -422,26 +454,20 @@
             </div>
         </div>	
 		
-        <!-- 注意: 下面的图片 div 原本在 .container 外部，为了结构一致性，如果它是主要内容流的一部分，我将它移入了 .container -->
-        <div class="section"> <!-- 假设这张图片也是一个版块，或者根据需要调整 -->
-            <div class="image-gallery" style="justify-content: center;"> <!-- 居中单个图片 -->
-                <img src="../image/1510201933049237504.png" alt="Product Image 1" style="width: auto; max-width: 100%;">
+        <!-- 这张图片所在的区块 -->
+        <div class="section"> 
+            <div class="image-gallery" style="justify-content: center;"> <!-- 桌面端通过内联样式使其内容居中 -->
+                <img src="../image/1510201933049237504.png" alt="产品相关图片" style="width: auto; max-width: 100%;"> <!-- 图片在桌面端通过内联样式自适应宽度，最大100% -->
             </div>  
         </div>
     </div> <!-- .container 结束 -->
-
 <div class="company-">
-    <iframe 
-        width="100%" 
-        height="500" <!-- 您可以根据需要调整视频高度 -->
-        src="https://v.qq.com/txp/iframe/player.html?vid=b3041b976jh" 
-        frameborder="0" 
-        allowfullscreen>
-    </iframe>
-</div>
+        <img src="../image/05.png" alt="公司宣传横幅"> <!-- 为图片添加alt属性 -->          
+    </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // 轮播图脚本 (已存在)
+    // Carousel script (轮播图脚本)
     const images = document.querySelectorAll('.carousel-image');
     const dots = document.querySelectorAll('.carousel-dots .dot');
     const banner = document.querySelector('.banner');
@@ -450,6 +476,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let slideInterval;
 
     function showImage(index) {
+        if (!images || images.length === 0) return;
         if (index >= images.length) index = 0;
         if (index < 0) index = images.length - 1;
 
@@ -462,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function nextImage() {
-        showImage((currentIndex + 1) % images.length);
+        showImage((currentIndex + 1) % (images.length || 1));
     }
 
     function startSlideShow() {
@@ -495,31 +522,27 @@ document.addEventListener('DOMContentLoaded', function() {
         banner.addEventListener('mouseleave', startSlideShow);
     }
 
-    // --- 新增: 可折叠版块脚本 ---
+    // Collapsible sections script (可折叠区域脚本)
     const sectionTitles = document.querySelectorAll('.section-title');
 
     sectionTitles.forEach(title => {
-        const content = title.nextElementSibling; // 假设内容是紧邻的下一个兄弟元素
+        const content = title.nextElementSibling; 
         const arrow = title.querySelector('.toggle-arrow');
-        // const titleText = title.textContent || title.innerText; // 获取标题文本用于判断
-        const sectionName = title.dataset.sectionName; // 使用 data-section-name 属性进行判断
+        const sectionName = title.dataset.sectionName; 
 
         if (!content || !arrow) {
-            // console.warn('跳过标题，缺少内容或箭头:', title);
-            return; // 如果结构不符合预期，则跳过
+            return; 
         }
         
-        // 确保内容具有 'collapsible-content' 类，以便在需要时进行样式化
         if (content.classList.contains('product-info-grid') || content.classList.contains('collapsible-content')) {
-            // 设置初始状态
+            // Set initial state based on section name (根据区块名称设置初始状态)
             if (sectionName === '产品信息') {
-                content.style.display = 'grid'; // 如果是 grid 布局，则设为 grid
-                arrow.textContent = '▲'; // 使用 ▲ 向上箭头，因为 ^ 可能太小
+                content.style.display = 'grid'; 
+                arrow.textContent = '▲'; 
             } else if (sectionName === '物理性能' || sectionName === '化学成分') {
                 content.style.display = 'none';
                 arrow.textContent = '▼';
-            } else {
-                 // 其他版块（如果有）的默认状态：展开
+            } else { // Default for other sections (其他区块的默认状态)
                 content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
                 arrow.textContent = '▲';
             }
@@ -527,7 +550,6 @@ document.addEventListener('DOMContentLoaded', function() {
             title.addEventListener('click', () => {
                 const isHidden = content.style.display === 'none';
                 if (isHidden) {
-                    // 如果是 product-info-grid，则恢复 grid 布局，否则恢复 block
                     content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
                     arrow.textContent = '▲';
                 } else {
