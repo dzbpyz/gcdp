@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>质保书信息</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        .warranty-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e8e8e8;
+            cursor: pointer;
+        }
+
+        .warranty-info .id {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            color: #1f1f1f;
+        }
+
+        .warranty-info .date {
+            font-size: 0.9em;
+            color: #595959;
+        }
+
+        .dropdown-arrow {
+            --arrow-color: #8c8c8c;
+            --arrow-rotation: 0deg;
+            --arrow-font-size: 1.7em;
+            --arrow-font-weight: normal;
+            font-size: var(--arrow-font-size);
+        }
+
+        .arrow-char {
+            display: inline-block;
+            color: var(--arrow-color);
+            transform: rotate(var(--arrow-rotation));
+            font-weight: var(--arrow-font-weight);
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, font-size 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+        }
+
+        .warranty-item.active .dropdown-arrow {
+             --arrow-color: #007bff;
+             --arrow-rotation: 180deg;
+             --arrow-font-size: 1.4em;
+             --arrow-font-weight: bold;
+        }
+
+        .warranty-details {
+            display: none;
+            padding: 10px 15px 20px 15px;
+            border-bottom: 1px solid #e8e8e8;
+            background-color: #fdfdfd;
+            font-size: 0.9em;
+        }
+
+        .warranty-details.expanded {
+            display: block;
+        }
+
+        .warranty-details > p {
+            margin: 4px 0;
+            line-height: 1.3;
+            color: #333;
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 24px;  /* 改动 */
+            color: #1f1f1f;
+        }
+        .warranty-details > p + .section-title {
+             margin-top: 15px;
+        }
+        .warranty-details > .section-title:first-child {
+            margin-top: 0;
+        }
+
+
+        .title-divider {
+            border: 0;
+            height: 1px;
+            background-color: #e0e0e0;
+            margin-top: 0px;      /* 改动 */
+            margin-bottom: 1px;   /* 改动: 分隔线与下方列表的间距 */
+        }
+
+        .details-list {
+            margin-bottom: 15px;
+        }
+
+        .detail-entry {
+            display: grid;
+            grid-template-columns: minmax(100px, 2fr) 1fr 1fr;
+            gap: 8px;
+            padding: 3px 0;
+            align-items: center;
+            line-height: 1.2;
+        }
+
+        .detail-entry span {
+            display: block;
+        }
+
+        .entry-label {
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .entry-value,
+        .entry-status {
+            text-align: center;
+        }
+
+        .detail-header .entry-label,
+        .detail-header .entry-value,
+        .detail-header .entry-status {
+            font-weight: bold;
+            color: #595959;
+        }
+
+
+        .certificate-image-container {
+            padding: 10px 0;
+        }
+
+        .certificate-image-container img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .contact-section {
+            padding: 20px 15px;
+            background-color: #ffffff;
+        }
+
+        .contact-section .title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1f1f1f;
+        }
+
+        .contact-section p {
+            margin: 8px 0;
+            line-height: 1.6;
+            font-size: 0.95em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 质保书条目 1 -->
+        <div class="warranty-item" data-id="示例1">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033(示例1)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <!-- 质保书条目 1 的展开内容 -->
+        <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-06</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ25</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">C (10 <sup>-2</sup>)</span>
+                    <span class="entry-value">25</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">Si (10 <sup>-2</sup>)</span>
+                    <span class="entry-value">25</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">Mn (10 <sup>-2</sup>)</span>
+                    <span class="entry-value">139</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">P (10 <sup>-3</sup>)</span>
+                    <span class="entry-value">29</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">S (10 <sup>-3</sup>)</span>
+                    <span class="entry-value">26</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">Ceq (10 <sup>-2</sup>)</span>
+                    <span class="entry-value">49</span>
+                    <span class="entry-status">合格</span>
+                </div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">材料实际厚度</span>
+                    <span class="entry-value">22</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value">14</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">屈服强度</span>
+                    <span class="entry-value">445.0</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">抗拉强度</span>
+                    <span class="entry-value">630.0</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">屈强比</span>
+                    <span class="entry-value">-1.000</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value">90</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value">4d</span>
+                    <span class="entry-status">合格</span>
+                </div>
+                <div class="detail-entry">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value">纵向</span>
+                    <span class="entry-status">合格</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 质保书条目 2 -->
+        <div class="warranty-item" data-id="示例2">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (示例2)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+       <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-05</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ22</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">C (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">Si (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">Mn (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">P (10 <sup>-3</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">S (10 <sup>-3</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">Ceq (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">材料实际厚度</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">标距代码</span><span class="entry-value">14</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">屈服强度</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">抗拉强度</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">屈强比</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲角度</span><span class="entry-value">90</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲直径</span><span class="entry-value">4d</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">拉伸试验方向</span><span class="entry-value">纵向</span><span class="entry-status">合格</span></div>
+            </div>
+        </div>
+
+
+        <!-- 质保书条目 3 -->
+        <div class="warranty-item" data-id="示例3">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (示例3)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-05</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ22</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">C (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">Si (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">材料实际厚度</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">标距代码</span><span class="entry-value">14</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">屈服强度</span><span class="entry-value">445.0</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">抗拉强度</span><span class="entry-value">630.0</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">屈强比</span><span class="entry-value">-1.000</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲角度</span><span class="entry-value">90</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲直径</span><span class="entry-value">4d</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">拉伸试验方向</span><span class="entry-value">纵向</span><span class="entry-status">合格</span></div>
+            </div>
+        </div>
+
+		<!-- 质保书条目 4 -->
+        <div class="warranty-item" data-id="示例4">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (示例4)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-05</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ22</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">S (10 <sup>-3</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">Ceq (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">标距代码</span><span class="entry-value">14</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲角度</span><span class="entry-value">90</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲直径</span><span class="entry-value">4d</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">拉伸试验方向</span><span class="entry-value">纵向</span><span class="entry-status">合格</span></div>
+            </div>
+        </div>
+		<!-- 质保书条目 5 -->
+        <div class="warranty-item" data-id="示例5">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (示例5)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-05</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ22</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                 <div class="detail-entry"><span class="entry-label">C (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">标距代码</span><span class="entry-value">14</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲角度</span><span class="entry-value">90</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲直径</span><span class="entry-value">4d</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">拉伸试验方向</span><span class="entry-value">纵向</span><span class="entry-status">合格</span></div>
+            </div>
+        </div>
+
+		<!-- 质保书条目 6 的展开内容 -->
+		<div class="warranty-item" data-id="示例6">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (示例6)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-05</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ22</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">C (10 <sup>-2</sup>)</span><span class="entry-value">24</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">Si (10 <sup>-2</sup>)</span><span class="entry-value">25</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">Mn (10 <sup>-2</sup>)</span><span class="entry-value">139</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">P (10 <sup>-3</sup>)</span><span class="entry-value">29</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">S (10 <sup>-3</sup>)</span><span class="entry-value">26</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">Ceq (10 <sup>-2</sup>)</span><span class="entry-value">49</span><span class="entry-status">合格</span></div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">材料实际厚度</span><span class="entry-value">22</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">标距代码</span><span class="entry-value">14</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">屈服强度</span><span class="entry-value">445.0</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">抗拉强度</span><span class="entry-value">630.0</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">屈强比</span><span class="entry-value">-1.000</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲角度</span><span class="entry-value">90</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲直径</span><span class="entry-value">4d</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">拉伸试验方向</span><span class="entry-value">纵向</span><span class="entry-status">合格</span></div>
+            </div>
+        </div>
+
+		<!-- 质保书条目 7 的展开内容 -->
+		<div class="warranty-item" data-id="示例7">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (示例7)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-05</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ22</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">Mn (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">P (10 <sup>-3</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+            </div>
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">标距代码</span><span class="entry-value">14</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">屈服强度</span><span class="entry-value">445.0</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">抗拉强度</span><span class="entry-value">630.0</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">屈强比</span><span class="entry-value">-1.000</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲角度</span><span class="entry-value">90</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲直径</span><span class="entry-value">4d</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">拉伸试验方向</span><span class="entry-value">纵向</span><span class="entry-status">合格</span></div>
+            </div>
+        </div>
+
+		<!-- 质保书条目 8 的展开内容 -->
+		<div class="warranty-item" data-id="示例8">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (示例8)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-05</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ22</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">Si (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+            </div>
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">标距代码</span><span class="entry-value">14</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲角度</span><span class="entry-value">90</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲直径</span><span class="entry-value">4d</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">拉伸试验方向</span><span class="entry-value">纵向</span><span class="entry-status">合格</span></div>
+            </div>
+        </div>
+		<!-- 质保书条目 9 的展开内容 -->
+		<div class="warranty-item" data-id="示例9">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (示例9)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-05</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ22</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                 <div class="detail-entry"><span class="entry-label">C (10 <sup>-2</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+                <div class="detail-entry"><span class="entry-label">S (10 <sup>-3</sup>)</span><span class="entry-value"></span><span class="entry-status"></span></div>
+            </div>
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                 <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">标距代码</span><span class="entry-value">14</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲角度</span><span class="entry-value">90</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲直径</span><span class="entry-value">4d</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">拉伸试验方向</span><span class="entry-value">纵向</span><span class="entry-status">合格</span></div>
+            </div>
+        </div>
+		<!-- 质保书条目 10 的展开内容 -->
+		<div class="warranty-item" data-id="示例10">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (示例10)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details">
+            <p>生产厂家: 凌源钢铁股份有限公司</p>
+            <p>产品名称: 热轧带肋钢筋 (直条)</p>
+            <p>生产日期: 2025-04-05</p>
+            <p>炉号: 25702918</p>
+            <p>钢种: 热轧带肋钢筋 (直条)</p>
+            <p>规格: Φ22</p>
+            <p>重量: 2.861000t</p>
+            <p>捆号 (卷号): B2254529802100</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+            </div>
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <!-- JS会在此处填充或更新匹配示例1标签的条目 -->
+                <div class="detail-entry"><span class="entry-label">标距代码</span><span class="entry-value">14</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲角度</span><span class="entry-value">90</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">弯曲直径</span><span class="entry-value">4d</span><span class="entry-status">合格</span></div>
+                <div class="detail-entry"><span class="entry-label">拉伸试验方向</span><span class="entry-value">纵向</span><span class="entry-status">合格</span></div>
+            </div>
+        </div>
+        <!-- 质保书条目 (证书图片链接) -->
+        <div class="warranty-item" data-id="证书图片">
+            <div class="warranty-info">
+                <div class="id">质保书号:M02504080033 (证书图片链接)</div>
+                <div class="date">签发日期: 2025-04-08</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details">
+            <div class="certificate-image-container">
+                 <img src="certificate-image.png" alt="产品质量证明书">
+            </div>
+        </div>
+
+
+        <!-- 联系方式区域 (独立于可折叠条目) -->
+        <div class="contact-section">
+            <div class="title">联系方式</div>
+            <p class="phone-line">销售电话: 建材0421-6838215、特钢0421-6838924、</p>
+            <p class="phone-line">宽带0421-6838211</p>
+            <p>服务热线: 400-0421-555</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const warrantyItems = document.querySelectorAll('.warranty-item');
+
+            // Accordion functionality
+            warrantyItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const currentDetails = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+
+                    // Close all other items
+                    warrantyItems.forEach(otherItem => {
+                        if (otherItem !== this) {
+                            otherItem.classList.remove('active');
+                            const otherDetails = otherItem.nextElementSibling;
+                            if (otherDetails && otherDetails.classList.contains('warranty-details')) {
+                                otherDetails.classList.remove('expanded');
+                            }
+                        }
+                    });
+
+                    // Toggle current item
+                    if (currentDetails && currentDetails.classList.contains('warranty-details')) {
+                        if (isActive) {
+                            this.classList.remove('active');
+                            currentDetails.classList.remove('expanded');
+                        } else {
+                            this.classList.add('active');
+                            currentDetails.classList.add('expanded');
+                        }
+                    }
+                });
+            });
+
+            // --- START: Logic to populate data from 示例1 ---
+            const sourceItem = document.querySelector('.warranty-item[data-id="示例1"]');
+            if (!sourceItem) {
+                console.error("Source warranty item '示例1' not found.");
+                return;
+            }
+            const sourceDetails = sourceItem.nextElementSibling;
+            if (!sourceDetails || !sourceDetails.classList.contains('warranty-details')) {
+                console.error("Details for '示例1' not found.");
+                return;
+            }
+
+            const sourceData = new Map();
+
+            // Extract data from 示例1
+            const sourceDetailEntries = sourceDetails.querySelectorAll('.details-list .detail-entry:not(.detail-header)');
+            sourceDetailEntries.forEach(entry => {
+                const labelEl = entry.querySelector('.entry-label');
+                const valueEl = entry.querySelector('.entry-value');
+                const statusEl = entry.querySelector('.entry-status');
+
+                if (labelEl && valueEl && statusEl) {
+                    // Using innerHTML for label to preserve <sup> tags if needed for exact match,
+                    // but trim it for consistency as a key.
+                    // Using textContent for value/status is usually safer.
+                    const labelKey = labelEl.innerHTML.trim();
+                    sourceData.set(labelKey, {
+                        value: valueEl.textContent.trim(),
+                        status: statusEl.textContent.trim()
+                    });
+                }
+            });
+
+            // Apply data to other examples (示例2 to 示例10)
+            for (let i = 2; i <= 10; i++) {
+                const targetItemId = `示例${i}`;
+                const targetItem = document.querySelector(`.warranty-item[data-id="${targetItemId}"]`);
+                if (!targetItem) {
+                    // console.warn(`Target warranty item '${targetItemId}' not found.`);
+                    continue;
+                }
+                const targetDetails = targetItem.nextElementSibling;
+                if (!targetDetails || !targetDetails.classList.contains('warranty-details')) {
+                    // console.warn(`Details for '${targetItemId}' not found.`);
+                    continue;
+                }
+
+                const targetDetailEntries = targetDetails.querySelectorAll('.details-list .detail-entry:not(.detail-header)');
+                targetDetailEntries.forEach(entry => {
+                    const labelEl = entry.querySelector('.entry-label');
+                    const valueEl = entry.querySelector('.entry-value');
+                    const statusEl = entry.querySelector('.entry-status');
+
+                    if (labelEl && valueEl && statusEl) {
+                        const labelKey = labelEl.innerHTML.trim(); // Match by HTML content of label
+                        if (sourceData.has(labelKey)) {
+                            const data = sourceData.get(labelKey);
+                            valueEl.textContent = data.value;
+                            statusEl.textContent = data.status;
+                        }
+                    }
+                });
+            }
+            // --- END: Logic to populate data ---
+        });
+    </script>
+
+</body>
+</html>
