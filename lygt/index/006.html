@@ -185,7 +185,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85); /* 半透明黑色背景 */
+            background-color: #000000; /* MODIFIED: 纯黑色背景 */
             z-index: 1000; /* 确保在最顶层 */
             display: flex; /* 使用 flex */
             align-items: center; /* 垂直居中 */
@@ -200,15 +200,20 @@
             justify-content: flex-start; /* 当可滚动时，让内容从左边开始 */
         }
 
-        .lightbox-overlay img { /* 第一次放大状态 */
+        .lightbox-overlay img { /* MODIFIED: 第一次放大状态 */
             display: block;
-            max-width: 90%;
-            max-height: 90vh;
+            /* 目标：宽度为视口高度的100%，高度等比例 */
+            width: 100vh; 
+            height: auto;
+            /* 约束：确保图片在视口内，并保留一些边距 */
+            max-width: 95vw;  /* 例如：最大宽度为视口宽度的95% */
+            max-height: 95vh; /* 例如：最大高度为视口高度的95% */
+            
             margin: auto; /* 配合父级flex的center实现居中 */
-            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+            box-shadow: none; /* MODIFIED: 在纯黑背景下，原黑色阴影不可见，暂设为none */
             cursor: pointer; /* 图片也可点击 */
-            transition: max-width 0.3s ease-in-out, max-height 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
-            object-fit: contain; /* 确保图片完整显示 */
+            transition: width 0.3s ease-in-out, height 0.3s ease-in-out, max-width 0.3s ease-in-out, max-height 0.3s ease-in-out;
+            object-fit: contain; /* 确保图片完整显示并保持比例 */
             flex-shrink: 0; /* 防止图片在flex容器中被不期望地缩小 */
         }
 
@@ -216,7 +221,7 @@
             height: 100vh;       /* 图片高度设置为视口高度的100% */
             width: auto;         /* 宽度将根据新的高度等比例缩放 */
             max-width: none;     /* 允许图片宽度根据其100vh的高度自由缩放，即使超出视口宽度 */
-            box-shadow: none;    /* 再次放大时可移除阴影 */
+            box-shadow: none;    /* MODIFIED: 再次放大时可移除阴影，与首次放大保持一致 */
             flex-shrink: 0;      /* 确保图片不会因为父flex容器的约束而缩小 */
             margin: 0;           /* 当可滚动且父级是flex-start时，移除auto margin确保从左边开始 */
         }
