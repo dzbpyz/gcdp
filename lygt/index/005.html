@@ -187,27 +187,27 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.85); /* 半透明黑色背景 */
             z-index: 1000; /* 确保在最顶层 */
-            display: flex; /* 使用 flex 居中图片 */
-            align-items: center;
-            justify-content: center;
+            display: flex; /* 使用 flex */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 默认水平居中，用于初次放大 */
             cursor: pointer; /* 提示用户背景可点击关闭 */
         }
 
-        /* 新增：当灯箱处于可滚动状态时的样式 */
+        /* 当灯箱处于可滚动状态时的样式 */
         .lightbox-overlay.is-scrollable {
             overflow-x: auto; /* 允许水平滚动 */
             -webkit-overflow-scrolling: touch; /* iOS 惯性滚动 */
-            /* 如果希望滚动总是从最左边开始，而不是居中，可以考虑在 is-scrollable 时改为 justify-content: flex-start; */
+            justify-content: flex-start; /* 当可滚动时，让内容从左边开始 */
         }
 
         .lightbox-overlay img { /* 第一次放大状态 */
             display: block;
             max-width: 90%;
             max-height: 90vh;
-            margin: auto; /* 在flex容器中，如果设置了align-items和justify-content, margin:auto可以进一步确保居中 */
+            margin: auto; /* 配合父级flex的center实现居中 */
             box-shadow: 0 0 25px rgba(0,0,0,0.5);
             cursor: pointer; /* 图片也可点击 */
-            transition: max-width 0.3s ease-in-out, max-height 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out; /* 平滑过渡 */
+            transition: max-width 0.3s ease-in-out, max-height 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
             object-fit: contain; /* 确保图片完整显示 */
             flex-shrink: 0; /* 防止图片在flex容器中被不期望地缩小 */
         }
@@ -218,8 +218,7 @@
             max-width: none;     /* 允许图片宽度根据其100vh的高度自由缩放，即使超出视口宽度 */
             box-shadow: none;    /* 再次放大时可移除阴影 */
             flex-shrink: 0;      /* 确保图片不会因为父flex容器的约束而缩小 */
-            margin: 0;           /* 当可滚动时，移除自动margin，让图片从可滚动区域的开始处渲染 */
-                                 /* object-fit: contain; 会从 .lightbox-overlay img 继承 */
+            margin: 0;           /* 当可滚动且父级是flex-start时，移除auto margin确保从左边开始 */
         }
 
     </style>
