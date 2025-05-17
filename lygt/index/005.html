@@ -75,8 +75,9 @@
             display: block;
         }
 
+        /* CSS for the full-width image area */
         .full-width-image-area {
-            padding: 5px 0;
+            padding: 5px 0; /* 5px padding top/bottom, 0 padding left/right. Adjust 5px as needed. */
         }
 
         .warranty-details > p {
@@ -98,6 +99,7 @@
         .warranty-details > .section-title:first-child {
             margin-top: 0;
         }
+
 
         .title-divider {
             border: 0;
@@ -142,18 +144,20 @@
         }
 
         .certificate-image-container {
-            padding: 10px 0;
+            padding: 10px 0; /* Original padding, will be overridden for full-width image */
         }
 
+        /* Override .certificate-image-container padding when inside .full-width-image-area */
         .full-width-image-area .certificate-image-container {
             padding: 0;
         }
 
         .certificate-image-container img {
             display: block;
-            width: 100%;
+            width: 100%; /* Image takes full width of its container */
             height: auto;
-            cursor: pointer;
+            /* margin: 0 auto; /* Centering not strictly needed for width: 100% */
+            cursor: pointer; /* 让页面中的图片也有手型光标 */
         }
 
         .contact-section {
@@ -177,47 +181,47 @@
 
         /* 灯箱样式 */
         .lightbox-overlay {
-            position: fixed;
+            position: fixed; /* 固定定位，覆盖整个屏幕 */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            display: flex;
+            background-color: rgba(0, 0, 0, 0.85); /* 半透明黑色背景 */
+            z-index: 1000; /* 确保在最顶层 */
+            display: flex; /* 使用 flex 居中图片 */
             align-items: center;
             justify-content: center;
-            cursor: pointer;
+            cursor: pointer; /* 提示用户背景可点击关闭 */
         }
 
         .lightbox-overlay img { /* 第一次放大状态 */
             display: block;
-            max-width: 90%;    /* 限制最大宽度 */
-            max-height: 90vh;   /* 限制最大高度 (视口高度的90%) */
-            width: auto;        /* 宽度自适应 */
-            height: auto;       /* 高度自适应 */
+            max-width: 90%;
+            max-height: 90vh;
             margin: auto;
             box-shadow: 0 0 25px rgba(0,0,0,0.5);
-            cursor: pointer;
-            transition: all 0.3s ease-in-out; /* 应用于所有变化的属性 */
-            object-fit: contain; /* 保证图片完整显示 */
+            cursor: pointer; /* 图片也可点击 */
+            transition: max-width 0.3s ease-in-out, max-height 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out; /* 平滑过渡 */
+            object-fit: contain; /* 确保图片完整显示 */
         }
 
-        .lightbox-overlay img.lightbox-image-zoomed { /* 双击后再次放大状态 - 高度优先 */
-            max-width: 100vw;   /* 宽度不能超过视口 */
-            width: auto;        /* 宽度根据高度自适应 */
-            height: 100vh;      /* 高度撑满视口 */
-            max-height: 100vh;  /* 再次确认最大高度 */
-            object-fit: contain;/* 保证图片完整显示 */
-            box-shadow: none;   /* 可以移除阴影以获得更纯粹的视图 */
-        }
+       .lightbox-overlay img.lightbox-image-zoomed { /* 双击后再次放大状态 */
+    height: 100vh;       /* 主要：将图片高度设置为视口高度的100% */
+    width: auto;         /* 宽度将根据新的高度等比例缩放 */
+    max-width: none;     /* 重要：移除或覆盖从父级 .lightbox-overlay img 继承的 max-width: 90% 限制，
+                             允许图片宽度根据其100vh的高度自由缩放，即使超出视口宽度。
+                             超出的部分会因为 body.style.overflow = 'hidden' 和灯箱布局而被裁剪。 */
+    /* max-height: 100vh; /* 这一行可以保留也可以移除，因为 height: 100vh; 已经确保了高度。*/
+    box-shadow: none;    /* 再次放大时可移除阴影 */
+    /* object-fit: contain; 会从 .lightbox-overlay img 继承，这是好的，
+                           它确保图片内容在其新的（可能很宽的）边界框内正确显示而不变形。*/
+}
 
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- ... (之前所有的质保书条目HTML保持不变) ... -->
         <!-- 质保书条目 1 (数据源模板) -->
         <div class="warranty-item" data-source-item-template>
             <div class="warranty-info">
@@ -694,6 +698,7 @@
                 <div class="detail-entry" data-target-property="tensileDirection">
                     <span class="entry-label">拉伸试验方向</span>
                     <span class="entry-value" data-target-value></span>
+
                     <span class="entry-status" data-target-status></span>
                 </div>
             </div>
@@ -970,7 +975,7 @@
 
     </div> <!-- 这是 .container 的结束标签 -->
 
-    <!-- 灯箱的 HTML 结构 -->
+    <!-- 灯箱的 HTML 结构 (已移除关闭按钮) -->
     <div id="imageLightbox" class="lightbox-overlay" style="display: none;">
         <img id="lightboxImage" src="" alt="证书放大图">
     </div>
@@ -1099,18 +1104,19 @@
             const lightbox = document.getElementById('imageLightbox');
             const lightboxImg = document.getElementById('lightboxImage');
 
-            let lightboxZoomState = 0; // 0: hidden, 1: normal zoom, 2: extra zoom (height-fit)
-            let clickTimer = null; 
+            let lightboxZoomState = 0; // 0: hidden, 1: normal zoom, 2: extra zoom
+            let clickTimer = null; // 用于区分单击和双击的计时器
 
             if (originalCertificateImage && lightbox && lightboxImg) {
+                // 点击页面中的图片，打开灯箱
                 originalCertificateImage.addEventListener('click', function() {
                     openLightbox(this.src);
                 });
 
                 function openLightbox(src) {
                     lightboxImg.src = src;
-                    lightboxZoomState = 1; 
-                    lightboxImg.classList.remove('lightbox-image-zoomed');
+                    lightboxZoomState = 1; // 初始为正常放大状态
+                    lightboxImg.classList.remove('lightbox-image-zoomed'); // 确保移除二次放大样式
                     lightbox.style.display = 'flex';
                     document.body.style.overflow = 'hidden';
                 }
@@ -1118,46 +1124,50 @@
                 function closeLightbox() {
                     lightbox.style.display = 'none';
                     lightboxImg.src = '';
-                    lightboxZoomState = 0; 
+                    lightboxZoomState = 0; // 重置状态
                     document.body.style.overflow = 'auto';
-                    lightboxImg.classList.remove('lightbox-image-zoomed');
+                    lightboxImg.classList.remove('lightbox-image-zoomed'); // 清理二次放大样式
                 }
 
+                // 点击灯箱背景关闭
                 lightbox.addEventListener('click', function(event) {
-                    if (event.target === lightbox) { 
+                    if (event.target === lightbox) { // 确保是点击覆盖层本身
                         closeLightbox();
                     }
                 });
 
+                // 点击灯箱内的图片：单击关闭，双击切换缩放级别
                 lightboxImg.addEventListener('click', function(event) {
-                    event.stopPropagation(); 
+                    event.stopPropagation(); // 阻止事件冒泡到 lightboxOverlay，避免立即关闭
 
-                    if (clickTimer) { 
+                    if (clickTimer) { // 如果计时器存在，说明是双击中的第二次点击
                         clearTimeout(clickTimer);
                         clickTimer = null;
                         handleDoubleClick();
-                    } else { 
+                    } else { // 第一次点击，设置一个短计时器
                         clickTimer = setTimeout(() => {
                             clickTimer = null;
                             handleSingleClick();
-                        }, 250); 
+                        }, 250); // 250ms 内的第二次点击算作双击
                     }
                 });
                 
                 function handleSingleClick() {
-                    closeLightbox(); // 任何单击都关闭灯箱
+                    // 任何单击都会关闭灯箱
+                    closeLightbox();
                 }
 
                 function handleDoubleClick() {
-                    if (lightboxZoomState === 1) { 
+                    if (lightboxZoomState === 1) { // 当前是正常放大，则进行二次放大
                         lightboxImg.classList.add('lightbox-image-zoomed');
-                        lightboxZoomState = 2; // 进入二次放大（高度适配）
-                    } else if (lightboxZoomState === 2) { 
+                        lightboxZoomState = 2;
+                    } else if (lightboxZoomState === 2) { // 当前是二次放大，则恢复正常放大
                         lightboxImg.classList.remove('lightbox-image-zoomed');
-                        lightboxZoomState = 1; // 返回第一次放大
+                        lightboxZoomState = 1;
                     }
                 }
 
+                // 按 Esc 键关闭灯箱 (可选增强)
                 document.addEventListener('keydown', function(event) {
                     if (event.key === 'Escape' && lightboxZoomState !== 0) {
                         closeLightbox();
