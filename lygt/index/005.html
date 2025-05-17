@@ -65,7 +65,7 @@
 
         .warranty-details {
             display: none;
-            padding: 10px 15px 20px 15px;
+            padding: 10px 15px 20px 15px; /* Default padding */
             border-bottom: 1px solid #e8e8e8;
             background-color: #fdfdfd;
             font-size: 0.9em;
@@ -73,6 +73,10 @@
 
         .warranty-details.expanded {
             display: block;
+        }
+
+        .full-width-image-area {
+            padding: 5px 0;
         }
 
         .warranty-details > p {
@@ -94,7 +98,6 @@
         .warranty-details > .section-title:first-child {
             margin-top: 0;
         }
-
 
         .title-divider {
             border: 0;
@@ -138,16 +141,19 @@
             color: #595959;
         }
 
-
         .certificate-image-container {
             padding: 10px 0;
         }
 
+        .full-width-image-area .certificate-image-container {
+            padding: 0;
+        }
+
         .certificate-image-container img {
             display: block;
-            max-width: 100%;
+            width: 100%;
             height: auto;
-            margin: 0 auto;
+            cursor: pointer;
         }
 
         .contact-section {
@@ -168,11 +174,50 @@
             font-size: 0.95em;
             color: #333;
         }
+
+        /* 灯箱样式 */
+        .lightbox-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .lightbox-overlay img { /* 第一次放大状态 */
+            display: block;
+            max-width: 90%;    /* 限制最大宽度 */
+            max-height: 90vh;   /* 限制最大高度 (视口高度的90%) */
+            width: auto;        /* 宽度自适应 */
+            height: auto;       /* 高度自适应 */
+            margin: auto;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out; /* 应用于所有变化的属性 */
+            object-fit: contain; /* 保证图片完整显示 */
+        }
+
+        .lightbox-overlay img.lightbox-image-zoomed { /* 双击后再次放大状态 - 高度优先 */
+            max-width: 100vw;   /* 宽度不能超过视口 */
+            width: auto;        /* 宽度根据高度自适应 */
+            height: 100vh;      /* 高度撑满视口 */
+            max-height: 100vh;  /* 再次确认最大高度 */
+            object-fit: contain;/* 保证图片完整显示 */
+            box-shadow: none;   /* 可以移除阴影以获得更纯粹的视图 */
+        }
+
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- ... (之前所有的质保书条目HTML保持不变) ... -->
         <!-- 质保书条目 1 (数据源模板) -->
         <div class="warranty-item" data-source-item-template>
             <div class="warranty-info">
@@ -907,11 +952,10 @@
             </div>
         </div>
 
-        <!-- MODIFIED: 证书图片直接显示 -->
-        <div class="warranty-details expanded"> <!-- Added 'expanded' class to make it visible by default -->
+        <!-- 证书图片直接显示 -->
+        <div class="warranty-details expanded full-width-image-area">
             <div class="certificate-image-container">
-                 <!-- MODIFIED: Update src to your image in the pdf folder. Replace 'certificate-image.png' with your actual file name -->
-                 <img src="../pdf/001.png" alt="产品质量证明书">
+                 <img src="../pdf/001.png" alt="产品质量证明书"> <!-- 确保图片路径正确 -->
             </div>
         </div>
 
@@ -924,11 +968,16 @@
             <p>服务热线: 400-0421-555</p>
         </div>
 
+    </div> <!-- 这是 .container 的结束标签 -->
+
+    <!-- 灯箱的 HTML 结构 -->
+    <div id="imageLightbox" class="lightbox-overlay" style="display: none;">
+        <img id="lightboxImage" src="" alt="证书放大图">
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- 数据填充逻辑 ---
+            // --- 数据填充逻辑 (保持不变) ---
             const sourceItemTemplate = document.querySelector('[data-source-item-template]');
             const sourceDetailsTemplate = document.querySelector('[data-source-details-template]');
 
@@ -937,7 +986,6 @@
                 return;
             }
 
-            // 获取源数据
             const sourceData = {
                 idText: sourceItemTemplate.querySelector('[data-source-field="idText"]')?.textContent || '',
                 dateText: sourceItemTemplate.querySelector('[data-source-field="dateText"]')?.textContent || '',
@@ -946,17 +994,13 @@
                 properties: {}
             };
 
-            // 提取P标签值
             sourceDetailsTemplate.querySelectorAll('[data-source-p]').forEach(pElement => {
                 const key = pElement.dataset.sourceP;
                 const textContent = pElement.textContent || '';
                 const value = textContent.substring(textContent.indexOf(':') + 1).trim();
-                if (key) {
-                    sourceData.pValues[key] = value;
-                }
+                if (key) sourceData.pValues[key] = value;
             });
 
-            // 提取成分信息值 (包括结果和判定)
             sourceDetailsTemplate.querySelectorAll('[data-source-component]').forEach(compElement => {
                 const key = compElement.dataset.sourceComponent;
                 const valueElement = compElement.querySelector('[data-source-value]');
@@ -969,7 +1013,6 @@
                 }
             });
 
-            // 提取物理特性值 (包括结果和判定)
             const propertiesToCopyFromSource = [
                 'actualThickness', 'gaugeCode', 'yieldStrength', 'tensileStrength',
                 'yieldRatio', 'bendingAngle', 'bendingDiameter', 'tensileDirection'
@@ -986,88 +1029,60 @@
                  }
             });
 
-
-            // 获取所有目标条目
             const targetItems = document.querySelectorAll('[data-target-item]');
-
             targetItems.forEach(targetItem => {
                 const targetDetails = targetItem.nextElementSibling;
-                if (!targetDetails || !targetDetails.hasAttribute('data-target-details')) {
-                    return; // 跳过没有对应details的item
-                }
+                if (!targetDetails || !targetDetails.hasAttribute('data-target-details')) return;
 
-                // 填充ID和Date
                 const targetIdField = targetItem.querySelector('[data-target-field="idText"]');
                 if (targetIdField) targetIdField.textContent = sourceData.idText;
-
                 const targetDateField = targetItem.querySelector('[data-target-field="dateText"]');
                 if (targetDateField) targetDateField.textContent = sourceData.dateText;
 
-                // 填充P标签值
                 for (const key in sourceData.pValues) {
                     const targetPValueSpan = targetDetails.querySelector(`[data-target-value-for-p="${key}"]`);
-                    if (targetPValueSpan) {
-                        targetPValueSpan.textContent = sourceData.pValues[key];
-                    }
+                    if (targetPValueSpan) targetPValueSpan.textContent = sourceData.pValues[key];
                 }
 
-                // 填充所有指定的物理特性值 (包括结果和判定)
                 for (const key in sourceData.properties) {
                      const targetPropEntry = targetDetails.querySelector(`[data-target-property="${key}"]`);
                      if (targetPropEntry) {
                          const targetValueSpan = targetPropEntry.querySelector('[data-target-value]');
                          const targetStatusSpan = targetPropEntry.querySelector('[data-target-status]');
-                         if (targetValueSpan && sourceData.properties[key]?.value !== undefined) {
-                             targetValueSpan.textContent = sourceData.properties[key].value;
-                         }
-                         if (targetStatusSpan && sourceData.properties[key]?.status !== undefined) {
-                             targetStatusSpan.textContent = sourceData.properties[key].status;
-                         }
+                         if (targetValueSpan && sourceData.properties[key]?.value !== undefined) targetValueSpan.textContent = sourceData.properties[key].value;
+                         if (targetStatusSpan && sourceData.properties[key]?.status !== undefined) targetStatusSpan.textContent = sourceData.properties[key].status;
                      }
                 }
 
-                // 特殊处理条目6的成分信息 (包括结果和判定)
                 if (targetDetails.dataset.itemIndex === '6') {
                     for (const key in sourceData.components) {
                         const targetCompEntry = targetDetails.querySelector(`[data-target-component="${key}"]`);
                         if (targetCompEntry) {
                             const targetValueSpan = targetCompEntry.querySelector('[data-target-value]');
                             const targetStatusSpan = targetCompEntry.querySelector('[data-target-status]');
-                            if (targetValueSpan && sourceData.components[key]?.value !== undefined) {
-                                targetValueSpan.textContent = sourceData.components[key].value;
-                            }
-                            if (targetStatusSpan && sourceData.components[key]?.status !== undefined) {
-                                targetStatusSpan.textContent = sourceData.components[key].status;
-                            }
+                            if (targetValueSpan && sourceData.components[key]?.value !== undefined) targetValueSpan.textContent = sourceData.components[key].value;
+                            if (targetStatusSpan && sourceData.components[key]?.status !== undefined) targetStatusSpan.textContent = sourceData.components[key].status;
                         }
                     }
                 }
             });
 
-            // --- 折叠/展开逻辑 ---
-            // MODIFIED: Query selector for warrantyItems now correctly excludes the static image,
-            // as its clickable header was removed.
-            const warrantyItems = document.querySelectorAll('.warranty-item'); // Selects all clickable items
-
+            // --- 折叠/展开逻辑 (保持不变) ---
+            const warrantyItems = document.querySelectorAll('.warranty-item'); 
             warrantyItems.forEach(item => {
                 item.addEventListener('click', function() {
                     const currentDetails = this.nextElementSibling;
                     const isActive = this.classList.contains('active');
-
-                    // Close all other collapsible items (data-target-item and data-source-item-template)
                     document.querySelectorAll('.warranty-item').forEach(otherItem => {
                         if (otherItem !== this) {
                             otherItem.classList.remove('active');
                             const otherDetails = otherItem.nextElementSibling;
-                            // Ensure otherDetails is a collapsible .warranty-details section
-                            if (otherDetails && otherDetails.classList.contains('warranty-details') && !otherDetails.querySelector('.certificate-image-container')) {
+                            if (otherDetails && otherDetails.classList.contains('warranty-details') && !otherDetails.classList.contains('full-width-image-area')) { 
                                 otherDetails.classList.remove('expanded');
                             }
                         }
                     });
-                    
-                    // Toggle the clicked item
-                    if (currentDetails && currentDetails.classList.contains('warranty-details')) {
+                    if (currentDetails && currentDetails.classList.contains('warranty-details') && !currentDetails.classList.contains('full-width-image-area')) {
                         if (isActive) {
                             this.classList.remove('active');
                             currentDetails.classList.remove('expanded');
@@ -1078,6 +1093,80 @@
                     }
                 });
             });
+
+            // --- 灯箱逻辑 (支持单击/双击切换缩放和关闭) ---
+            const originalCertificateImage = document.querySelector('.full-width-image-area .certificate-image-container img');
+            const lightbox = document.getElementById('imageLightbox');
+            const lightboxImg = document.getElementById('lightboxImage');
+
+            let lightboxZoomState = 0; // 0: hidden, 1: normal zoom, 2: extra zoom (height-fit)
+            let clickTimer = null; 
+
+            if (originalCertificateImage && lightbox && lightboxImg) {
+                originalCertificateImage.addEventListener('click', function() {
+                    openLightbox(this.src);
+                });
+
+                function openLightbox(src) {
+                    lightboxImg.src = src;
+                    lightboxZoomState = 1; 
+                    lightboxImg.classList.remove('lightbox-image-zoomed');
+                    lightbox.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeLightbox() {
+                    lightbox.style.display = 'none';
+                    lightboxImg.src = '';
+                    lightboxZoomState = 0; 
+                    document.body.style.overflow = 'auto';
+                    lightboxImg.classList.remove('lightbox-image-zoomed');
+                }
+
+                lightbox.addEventListener('click', function(event) {
+                    if (event.target === lightbox) { 
+                        closeLightbox();
+                    }
+                });
+
+                lightboxImg.addEventListener('click', function(event) {
+                    event.stopPropagation(); 
+
+                    if (clickTimer) { 
+                        clearTimeout(clickTimer);
+                        clickTimer = null;
+                        handleDoubleClick();
+                    } else { 
+                        clickTimer = setTimeout(() => {
+                            clickTimer = null;
+                            handleSingleClick();
+                        }, 250); 
+                    }
+                });
+                
+                function handleSingleClick() {
+                    closeLightbox(); // 任何单击都关闭灯箱
+                }
+
+                function handleDoubleClick() {
+                    if (lightboxZoomState === 1) { 
+                        lightboxImg.classList.add('lightbox-image-zoomed');
+                        lightboxZoomState = 2; // 进入二次放大（高度适配）
+                    } else if (lightboxZoomState === 2) { 
+                        lightboxImg.classList.remove('lightbox-image-zoomed');
+                        lightboxZoomState = 1; // 返回第一次放大
+                    }
+                }
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && lightboxZoomState !== 0) {
+                        closeLightbox();
+                    }
+                });
+
+            } else {
+                console.error('Lightbox elements not found! Check selectors.');
+            }
         });
     </script>
 
