@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>质保书信息</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            font-size: 16px; /* 基准字体大小 */
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+
+        .warranty-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #e8e8e8;
+            cursor: pointer;
+        }
+
+        .warranty-info .id {
+            font-weight: bold;
+            font-size: 1.1em; /* 桌面端大小 */
+            margin-bottom: 5px;
+            color: #1f1f1f;
+        }
+
+        .warranty-info .date {
+            font-size: 0.9em; /* 桌面端大小 */
+            color: #595959;
+        }
+
+        .dropdown-arrow {
+            --arrow-color: #8c8c8c;
+            --arrow-rotation: 0deg;
+            --arrow-font-size: 1.7em;
+            --arrow-font-weight: normal;
+            font-size: var(--arrow-font-size);
+        }
+
+        .arrow-char {
+            display: inline-block;
+            color: var(--arrow-color);
+            transform: rotate(var(--arrow-rotation));
+            font-weight: var(--arrow-font-weight);
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, font-size 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+        }
+
+        .warranty-item.active .dropdown-arrow {
+             --arrow-color: #007bff;
+             --arrow-rotation: 180deg;
+             --arrow-font-size: 1.4em;
+             --arrow-font-weight: bold;
+        }
+
+        .warranty-details {
+            display: none;
+            padding: 10px 15px 20px 15px; /* Default padding */
+            border-bottom: 1px solid #e8e8e8;
+            background-color: #fdfdfd;
+            font-size: 0.9em;
+        }
+
+        .warranty-details.expanded {
+            display: block;
+        }
+
+        /* CSS for the full-width image area */
+        .full-width-image-area {
+            padding: 5px 0; /* 5px padding top/bottom, 0 padding left/right. Adjust 5px as needed. */
+        }
+
+        .warranty-details > p {
+            margin: 4px 0;
+            line-height: 1.3;
+            color: #333;
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-top: 20px;
+            margin-bottom: 24px;
+            color: #1f1f1f;
+        }
+        .warranty-details > p + .section-title {
+             margin-top: 15px;
+        }
+        .warranty-details > .section-title:first-child {
+            margin-top: 0;
+        }
+
+
+        .title-divider {
+            border: 0;
+            height: 1px;
+            background-color: #e0e0e0;
+            margin-top: 0px;
+            margin-bottom: 1px;
+        }
+
+        .details-list {
+            margin-bottom: 15px;
+        }
+
+        .detail-entry {
+            display: grid;
+            grid-template-columns: minmax(100px, 2fr) 1fr 1fr;
+            gap: 8px;
+            padding: 3px 0;
+            align-items: center;
+            line-height: 1.2;
+        }
+
+        .detail-entry span {
+            display: block;
+        }
+
+        .entry-label {
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .entry-value,
+        .entry-status {
+            text-align: center;
+        }
+
+        .detail-header .entry-label,
+        .detail-header .entry-value,
+        .detail-header .entry-status {
+            font-weight: bold;
+            color: #595959;
+        }
+
+        .certificate-image-container {
+            padding: 10px 0; /* Original padding, will be overridden for full-width image */
+        }
+
+        /* Override .certificate-image-container padding when inside .full-width-image-area */
+        .full-width-image-area .certificate-image-container {
+            padding: 0;
+        }
+
+        .certificate-image-container img {
+            display: block;
+            width: 100%; /* Image takes full width of its container */
+            height: auto;
+            cursor: pointer; /* 让页面中的图片也有手型光标 */
+        }
+
+        .contact-section {
+            padding: 20px 15px;
+            background-color: #ffffff;
+        }
+
+        .contact-section .title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1f1f1f;
+        }
+
+        .contact-section p {
+            margin: 8px 0;
+            line-height: 1.6;
+            font-size: 0.95em;
+            color: #333;
+        }
+
+        /* 灯箱样式 */
+        .lightbox-overlay {
+            position: fixed; /* 固定定位，覆盖整个屏幕 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000000; /* MODIFIED: 纯黑色背景 */
+            z-index: 1000; /* 确保在最顶层 */
+            display: flex; /* 使用 flex */
+            align-items: center; /* 垂直居中 */
+            justify-content: center; /* 默认水平居中，用于初次放大 */
+            cursor: pointer; /* 提示用户背景可点击关闭 */
+        }
+
+        /* 当灯箱处于可滚动状态时的样式 */
+        .lightbox-overlay.is-scrollable {
+            overflow-x: auto; /* 允许水平滚动 */
+            -webkit-overflow-scrolling: touch; /* iOS 惯性滚动 */
+            justify-content: flex-start; /* 当可滚动时，让内容从左边开始 */
+        }
+
+        .lightbox-overlay img { /* MODIFIED: 第一次放大状态 */
+            display: block;
+            /* 目标：宽度为视口高度的100%，高度等比例 */
+            width: 100vh; 
+            height: auto;
+            /* 约束：确保图片在视口内，并保留一些边距 */
+            max-width: 95vw;  /* 例如：最大宽度为视口宽度的95% */
+            max-height: 95vh; /* 例如：最大高度为视口高度的95% */
+            
+            margin: auto; /* 配合父级flex的center实现居中 */
+            box-shadow: none; /* MODIFIED: 在纯黑背景下，原黑色阴影不可见，暂设为none */
+            cursor: pointer; /* 图片也可点击 */
+            transition: width 0.3s ease-in-out, height 0.3s ease-in-out, max-width 0.3s ease-in-out, max-height 0.3s ease-in-out;
+            object-fit: contain; /* 确保图片完整显示并保持比例 */
+            flex-shrink: 0; /* 防止图片在flex容器中被不期望地缩小 */
+        }
+
+        .lightbox-overlay img.lightbox-image-zoomed { /* 双击后再次放大状态 */
+            height: 100vh;       /* 图片高度设置为视口高度的100% */
+            width: auto;         /* 宽度将根据新的高度等比例缩放 */
+            max-width: none;     /* 允许图片宽度根据其100vh的高度自由缩放，即使超出视口宽度 */
+            box-shadow: none;    /* MODIFIED: 再次放大时可移除阴影，与首次放大保持一致 */
+            flex-shrink: 0;      /* 确保图片不会因为父flex容器的约束而缩小 */
+            margin: 0;           /* 当可滚动且父级是flex-start时，移除auto margin确保从左边开始 */
+        }
+
+        /* --- 媒体查询：针对手机屏幕 --- */
+        @media (max-width: 767px) { /* 当屏幕宽度 <= 767px 时应用以下样式 */
+            .warranty-info .id {
+                font-size: 0.75em; /* 调整为约 16px (相对于body的16px) */
+            }
+
+            .warranty-info .date {
+                font-size: 0.85em; /* 调整为约 13.6px (相对于body的16px) */
+            }
+        }
+        /* --- 媒体查询结束 --- */
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 质保书条目 1 (数据源模板) -->
+        <div class="warranty-item" data-source-item-template>
+            <div class="warranty-info">
+                <div class="id" data-source-field="idText">质保书号:M02504080033</div>
+                <div class="date" data-source-field="dateText">签发日期: 2025-04-11</div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details" data-source-details-template>
+            <p data-source-p="manufacturer">生产厂家: 凌源钢铁股份有限公司</p>
+            <p data-source-p="productName">产品名称: 热轧带肋钢筋 (直条)</p>
+            <p data-source-p="productionDate">生产日期: 2025-04-05</p>
+            <p data-source-p="furnaceNo">炉号: 257029181</p>
+            <p data-source-p="steelGrade">钢种: 热轧带肋钢筋 (直条)</p>
+            <p data-source-p="specification">规格: Φ21</p>
+            <p data-source-p="weight">重量: 2.86100t</p>
+            <p data-source-p="bundleNo">捆号 (卷号): B2254529802111</p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-source-component="C">
+                    <span class="entry-label">C (10 <sup>-2</sup>)</span>
+                    <span class="entry-value" data-source-value>21</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-component="Si">
+                    <span class="entry-label">Si (10 <sup>-2</sup>)</span>
+                    <span class="entry-value" data-source-value>21</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-component="Mn">
+                    <span class="entry-label">Mn (10 <sup>-2</sup>)</span>
+                    <span class="entry-value" data-source-value>131</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-component="P">
+                    <span class="entry-label">P (10 <sup>-3</sup>)</span>
+                    <span class="entry-value" data-source-value>21</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-component="S">
+                    <span class="entry-label">S (10 <sup>-3</sup>)</span>
+                    <span class="entry-value" data-source-value>21</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-component="Ceq">
+                    <span class="entry-label">Ceq (10 <sup>-2</sup>)</span>
+                    <span class="entry-value" data-source-value>41</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-source-property="actualThickness">
+                    <span class="entry-label">材料实际厚度</span>
+                    <span class="entry-value" data-source-value>21</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-source-value>11</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-property="yieldStrength">
+                    <span class="entry-label">屈服强度</span>
+                    <span class="entry-value" data-source-value>441.0</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-property="tensileStrength">
+                    <span class="entry-label">抗拉强度</span>
+                    <span class="entry-value" data-source-value>631.0</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-property="yieldRatio">
+                    <span class="entry-label">屈强比</span>
+                    <span class="entry-value" data-source-value>-1.000</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-source-value>91</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-source-value>41d</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+                <div class="detail-entry" data-source-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-source-value>纵向</span>
+                    <span class="entry-status" data-source-status>合格</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 质保书条目 2 -->
+        <div class="warranty-item" data-target-item>
+            <div class="warranty-info">
+                <div class="id" data-target-field="idText"></div>
+                <div class="date" data-target-field="dateText"></div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+       <div class="warranty-details" data-target-details>
+            <p>生产厂家: <span data-target-value-for-p="manufacturer"></span></p>
+            <p>产品名称: <span data-target-value-for-p="productName"></span></p>
+            <p>生产日期: <span data-target-value-for-p="productionDate"></span></p>
+            <p>炉号: <span data-target-value-for-p="furnaceNo"></span></p>
+            <p>钢种: <span data-target-value-for-p="steelGrade"></span></p>
+            <p>规格: <span data-target-value-for-p="specification"></span></p>
+            <p>重量: <span data-target-value-for-p="weight"></span></p>
+            <p>捆号 (卷号): <span data-target-value-for-p="bundleNo"></span></p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 质保书条目 3 -->
+        <div class="warranty-item" data-target-item>
+            <div class="warranty-info">
+                <div class="id" data-target-field="idText"></div>
+                <div class="date" data-target-field="dateText"></div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details" data-target-details>
+            <p>生产厂家: <span data-target-value-for-p="manufacturer"></span></p>
+            <p>产品名称: <span data-target-value-for-p="productName"></span></p>
+            <p>生产日期: <span data-target-value-for-p="productionDate"></span></p>
+            <p>炉号: <span data-target-value-for-p="furnaceNo"></span></p>
+            <p>钢种: <span data-target-value-for-p="steelGrade"></span></p>
+            <p>规格: <span data-target-value-for-p="specification"></span></p>
+            <p>重量: <span data-target-value-for-p="weight"></span></p>
+            <p>捆号 (卷号): <span data-target-value-for-p="bundleNo"></span></p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="yieldStrength">
+                    <span class="entry-label">屈服强度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileStrength">
+                    <span class="entry-label">抗拉强度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="yieldRatio">
+                    <span class="entry-label">屈强比</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+        </div>
+
+		<!-- 质保书条目 4 -->
+        <div class="warranty-item" data-target-item>
+            <div class="warranty-info">
+                <div class="id" data-target-field="idText"></div>
+                <div class="date" data-target-field="dateText"></div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details" data-target-details>
+            <p>生产厂家: <span data-target-value-for-p="manufacturer"></span></p>
+            <p>产品名称: <span data-target-value-for-p="productName"></span></p>
+            <p>生产日期: <span data-target-value-for-p="productionDate"></span></p>
+            <p>炉号: <span data-target-value-for-p="furnaceNo"></span></p>
+            <p>钢种: <span data-target-value-for-p="steelGrade"></span></p>
+            <p>规格: <span data-target-value-for-p="specification"></span></p>
+            <p>重量: <span data-target-value-for-p="weight"></span></p>
+            <p>捆号 (卷号): <span data-target-value-for-p="bundleNo"></span></p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+        </div>
+		<!-- 质保书条目 5 -->
+        <div class="warranty-item" data-target-item>
+            <div class="warranty-info">
+                <div class="id" data-target-field="idText"></div>
+                <div class="date" data-target-field="dateText"></div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details" data-target-details>
+            <p>生产厂家: <span data-target-value-for-p="manufacturer"></span></p>
+            <p>产品名称: <span data-target-value-for-p="productName"></span></p>
+            <p>生产日期: <span data-target-value-for-p="productionDate"></span></p>
+            <p>炉号: <span data-target-value-for-p="furnaceNo"></span></p>
+            <p>钢种: <span data-target-value-for-p="steelGrade"></span></p>
+            <p>规格: <span data-target-value-for-p="specification"></span></p>
+            <p>重量: <span data-target-value-for-p="weight"></span></p>
+            <p>捆号 (卷号): <span data-target-value-for-p="bundleNo"></span></p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+        </div>
+
+		<!-- 质保书条目 6 -->
+		<div class="warranty-item" data-target-item>
+            <div class="warranty-info">
+                <div class="id" data-target-field="idText"></div>
+                <div class="date" data-target-field="dateText"></div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details" data-target-details data-item-index="6"> <!-- 特殊标记条目6 -->
+            <p>生产厂家: <span data-target-value-for-p="manufacturer"></span></p>
+            <p>产品名称: <span data-target-value-for-p="productName"></span></p>
+            <p>生产日期: <span data-target-value-for-p="productionDate"></span></p>
+            <p>炉号: <span data-target-value-for-p="furnaceNo"></span></p>
+            <p>钢种: <span data-target-value-for-p="steelGrade"></span></p>
+            <p>规格: <span data-target-value-for-p="specification"></span></p>
+            <p>重量: <span data-target-value-for-p="weight"></span></p>
+            <p>捆号 (卷号): <span data-target-value-for-p="bundleNo"></span></p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-component="C">
+                    <span class="entry-label">C (10 <sup>-2</sup>)</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-component="Si">
+                    <span class="entry-label">Si (10 <sup>-2</sup>)</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-component="Mn">
+                    <span class="entry-label">Mn (10 <sup>-2</sup>)</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-component="P">
+                    <span class="entry-label">P (10 <sup>-3</sup>)</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-component="S">
+                    <span class="entry-label">S (10 <sup>-3</sup>)</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-component="Ceq">
+                    <span class="entry-label">Ceq (10 <sup>-2</sup>)</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-property="actualThickness">
+                    <span class="entry-label">材料实际厚度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="yieldStrength">
+                    <span class="entry-label">屈服强度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileStrength">
+                    <span class="entry-label">抗拉强度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="yieldRatio">
+                    <span class="entry-label">屈强比</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-target-value></span>
+
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+        </div>
+
+		<!-- 质保书条目 7 -->
+		<div class="warranty-item" data-target-item>
+            <div class="warranty-info">
+                <div class="id" data-target-field="idText"></div>
+                <div class="date" data-target-field="dateText"></div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details" data-target-details>
+            <p>生产厂家: <span data-target-value-for-p="manufacturer"></span></p>
+            <p>产品名称: <span data-target-value-for-p="productName"></span></p>
+            <p>生产日期: <span data-target-value-for-p="productionDate"></span></p>
+            <p>炉号: <span data-target-value-for-p="furnaceNo"></span></p>
+            <p>钢种: <span data-target-value-for-p="steelGrade"></span></p>
+            <p>规格: <span data-target-value-for-p="specification"></span></p>
+            <p>重量: <span data-target-value-for-p="weight"></span></p>
+            <p>捆号 (卷号): <span data-target-value-for-p="bundleNo"></span></p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+            </div>
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="yieldStrength">
+                    <span class="entry-label">屈服强度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileStrength">
+                    <span class="entry-label">抗拉强度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="yieldRatio">
+                    <span class="entry-label">屈强比</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+        </div>
+
+		<!-- 质保书条目 8 -->
+		<div class="warranty-item" data-target-item>
+            <div class="warranty-info">
+                <div class="id" data-target-field="idText"></div>
+                <div class="date" data-target-field="dateText"></div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details" data-target-details>
+            <p>生产厂家: <span data-target-value-for-p="manufacturer"></span></p>
+            <p>产品名称: <span data-target-value-for-p="productName"></span></p>
+            <p>生产日期: <span data-target-value-for-p="productionDate"></span></p>
+            <p>炉号: <span data-target-value-for-p="furnaceNo"></span></p>
+            <p>钢种: <span data-target-value-for-p="steelGrade"></span></p>
+            <p>规格: <span data-target-value-for-p="specification"></span></p>
+            <p>重量: <span data-target-value-for-p="weight"></span></p>
+            <p>捆号 (卷号): <span data-target-value-for-p="bundleNo"></span></p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+            </div>
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+        </div>
+		<!-- 质保书条目 9 -->
+		<div class="warranty-item" data-target-item>
+            <div class="warranty-info">
+                <div class="id" data-target-field="idText"></div>
+                <div class="date" data-target-field="dateText"></div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details" data-target-details>
+            <p>生产厂家: <span data-target-value-for-p="manufacturer"></span></p>
+            <p>产品名称: <span data-target-value-for-p="productName"></span></p>
+            <p>生产日期: <span data-target-value-for-p="productionDate"></span></p>
+            <p>炉号: <span data-target-value-for-p="furnaceNo"></span></p>
+            <p>钢种: <span data-target-value-for-p="steelGrade"></span></p>
+            <p>规格: <span data-target-value-for-p="specification"></span></p>
+            <p>重量: <span data-target-value-for-p="weight"></span></p>
+            <p>捆号 (卷号): <span data-target-value-for-p="bundleNo"></span></p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+            </div>
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+        </div>
+		<!-- 质保书条目 10 -->
+		<div class="warranty-item" data-target-item>
+            <div class="warranty-info">
+                <div class="id" data-target-field="idText"></div>
+                <div class="date" data-target-field="dateText"></div>
+            </div>
+            <div class="dropdown-arrow">
+                <span class="arrow-char">∨</span>
+            </div>
+        </div>
+        <div class="warranty-details" data-target-details>
+            <p>生产厂家: <span data-target-value-for-p="manufacturer"></span></p>
+            <p>产品名称: <span data-target-value-for-p="productName"></span></p>
+            <p>生产日期: <span data-target-value-for-p="productionDate"></span></p>
+            <p>炉号: <span data-target-value-for-p="furnaceNo"></span></p>
+            <p>钢种: <span data-target-value-for-p="steelGrade"></span></p>
+            <p>规格: <span data-target-value-for-p="specification"></span></p>
+            <p>重量: <span data-target-value-for-p="weight"></span></p>
+            <p>捆号 (卷号): <span data-target-value-for-p="bundleNo"></span></p>
+
+            <div class="section-title">成分信息</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">成分</span>
+                    <span class="entry-value">结果, %</span>
+                    <span class="entry-status">判定</span>
+                </div>
+            </div>
+            <div class="section-title">物理特性</div>
+            <hr class="title-divider">
+            <div class="details-list">
+                <div class="detail-entry detail-header">
+                    <span class="entry-label">项目</span>
+                    <span class="entry-value">结果</span>
+                    <span class="entry-status">判定</span>
+                </div>
+                <div class="detail-entry" data-target-property="gaugeCode">
+                    <span class="entry-label">标距代码</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingAngle">
+                    <span class="entry-label">弯曲角度</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="bendingDiameter">
+                    <span class="entry-label">弯曲直径</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+                <div class="detail-entry" data-target-property="tensileDirection">
+                    <span class="entry-label">拉伸试验方向</span>
+                    <span class="entry-value" data-target-value></span>
+                    <span class="entry-status" data-target-status></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 证书图片直接显示 -->
+        <div class="warranty-details expanded full-width-image-area">
+            <div class="certificate-image-container">
+                 <img src="../pdf/001.png" alt="产品质量证明书"> <!-- 确保图片路径正确 -->
+            </div>
+        </div>
+
+
+        <!-- 联系方式区域 (独立于可折叠条目) - 保持原样 -->
+        <div class="contact-section">
+            <div class="title">联系方式</div>
+            <p class="phone-line">销售电话: 建材0421-6838215、特钢0421-6838924、</p>
+            <p class="phone-line">宽带0421-6838211</p>
+            <p>服务热线: 400-0421-555</p>
+        </div>
+
+    </div> <!-- 这是 .container 的结束标签 -->
+
+    <!-- 灯箱的 HTML 结构 (已移除关闭按钮) -->
+    <div id="imageLightbox" class="lightbox-overlay" style="display: none;">
+        <img id="lightboxImage" src="" alt="证书放大图">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- 数据填充逻辑 (保持不变) ---
+            const sourceItemTemplate = document.querySelector('[data-source-item-template]');
+            const sourceDetailsTemplate = document.querySelector('[data-source-details-template]');
+
+            if (!sourceItemTemplate || !sourceDetailsTemplate) {
+                console.error('Source template elements not found!');
+                return;
+            }
+
+            const sourceData = {
+                idText: sourceItemTemplate.querySelector('[data-source-field="idText"]')?.textContent || '',
+                dateText: sourceItemTemplate.querySelector('[data-source-field="dateText"]')?.textContent || '',
+                pValues: {},
+                components: {},
+                properties: {}
+            };
+
+            sourceDetailsTemplate.querySelectorAll('[data-source-p]').forEach(pElement => {
+                const key = pElement.dataset.sourceP;
+                const textContent = pElement.textContent || '';
+                const value = textContent.substring(textContent.indexOf(':') + 1).trim();
+                if (key) sourceData.pValues[key] = value;
+            });
+
+            sourceDetailsTemplate.querySelectorAll('[data-source-component]').forEach(compElement => {
+                const key = compElement.dataset.sourceComponent;
+                const valueElement = compElement.querySelector('[data-source-value]');
+                const statusElement = compElement.querySelector('[data-source-status]');
+                if (key && valueElement && statusElement) {
+                    sourceData.components[key] = {
+                        value: valueElement.textContent || '',
+                        status: statusElement.textContent || ''
+                    };
+                }
+            });
+
+            const propertiesToCopyFromSource = [
+                'actualThickness', 'gaugeCode', 'yieldStrength', 'tensileStrength',
+                'yieldRatio', 'bendingAngle', 'bendingDiameter', 'tensileDirection'
+            ];
+            propertiesToCopyFromSource.forEach(propKey => {
+                 const propElement = sourceDetailsTemplate.querySelector(`[data-source-property="${propKey}"]`);
+                 const valueElement = propElement?.querySelector('[data-source-value]');
+                 const statusElement = propElement?.querySelector('[data-source-status]');
+                 if (propElement && valueElement && statusElement){
+                    sourceData.properties[propKey] = {
+                        value: valueElement.textContent || '',
+                        status: statusElement.textContent || ''
+                    };
+                 }
+            });
+
+            const targetItems = document.querySelectorAll('[data-target-item]');
+            targetItems.forEach(targetItem => {
+                const targetDetails = targetItem.nextElementSibling;
+                if (!targetDetails || !targetDetails.hasAttribute('data-target-details')) return;
+
+                const targetIdField = targetItem.querySelector('[data-target-field="idText"]');
+                if (targetIdField) targetIdField.textContent = sourceData.idText;
+                const targetDateField = targetItem.querySelector('[data-target-field="dateText"]');
+                if (targetDateField) targetDateField.textContent = sourceData.dateText;
+
+                for (const key in sourceData.pValues) {
+                    const targetPValueSpan = targetDetails.querySelector(`[data-target-value-for-p="${key}"]`);
+                    if (targetPValueSpan) targetPValueSpan.textContent = sourceData.pValues[key];
+                }
+
+                for (const key in sourceData.properties) {
+                     const targetPropEntry = targetDetails.querySelector(`[data-target-property="${key}"]`);
+                     if (targetPropEntry) {
+                         const targetValueSpan = targetPropEntry.querySelector('[data-target-value]');
+                         const targetStatusSpan = targetPropEntry.querySelector('[data-target-status]');
+                         if (targetValueSpan && sourceData.properties[key]?.value !== undefined) targetValueSpan.textContent = sourceData.properties[key].value;
+                         if (targetStatusSpan && sourceData.properties[key]?.status !== undefined) targetStatusSpan.textContent = sourceData.properties[key].status;
+                     }
+                }
+
+                if (targetDetails.dataset.itemIndex === '6') {
+                    for (const key in sourceData.components) {
+                        const targetCompEntry = targetDetails.querySelector(`[data-target-component="${key}"]`);
+                        if (targetCompEntry) {
+                            const targetValueSpan = targetCompEntry.querySelector('[data-target-value]');
+                            const targetStatusSpan = targetCompEntry.querySelector('[data-target-status]');
+                            if (targetValueSpan && sourceData.components[key]?.value !== undefined) targetValueSpan.textContent = sourceData.components[key].value;
+                            if (targetStatusSpan && sourceData.components[key]?.status !== undefined) targetStatusSpan.textContent = sourceData.components[key].status;
+                        }
+                    }
+                }
+            });
+
+            // --- 折叠/展开逻辑 (保持不变) ---
+            const warrantyItems = document.querySelectorAll('.warranty-item'); 
+            warrantyItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const currentDetails = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+                    document.querySelectorAll('.warranty-item').forEach(otherItem => {
+                        if (otherItem !== this) {
+                            otherItem.classList.remove('active');
+                            const otherDetails = otherItem.nextElementSibling;
+                            if (otherDetails && otherDetails.classList.contains('warranty-details') && !otherDetails.classList.contains('full-width-image-area')) { 
+                                otherDetails.classList.remove('expanded');
+                            }
+                        }
+                    });
+                    if (currentDetails && currentDetails.classList.contains('warranty-details') && !currentDetails.classList.contains('full-width-image-area')) {
+                        if (isActive) {
+                            this.classList.remove('active');
+                            currentDetails.classList.remove('expanded');
+                        } else {
+                            this.classList.add('active');
+                            currentDetails.classList.add('expanded');
+                        }
+                    }
+                });
+            });
+
+            // --- 灯箱逻辑 (支持单击/双击切换缩放和关闭，二次放大可滑动) ---
+            const originalCertificateImage = document.querySelector('.full-width-image-area .certificate-image-container img');
+            const lightbox = document.getElementById('imageLightbox'); // The .lightbox-overlay element
+            const lightboxImg = document.getElementById('lightboxImage');
+
+            let lightboxZoomState = 0; // 0: hidden, 1: normal zoom, 2: extra zoom
+            let clickTimer = null;
+
+            if (originalCertificateImage && lightbox && lightboxImg) {
+                originalCertificateImage.addEventListener('click', function() {
+                    openLightbox(this.src);
+                });
+
+                function openLightbox(src) {
+                    lightboxImg.src = src;
+                    lightboxZoomState = 1; 
+                    lightboxImg.classList.remove('lightbox-image-zoomed');
+                    lightbox.classList.remove('is-scrollable'); // Ensure not scrollable on open
+                    lightbox.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+
+                function closeLightbox() {
+                    lightbox.style.display = 'none';
+                    lightboxImg.src = '';
+                    lightboxZoomState = 0; 
+                    document.body.style.overflow = 'auto';
+                    lightboxImg.classList.remove('lightbox-image-zoomed');
+                    lightbox.classList.remove('is-scrollable'); // Ensure not scrollable on close
+                }
+
+                lightbox.addEventListener('click', function(event) {
+                    if (event.target === lightbox) { 
+                        closeLightbox();
+                    }
+                });
+
+                lightboxImg.addEventListener('click', function(event) {
+                    event.stopPropagation(); 
+
+                    if (clickTimer) { 
+                        clearTimeout(clickTimer);
+                        clickTimer = null;
+                        handleDoubleClick();
+                    } else { 
+                        clickTimer = setTimeout(() => {
+                            clickTimer = null;
+                            handleSingleClick();
+                        }, 250); 
+                    }
+                });
+                
+                function handleSingleClick() {
+                    closeLightbox();
+                }
+
+                function handleDoubleClick() {
+                    if (lightboxZoomState === 1) { 
+                        lightboxImg.classList.add('lightbox-image-zoomed');
+                        lightbox.classList.add('is-scrollable'); // Enable scrolling for zoomed state
+                        lightboxZoomState = 2;
+                    } else if (lightboxZoomState === 2) { 
+                        lightboxImg.classList.remove('lightbox-image-zoomed');
+                        lightbox.classList.remove('is-scrollable'); // Disable scrolling
+                        lightboxZoomState = 1;
+                    }
+                }
+
+                document.addEventListener('keydown', function(event) {
+                    if (event.key === 'Escape' && lightboxZoomState !== 0) {
+                        closeLightbox();
+                    }
+                });
+
+            } else {
+                console.error('Lightbox elements not found! Check selectors.');
+            }
+        });
+    </script>
+
+</body>
+</html>
