@@ -1008,34 +1008,38 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- START: Dynamically set certificate image based on URL parameter ---
+                        // --- START: Dynamically set certificate image based on URL parameter ---
             const certificateImageElement = document.querySelector('.full-width-image-area .certificate-image-container img');
             if (certificateImageElement) {
                 try {
                     const urlParams = new URLSearchParams(window.location.search);
-                    const pdfParamValue = urlParams.get('pdf'); // e.g., "003" or "003.png"
+                    const pdfParamValue = urlParams.get('pdf'); // e.g., "003" or "003.jpg"
 
                     if (pdfParamValue) {
                         // Sanitize to allow alphanumeric, hyphen, underscore, dot. Prevents path traversal.
                         let fileName = pdfParamValue.replace(/[^\w\-\.]/g, '');
 
                         if (fileName) {
-                            // Ensure it ends with .png
-                            if (!fileName.toLowerCase().endsWith('.png')) {
+                            // NEW LOGIC:
+                            // Check if an extension (a dot) is ALREADY present in the sanitized fileName.
+                            // We look for the last dot to correctly handle filenames like "archive.version1.jpg".
+                            if (fileName.lastIndexOf('.') === -1) {
+                                // If no dot (meaning no extension provided in the URL parameter),
+                                // then append a default extension.
+                                // Let's keep .png as the default for now if no extension is given.
+                                // If you want .jpg as default, or want to try multiple, this logic would need adjustment.
                                 fileName += '.png';
                             }
+                            // Now, if pdfParamValue was "image.jpg", fileName remains "image.jpg".
+                            // If pdfParamValue was "image", fileName becomes "image.png".
+
                             certificateImageElement.src = `../pdf/${fileName}`;
-                            // Update alt text for accessibility, using the base name (e.g., "003")
-                            const baseName = fileName.substring(0, fileName.lastIndexOf('.'));
+                            const baseName = fileName.substring(0, fileName.lastIndexOf('.') > -1 ? fileName.lastIndexOf('.') : fileName.length);
                             certificateImageElement.alt = `产品质量证明书 ${baseName}`;
                         } else {
                             console.warn('Invalid "pdf" parameter value after sanitization:', pdfParamValue);
-                            // Optional: Fallback to default or show an error image/message
-                            // certificateImageElement.src = '../pdf/default.png';
-                            // certificateImageElement.alt = '产品质量证明书 默认';
                         }
                     }
-                    // If no 'pdf' parameter, the default src from HTML will be used.
                 } catch (e) {
                     console.error("Error processing URL parameters for PDF image:", e);
                 }
