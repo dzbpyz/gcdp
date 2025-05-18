@@ -560,6 +560,7 @@
         <div class="warranty-item" data-target-item>
             <div class="warranty-info">
                 <div class="id" data-target-field="idText"></div>
+
                 <div class="date" data-target-field="dateText"></div>
             </div>
             <div class="dropdown-arrow">
@@ -985,7 +986,7 @@
         <!-- 证书图片直接显示 -->
         <div class="warranty-details expanded full-width-image-area">
             <div class="certificate-image-container">
-                 <img src="../pdf/001.png" alt="产品质量证明书"> <!-- 确保图片路径正确 -->
+                 <img src="../pdf/材质单示例.png" alt="产品质量证明书"> <!-- 默认图片 -->
             </div>
         </div>
 
@@ -1007,6 +1008,94 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+                                 // --- START: Dynamically set certificate image based on URL parameter ---
+            const certificateImageElement = document.querySelector('.full-width-image-area .certificate-image-container img');
+            const defaultImageSrc = certificateImageElement ? certificateImageElement.src : '../pdf/001.png'; // 保存原始默认图片
+            const defaultImageAlt = certificateImageElement ? certificateImageElement.alt : '产品质量证明书';
+
+            if (certificateImageElement) {
+                try {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const pdfParamValue = urlParams.get('pdf');
+
+                    if (pdfParamValue) {
+                        // 1. 优先处理用户明确指定了后缀的情况 (e.g., myimage.jpg, another.png)
+                        //    我们通过检查原始参数值中是否包含点号，并且这个点号不是唯一的字符
+                        if (pdfParamValue.includes('.') && pdfParamValue.lastIndexOf('.') < pdfParamValue.length - 1) {
+                            let explicitFileName = pdfParamValue.replace(/[^\w\-\.]/g, ''); // 允许字母数字、连字符、下划线、点
+                            if (explicitFileName) {
+                                certificateImageElement.src = `../pdf/${explicitFileName}`;
+                                const baseName = explicitFileName.substring(0, explicitFileName.lastIndexOf('.'));
+                                certificateImageElement.alt = `产品质量证明书 ${baseName}`;
+                                // 为明确指定的文件设置一个错误处理器
+                                certificateImageElement.onerror = function() {
+                                    console.error(`Error loading explicitly specified image: ../pdf/${explicitFileName}. Reverting to default.`);
+                                    certificateImageElement.src = defaultImageSrc; // 明确指定的文件加载失败，恢复默认
+                                    certificateImageElement.alt = defaultImageAlt;
+                                    certificateImageElement.onerror = null; // 清除错误处理器，避免循环
+                                };
+                                certificateImageElement.onload = function() {
+                                    certificateImageElement.onerror = null; // 加载成功，清除错误处理器
+                                };
+                            } else {
+                                console.warn('Invalid "pdf" parameter (with extension) after sanitization:', pdfParamValue);
+                                // 无效参数，使用默认图片 (src 和 alt 已是默认)
+                            }
+                        } else {
+                            // 2. 处理用户只提供了文件名，没有后缀的情况 (e.g., myimage)
+                            let baseFileName = pdfParamValue.replace(/[^\w\-]/g, ''); // 只允许字母数字、连字符、下划线
+                            if (baseFileName) {
+                                const extensionsToTry = ['png', 'jpg', 'jpeg', 'gif', 'webp']; // 您可以按需调整尝试的后缀顺序和类型
+                                let foundImage = false;
+
+                                function tryLoadNextExtension(index) {
+                                    if (index >= extensionsToTry.length) {
+                                        // 所有尝试都失败了
+                                        console.warn(`Image not found for base name "${baseFileName}" with any attempted extension. Reverting to default.`);
+                                        certificateImageElement.src = defaultImageSrc; // 所有尝试失败，恢复默认
+                                        certificateImageElement.alt = defaultImageAlt;
+                                        certificateImageElement.onerror = null;
+                                        return;
+                                    }
+
+                                    const currentExtension = extensionsToTry[index];
+                                    const potentialSrc = `../pdf/${baseFileName}.${currentExtension}`;
+                                    certificateImageElement.src = potentialSrc;
+
+                                    certificateImageElement.onload = function() {
+                                        console.log(`Successfully loaded: ${potentialSrc}`);
+                                        certificateImageElement.alt = `产品质量证明书 ${baseFileName}`;
+                                        foundImage = true;
+                                        certificateImageElement.onerror = null; // 清除错误处理器
+                                        certificateImageElement.onload = null;  // 清除成功处理器
+                                    };
+
+                                    certificateImageElement.onerror = function() {
+                                        console.log(`Failed to load: ${potentialSrc}. Trying next extension...`);
+                                        tryLoadNextExtension(index + 1); // 尝试下一个后缀
+                                    };
+                                }
+                                tryLoadNextExtension(0); // 从第一个后缀开始尝试
+                            } else {
+                                console.warn('Invalid "pdf" parameter (no extension) after sanitization:', pdfParamValue);
+                                // 无效参数，使用默认图片 (src 和 alt 已是默认)
+                            }
+                        }
+                    }
+                    // 如果没有 pdfParamValue, 则图片元素将使用其在HTML中定义的默认src和alt
+                } catch (e) {
+                    console.error("Error processing URL parameters for PDF image:", e);
+                    if (certificateImageElement) {
+                        certificateImageElement.src = defaultImageSrc; // 发生其他错误，恢复默认
+                        certificateImageElement.alt = defaultImageAlt;
+                    }
+                }
+            } else {
+                console.error('Certificate image element not found for dynamic update.');
+            }
+            // --- END: Dynamically set certificate image ---
+
+
             // --- 数据填充逻辑 (保持不变) ---
             const sourceItemTemplate = document.querySelector('[data-source-item-template]');
             const sourceDetailsTemplate = document.querySelector('[data-source-details-template]');
@@ -1125,7 +1214,8 @@
             });
 
             // --- 灯箱逻辑 (支持单击/双击切换缩放和关闭，二次放大可滑动) ---
-            const originalCertificateImage = document.querySelector('.full-width-image-area .certificate-image-container img');
+            // Note: originalCertificateImage now refers to certificateImageElement defined above
+            const originalCertificateImage = certificateImageElement; // Use the potentially updated image
             const lightbox = document.getElementById('imageLightbox'); // The .lightbox-overlay element
             const lightboxImg = document.getElementById('lightboxImage');
 
@@ -1134,7 +1224,7 @@
 
             if (originalCertificateImage && lightbox && lightboxImg) {
                 originalCertificateImage.addEventListener('click', function() {
-                    openLightbox(this.src);
+                    openLightbox(this.src); // 'this.src' will have the dynamically set path
                 });
 
                 function openLightbox(src) {
@@ -1199,10 +1289,13 @@
                 });
 
             } else {
-                console.error('Lightbox elements not found! Check selectors.');
+                if (!originalCertificateImage) console.error('Original certificate image (for lightbox) not found! Check selector or if it was dynamically removed.');
+                if (!lightbox) console.error('Lightbox overlay element not found!');
+                if (!lightboxImg) console.error('Lightbox image element not found!');
             }
         });
     </script>
+
 
 </body>
 </html>
