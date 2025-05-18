@@ -1008,40 +1008,87 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-                        // --- START: Dynamically set certificate image based on URL parameter ---
+                                 // --- START: Dynamically set certificate image based on URL parameter ---
             const certificateImageElement = document.querySelector('.full-width-image-area .certificate-image-container img');
+            const defaultImageSrc = certificateImageElement ? certificateImageElement.src : '../pdf/001.png'; // 保存原始默认图片
+            const defaultImageAlt = certificateImageElement ? certificateImageElement.alt : '产品质量证明书';
+
             if (certificateImageElement) {
                 try {
                     const urlParams = new URLSearchParams(window.location.search);
-                    const pdfParamValue = urlParams.get('pdf'); // e.g., "003" or "003.jpg"
+                    const pdfParamValue = urlParams.get('pdf');
 
                     if (pdfParamValue) {
-                        // Sanitize to allow alphanumeric, hyphen, underscore, dot. Prevents path traversal.
-                        let fileName = pdfParamValue.replace(/[^\w\-\.]/g, '');
-
-                        if (fileName) {
-                            // NEW LOGIC:
-                            // Check if an extension (a dot) is ALREADY present in the sanitized fileName.
-                            // We look for the last dot to correctly handle filenames like "archive.version1.jpg".
-                            if (fileName.lastIndexOf('.') === -1) {
-                                // If no dot (meaning no extension provided in the URL parameter),
-                                // then append a default extension.
-                                // Let's keep .png as the default for now if no extension is given.
-                                // If you want .jpg as default, or want to try multiple, this logic would need adjustment.
-                                fileName += '.png';
+                        // 1. 优先处理用户明确指定了后缀的情况 (e.g., myimage.jpg, another.png)
+                        //    我们通过检查原始参数值中是否包含点号，并且这个点号不是唯一的字符
+                        if (pdfParamValue.includes('.') && pdfParamValue.lastIndexOf('.') < pdfParamValue.length - 1) {
+                            let explicitFileName = pdfParamValue.replace(/[^\w\-\.]/g, ''); // 允许字母数字、连字符、下划线、点
+                            if (explicitFileName) {
+                                certificateImageElement.src = `../pdf/${explicitFileName}`;
+                                const baseName = explicitFileName.substring(0, explicitFileName.lastIndexOf('.'));
+                                certificateImageElement.alt = `产品质量证明书 ${baseName}`;
+                                // 为明确指定的文件设置一个错误处理器
+                                certificateImageElement.onerror = function() {
+                                    console.error(`Error loading explicitly specified image: ../pdf/${explicitFileName}. Reverting to default.`);
+                                    certificateImageElement.src = defaultImageSrc; // 明确指定的文件加载失败，恢复默认
+                                    certificateImageElement.alt = defaultImageAlt;
+                                    certificateImageElement.onerror = null; // 清除错误处理器，避免循环
+                                };
+                                certificateImageElement.onload = function() {
+                                    certificateImageElement.onerror = null; // 加载成功，清除错误处理器
+                                };
+                            } else {
+                                console.warn('Invalid "pdf" parameter (with extension) after sanitization:', pdfParamValue);
+                                // 无效参数，使用默认图片 (src 和 alt 已是默认)
                             }
-                            // Now, if pdfParamValue was "image.jpg", fileName remains "image.jpg".
-                            // If pdfParamValue was "image", fileName becomes "image.png".
-
-                            certificateImageElement.src = `../pdf/${fileName}`;
-                            const baseName = fileName.substring(0, fileName.lastIndexOf('.') > -1 ? fileName.lastIndexOf('.') : fileName.length);
-                            certificateImageElement.alt = `产品质量证明书 ${baseName}`;
                         } else {
-                            console.warn('Invalid "pdf" parameter value after sanitization:', pdfParamValue);
+                            // 2. 处理用户只提供了文件名，没有后缀的情况 (e.g., myimage)
+                            let baseFileName = pdfParamValue.replace(/[^\w\-]/g, ''); // 只允许字母数字、连字符、下划线
+                            if (baseFileName) {
+                                const extensionsToTry = ['png', 'jpg', 'jpeg', 'gif', 'webp']; // 您可以按需调整尝试的后缀顺序和类型
+                                let foundImage = false;
+
+                                function tryLoadNextExtension(index) {
+                                    if (index >= extensionsToTry.length) {
+                                        // 所有尝试都失败了
+                                        console.warn(`Image not found for base name "${baseFileName}" with any attempted extension. Reverting to default.`);
+                                        certificateImageElement.src = defaultImageSrc; // 所有尝试失败，恢复默认
+                                        certificateImageElement.alt = defaultImageAlt;
+                                        certificateImageElement.onerror = null;
+                                        return;
+                                    }
+
+                                    const currentExtension = extensionsToTry[index];
+                                    const potentialSrc = `../pdf/${baseFileName}.${currentExtension}`;
+                                    certificateImageElement.src = potentialSrc;
+
+                                    certificateImageElement.onload = function() {
+                                        console.log(`Successfully loaded: ${potentialSrc}`);
+                                        certificateImageElement.alt = `产品质量证明书 ${baseFileName}`;
+                                        foundImage = true;
+                                        certificateImageElement.onerror = null; // 清除错误处理器
+                                        certificateImageElement.onload = null;  // 清除成功处理器
+                                    };
+
+                                    certificateImageElement.onerror = function() {
+                                        console.log(`Failed to load: ${potentialSrc}. Trying next extension...`);
+                                        tryLoadNextExtension(index + 1); // 尝试下一个后缀
+                                    };
+                                }
+                                tryLoadNextExtension(0); // 从第一个后缀开始尝试
+                            } else {
+                                console.warn('Invalid "pdf" parameter (no extension) after sanitization:', pdfParamValue);
+                                // 无效参数，使用默认图片 (src 和 alt 已是默认)
+                            }
                         }
                     }
+                    // 如果没有 pdfParamValue, 则图片元素将使用其在HTML中定义的默认src和alt
                 } catch (e) {
                     console.error("Error processing URL parameters for PDF image:", e);
+                    if (certificateImageElement) {
+                        certificateImageElement.src = defaultImageSrc; // 发生其他错误，恢复默认
+                        certificateImageElement.alt = defaultImageAlt;
+                    }
                 }
             } else {
                 console.error('Certificate image element not found for dynamic update.');
