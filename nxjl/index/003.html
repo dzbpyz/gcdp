@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品信息</title>
+    <style>
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", SimHei, Arial, sans-serif;
+            background-color: #f0f0f0; /* 页面整体的浅灰色背景 */
+            margin: 0;
+            padding: 20px;
+            font-size: 14px; /* 基础字体大小 */
+            color: #333;
+        }
+
+        .container {
+            max-width: 700px; /* 内容块的大致宽度 */
+            margin: 0 auto;
+            background-color: #ffffff; /* 内容区域的白色背景 */
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* 轻微阴影效果 */
+        }
+
+        .header {
+            background-color: #CE1234;
+            color: white;
+            font-size: 2.0em;
+            font-weight: bold;
+            text-align: center;
+            height: 50px;
+            width:330px; /* This will be overridden for mobile */
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            padding-left: 10px;
+            padding-right: 2px;
+            box-sizing: border-box; /* Ensures padding is included in width */
+        }
+
+        .section-title {
+            background-color: #f2f2f2; /* 各个信息块的标题背景色 (默认) */
+            padding: 1px 1px;
+            font-weight: bold;
+            font-size: 1.8em;
+            border-bottom: 1px solid #e0e0e0; /* 标题下方的细线 */
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse; /* 合并表格边框 */
+            margin-bottom: 8px;
+        }
+
+        .info-table td {
+            padding: 8px 15px;
+            vertical-align: middle;
+        }
+
+        .info-table td:nth-child(odd) { /* 标签列（如 品名, 标准） */
+            width: auto;
+            font-weight: normal;
+            text-align: left;
+            color: #555;
+        }
+        .info-table td:nth-child(even) { /* 值列 */
+            text-align: left;
+        }
+
+        .product-info-table td.label {
+            width: 60px; /* 为 品名 等标签列设置固定宽度 */
+        }
+
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .results-table th {
+            background-color: #e7e6e6;
+            padding: 10px 5px;
+            font-weight: bold;
+        }
+
+        .results-table td {
+            padding: 8px 5px;
+        }
+
+        /* --- Common font/size styles for table cells --- */
+        .product-info-table td,
+        .results-table th,
+        .results-table td {
+            font-family: "黑体", SimHei, sans-serif;
+            font-size: 20px;
+            text-align: left;
+        }
+
+        /* Background colors for table cells */
+        .product-info-table td,
+        .results-table td {
+            background-color: #f5f5f5;
+        }
+
+        .results-table th {
+            background-color: #d8d8d8;
+            font-size: 22px;
+        }
+
+        .custom-bg-title {
+            background-color: #d8d8d8;
+        }
+
+        .white-divider {
+            background-color: #ffffff;
+            height: 6px;
+            width: 100%;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+
+        :root {
+            --table-row-divider-thickness: 2px;
+        }
+
+        .product-info-table td {
+            border-bottom: var(--table-row-divider-thickness) solid #ffffff;
+        }
+
+        .results-table th,
+        .results-table td {
+            border-left: 1px solid #dcdcdc;
+            border-right: 1px solid #dcdcdc;
+            border-top: 1px solid #dcdcdc;
+            border-bottom: var(--table-row-divider-thickness) solid #ffffff;
+        }
+
+        .results-table th:first-child,
+        .results-table td:first-child {
+            width: 140px;
+            padding-left: 15px;
+            text-align: left;
+        }
+
+        .results-table th:nth-child(2), .results-table td:nth-child(2),
+        .results-table th:nth-child(3), .results-table td:nth-child(3) {
+            text-align: left;
+        }
+
+        /* --- Styles for Mobile Devices --- */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px; /* Reduce page padding */
+                font-size: 12px; /* Reduce base font size for mobile */
+            }
+
+            .container {
+                /* Optionally make container full width on mobile */
+                /* max-width: 100%; */
+                /* box-shadow: none; */ /* Optionally remove shadow on mobile */
+            }
+
+            .header {
+                font-size: 1.4em; /* Reduce header font size */
+                height: 40px;   /* Reduce header height */
+                width: 100%;    /* Make header full width of its container */
+                padding-left: 8px; /* Reduce header padding */
+                padding-right: 8px;
+            }
+
+            .section-title {
+                font-size: 1.3em; /* Reduce section title font size */
+                padding: 4px 8px; /* Adjust padding */
+            }
+
+            /* --- Adjust common font/size for table cells on mobile --- */
+            .product-info-table td,
+            .results-table th,
+            .results-table td {
+                font-size: 14px; /* Reduce font size in tables */
+            }
+
+            .results-table th {
+                font-size: 15px; /* Slightly larger for table headers */
+            }
+
+            /* --- Product Info Table Adjustments for Mobile --- */
+            .product-info-table td {
+                padding: 6px 5px; /* Reduce cell padding */
+            }
+
+            .product-info-table td.label {
+                width: 45px; /* Reduce label column width */
+                 /* Allow text to wrap if absolutely necessary, though goal is single line */
+                /* white-space: normal; */
+                /* word-break: break-all; */
+            }
+             /* Ensure value columns take up remaining space */
+            .product-info-table td:not(.label) {
+                /* width: auto;  This is default */
+            }
+
+
+            /* --- Results Table Adjustments for Mobile --- */
+            .results-table th {
+                padding: 6px 3px; /* Reduce header cell padding */
+            }
+
+            .results-table td {
+                padding: 5px 3px; /* Reduce data cell padding */
+            }
+
+            .results-table th:first-child,
+            .results-table td:first-child {
+                width: auto; /* Let it be more flexible */
+                min-width: 60px; /* Set a minimum width for the first column */
+                padding-left: 5px; /* Reduce first column left padding */
+                /* white-space: normal; */ /* Allow header text to wrap if needed */
+            }
+            
+            /* Make other columns in results table also more flexible and reduce padding */
+            .results-table th:nth-child(2), .results-table td:nth-child(2),
+            .results-table th:nth-child(3), .results-table td:nth-child(3) {
+                padding-left: 3px;
+                padding-right: 3px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            宁夏建龙电子标牌-申银牌
+        </div>
+        <div class="white-divider"></div>
+        <div class="section-title custom-bg-title">
+            产品信息
+        </div>
+        <div class="white-divider"></div>
+        <table class="info-table product-info-table">
+            <tbody>
+                <tr>
+                    <td class="label">品 名:</td>
+                    <td>热轧带肋钢筋</td>
+                    <td class="label"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="label">标 准:</td>
+                    <td>GB1499.2-2024</td>
+                    <td class="label">日 期:</td>
+                    <td>2025-03-23</td>
+                </tr>
+                <tr>
+                    <td class="label">牌 号:</td>
+                    <td>HRB400E</td>
+                    <td class="label">规 格:</td>
+                    <td>Φ14mm/12m</td>
+                </tr>
+                <tr>
+                    <td class="label">批 号:</td>
+                    <td>A153123AH</td>
+                    <td class="label">序 号:</td>
+                    <td>8010</td>
+                </tr>
+                <tr>
+                    <td class="label">重 量:</td>
+                    <td>2541</td>
+                    <td class="label">支 数:</td>
+                    <td>175</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-title custom-bg-title">
+            成分信息
+        </div>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>检验项目</th>
+                    <th>检验结果</th>
+                    <th>判定结果</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>C</td>
+                    <td>0.25</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>Si</td>
+                    <td>0.34</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>Mn</td>
+                    <td>1.37</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>P</td>
+                    <td>0.032</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>S</td>
+                    <td>0.023</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>Cr</td>
+                    <td>0.069</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>Ni</td>
+                    <td>0.023</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>Cu</td>
+                    <td>0.018</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>Mo</td>
+                    <td>0.003</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>V</td>
+                    <td>0.018</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>Nb</td>
+                    <td>0.002</td>
+                    <td>合格</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="white-divider"></div>
+        <div class="section-title custom-bg-title">
+            物理性能
+        </div>
+        <table class="results-table">
+            <thead>
+                <tr>
+                    <th>检验项目</th>
+                    <th>检验结果</th>
+                    <th>判定结果</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Rel</td>
+                    <td>490/475</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>Rm</td>
+                    <td>675/675</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>25/24</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>ROm/ROel</td>
+                    <td>1.39/1.42</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>ROel/Rel</td>
+                    <td>1.22/1.19</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>Agt</td>
+                    <td>13.7/14.2</td>
+                    <td>合格</td>
+                </tr>
+                <tr>
+                    <td>反向弯曲性能</td>
+                    <td>合格</td>
+                    <td>合格</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
