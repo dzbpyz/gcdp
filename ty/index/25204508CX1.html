@@ -392,37 +392,40 @@
             </div>
             <div class="flex-row">
                 <div class="flex-cell flex-35">批次号</div>
-                <div class="flex-cell flex-65">20203542BC1</div>
+                <div class="flex-cell flex-65">25204508CX1</div>
             </div>
             <div class="flex-row">
                 <div class="flex-cell flex-35">捆（卷）号</div>
-                <div class="flex-cell flex-65" id="kunJuanHaoValue">01</div>
+                <div class="flex-cell flex-65" id="kunJuanHaoValue"> </div>
             </div>
             <div class="flex-row">
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">牌号</div>
                 <div class="flex-cell flex-25">HRB400E</div>
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">规格(mm)</div>
-                <div class="flex-cell flex-25">Φ12</div>
+                <div class="flex-cell flex-25">Φ8</div>
             </div>
+			
             <div class="flex-row">
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">理重（kg）</div>
-                <div class="flex-cell flex-25">2984</div>
+                <div class="flex-cell flex-25"> </div>
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">实重（kg）</div>
-                <div class="flex-cell flex-25">2854</div>
+                <!-- *** HTML MODIFICATION: Added id="shizhongValue" *** -->
+                <div class="flex-cell flex-25" id="shizhongValue"> </div>
             </div>
+			
             <div class="flex-row">
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">根数（支）</div>
-                <div class="flex-cell flex-25">280</div>
+                <div class="flex-cell flex-25"> </div>
                 <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">定尺（mm）</div>
-                <div class="flex-cell flex-25">12000</div>
+                <div class="flex-cell flex-25"> </div>
             </div>
             <div class="flex-row">
                 <div class="flex-cell flex-35">生产日期</div>
-                <div class="flex-cell flex-65">2025-04-07</div>
+                <div class="flex-cell flex-65">2025-04-22</div>
             </div>
             <div class="flex-row">
                 <div class="flex-cell flex-35">发货日期</div>
-                <div class="flex-cell flex-65">2025-04-08</div>
+                <div class="flex-cell flex-65">2025-04-22</div>
             </div>
         </div>
     </div>
@@ -437,10 +440,10 @@
                 <th>磷P/%</th>
             </tr>
             <tr>
-                <td>0.241</td>
-                <td>1.32</td>
-                <td>0.022</td>
-                <td>0.031</td>
+                <td>0.230</td>
+                <td>1.18</td>
+                <td>0.018</td>
+                <td>0.028</td>
             </tr>
             <tr>
                 <th>硅Si/%</th>
@@ -448,9 +451,9 @@
                 <th colspan="2">碳当量Ceq/%</th>
             </tr>
             <tr>
-                <td>0.35</td>
+                <td>0.31</td>
                 <td>0.001</td>
-                <td colspan="2">0.461</td>
+                <td colspan="2">0.441</td>
             </tr>
         </table>
     </div>
@@ -464,8 +467,8 @@
                 <div class="performance-cell th">断后伸长率/%</div>
             </div>
             <div class="performance-row">
-                <div class="performance-cell">451,446,451</div>
-                <div class="performance-cell">606,604,606</div>
+                <div class="performance-cell">455,455</div>
+                <div class="performance-cell">660,655</div>
                 <div class="performance-cell">---</div>
             </div>
             <div class="performance-row">
@@ -473,8 +476,8 @@
                 <div class="performance-cell th">重量偏差/%</div>
             </div>
             <div class="performance-row">
-                <div class="performance-cell">16.3,16.3,16.3</div>
-                <div class="performance-cell">-4.94,-4.94</div>
+                <div class="performance-cell">14.3,14.3</div>
+                <div class="performance-cell">-0.2</div>
             </div>
             <div class="performance-row">
                 <div class="performance-cell th">R'eL/ReL</div>
@@ -482,13 +485,13 @@
                 <div class="performance-cell th">反向弯曲</div>
             </div>
             <div class="performance-row">
-                <div class="performance-cell">1.13,1.12,1.13</div>
-                <div class="performance-cell">1.35,1.35,1.34</div>
-                <div class="performance-cell">合格,合格</div>
+                <div class="performance-cell">1.15,1.15</div>
+                <div class="performance-cell">1.44,1.340</div>
+                <div class="performance-cell">合格</div>
             </div>
             <div class="performance-row">
                 <div class="performance-cell th">180°弯曲试验</div>
-                <div class="performance-cell th">合格,合格,合格</div>
+                <div class="performance-cell th">合格,合格</div>
             </div>
         </div>
     </div>
@@ -545,7 +548,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             const urlParams = new URLSearchParams(window.location.search); // Define urlParams once
 
-            // --- Handle 'kh' parameter for 捆（卷）号 (unchanged) ---
+            // --- Handle 'kh' parameter for 捆（卷）号 ---
             const khValue = urlParams.get('kh');
             const kunJuanHaoElement = document.getElementById('kunJuanHaoValue');
 
@@ -553,6 +556,16 @@
                 kunJuanHaoElement.textContent = khValue;
             }
             // --- MODIFICATION END for kh ---
+
+            // --- *** JAVASCRIPT MODIFICATION: Handle 'zl' parameter for 实重（kg） *** ---
+            const zlParamValue = urlParams.get('zl'); // Get 'zl' parameter value
+            const shizhongElement = document.getElementById('shizhongValue'); // Get the element
+
+            if (shizhongElement && zlParamValue !== null) { // Check if element exists and zl parameter is present
+                shizhongElement.textContent = zlParamValue;
+            }
+            // --- *** MODIFICATION END for zl *** ---
+
 
             // --- PDF Link logic (modified from zbsPdfLink to use 'pdf' parameter) ---
             const zbsPdfLinkElement = document.getElementById('zbsPdfLink'); // The element ID in HTML is still 'zbsPdfLink'
