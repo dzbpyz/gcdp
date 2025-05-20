@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF 查看器 (PDF.js)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- 引入 PDF.js 核心库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <!-- PDF.js worker (路径需要正确配置) -->
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    </script>
+
+    <!-- ****** 新增：在这里定义 PDF 文件路径 ****** -->
+    <script>
+        // 将 'your_actual_document.pdf' 替换为您想在此页面打开的 PDF 文件路径
+        // 例如: var pdfPathFromHtml = 'reports/annual_report_2023.pdf';
+        // 或: var pdfPathFromHtml = 'my_invoice.pdf';
+        var pdfPathFromHtml = '/pdf/001.pdf';
+    </script>
+    <!-- ****** 结束新增 ****** -->
+
+</head>
+<body>
+    <div class="toolbar">
+        <div class="nav-group">
+            <button id="first-page" title="首页"><i class="fas fa-angle-double-left"></i> 首页</button>
+            <button id="prev-page" title="上一页"><i class="fas fa-chevron-left"></i> 上一页</button>
+            <input type="number" value="1" class="page-number-input" id="page-num">
+            <span class="total-pages">/ <span id="page-count">N</span></span>
+            <button id="next-page" title="下一页">下一页 <i class="fas fa-chevron-right"></i></button>
+            <button id="last-page" title="末页">末页 <i class="fas fa-angle-double-right"></i></button>
+        </div>
+
+        <div class="separator"></div>
+
+        <div class="action-group">
+            <!-- "打开源文件" 的 href 将由 JS 更新 -->
+            <a href="#" id="open-source-pdf-link" target="_blank" class="toolbar-button-link" title="在新标签页打开PDF">
+                <button><i class="fas fa-external-link-alt"></i> 打开源文件</button>
+            </a>
+            <div class="dropdown">
+                <button id="print-pdf" title="打印"><i class="fas fa-print"></i> 打印 <i class="fas fa-caret-down"></i></button>
+                <div class="dropdown-content">
+                    <a href="#" onclick="window.print(); return false;">打印当前视图</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                 <button title="输出"><i class="fas fa-sign-out-alt"></i> 输出 <i class="fas fa-caret-down"></i></button>
+                 <div class="dropdown-content">
+                    <!-- "下载 PDF" 的 href 将由 JS 更新 -->
+                    <a href="#" id="download-pdf-link-dropdown" download>下载 PDF</a>
+                </div>
+            </div>
+            <!-- "邮件" 按钮的 onclick 将由 JS 更新 -->
+            <button title="邮件" id="email-pdf-button"><i class="fas fa-envelope"></i> 邮件</button>
+            <button title="导出图片" id="export-image"><i class="fas fa-image"></i> 导出本页图片</button>
+        </div>
+    </div>
+
+    <div class="pdf-viewer-area">
+        <canvas id="pdf-canvas"></canvas>
+    </div>
+
+    <div class="bottom-bar">
+        <!-- "PDF下载" 按钮的 href 将由 JS 更新 -->
+        <a href="#" id="bottom-download-pdf-link" download class="pdf-download-button-link">
+            <button class="pdf-download-button">PDF下载</button>
+        </a>
+        <div class="bottom-actions">
+            <button><i class="fas fa-pencil-alt"></i> 继续批注</button>
+            <button><i class="fas fa-phone-alt"></i> 联系方式</button>
+        </div>
+    </div>
+
+    <!-- 确保 viewer.js 在定义了 pdfPathFromHtml 之后引入 -->
+    <script src="viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif, "Microsoft YaHei", "微软雅黑";
+    background-color: #f0f2f5;
+    font-size: 13px;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.toolbar {
+    background-color: #f0f0f0;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #d9d9d9;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    flex-shrink: 0;
+}
+
+.toolbar button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 4px 8px;
+    margin: 0 2px;
+    cursor: pointer;
+    color: #333;
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.toolbar button:hover {
+    background-color: #e0e0e0;
+    border-color: #c0c0c0;
+}
+
+.toolbar button i {
+    margin-right: 5px;
+}
+.toolbar button i.fa-chevron-right,
+.toolbar button i.fa-angle-double-right {
+    margin-left: 5px;
+    margin-right: 0;
+}
+.toolbar button i.fa-caret-down {
+    margin-left: 5px;
+    margin-right: 0;
+    font-size: 0.8em;
+}
+
+.nav-group, .action-group {
+    display: flex;
+    align-items: center;
+}
+
+.page-number-input {
+    width: 35px;
+    height: 20px;
+    text-align: center;
+    border: 1px solid #c0c0c0;
+    margin: 0 5px;
+    padding: 2px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.total-pages {
+    margin-right: 8px;
+    color: #555;
+}
+
+.separator {
+    width: 1px;
+    height: 20px;
+    background-color: #c0c0c0;
+    margin: 0 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    top: 100%;
+    left: 0;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 8px 10px;
+    text-decoration: none;
+    display: block;
+    font-size: 13px;
+}
+
+.dropdown-content a:hover {
+    background-color: #e0e0e0;
+}
+
+.dropdown-content.show {
+    display: block;
+}
+
+.pdf-viewer-area {
+    flex-grow: 1;
+    overflow: hidden; /* iframe 自己会处理滚动，所以这里可以 hidden */
+    background-color: #e0e0e0; /* PDF 加载时的背景色 */
+    display: flex; /* 确保 iframe 能撑满 */
+    /* 移除了之前针对图片的 padding，让 iframe 直接填充 */
+}
+
+/* 新增/修改：iframe 样式 */
+.pdf-iframe {
+    width: 100%;
+    height: 100%;
+    border: none; /* 移除 iframe 默认边框 */
+}
+
+/* .pdf-content-image 相关的样式可以删除了，因为它不再被使用 */
+/*
+.pdf-content-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    background-color: white;
+}
+*/
+
+.bottom-bar {
+    background-color: #f9f9f9;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    flex-shrink: 0;
+}
+
+.pdf-download-button {
+    background-color: #1890ff;
+    color: white;
+    border: 1px solid #1890ff;
+    padding: 6px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.pdf-download-button:hover {
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+}
+
+.bottom-actions button {
+    background: none;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    font-size: 13px;
+    margin-left: 15px;
+    display: inline-flex;
+    align-items: center;
+}
+.bottom-actions button:hover {
+    color: #1890ff;
+}
+.bottom-actions button i {
+    margin-right: 5px;
+}
+
+/* ... (您之前的CSS代码保持不变) ... */
+
+.pdf-viewer-area {
+    flex-grow: 1;
+    overflow: auto; /* 允许滚动查看大的PDF页面 */
+    background-color: #525659; /* PDF.js 默认查看器背景色，可以自定义 */
+    display: flex;
+    justify-content: center; /* 水平居中 canvas */
+    align-items: flex-start; /* 垂直顶部对齐 canvas */
+    padding: 10px 0; /* 上下留白 */
+}
+
+#pdf-canvas {
+    border: 1px solid black; /* 给canvas一个边框，方便看清范围 */
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    /* 宽度和高度将由JS根据PDF页面动态设置 */
+}
+
+/* 如果按钮被 <A> 标签包裹，需要调整样式使其看起来像普通按钮 */
+.toolbar-button-link {
+    text-decoration: none;
+}
+.toolbar-button-link button {
+    /* 继承 .toolbar button 的样式 */
+}
+.pdf-download-button-link {
+    text-decoration: none;
+}
