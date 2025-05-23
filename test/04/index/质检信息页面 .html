@@ -1,0 +1,35 @@
+<html>
+<head>
+	<!-- AMap.style 样式块已移除 -->
+	<style type="text/css">.amap-logo{display:block!important;pointer-events:none;}</style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="screen-orientation" content="portrait">
+	<title>供应商自助平台</title>
+	<script>
+		// 1. 在 index.html 中定义 PDF 文件路径和其他可能需要的参数
+		//    ！！！请务必将这里的路径替换为您的实际文件路径 ！！！
+		window.PDF_APP_CONFIG = {
+			// index.html 在 index/ 目录下，static/pdf/ 在上一级的 static/ 目录下
+			pdfUrl: "../static/pdf/001.pdf", // 例如: "../static/pdf/my_document.pdf"
+			// 如果 piece_number 和 corp 对这个特定页面是固定的，也可以在这里定义
+			// piece_number: "固定的piece_number",
+			// corp: "固定的corp"
+		};
+	</script>
+	<!-- 假设 mui.js 和 app.js 都在 static/js/ 目录下 -->
+	<script src="../static/js/mui.js"></script>
+	<script src="../static/js/app.js"></script>
+	<!-- 高德地图 API 脚本已移除 -->
+	<script type="module"></script>
+	<link href="../static/css/app.ef22bdccde1dbed73d74bc5fcd6a7565.css" rel="stylesheet">
+	</head>
+	
+	<body>
+		    <div id="app">
+				<!-- Vue App 会在这里渲染 -->
+			</div>
+	        <script type="text/javascript" src="../static/js/manifest.691fcb6308a38fbcbb5f.js"></script>
+	        <script type="text/javascript" src="../static/js/vendor.3a689893874c045cb349.js"></script>
+	       <script type="text/javascript" src="../static/js/app.1a777392d0f3c51550b8.js"></script></body>
+</html>
