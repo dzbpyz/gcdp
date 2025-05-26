@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>螺纹钢</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5; /* Body background, page background */
+            color: #333;
+            font-size: 15px; /* Adjusted base font size for mobile */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff; /* Main content area background */
+        }
+
+        .top-bar {
+            background-color: #f8f8f8; /* Light grey background like screenshot */
+            color: #333;
+            padding: 15px 20px; /* Adjusted padding */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            box-sizing: border-box;
+        }
+
+        .top-bar .top-bar-code {
+            font-weight: bold;
+            font-size: 18px; /* Adjusted font size */
+            color: #2c3e50; /* Darker blue-ish color, adjust as needed */
+        }
+
+        .top-bar .industrial-internet-logo-text-container {
+            background-color: #e6f3ff; /* Light blue background from screenshot */
+            color: #3b82f6;       /* Medium blue text color from screenshot */
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 13px;      /* Smaller font for this logo */
+            margin-top: 8px;
+            display: inline-block; /* To respect padding and act like a block */
+        }
+
+        /* --- Banner/Carousel Styles --- */
+        .banner {
+            max-width: 1200px;
+            height: 220px; /* Adjusted height for mobile aspect */
+            background-color: #ccc;
+            position: relative;
+            overflow: hidden;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .carousel-images {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Changed to cover to avoid distortion, fill can stretch */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.7s ease-in-out;
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 10px; /* Slightly less space from bottom */
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            z-index: 2;
+        }
+
+        .carousel-dots .dot {
+            width: 8px; /* Smaller dots */
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            margin: 0 4px;
+            cursor: pointer;
+        }
+        .carousel-dots .dot.active {
+            background-color: #fff;
+        }
+        /* --- End Banner/Carousel Styles --- */
+
+        .section {
+            padding: 0; /* Remove section padding, let children control it */
+            border-bottom: 1px solid #e0e0e0; /* Slightly softer border */
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 16px; /* Adjusted font size */
+            font-weight: normal; /* Screenshot title doesn't look bold */
+            margin-bottom: 0; /* Remove margin if grid directly follows */
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background-color: #f8f8f8; /* Light grey background for title */
+            padding: 12px 15px;     /* Padding for title area */
+        }
+        .section-title .toggle-arrow {
+            font-size: 14px; /* Slightly smaller arrow */
+            color: #888;
+            margin-left: 10px;
+        }
+
+        .product-info-grid {
+            display: grid;
+            /* Adjusted label width for mobile, e.g., 110px or 120px */
+            grid-template-columns: 110px 1fr;
+            row-gap: 1px;
+            background-color: #e0e0e0; /* Grid line color */
+            border: 1px solid #e0e0e0;
+            border-top: none; /* No top border if it touches section-title */
+        }
+
+        .product-info-grid > div {
+            padding: 10px 12px;
+            background-color: #fff; /* Default background */
+            font-family: "SimHei", "黑体", sans-serif;
+            font-size: 15px; /* Consistent font size for grid items */
+            display: flex; /* Added for vertical centering */
+            align-items: center; /* Added for vertical centering */
+        }
+
+        .product-info-grid > div.label {
+            font-weight: normal; /* Screenshot labels don't look bold */
+            color: #333; /* Darker text for labels as in screenshot */
+            justify-content: center; /* Horizontal center for label text */
+            text-align: center; /* Fallback for non-flex */
+        }
+        .product-info-grid > div.value {
+            text-align: left;
+            color: #333;
+            justify-content: flex-start; /* Align value text to the left */
+            flex-wrap: wrap; /* Allow long values to wrap */
+        }
+
+        /* Alternating row colors - adjusted for screenshot */
+        /* Row 1 (and 5, 9...) */
+        .product-info-grid > div.label:nth-child(4n-3) {
+            background-color: #f0f0f0; /* Light grey for specific labels */
+        }
+        .product-info-grid > div.value:nth-child(4n-2) {
+            background-color: #fff;    /* White for their values */
+        }
+        /* Row 2 (and 6, 10...) */
+        .product-info-grid > div.label:nth-child(4n-1) {
+            background-color: #fff;    /* White for other labels */
+        }
+        .product-info-grid > div.value:nth-child(4n) {
+            background-color: #fff;    /* White for their values */
+        }
+
+        .customer-notice {
+            background-color: transparent !important; /* Make it inherit from .value parent */
+            padding: 0; /* Remove extra padding, parent .value has it */
+            font-size: 13px; /* Smaller font for notice */
+            color: #555;
+            line-height: 1.6;
+            width: 100%; /* Ensure it takes full width of the cell */
+        }
+               .customer-notice ol {
+            padding-left: 18px; /* Indent list items, or set to 0 if no indent is needed */
+            margin: 0;
+            list-style-type: none; /* 添加这一行来移除数字标记 */
+        }
+        .customer-notice li {
+            margin-bottom: 5px;
+        }
+
+        /* Styles for the image section (15102019...png) */
+        .image-gallery-section { /* Add a specific class to this section if needed */
+             padding: 15px 0; /* Add some vertical padding */
+             background-color: #fff; /* Ensure white background */
+        }
+        .image-gallery {
+            display: flex;
+            justify-content: center; /* Center single image */
+            gap: 10px;
+            /* padding: 20px; */ /* Remove padding here if handled by section */
+        }
+
+        .image-gallery img {
+            width: auto; /* Let image size naturally up to max-width */
+            max-width: 100%; /* Ensure image is responsive */
+            height: auto;
+            object-fit: contain; /* Use contain if you don't want cropping */
+        }
+
+        .company- {
+            max-width: 1200px;
+            margin: 0 auto; /* Remove top/bottom margin if it should touch content above */
+            /* background-color: #fff; */ /* It's outside container, so may not need this */
+        }
+
+        .company- img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Collapsible content - no change needed here from original */
+        .collapsible-content.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+       <span class="top-bar-code">88.210.88/XG-3138295-2207</span>
+       <!-- Replaced img with styled div for text logo -->
+       <div class="industrial-internet-logo-text-container">国家工业互联网标识</div>
+    </div>
+
+    <div class="banner">
+        <div class="carousel-images">
+            <img src="../image/01.png" alt="Banner Image 1" class="carousel-image active">
+            <img src="../image/02.jpg" alt="Banner Image 2" class="carousel-image">
+            <img src="../image/03.jpg" alt="Banner Image 3" class="carousel-image">
+            <img src="../image/04.jpg" alt="Banner Image 4" class="carousel-image">
+        </div>
+        <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-title" data-section-name="产品信息">产品信息 <span class="toggle-arrow">▲</span></div>
+            <div class="product-info-grid collapsible-content">
+                <div class="label">产品名称</div><div class="value">螺纹钢</div>
+                <div class="label">产品条码</div><div class="value">TCTOGGLE-XLJG-NEW</div>
+                <div class="label">产品分类</div><div class="value">其他制造业</div>
+                <div class="label">生产许可证</div><div class="value">(黑) XK05-001-00706</div>
+                <div class="label">炉批号</div><div class="value">4148562</div>
+                <div class="label">捆号</div><div class="value">2201</div>
+                <div class="label">熔炼号</div><div class="value">1180211</div>
+                <div class="label">牌号</div><div class="value">HRB400E</div>
+                <div class="label">标准</div><div class="value">GB1499.2-2024</div>
+                <div class="label">规格</div><div class="value">Φ25×12000</div>
+                <div class="label">生产日期</div><div class="value">2025-03-05</div>
+                <div class="label">重量</div><div class="value"><span id="weight-integer">3557</span><span id="weight-decimal">.000</span></div>
+                <div class="label">支数</div><div class="value">77</div>
+                <div class="label">客户名称</div><div class="value">0</div>
+                <div class="label">出库日期</div><div class="value"></div>
+                <div class="label">出库车号</div><div class="value"></div>
+                <div class="label">销售热线</div><div class="value">0458-3789405</div>
+                <div class="label">质量咨询</div><div class="value">0458-3788204,3788308</div>
+                <div class="label">致顾客</div>
+                <div class="value"> <!-- No .customer-notice class directly on value, but on its child ol for styling -->
+                    <div class="customer-notice"> <!-- Wrapped ol in a div for better control if needed -->
+                        <ol>
+                            <li>1.标识信息必须通过国家标识解析网站上进行统一查询，网站的质检信息代表《产品合格证》。2.质量异议请持证明书与经销商联系处理，来函请提供证明书编号、产品名称、牌号、规格、熔炼号等信息。3.请注意核对钢材实物上的标牌和标识与产品标识系统所示信息是否一致，谨防假冒。</li>                          
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title" data-section-name="物理性能">物理性能 <span class="toggle-arrow">▼</span></div>
+            <div class="product-info-grid collapsible-content hidden"> <!-- Added hidden and ensure JS sets display correctly -->
+                <div class="label">弯曲试验</div><div class="value">完好/完好</div>
+                <div class="label">R0eL/Rel</div><div class="value">1.10/1.10/1.14</div>
+                <div class="label">反向弯曲</div><div class="value">完好</div>
+                <div class="label">Rm</div><div class="value">610/615/615</div>
+                <div class="label">Rel</div><div class="value">450/455/455</div>
+                <div class="label">R0m/R0eL</div><div class="value">1.38/1.38/1.36</div>
+                <div class="label">Agt</div><div class="value">	13.2/13.3/13.2</div>
+                <div class="label">A</div><div class="value">18/18/18</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title" data-section-name="化学成分">化学成分<span class="toggle-arrow">▼</span></div>
+            <div class="product-info-grid collapsible-content hidden"> <!-- Added hidden -->
+                <div class="label">CEppm</div><div class="value"> </div>
+                <div class="label">S</div><div class="value">0.027</div>
+                <div class="label">Zr</div><div class="value"></div>
+                <div class="label">Sn</div><div class="value">0.0040</div>
+                <div class="label">Mn</div><div class="value">1.31</div>
+                <div class="label">Nb</div><div class="value">0.0042</div>
+                <div class="label">N</div><div class="value"></div>
+                <div class="label">CEllw</div><div class="value"></div>
+				<div class="label">Ni</div><div class="value">0.018</div>
+                <div class="label">Ti</div><div class="value">0.0012</div>
+                <div class="label">Bs</div><div class="value"></div>
+                <div class="label">V</div><div class="value">0.0240</div>
+                <div class="label">Cu</div><div class="value">0.022</div>
+                <div class="label">Zn</div><div class="value"></div>
+                <div class="label">Ca</div><div class="value"></div>
+                <div class="label">B</div><div class="value">0.0007</div>
+				<div class="label">CE</div><div class="value"></div>
+                <div class="label">P</div><div class="value">0.036</div>
+                <div class="label">Mo</div><div class="value">0.003</div>
+                <div class="label">Als</div><div class="value"></div>
+                <div class="label">Co</div><div class="value"></div>
+                <div class="label">Al</div><div class="value">0.0023</div>
+                <div class="label">Cr</div><div class="value">0.058</div>
+                <div class="label">Sb</div><div class="value">0.0010</div>
+				<div class="label">C+1/6Mn</div><div class="value">0.47</div>
+                <div class="label">As</div><div class="value">0.0060</div>
+                <div class="label">Bi</div><div class="value">0.0020</div>
+                <div class="label">C</div><div class="value">0.25</div>
+				<div class="label">总量</div><div class="value">0.02</div>
+                <div class="label">W</div><div class="value">0.0030</div>
+                <div class="label">Pcm</div><div class="value"></div>
+                <div class="label">Si</div><div class="value">0.50</div>
+                <div class="label">CEV</div><div class="value"></div>
+				<div class="label">Ceq</div><div class="value">0.48</div>
+                <div class="label">Pb</div><div class="value">0.0010</div>               
+              </div>
+        </div>
+
+        <!-- Section for the single image -->
+        <div class="section image-gallery-section">
+            <div class="image-gallery">
+                <img src="../image/1510201933049237504.png" alt="Product Image Details">
+            </div>
+        </div>
+    </div> <!-- .container 结束 -->
+
+    <div class="company-">
+        <img src="../image/05.png" alt="Company Information">
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Carousel script (no changes from original, assumed working)
+    const images = document.querySelectorAll('.carousel-image');
+    const dots = document.querySelectorAll('.carousel-dots .dot');
+    const banner = document.querySelector('.banner');
+    let currentIndex = 0;
+    const intervalTime = 3000;
+    let slideInterval;
+
+    function showImage(index) {
+        if (!images || images.length === 0) return;
+        if (index >= images.length) index = 0;
+        if (index < 0) index = images.length - 1;
+
+        images.forEach(img => img.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        if (images[index]) images[index].classList.add('active');
+        if (dots[index]) dots[index].classList.add('active');
+        currentIndex = index;
+    }
+
+    function nextImage() {
+        showImage((currentIndex + 1) % images.length);
+    }
+
+    function startSlideShow() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextImage, intervalTime);
+    }
+
+    function stopSlideShow() {
+        clearInterval(slideInterval);
+    }
+
+    if (images.length > 0) {
+        showImage(0);
+        startSlideShow();
+    }
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            if (!isNaN(index)) {
+                stopSlideShow();
+                showImage(index);
+                startSlideShow(); // Restart slideshow after manual click
+            }
+        });
+    });
+
+    if (banner) {
+        banner.addEventListener('mouseenter', stopSlideShow);
+        banner.addEventListener('mouseleave', startSlideShow);
+    }
+
+    // Collapsible sections script
+    const sectionTitles = document.querySelectorAll('.section-title');
+
+    sectionTitles.forEach(title => {
+        const content = title.nextElementSibling;
+        const arrow = title.querySelector('.toggle-arrow');
+        const sectionName = title.dataset.sectionName;
+
+        if (!content || !arrow || !content.classList.contains('collapsible-content')) {
+            return;
+        }
+
+        // Initial state based on section name
+        if (sectionName === '产品信息') {
+            content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+            arrow.textContent = '▲';
+            content.classList.remove('hidden'); // Ensure it's not hidden by default CSS
+        } else { // For '物理性能', '化学成分', and any others default to collapsed
+            content.style.display = 'none';
+            arrow.textContent = '▼';
+            // The 'hidden' class in HTML already handles initial state for these
+        }
+
+        title.addEventListener('click', () => {
+            const isHidden = content.style.display === 'none';
+            if (isHidden) {
+                content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+                arrow.textContent = '▲';
+                content.classList.remove('hidden');
+            } else {
+                content.style.display = 'none';
+                arrow.textContent = '▼';
+                content.classList.add('hidden'); // Good practice to also manage class
+            }
+        });
+    });
+
+    // --- START: CODE FOR URL PARAMETERS (MODIFIED) ---
+    function updateValuesFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // 1. 更新 "捆号"
+        const kunhaoParam = urlParams.get('kh');
+        // 如果 kunhaoParam 存在且不为空字符串，则更新
+        if (kunhaoParam && kunhaoParam.trim() !== "") {
+            const labels = document.querySelectorAll('.product-info-grid .label');
+            labels.forEach(label => {
+                if (label.textContent.trim() === '捆号') {
+                    const valueElement = label.nextElementSibling;
+                    if (valueElement && valueElement.classList.contains('value')) {
+                        valueElement.textContent = kunhaoParam;
+                    }
+                }
+            });
+        }
+        // 如果 kunhaoParam 为 null, undefined 或空字符串, 则不执行更新, 显示 HTML 默认值
+
+        // 2. 更新 "重量" 的整数部分 - 相关代码已移除
+        // const zhongliangParam = urlParams.get('zl');
+        // // 如果 zhongliangParam 存在且不为空字符串，则更新
+        // if (zhongliangParam && zhongliangParam.trim() !== "") {
+        //     const weightIntegerElement = document.getElementById('weight-integer');
+        //     if (weightIntegerElement) {
+        //         weightIntegerElement.textContent = zhongliangParam;
+        //     }
+        // }
+        // // 如果 zhongliangParam 为 null, undefined 或空字符串, 则不执行更新, 显示 HTML 默认值
+    }
+
+    updateValuesFromURL(); // Call the function to update values on page load
+    // --- END: CODE FOR URL PARAMETERS (MODIFIED) ---
+
+});
+</script>
+</body>
+</html>
