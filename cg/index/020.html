@@ -79,9 +79,9 @@
 </head>
 <body>
 
-		<div size="100%" showcollapsebutton="true"  style="border:10px solid #000">
+			<div size="100%" showcollapsebutton="true"  style="border:10px solid #000">
 
-				   <form id="searchkey" method="post" onsubmit="return false;"> <!-- Added onsubmit="return false;" to prevent default form submission -->
+				   <form id="searchkey" method="post" onsubmit="return false;">
 				   		<table  border="0" cellpadding="0" cellspacing="0">
 				   	    <tr>
 				   	    	 <td>
@@ -171,7 +171,7 @@
 								发货日期：
 							</td>
 							<td style="text-align: left"  colspan="2">
-								<input id="FHDATE" name="FHDATE" placeholder="格式： YYYY-MM-DD" vtype="date:yyyy-MM-dd"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" />
+								<input id="FHDATE" name="FHDATE" placeholder="日期格式： YYYY-MM-DD (此项不再用于查验)" vtype="date:yyyy-MM-dd"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" />
 							</td>
 							</tr>
 							<tr>
@@ -279,16 +279,21 @@ const modalOverlay = document.getElementById('custom-modal-overlay');
 const modal = document.getElementById('custom-modal');
 const modalMessage = document.getElementById('custom-modal-message');
 const modalCloseButton = document.getElementById('custom-modal-close');
+let reloadPageAfterModalClose = false;
 
-function showCustomAlert(message) {
+function showCustomAlert(message, reloadAfterClose = false) {
     if (modalMessage && modal && modalOverlay) {
         modalMessage.textContent = message;
         modalOverlay.style.display = 'block';
         modal.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // 可选: 防止背景页面滚动
+        document.body.style.overflow = 'hidden';
+        reloadPageAfterModalClose = reloadAfterClose;
     } else {
         console.error("Custom modal elements not found! Falling back to native alert.");
-        alert(message); // Fallback
+        alert(message);
+        if (reloadAfterClose) {
+            window.location.reload();
+        }
     }
 }
 
@@ -296,7 +301,11 @@ function hideCustomAlert() {
     if (modal && modalOverlay) {
         modalOverlay.style.display = 'none';
         modal.style.display = 'none';
-        document.body.style.overflow = ''; // 可选: 恢复背景页面滚动
+        document.body.style.overflow = '';
+        if (reloadPageAfterModalClose) {
+            reloadPageAfterModalClose = false;
+            window.location.reload();
+        }
     }
 }
 
@@ -310,7 +319,7 @@ if (modalCloseButton) {
 function updateKhFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     const khSuffixFromUrl = urlParams.get('kh');
-    const defaultSuffix = "01"; // Changed default from 26 to 01 to match initial display
+    const defaultSuffix = "01";
     const khDynamicSuffixElement = document.getElementById('khDynamicSuffix');
 
     if (khDynamicSuffixElement) {
@@ -318,27 +327,23 @@ function updateKhFromUrl() {
     }
 
     const zlValueFromUrl = urlParams.get('zl');
-    const defaultZlValue = "3108"; // Assuming this default is still desired or matches some base product
+    const defaultZlValue = "3108";
     const szDynamicValueElement = document.getElementById('szDynamicValue');
 
     if (szDynamicValueElement) {
         szDynamicValueElement.textContent = (zlValueFromUrl !== null && zlValueFromUrl.trim() !== "") ? zlValueFromUrl : defaultZlValue;
     }
-    // Note: The 'pdf' URL parameter is read here but no longer used by validateCertificate
-    // const pdfFilenameBase = urlParams.get('pdf');
 }
 
 updateKhFromUrl(); // 页面加载时调用
 
 function showDialoghuaxue() {
     console.log("showDialoghuaxue 函数被调用");
-    // 示例：如果您想用自定义弹窗显示某些信息
     // showCustomAlert("这里是化学成分的详细信息...");
 }
 
 function showDialogwuli() {
     console.log("showDialogwuli 函数被调用");
-    // 示例：
     // showCustomAlert("这里是物理性能的详细信息...");
 }
 
@@ -352,49 +357,51 @@ function online_fankui(){
     if (linkElement) linkElement.click();
 }
 
-// --- MODIFIED FUNCTION for certificate validation based SOLELY on ZLZMSBH input and HTML file existence ---
+// --- CORRECTED FUNCTION based on final clarification ---
 async function validateCertificate() {
     const inputZLZMSBH_element = document.getElementById("ZLZMSBH");
 
     if (!inputZLZMSBH_element) {
         console.error("ZLZMSBH input element not found!");
-        showCustomAlert("页面元素错误，请联系管理员。");
+        // 对于页面关键元素缺失，弹窗提示并安排刷新
+        showCustomAlert("页面查询组件缺失，请联系技术支持。页面将自动刷新。", true);
         return;
     }
 
-    const inputZLZMSBH = inputZLZMSBH_element.value.trim(); // 获取并去除首尾空格
+    const inputZLZMSBH = inputZLZMSBH_element.value.trim();
 
-    // 如果用户没有输入任何内容，则直接刷新页面
     if (inputZLZMSBH === "") {
-        // 根据您的要求“若没有与之相同命名的html文件，则不做页面跳转，刷新当前页面”，空输入也应导致刷新
-        window.location.reload();
+        // 如果输入为空，刷新当前页面
+        // 或者，如果您希望提示用户：
+        // showCustomAlert("请输入质量证明书编号后查询。页面将自动刷新。", true);
+        // return;
+        window.location.reload(); // 直接刷新更符合“文件不存在时刷新”的简洁性
         return;
     }
 
-    // 构建目标 HTML 文件的 URL
-    // 文件名直接使用用户输入的 ZLZMSBH
     const targetFilenameBase = inputZLZMSBH;
     const targetURL = "../search/" + targetFilenameBase + ".html";
 
     try {
-        // 使用 HEAD 请求检查文件是否存在，避免不必要的下载
         const response = await fetch(targetURL, { method: 'HEAD', cache: 'no-cache' });
 
         if (response.ok) {
-            // 文件存在，跳转到该 HTML 文件
+            // 文件存在，则跳转至该页面
             window.location.href = targetURL;
         } else {
-            // 文件不存在 (例如 404 Not Found) 或其他非成功状态
-            console.warn(`Target HTML file not found or inaccessible: ${targetURL}, status: ${response.status}`);
-            window.location.reload(); // 刷新当前页面
+            // 文件不存在 (例如 404 Not Found)
+            console.warn(`目标 HTML 文件未找到或无法访问: ${targetURL}, 状态: ${response.status}`);
+            // 按用户要求，刷新当前页面
+            window.location.reload();
         }
     } catch (error) {
         // 网络错误或其他 fetch 错误
-        console.error(`Error checking HTML file: ${error}`);
-        window.location.reload(); // 刷新当前页面
+        console.error(`检查 HTML 文件时出错: ${error}`);
+        // 按用户要求，刷新当前页面
+        window.location.reload();
     }
 }
-// --- END OF MODIFIED FUNCTION ---
+// --- END OF CORRECTED FUNCTION ---
 </script>
 </body>
 </html>
