@@ -81,7 +81,7 @@
 
 		<div size="100%" showcollapsebutton="true"  style="border:10px solid #000">
 
-				   <form id="searchkey" method="post" onsubmit="return false;"> <!-- Added onsubmit to prevent default form submission -->
+				   <form id="searchkey" method="post" onsubmit="return false;"> <!-- Added onsubmit="return false;" to prevent default form submission -->
 				   		<table  border="0" cellpadding="0" cellspacing="0">
 				   	    <tr>
 				   	    	 <td>
@@ -163,8 +163,7 @@
 								<input id="ZLZMSBH" name="ZLZMSBH"  style="width: 100%" required="true" />
 							</td>
 							<td rowspan="2" style="text-align: left;">
-							    <!-- onclick calls validateCertificate, onsubmit="return false;" on form prevents default -->
-							    <img src="../static/picture/chaxun.jpg" onclick="validateCertificate();" style="cursor:pointer;" alt="查询" />
+							<img src="../static/picture/chaxun.jpg" onclick="validateCertificate()" style="cursor:pointer;" alt="查询" />
 							</td>
 							</tr>
 							<tr>
@@ -172,12 +171,12 @@
 								发货日期：
 							</td>
 							<td style="text-align: left"  colspan="2">
-								<input id="FHDATE" name="FHDATE" placeholder="日期格式： YYYY-MM-DD" vtype="date:yyyy-MM-dd" required="true"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" />
+								<input id="FHDATE" name="FHDATE" placeholder="格式： YYYY-MM-DD" vtype="date:yyyy-MM-dd"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" />
 							</td>
 							</tr>
 							<tr>
 								<td colspan="2" style="font-size:15px;color:red;border-right:none"></td>
-								<td colspan="2" style="font-size:15px;color:red;border-left:none">※请输入所持证明书信息查验</td>
+								<td colspan="2" style="font-size:15px;color:red;border-left:none">※请输入所持证明书编号查验</td>
 							</tr>
 							<tr>
 								<td  colspan="1" style="font-family: 宋体;.text-align: right;font-size:20px;height:40px;border-bottom:none;border-right:none">
@@ -311,7 +310,7 @@ if (modalCloseButton) {
 function updateKhFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     const khSuffixFromUrl = urlParams.get('kh');
-    const defaultSuffix = "26"; 
+    const defaultSuffix = "01"; // Changed default from 26 to 01 to match initial display
     const khDynamicSuffixElement = document.getElementById('khDynamicSuffix');
 
     if (khDynamicSuffixElement) {
@@ -319,22 +318,28 @@ function updateKhFromUrl() {
     }
 
     const zlValueFromUrl = urlParams.get('zl');
-    const defaultZlValue = "3108"; 
+    const defaultZlValue = "3108"; // Assuming this default is still desired or matches some base product
     const szDynamicValueElement = document.getElementById('szDynamicValue');
 
     if (szDynamicValueElement) {
         szDynamicValueElement.textContent = (zlValueFromUrl !== null && zlValueFromUrl.trim() !== "") ? zlValueFromUrl : defaultZlValue;
     }
+    // Note: The 'pdf' URL parameter is read here but no longer used by validateCertificate
+    // const pdfFilenameBase = urlParams.get('pdf');
 }
 
 updateKhFromUrl(); // 页面加载时调用
 
 function showDialoghuaxue() {
     console.log("showDialoghuaxue 函数被调用");
+    // 示例：如果您想用自定义弹窗显示某些信息
+    // showCustomAlert("这里是化学成分的详细信息...");
 }
 
 function showDialogwuli() {
     console.log("showDialogwuli 函数被调用");
+    // 示例：
+    // showCustomAlert("这里是物理性能的详细信息...");
 }
 
 function online_print(){
@@ -347,62 +352,47 @@ function online_fankui(){
     if (linkElement) linkElement.click();
 }
 
-// --- MODIFIED FUNCTION for certificate validation with file check (using SYNCHRONOUS XHR for debugging) ---
-function validateCertificate() {
-    console.log("[validateCertificate] Function started. Current URL:", window.location.href);
-    const originalPageURL = window.location.href; // 保存函数开始时的URL
-
+// --- MODIFIED FUNCTION for certificate validation based SOLELY on ZLZMSBH input and HTML file existence ---
+async function validateCertificate() {
     const inputZLZMSBH_element = document.getElementById("ZLZMSBH");
 
     if (!inputZLZMSBH_element) {
-        console.error("[validateCertificate] ZLZMSBH input element not found!");
+        console.error("ZLZMSBH input element not found!");
         showCustomAlert("页面元素错误，请联系管理员。");
         return;
     }
 
-    const inputZLZMSBH = inputZLZMSBH_element.value.trim();
-    console.log("[validateCertificate] Input ZLZMSBH:", inputZLZMSBH);
-    console.log("[validateCertificate] Original Page URL to revert to:", originalPageURL);
+    const inputZLZMSBH = inputZLZMSBH_element.value.trim(); // 获取并去除首尾空格
 
-
+    // 如果用户没有输入任何内容，则直接刷新页面
     if (inputZLZMSBH === "") {
-        console.log("[validateCertificate] Input ZLZMSBH is empty. Navigating to originalPageURL.");
-        window.location.href = originalPageURL;
+        // 根据您的要求“若没有与之相同命名的html文件，则不做页面跳转，刷新当前页面”，空输入也应导致刷新
+        window.location.reload();
         return;
     }
 
-    const targetHtmlURL = "../search/" + inputZLZMSBH + ".html";
-    console.log("[validateCertificate] Target HTML URL to check:", targetHtmlURL);
+    // 构建目标 HTML 文件的 URL
+    // 文件名直接使用用户输入的 ZLZMSBH
+    const targetFilenameBase = inputZLZMSBH;
+    const targetURL = "../search/" + targetFilenameBase + ".html";
 
     try {
-        const xhr = new XMLHttpRequest();
-        // 使用同步请求进行调试，以查看是否能阻止URL在JS控制前改变
-        // !! 警告: 同步XHR会阻塞UI，仅用于调试目的 !!
-        console.log("[validateCertificate] Before opening SYNCHRONOUS XHR. Current URL:", window.location.href);
-        xhr.open('HEAD', targetHtmlURL, false); // 第三个参数 false 表示同步
-        console.log("[validateCertificate] After opening SYNCHRONOUS XHR. Current URL:", window.location.href);
+        // 使用 HEAD 请求检查文件是否存在，避免不必要的下载
+        const response = await fetch(targetURL, { method: 'HEAD', cache: 'no-cache' });
 
-        // 对于同步请求，onload 和 onerror 不会像异步那样触发，状态在 send() 后直接可用
-        xhr.send(null);
-        console.log("[validateCertificate] After sending SYNCHRONOUS XHR. Current URL:", window.location.href);
-        console.log("[validateCertificate] XHR status:", xhr.status);
-
-
-        if (xhr.status >= 200 && xhr.status < 300) { // 2xx 状态码表示成功
-            console.log("[validateCertificate] File exists (status " + xhr.status + "). Navigating to targetHtmlURL:", targetHtmlURL);
-            window.location.href = targetHtmlURL;
+        if (response.ok) {
+            // 文件存在，跳转到该 HTML 文件
+            window.location.href = targetURL;
         } else {
-            console.warn(`[validateCertificate] File not found or error (status ${xhr.status}). Navigating to originalPageURL:`, originalPageURL);
-            // 强制导航回原始页面
-            window.location.href = originalPageURL;
+            // 文件不存在 (例如 404 Not Found) 或其他非成功状态
+            console.warn(`Target HTML file not found or inaccessible: ${targetURL}, status: ${response.status}`);
+            window.location.reload(); // 刷新当前页面
         }
     } catch (error) {
-        console.error(`[validateCertificate] Error during XHR request for ${targetHtmlURL}:`, error);
-        console.log("[validateCertificate] Exception caught. Navigating to originalPageURL:", originalPageURL);
-        // 发生异常也强制导航回原始页面
-        window.location.href = originalPageURL;
+        // 网络错误或其他 fetch 错误
+        console.error(`Error checking HTML file: ${error}`);
+        window.location.reload(); // 刷新当前页面
     }
-    console.log("[validateCertificate] Function ended. Current URL (might be a new page if navigation occurred):", window.location.href);
 }
 // --- END OF MODIFIED FUNCTION ---
 </script>
