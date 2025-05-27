@@ -81,7 +81,7 @@
 
 		<div size="100%" showcollapsebutton="true"  style="border:10px solid #000">
 
-				   <form id="searchkey" method="post">
+				   <form id="searchkey" method="post" onsubmit="return false;"> <!-- 添加 onsubmit="return false;" 阻止表单默认提交 -->
 				   		<table  border="0" cellpadding="0" cellspacing="0">
 				   	    <tr>
 				   	    	 <td>
@@ -310,7 +310,7 @@ if (modalCloseButton) {
 function updateKhFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     const khSuffixFromUrl = urlParams.get('kh');
-    const defaultSuffix = "26";
+    const defaultSuffix = "26"; // 您可以根据需要更改默认值
     const khDynamicSuffixElement = document.getElementById('khDynamicSuffix');
 
     if (khDynamicSuffixElement) {
@@ -318,7 +318,7 @@ function updateKhFromUrl() {
     }
 
     const zlValueFromUrl = urlParams.get('zl');
-    const defaultZlValue = "3108";
+    const defaultZlValue = "3108"; // 您可以根据需要更改默认值
     const szDynamicValueElement = document.getElementById('szDynamicValue');
 
     if (szDynamicValueElement) {
@@ -352,12 +352,14 @@ function online_fankui(){
 
 // --- MODIFIED FUNCTION for certificate validation with file check ---
 async function validateCertificate() {
+    const originalPageURL = window.location.href; // <--- 在函数开始时保存当前页面的完整URL
+
     const inputZLZMSBH_element = document.getElementById("ZLZMSBH");
     // const inputFHDATE_element = document.getElementById("FHDATE"); // 获取但不直接用于核心判断
 
     if (!inputZLZMSBH_element) {
         console.error("ZLZMSBH input element not found!");
-        showCustomAlert("页面元素错误，请联系管理员。"); // 使用自定义弹窗
+        showCustomAlert("页面元素错误，请联系管理员。");
         return;
     }
 
@@ -366,7 +368,8 @@ async function validateCertificate() {
 
     // 检查质量证明书编号是否为空
     if (inputZLZMSBH === "") {
-        window.location.reload(); // 直接刷新
+        // 对于空输入，也跳转回原始页面（等同于刷新）
+        window.location.href = originalPageURL;
         return;
     }
 
@@ -374,20 +377,23 @@ async function validateCertificate() {
 
     try {
         // 使用 HEAD 请求检查文件是否存在，更高效
+        // 这个 fetch 请求本身不会改变当前页面的 window.location.href
         const response = await fetch(targetHtmlURL, { method: 'HEAD', cache: 'no-cache' });
 
         if (response.ok) {
-            // 文件存在 (status 200-299)
+            // 文件存在 (status 200-299)，跳转到目标文件
             window.location.href = targetHtmlURL;
         } else {
             // 文件不存在 (e.g., 404) 或其他非成功状态
             console.warn(`HTML file not found or inaccessible: ${targetHtmlURL}, status: ${response.status}`);
-            window.location.reload(); // 刷新当前页面
+            // 跳转回原始页面
+            window.location.href = originalPageURL;
         }
     } catch (error) {
         // 网络错误或其他 fetch 导致的异常
         console.error(`Error checking HTML file (${targetHtmlURL}): ${error}`);
-        window.location.reload(); // 刷新当前页面
+        // 跳转回原始页面
+        window.location.href = originalPageURL;
     }
 }
 // --- END OF MODIFIED FUNCTION ---
