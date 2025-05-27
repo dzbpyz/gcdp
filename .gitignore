@@ -1,20 +1,5 @@
-# macOS
+
+ads.txt
 .DS_Store
-
-# Windows
-Thumbs.db
-
-# phpMyAdmin
-irb-x/
-irb-x@
-irb-x*
-
-# Piwic
-analytics/
-analytics@
-analytics*
-
-# Let's Encrypt
-.well-known/
-.well-known@
-.well-known*
+BingSiteAuth.xml
+5fa2203738f1c8a3f10fc7a2023ce026.txt
