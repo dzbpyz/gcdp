@@ -366,9 +366,7 @@ async function validateCertificate() {
 
     // 检查质量证明书编号是否为空
     if (inputZLZMSBH === "") {
-        // 如果用户要求空输入也刷新，则取消下面的提示，直接刷新
-        // showCustomAlert("请输入质量证明书编号。");
-        window.location.reload(); // 或者根据需求决定空输入时的行为
+        window.location.reload(); // 直接刷新
         return;
     }
 
