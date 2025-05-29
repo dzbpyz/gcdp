@@ -45,7 +45,7 @@
     html, body {
       height: 100%;
       width: 100%;
-      overflow: hidden;
+      overflow: hidden; /* 建议在body上应用，如果#example1需要滚动，则其本身应有overflow-y: scroll */
     }
 
     .top {
@@ -53,21 +53,24 @@
       align-items: center;
       background-color: rgb(238, 238, 238);
       padding: 2px 0;
+      flex-wrap: wrap; /* 允许按钮在小屏幕上换行 */
     }
 
-
-
     #example1 {
-      width: calc(100% - 20px);
-      height: 70vh;
+      width: calc(100% - 20px); /* 左右各10px padding */
+      height: 70vh; /* 这个高度可能需要根据实际情况调整 */
       overflow-y: scroll;
       padding: 10px;
-      position: relative;
+      position: relative; /* 用于内部绝对定位元素（如果需要） */
+      background-color: #f0f0f0; /* 增加背景色以便区分 */
+      border: 1px solid #ccc; /* 增加边框以便区分 */
+      box-sizing: border-box; /* 确保padding和border不增加总宽度/高度 */
     }
 
     canvas {
       display: block;
-      margin: 10px auto;
+      margin: 10px auto; /* 上下10px，左右居中 */
+      box-shadow: 0 0 5px rgba(0,0,0,0.2); /* 为canvas添加一点阴影使其更突出 */
     }
 
     input {
@@ -78,7 +81,7 @@
 
   /*  当时是pc端尺寸的*/
   </style>
-  <link rel="stylesheet" href="../static/css/index.css">
+  <link rel="stylesheet" href="../static/css/index.css"> <!-- 确保这个CSS文件路径正确 -->
 
 
   <style type="text/css">
@@ -124,48 +127,38 @@
     <span class="icon-next icon"></span>
     上一页
   </button>
-  <span class="page-info" id="pageInfo">
-        <input id="pageInput" value="1" />  <span id="totalPages">0</span>
+  <span class="page-info" id="pageInfo" style="display: none;"> <!-- 初始隐藏，加载成功后显示 -->
+        <input id="pageInput" value="1" type="number" min="1" /> / <span id="totalPages">0</span>
     </span>
 
   <button id="nextPage">
-        <span class="icon-next-page icon">
-
-        </span>
+        <span class="icon-next-page icon"></span>
     下一页</button>
   <button id="lastPage">
-        <span class="icon-last icon">
-
-        </span>
+        <span class="icon-last icon"></span>
     末页</button>
   <button id="printPage">
-        <span class="icon-print icon">
-
-        </span>
-    打印[客户端]</button> <!-- 新增打印按钮 -->
+        <span class="icon-print icon"></span>
+    打印[客户端]</button>
   <button id="printPage2">
-          <span class="icon-print1 icon">
-          </span>
+          <span class="icon-print1 icon"></span>
     打印
   </button>
 
   <button id="downloadPDF">
-        <span class="icon-download icon">
-
-        </span>
-    输出</button> <!-- 新增下载PDF按钮 -->
+        <span class="icon-download icon"></span>
+    输出</button>
   <button >
-        <span class="icon-email icon">
-
-        </span>
+        <span class="icon-email icon"></span>
     邮件
   </button>
   <button id="exportImage">
-
-    导出图片</button> <!-- 新增导出为图片按钮 -->
+    导出图片</button>
 </div>
 
-<div id="example1"></div>
+<div id="example1">
+  <!-- Canvas 元素将在这里动态添加 -->
+</div>
 
 
 <div id="app"><!---->
@@ -176,10 +169,8 @@
     </button>
 
     <div class="PDF">
-      <div id="pdf-viewer"></div>
-
+      <div id="pdf-viewer"></div> <!-- 这个div似乎未使用，可以考虑移除或明确其用途 -->
     </div>
-
 
     <div data-v-af452f00="" class="van-hairline--top-bottom van-tabbar van-tabbar--fixed">
       <div data-v-af452f00="" class="van-tabbar-item van-tabbar-item--active" style="color: rgb(255, 105, 180);">
@@ -200,161 +191,294 @@
 </div>
 
 <script>
-  const url = "../static/pdf/002.pdf";  // PDF 文件路径
+  // --- 修改开始 ---
+  const defaultPdfUrl = "../static/pdf/001.pdf"; // 默认PDF文件路径
+  let currentLoadedPdfUrl = ""; // 用于存储当前实际加载的PDF的URL
 
   let pdfDoc = null;
   let pageNum = 1;
   let totalPages = 0;
-  let pages = [];
-  let pageHeight = 0;  // 每个页面的高度
+  let pages = []; // 用于存储渲染好的canvas元素
+  let pageHeight = 0;  // 每个渲染页面的高度 (canvas高度 + 上下margin)
 
-  // 加载PDF文件
-  pdfjsLib.getDocument(url).promise.then(function(pdf) {
-    pdfDoc = pdf;
-    totalPages = pdf.numPages;
-    document.getElementById('totalPages').textContent = totalPages;
-    console.log('PDF loaded');
-    updatePageInfo();
-    renderAllPages();  // 渲染所有页面
-  }).catch(function(error) {
-    console.error('Error loading PDF: ' + error);
-  });
+  // 初始化并加载PDF的函数
+  function initializeAndLoadPdf() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const pdfNameFromQuery = urlParams.get('pdf'); // 从URL "?pdf=文件名" 中获取文件名
+    let urlToLoad = defaultPdfUrl; // 默认为默认PDF
 
-  // 更新页面信息
-  function updatePageInfo() {
-    document.getElementById('pageInput').value = pageNum;
-    document.getElementById('totalPages').textContent = ` / ${totalPages}`;
+    if (pdfNameFromQuery) {
+      // 根据您的要求，路径是上一层目录的static/pdf/
+      // 注意: '../static/pdf/' 这个相对路径是相对于当前HTML文件的位置。
+      // 如果HTML文件在根目录，'../'可能会导致问题。请确保路径正确。
+      // 通常，如果HTML和static文件夹在同一级，路径应为 'static/pdf/' 或 './static/pdf/'
+      const potentialUrl = `../static/pdf/${pdfNameFromQuery}.pdf`;
+      urlToLoad = potentialUrl;
+      console.log(`尝试从URL参数加载PDF: ${pdfNameFromQuery}.pdf`);
+    } else {
+      console.log("URL中未指定PDF，尝试加载默认PDF。");
+    }
+    
+    loadPdfDocument(urlToLoad, true); // true表示这是初次尝试加载
   }
 
-  // 渲染单个PDF页面
-  function renderPage(pageNum) {
-    pdfDoc.getPage(pageNum).then(function(page) {
-      console.log('Page ' + pageNum + ' loaded');
-      const scale = 1.3;
+  // 加载PDF文档的函数
+  function loadPdfDocument(url, isPrimaryAttempt) {
+    console.log(`开始加载PDF: ${url}`);
+    pdfjsLib.getDocument(url).promise.then(function(pdf) {
+      pdfDoc = pdf;
+      totalPages = pdf.numPages;
+      currentLoadedPdfUrl = url; // 存储成功加载的PDF的URL
+
+      console.log(`PDF加载成功: ${currentLoadedPdfUrl}, 总页数: ${totalPages}`);
+      document.getElementById('pageInfo').style.display = 'inline'; // 显示页码信息区域
+      document.getElementById('totalPages').textContent = totalPages; // 更新总页数显示
+      
+      // 清空之前的canvas（例如，如果是在重新加载不同的PDF）
+      document.getElementById('example1').innerHTML = '';
+      pages = []; // 重置已渲染页面的数组
+      pageNum = 1; // 重置到第一页
+      pageHeight = 0; // 重置页面高度，将在渲染第一页后计算
+
+      updatePageInfo(); // 更新页码输入框等
+      renderAllPages(); // 开始渲染所有页面
+    }).catch(function(error) {
+      console.error(`加载PDF ${url} 失败: ${error}`);
+      if (isPrimaryAttempt && url !== defaultPdfUrl) {
+        // 如果初次尝试加载指定PDF失败，并且失败的不是默认PDF本身，则尝试加载默认PDF
+        console.warn(`加载 ${url} 失败。回退到默认PDF: ${defaultPdfUrl}`);
+        loadPdfDocument(defaultPdfUrl, false); // false表示这是回退尝试
+      } else {
+        // 如果是加载默认PDF失败，或者回退到默认PDF也失败了
+        console.error('无法加载任何PDF文件。将显示错误信息。');
+        document.getElementById('example1').innerHTML = `<p style="color: red; text-align: center; padding-top: 20px;">无法加载PDF文件 (尝试过: ${url})。<br>请检查文件路径或网络连接。</p>`;
+        currentLoadedPdfUrl = ""; // 没有PDF被加载
+        totalPages = 0;
+        document.getElementById('totalPages').textContent = '0';
+        document.getElementById('pageInput').value = '0';
+        document.getElementById('pageInfo').style.display = 'none'; // 隐藏页码信息
+        // 可以考虑禁用翻页等按钮
+      }
+    });
+  }
+  // --- 修改结束 ---
+
+  // 页面加载时执行初始化函数
+  initializeAndLoadPdf();
+
+  // 更新页面信息显示 (页码输入框和总页数)
+  function updatePageInfo() {
+    if (!pdfDoc) return; // 如果没有加载PDF，则不更新
+    document.getElementById('pageInput').value = pageNum;
+    // document.getElementById('totalPages').textContent = totalPages; // 这行在loadPdfDocument中已更新
+    // 确保页码输入框的最大值不超过总页数
+    document.getElementById('pageInput').max = totalPages > 0 ? totalPages : 1;
+  }
+
+  // 渲染单个PDF页面到canvas
+  function renderPage(num) {
+    if (!pdfDoc) return Promise.reject("pdfDoc尚未加载");
+
+    return pdfDoc.getPage(num).then(function(page) {
+      console.log('第 ' + num + ' 页已加载');
+      const scale = 1.3; // PDF渲染的缩放比例，可以调整
       const viewport = page.getViewport({ scale: scale });
 
       const canvas = document.createElement("canvas");
       const context = canvas.getContext("2d");
       canvas.width = viewport.width;
       canvas.height = viewport.height;
+      canvas.dataset.pageNum = num; // 给canvas添加一个数据属性存储页码，方便调试
 
-      page.render({
+      // 将canvas添加到容器中
+      document.getElementById('example1').appendChild(canvas);
+      pages[num - 1] = canvas; // 将渲染好的canvas存起来
+
+      // 如果是第一页（或第一个成功渲染的页面），计算pageHeight
+      // pageHeight包含canvas的高度和其上下margin (CSS中canvas margin: 10px auto)
+      if (pageHeight === 0 && canvas.height > 0) { 
+          pageHeight = canvas.height + 20; // 假设上下各有10px的margin
+          console.log("计算得到的pageHeight:", pageHeight);
+      }
+
+      // 开始渲染
+      return page.render({
         canvasContext: context,
         viewport: viewport
       }).promise.then(function() {
-        console.log('Page ' + pageNum + ' rendered');
-        pages[pageNum - 1] = canvas;  // 保存已渲染的页面
-        document.getElementById('example1').appendChild(canvas); // 显示当前页面
-        if (pageNum === 1) {
-          pageHeight = canvas.height;  // 获取页面高度
-        }
-        updatePageInfo();
+        console.log('第 ' + num + ' 页已渲染');
       });
+    }).catch(function(error) {
+        console.error("渲染第 " + num + " 页时出错:", error);
+        // 可以在页面上为渲染失败的页显示一个占位符或错误提示
+        const example1Div = document.getElementById('example1');
+        const errorMsg = document.createElement('p');
+        errorMsg.textContent = `渲染第 ${num} 页失败。`;
+        errorMsg.style.color = 'orange';
+        example1Div.appendChild(errorMsg);
     });
   }
 
-  // 渲染所有PDF页面
-  function renderAllPages() {
+  // 异步渲染所有PDF页面
+  async function renderAllPages() {
+    if (!pdfDoc) return;
+    console.log('开始渲染所有页面...');
+    const example1Div = document.getElementById('example1');
+    // example1Div.innerHTML = ''; // 这行已移至loadPdfDocument中，避免重复清空
+
+    pages = new Array(totalPages); // 为canvas元素重新初始化数组
+
     for (let i = 1; i <= totalPages; i++) {
-      renderPage(i);
+      try {
+        await renderPage(i); // 等待当前页渲染完成再开始下一页
+      } catch (e) {
+        console.error(`渲染第 ${i} 页失败，停止后续渲染。`, e);
+        // 可以在#example1中显示更友好的用户消息
+        example1Div.innerHTML += `<p style="color:red;">渲染第 ${i} 页时发生严重错误，后续页面可能无法显示。</p>`;
+        break; // 如果一页渲染失败，可以选择停止后续渲染
+      }
     }
+    // 在所有页面尝试渲染后，如果pageHeight仍未设置（例如第一页渲染失败但后续页面成功）
+    // 并且至少有一个页面成功渲染，则重新计算pageHeight
+    if (totalPages > 0 && pageHeight === 0) {
+        for(let i=0; i < pages.length; i++) {
+            if (pages[i] && pages[i].height > 0) {
+                pageHeight = pages[i].height + 20; // 使用第一个有效canvas的高度
+                console.log("回退计算得到的pageHeight:", pageHeight);
+                break;
+            }
+        }
+    }
+    console.log('所有页面渲染过程已完成。');
+    updatePageInfo(); // 所有页面尝试渲染完毕后，更新一次页码信息
   }
 
-  // 滚动时动态更新页码
+
+  // 监听#example1的滚动事件，动态更新当前页码
   document.getElementById('example1').addEventListener('scroll', function() {
+    if (!pdfDoc || pageHeight === 0 || totalPages === 0) return; // 没有PDF或页面高度未计算则不执行
+
     const scrollTop = this.scrollTop;
-    const newPageNum = Math.min(Math.ceil(scrollTop / pageHeight) + 1, totalPages); // 限制最大页码为totalPages
+    // 计算当前页码。可以稍微调整逻辑，例如当页面的一半滚过时改变页码
+    // Math.floor(scrollTop / pageHeight) 得到的是完整滚过的页面数量
+    const newPageNum = Math.min(Math.max(1, Math.floor(scrollTop / pageHeight) + 1), totalPages);
+    
     if (newPageNum !== pageNum) {
       pageNum = newPageNum;
       updatePageInfo();
     }
   });
 
+  // 滚动到指定页面的函数
+  function scrollToPage(targetPage) {
+    if (!pdfDoc || pageHeight === 0) return;
+    pageNum = Math.max(1, Math.min(targetPage, totalPages)); // 确保页码在有效范围内
+    // 滚动位置是 (目标页码 - 1) * 每页高度
+    document.getElementById('example1').scrollTop = (pageNum - 1) * pageHeight;
+    updatePageInfo();
+  }
+
   // 按钮功能：跳转到首页
   document.getElementById('firstPage').addEventListener('click', function() {
-    pageNum = 1;
-    document.getElementById('example1').scrollTop = 0;  // 滚动到顶部
-    updatePageInfo();
+    scrollToPage(1);
   });
 
   // 按钮功能：上一页
   document.getElementById('prevPage').addEventListener('click', function() {
     if (pageNum > 1) {
-      pageNum--;
-      document.getElementById('example1').scrollTop = (pageNum - 1) * pageHeight;  // 设置滚动位置
-      updatePageInfo();
+      scrollToPage(pageNum - 1);
     }
   });
 
   // 按钮功能：下一页
   document.getElementById('nextPage').addEventListener('click', function() {
     if (pageNum < totalPages) {
-      pageNum++;
-      document.getElementById('example1').scrollTop = (pageNum - 1) * pageHeight;  // 设置滚动位置
-      updatePageInfo();
+      scrollToPage(pageNum + 1);
     }
   });
 
   // 按钮功能：末页
   document.getElementById('lastPage').addEventListener('click', function() {
-    pageNum = totalPages;
-    document.getElementById('example1').scrollTop = (totalPages - 1) * pageHeight;  // 滚动到最后一页
-    updatePageInfo();
+    scrollToPage(totalPages);
   });
 
-  // 按钮功能：打印页面
-  document.getElementById('printPage').addEventListener('click', function() {
-    location.href = url + '#page=' + pageNum;  // 跳转到指定页面并打印
-  });
-
-
-  document.getElementById('printPage2').addEventListener('click', function() {
-    location.href = url + '#page=' + pageNum;  // 跳转到指定页面并打印
-  });
-  // 按钮功能：下载PDF
-  document.getElementById('downloadPDF').addEventListener('click', function() {
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'document.pdf';
-    link.click();
-  });
-
-  // 按钮功能：导出为图片
-  document.getElementById('exportImage').addEventListener('click', function() {
-    const canvas = pages[pageNum - 1];
-    if (canvas) {
-      const dataUrl = canvas.toDataURL();
-      const link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = `page_${pageNum}.png`;
-      link.click();
+  // 页码输入框：当值改变时跳转 (使用 'change' 事件通常比 'blur' 更好)
+  document.getElementById('pageInput').addEventListener('change', function() {
+    if (!pdfDoc) { // 如果没有PDF加载，重置输入框的值
+        this.value = pageNum; 
+        return;
     }
-  });
-
-  // 当输入框失去焦点时，跳转到输入的页面
-  document.getElementById('pageInput').addEventListener('blur', function() {
     const inputValue = parseInt(this.value, 10);
-    if (inputValue >= 1 && inputValue <= totalPages) {
-      pageNum = inputValue;
-      document.getElementById('example1').scrollTop = (pageNum - 1) * pageHeight;  // 设置滚动位置
-      updatePageInfo();
+    if (!isNaN(inputValue) && inputValue >= 1 && inputValue <= totalPages) {
+      scrollToPage(inputValue);
     } else {
-      // 如果输入的值无效，恢复到当前页面
+      // 如果输入的值无效，恢复到当前页码
       this.value = pageNum;
     }
   });
 
 
-  // 按钮功能：下载PDF
-  document.getElementById('downBtn').addEventListener('click', function() {
+  // 按钮功能：打印页面 (使用实际加载的PDF的URL)
+  document.getElementById('printPage').addEventListener('click', function() {
+    if (!currentLoadedPdfUrl) { alert("没有PDF文件加载，无法打印！"); return; }
+    // 客户端打印通常是打开带有页面片段的PDF URL，让浏览器PDF查看器处理
+    window.open(currentLoadedPdfUrl + '#page=' + pageNum, '_blank');
+  });
+
+  document.getElementById('printPage2').addEventListener('click', function() {
+    if (!currentLoadedPdfUrl) { alert("没有PDF文件加载，无法打印！"); return; }
+    window.open(currentLoadedPdfUrl + '#page=' + pageNum, '_blank');
+  });
+
+  // 按钮功能：下载PDF (使用实际加载的PDF的URL)
+  document.getElementById('downloadPDF').addEventListener('click', function() {
+    if (!currentLoadedPdfUrl) { alert("没有PDF文件加载，无法下载！"); return; }
     const link = document.createElement('a');
-    link.href = url;
-    link.download = 'document.pdf';
+    link.href = currentLoadedPdfUrl;
+    // 从URL中提取文件名，或使用通用名称
+    const filename = currentLoadedPdfUrl.substring(currentLoadedPdfUrl.lastIndexOf('/') + 1) || 'document.pdf';
+    link.download = filename;
+    link.click();
+  });
+  
+  // 浮动下载按钮功能：下载PDF (使用实际加载的PDF的URL)
+  document.getElementById('downBtn').addEventListener('click', function() {
+    if (!currentLoadedPdfUrl) { alert("没有PDF文件加载，无法下载！"); return; }
+    const link = document.createElement('a');
+    link.href = currentLoadedPdfUrl;
+    const filename = currentLoadedPdfUrl.substring(currentLoadedPdfUrl.lastIndexOf('/') + 1) || 'document.pdf';
+    link.download = filename;
     link.click();
   });
 
 
+  // 按钮功能：导出当前页为图片
+  document.getElementById('exportImage').addEventListener('click', function() {
+    if (!pdfDoc || pages.length === 0 || !pages[pageNum - 1]) {
+      alert("当前页面尚未渲染或没有PDF加载！");
+      return;
+    }
+    const canvas = pages[pageNum - 1]; // 获取当前页的canvas
+    if (canvas) {
+      try {
+        const dataUrl = canvas.toDataURL('image/png'); // 转换为PNG格式的DataURL
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        // 构造一个更有意义的文件名
+        const pdfFilenameBase = currentLoadedPdfUrl.substring(currentLoadedPdfUrl.lastIndexOf('/') + 1).replace('.pdf','') || 'document';
+        link.download = `page_${pageNum}_from_${pdfFilenameBase}.png`;
+        link.click();
+      } catch (e) {
+        console.error("导出图片失败:", e);
+        // 常见的错误是canvas被污染 (tainted by cross-origin data)
+        // 如果PDF是从不同的域加载的，并且服务器没有设置CORS头部，toDataURL会失败
+        alert("导出图片失败。如果PDF来自其他域名，可能存在跨域问题。");
+      }
+    } else {
+        alert(`第 ${pageNum} 页的canvas元素未找到或未渲染。`);
+    }
+  });
+
 </script>
 </body>
-
 </html>
