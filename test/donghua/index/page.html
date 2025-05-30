@@ -1,0 +1,440 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="screen-orientation" content="portrait">
+    <title>供应商自助平台</title>
+    <script type="module"></script>
+    <link href="../static/css/app.ef22bdccde1dbed73d74bc5fcd6a7565.css" rel="stylesheet">
+    <style type="text/css">
+        .van-tabbar[data-v-af452f00] {
+            border-top: 1px solid #eee;
+            height: 55px;
+        }
+
+        .van-tabbar-item__icon img[data-v-af452f00] {
+            width: 22px;
+            height: 22px;
+        }
+
+        .active_tab img[data-v-af452f00] {
+            width: 22px;
+            height: 22px;
+        }
+
+        [data-v-af452f00] .van-button {
+            position: fixed;
+            left: 20px;
+            bottom: 100px;
+        }
+
+        .van-tabbar[data-v-4566e0a3] {
+            border-top: 1px solid #eee;
+            height: 55px;
+        }
+
+        .van-tabbar-item__icon img[data-v-4566e0a3] {
+            width: 22px;
+            height: 22px;
+        }
+
+        .active_tab img[data-v-4566e0a3] {
+            width: 22px;
+            height: 22px;
+        }
+
+        .company[data-v-4566e0a3] {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        hr[data-v-4566e0a3] {
+            margin-top: 10px;
+        }
+
+
+    </style>
+
+    <!-- 引入 pdf.js -->
+    <!-- 引入 pdf.js -->
+    <script src="../static/pdfjs/build/pdf.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .top {
+            display: flex;
+            align-items: center;
+            background-color: rgb(238, 238, 238);
+            padding: 2px 0;
+        }
+
+
+        #example1 {
+            width: calc(100% - 20px);
+            height: calc(100% - 60px);
+            overflow-y: scroll;
+            padding: 10px;
+            position: relative;
+        }
+
+        canvas {
+            display: block;
+            margin: 10px auto;
+        }
+
+        input {
+            width: 50px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        /*  当时是pc端尺寸的*/
+    </style>
+    <link rel="stylesheet" href="../static/css/index.css">
+    <script src="../static/js/flixble.js"></script>
+    <script type="text/javascript" src="../static/js/print.js"></script>
+</head>
+
+<body>
+<div id="main">
+    <div class="top">
+        <div class="inner">
+            <button id="firstPage" class="filter">
+                <span class="icon-home"></span>
+                首页
+            </button>
+            <button id="prevPage" class="filter">
+                <span class="icon-next icon"></span>
+                上一页
+            </button>
+            <span class="page-info" id="pageInfo">
+        <input id="pageInput" value="1"/>  <span id="totalPages">0</span>
+    </span>
+
+            <button id="nextPage" class="filter">
+        <span class="icon-next-page icon">
+
+        </span>
+                下一页
+            </button>
+            <button id="lastPage" class="filter">
+        <span class="icon-last icon">
+
+        </span>
+                末页
+            </button>
+            <button id="printPage">
+        <span class="icon-print icon">
+
+        </span>
+                打印[客户端]
+            </button> <!-- 新增打印按钮 -->
+            <button id="printPage2">
+          <span class="icon-print1 icon">
+          </span>
+                打印
+            </button>
+
+            <button id="downloadPDF">
+        <span class="icon-download icon">
+
+        </span>
+                输出
+            </button> <!-- 新增下载PDF按钮 -->
+            <button>
+        <span class="icon-email icon">
+
+        </span>
+                邮件
+            </button>
+            <button id="exportImage">
+
+                导出图片
+            </button> <!-- 新增导出为图片按钮 -->
+
+        </div>
+
+
+    </div>
+
+
+    <div id="example1"></div>
+</div>
+
+
+<div id="app"><!---->
+    <div data-v-af452f00="">
+
+        <button data-v-af452f00="" id="downBtn" class="van-button van-button--info van-button--normal">
+            <div data-v-af452f00="" class="van-button__content">
+                <span data-v-af452f00="" class="van-button__text">PDF下载</span></div>
+        </button>
+
+        <div class="PDF">
+            <div id="pdf-viewer"></div>
+
+        </div>
+
+
+        <div data-v-af452f00="" class="van-hairline--top-bottom van-tabbar van-tabbar--fixed">
+            <div data-v-af452f00="" class="van-tabbar-item van-tabbar-item--active" style="color: rgb(255, 105, 180);">
+                <div class="van-tabbar-item__icon"><i class="van-icon van-icon-comment-o"><!----></i><!----></div>
+                <div class="van-tabbar-item__text">
+                    <span data-v-af452f00="">质检信息</span>
+                </div>
+            </div>
+            <div data-v-af452f00="" id="contact" class="van-tabbar-item" style="color: rgb(255, 182, 193);">
+                <div class="van-tabbar-item__icon">
+                    <i class="van-icon van-icon-wap-home-o"><!----></i><!----></div>
+                <div class="van-tabbar-item__text" >
+                    <span data-v-af452f00="">联系方式</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    <!--页面加载完成获取query 参数-->
+    let url = "../static/pdf/001.pdf";  // PDF 文件路径
+    let pdfName = "001.pdf"
+
+    function updateFontSize() {
+        var main = document.getElementById('main');
+        // 重新计算并设置根元素字体大小
+        var fontSize = main.offsetWidth / 1680 * 16; // 计算字体大小
+        var minFontSize = 11.7; // 设置最小字体大小
+
+        // 如果计算出来的字体大小小于最小字体大小，则设置为最小字体大小
+        if (fontSize < minFontSize) {
+            fontSize = minFontSize;
+        }
+
+        // 设置根元素的字体大小
+        document.documentElement.style.fontSize = fontSize + 'px';
+    }
+
+   
+
+    window.onload = function () {
+        updateFontSize(); // 初始设置字体大小
+        window.addEventListener('resize', updateFontSize); // 监听窗口大小变化
+
+        let query = window.location.search.substring(1);
+        let params = new URLSearchParams(query);
+        if (params.has('pdf')) {
+            let pdf = params.get('pdf');
+            console.log(pdf);
+            url = "../static/pdf" + "/" + pdf + ".pdf"; // PDF 文件路径
+            //   存储文件名 跳转时携带
+            pdfName = pdf
+        }
+        pdfjsLib.getDocument(url).promise.then(function (pdf) {
+            pdfDoc = pdf;
+            totalPages = pdf.numPages;
+            document.getElementById('totalPages').textContent = totalPages;
+            console.log('PDF loaded');
+            updatePageInfo();
+            renderAllPages();  // 渲染所有页面
+        }).catch(function (error) {
+            console.error('Error loading PDF: ' + error);
+        });
+
+    }
+
+
+    function printPDF(url) {
+        var pdfUrl = url;  // PDF文件路径
+
+        // 使用 fetch API 确保 PDF 文件加载完成
+        fetch(pdfUrl)
+            .then(response => {
+                if (response.ok) {
+                    return response.blob();  // 获取 PDF 文件的二进制数据
+                }
+                throw new Error('PDF加载失败');
+            })
+            .then(blob => {
+                // 在这里确保文件已经准备好后再打印
+                printJS({
+                    printable: URL.createObjectURL(blob),
+                    type: 'pdf',
+                    showModal: true
+                });
+            })
+            .catch(error => {
+                console.error('打印失败:', error);
+            });
+    }
+
+
+    let pdfDoc = null;
+    let pageNum = 1;
+    let totalPages = 0;
+    let pages = [];
+    let pageHeight = 0;  // 每个页面的高度
+
+    // 加载PDF文件
+
+
+    // 更新页面信息
+    function updatePageInfo() {
+        document.getElementById('pageInput').value = pageNum;
+        document.getElementById('totalPages').textContent = ` / ${totalPages}`;
+    }
+
+    // 渲染单个PDF页面
+    function renderPage(pageNum) {
+        pdfDoc.getPage(pageNum).then(function (page) {
+            console.log('Page ' + pageNum + ' loaded');
+            const scale = 1.3;
+            const viewport = page.getViewport({scale: scale});
+
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+            }).promise.then(function () {
+                console.log('Page ' + pageNum + ' rendered');
+                pages[pageNum - 1] = canvas;  // 保存已渲染的页面
+                document.getElementById('example1').appendChild(canvas); // 显示当前页面
+                if (pageNum === 1) {
+                    pageHeight = canvas.height;  // 获取页面高度
+                }
+                updatePageInfo();
+            });
+        });
+    }
+
+    // 渲染所有PDF页面
+    function renderAllPages() {
+        for (let i = 1; i <= totalPages; i++) {
+            renderPage(i);
+        }
+    }
+
+    // 滚动时动态更新页码
+    document.getElementById('example1').addEventListener('scroll', function () {
+        const scrollTop = this.scrollTop;
+        const newPageNum = Math.min(Math.ceil(scrollTop / pageHeight) + 1, totalPages); // 限制最大页码为totalPages
+        if (newPageNum !== pageNum) {
+            pageNum = newPageNum;
+            updatePageInfo();
+        }
+    });
+
+    // 按钮功能：跳转到首页
+    document.getElementById('firstPage').addEventListener('click', function () {
+        pageNum = 1;
+        document.getElementById('example1').scrollTop = 0;  // 滚动到顶部
+        updatePageInfo();
+    });
+
+    // 按钮功能：上一页
+    document.getElementById('prevPage').addEventListener('click', function () {
+        if (pageNum > 1) {
+            pageNum--;
+            document.getElementById('example1').scrollTop = (pageNum - 1) * pageHeight;  // 设置滚动位置
+            updatePageInfo();
+        }
+    });
+
+    // 按钮功能：下一页
+    document.getElementById('nextPage').addEventListener('click', function () {
+        if (pageNum < totalPages) {
+            pageNum++;
+            document.getElementById('example1').scrollTop = (pageNum - 1) * pageHeight;  // 设置滚动位置
+            updatePageInfo();
+        }
+    });
+
+    // 按钮功能：末页
+    document.getElementById('lastPage').addEventListener('click', function () {
+        pageNum = totalPages;
+        document.getElementById('example1').scrollTop = (totalPages - 1) * pageHeight;  // 滚动到最后一页
+        updatePageInfo();
+    });
+
+    // 按钮功能：打印页面
+    document.getElementById('printPage').addEventListener('click', function () {
+        printPDF(url)
+
+
+    });
+
+
+    document.getElementById('printPage2').addEventListener('click', function () {
+
+        printPDF(url)
+    });
+    // 按钮功能：下载PDF
+    document.getElementById('downloadPDF').addEventListener('click', function () {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'document.pdf';
+        link.click();
+    });
+
+
+    document.getElementById('downBtn').addEventListener('click', function () {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'document.pdf';
+        link.click();
+    });
+
+
+    // 按钮功能：导出为图片
+    document.getElementById('exportImage').addEventListener('click', function () {
+        const canvas = pages[pageNum - 1];
+        if (canvas) {
+            const dataUrl = canvas.toDataURL();
+            const link = document.createElement('a');
+            link.href = dataUrl;
+            link.download = `page_${pageNum}.png`;
+            link.click();
+        }
+    });
+
+    // 当输入框失去焦点时，跳转到输入的页面
+    document.getElementById('pageInput').addEventListener('blur', function () {
+        const inputValue = parseInt(this.value, 10);
+        if (inputValue >= 1 && inputValue <= totalPages) {
+            pageNum = inputValue;
+            document.getElementById('example1').scrollTop = (pageNum - 1) * pageHeight;  // 设置滚动位置
+            updatePageInfo();
+        } else {
+            // 如果输入的值无效，恢复到当前页面
+            this.value = pageNum;
+        }
+    });
+
+    //   等页面加载完成进行一次页面刷新
+
+
+    document.querySelector("#contact").addEventListener("click", function () {
+        location.href = "联系方式页面.html?pdf=" + pdfName;
+    })
+
+</script>
+
+</body>
+
+</html>
