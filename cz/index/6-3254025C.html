@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0,maximum-scale=1,user-scalable=no"
+    />
+    <title>首钢长钢公司电子标牌</title>
+    <link rel="stylesheet" href="../static/css/base.css" />
+</head>
+
+<body>
+<div id="app" class="content">
+    <div class="signs-wrap">
+        <div class="signs-label">标牌信息</div>
+        <div class="signs-content">
+            <img src="../static/picture/1-v1-t.png" alt="" srcset="" />
+            <div
+                    class="signs-tabel"
+                    style="background-image: url('../static/images/1-v1-b.png')"
+            >
+                <p>许可证号：<strong> (晋)XK05-001-00011 </strong></p>
+                <p>产品名称：<strong>热轧光圆钢筋</strong></p>
+                <p>产品标准：GB 1499.1-2024</p>
+                <!---->
+                <p class="col-2">
+                    <span>牌号： <strong>HPB300</strong></span>
+                    <span> <!-- 这个 span 保持 col-2 的布局结构 -->
+                        <span>重量：<strong id="weight-value">-</strong></span> <!-- 重量标签和数值 - 添加了 ID -->
+                        <span class="unit"><strong> kg</strong></span> <!-- 独立的单位 kg -->
+                    </span>
+                </p>
+                <p class="col-2">
+                    <span>批号： <strong>3254025C</strong></span>
+                    <span>支数：<strong>1支</strong></span>
+                </p>
+                <!---->
+                <div class="list_qrcode">
+                    <div class="list">
+                        <p>规格：Φ6mm</p>
+                        <p>长度：盘卷</p>
+                        <p>验号：35</p>
+                        <p>日期：2025.05.25</p>
+                    </div>
+                    <div>
+                        <div class="qrcode">
+                            <canvas id="qr" width="150" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <!---->
+            </div>
+        </div>
+    </div>
+    <div class="QC-result">
+        <div class="signs-label">电子签章</div>
+        <div class="books-wrap">
+            <span>质保书号：QT202505250026&nbsp; </span>
+            <span class="text-right"></span>
+        </div>
+        <div class="person-img">
+            <div class="person-item">
+                <div class="img-left">
+                    <span>审核签字：</span>
+                    <div class="small-text">(电子签名)</div>
+                </div>
+                <img src="../static/picture/1.png" alt="" srcset="" class="person w120" />
+            </div>
+            <div class="person-item">
+                <div class="img-left">
+                    <span>审核盖章：</span>
+                    <div class="small-text">(电子印章)</div>
+                </div>
+                <img src="../static/picture/dzqz.png" alt="" srcset="" class="dzyz-img" />
+            </div>
+        </div>
+
+        <div class="QC-result">
+            <div class="signs-label">化学成分%</div>
+            <div class="chemistry-table">
+                <p class="col-2">
+                    <span>项目 </span> <span class="text-right">结果 </span>
+                </p>
+                <p class="col-2">
+                    <span>C </span> <span class="text-right">0.17 </span>
+                </p>
+                <p class="col-2">
+                    <span>Mn </span> <span class="text-right">0.55 </span>
+                </p>
+                <p class="col-2">
+                    <span>Si </span> <span class="text-right">0.23 </span>
+                </p>
+                <p class="col-2">
+                    <span>P </span> <span class="text-right">0.021 </span>
+                </p>
+                <p class="col-2">
+                    <span>S </span> <span class="text-right">0.033 </span>
+                </p>
+                <p class="col-2">
+                    <span>Ceq(CEV) </span> <span class="text-right">0.26 </span>
+                </p>
+            </div>
+            <div class="signs-label">物理性能%</div>
+            <div class="chemistry-table">
+                <p class="col-4">
+                    <span>项目 </span> <span class="text-right"></span>
+                </p>
+                <p class="col-4">
+                    <span>Rm/Mpa </span> <span class="text-center">510 </span>
+                    <span class="text-center">515 </span>
+                    <span class="text-center">510 </span>
+                </p>
+                <p class="col-4">
+                    <span>ReL(RP0.2)/Mpa </span> <span class="text-center">355 </span>
+                    <span class="text-center">360 </span>
+                    <span class="text-center">355 </span>
+                </p>
+                <p class="col-4">
+                    <span>A/% </span> <span class="text-center">32.0 </span>
+                    <span class="text-center">31.5 </span>
+                    <span class="text-center">32.0 </span>
+                </p>
+                <p class="col-4">
+                    <span>Agt/% </span> <span class="text-center">&nbsp; </span>
+                    <span class="text-center">&nbsp; </span>
+                    <span class="text-center">&nbsp; </span>
+                </p>
+                <p class="col-4">
+                    <span>R0m/R0eL </span> <span class="text-center">&nbsp; </span>
+                    <span class="text-center">&nbsp; </span>
+                    <span class="text-center">&nbsp; </span>
+                </p>
+                <p class="col-4">
+                    <span>R0eL/ReL </span> <span class="text-center">&nbsp; </span>
+                    <span class="text-center">&nbsp; </span>
+                    <span class="text-center">&nbsp; </span>
+                </p>
+                <p class="col-4">
+                    <span>弯芯直径 </span> <span class="text-center">d </span>
+                    <span class="text-center">d </span>
+                    <span class="text-center">d </span>
+                </p>
+                <p class="col-4">
+                    <span>冷弯角度 </span> <span class="text-center">180 </span>
+                    <span class="text-center">180 </span>
+                    <span class="text-center">180 </span>
+                </p>
+                <p class="col-4">
+                    <span>冷弯结果 </span> <span class="text-center">合格 </span>
+                    <span class="text-center">合格 </span>
+                    <span class="text-center">合格 </span>
+                </p>
+                <p class="col-4">
+                    <span>KV2J </span> <span class="text-center"> </span>
+                    <span class="text-center"> </span>
+                    <span class="text-center"> </span>
+                </p>
+                <p class="col-4">
+                    <span>硬度(HBW) </span> <span class="text-center"> </span>
+                    <span class="text-center"> </span>
+                    <span class="text-center"> </span>
+                </p>
+                <p class="col-4">
+                    <span>顶锻 </span> <span class="text-center"> </span>
+                    <span class="text-center"> </span>
+                    <span class="text-center"> </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!---->
+    <div class="signs-label">公司简介</div>
+    <div class="company-desc">
+        <p class="company-desc-text">
+            首钢长治钢铁有限公司为首钢集团下属重要的建材生产基地，主要产品包括：热轧带肋钢筋（抗震）—直条/盘卷，热轧光圆钢筋—直条/盘卷、热轧H型钢、支护用高强度锚杆钢、热轧圆钢等产品，规格：∅5.5-∅50mm。本公司秉承“客户至上”的理念，竭力做好售前、售中、售后的各项服务，愿携手客户共同营造合作双赢的局面。
+        </p>
+        <p>地址：山西省长治市潞州区故县东大街9号</p>
+        <p>邮编：046031</p>
+        <p>销售热线：0355-5089999</p>
+        <p>质量热线：0355-5085752</p>
+    </div>
+    <div class="wechat"></div>
+</div>
+</body>
+
+<script src="../static/js/jquery-1.10.2.min.js"></script>
+<script src="../static/js/qrious.min.js"></script>
+
+<!-- <script src="../static/js/jquery.qrcode.min.js"></script> -->
+<script type="text/javascript">
+    // --- 原有的 QRious 代码 ---
+    new QRious({
+        element: document.getElementById("qr"),
+        value: location.href,
+        size: 100,
+    });
+
+    // --- 新增的用于更新重量的代码 ---
+    document.addEventListener('DOMContentLoaded', function() {
+        // 1. 获取 URL 查询参数
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // 2. 尝试获取名为 'weight' 的参数值
+        const weightValueFromUrl = urlParams.get('weight'); // 参数名是 'weight'
+
+        // 3. 找到显示重量的元素
+        const weightElement = document.getElementById('weight-value');
+
+        // 4. 如果 URL 中提供了 'weight' 参数，并且找到了对应的元素，则更新它
+        if (weightElement && weightValueFromUrl !== null && weightValueFromUrl !== '') {
+            weightElement.textContent = weightValueFromUrl; // 更新元素的文本内容
+        }
+        // 如果 URL 中没有 'weight' 参数或参数为空，则页面会显示 HTML 中默认的 "2084"
+    });
+</script>
+</html>
