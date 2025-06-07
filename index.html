@@ -3,47 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>网络繁忙</title>
+    <title></title>
     <style>
         /* 基本重置和页面设置 */
         html, body {
-            height: 100%;
+            height: 100%; /* 确保body至少有视口高度 */
             margin: 0;
             padding: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            background-color: #f4f4f4; /* 页面背景色 */
+            /* 移除了 display:flex 和居中对齐的样式，因为消息要固定在左上角 */
         }
 
         /* 消息容器 */
         .message-container {
-            padding: 25px 35px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            max-width: 90%; /* 限制最大宽度，防止在超大屏幕上过宽，同时在小屏幕上也能自适应 */
-            box-sizing: border-box;
+            position: absolute; /* 使用绝对定位 */
+            top: 0;             /* 定位到顶部 */
+            left: 0;            /* 定位到左边 */
+            padding: 20px;      /* 给文字一些内边距，使其不紧贴边缘 */
+            /* 移除了 background-color, border-radius, box-shadow */
+            /* 移除了 max-width 和 box-sizing，因为不再需要居中和限制宽度 */
         }
 
         /* 消息文本样式 */
         .message-container p {
             font-size: 1.2em;
             margin: 0;
-            line-height: 1.6; /* 虽然是单行，保留行高设置也无妨 */
-            white-space: nowrap; /* 关键：确保文本不换行 */
+            line-height: 1.6;
+            white-space: nowrap; /* 确保文本不换行 */
+            color: #333;        /* 文字颜色，确保在背景上可见 */
         }
 
         /* 针对非常小的屏幕（例如宽度小于480px的手机），可以稍微调整 */
         @media (max-width: 480px) {
+            .message-container {
+                padding: 15px; /* 略微减小内边距 */
+            }
             .message-container p {
                 font-size: 1em; /* 略微减小字体 */
-            }
-            .message-container {
-                padding: 20px 25px; /* 略微减小内边距 */
             }
         }
     </style>
