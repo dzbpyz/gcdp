@@ -1,0 +1,360 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN"> <!-- 修改语言为中文 -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../static/css/bq01.css">
+    <style>
+        .search_btn{
+            width:100%;
+            height:100%;
+            text-align: center;
+            /* background:#53a2f8; */
+            color:#fff;
+            border-radius:10px;
+            line-height: 50px;
+            font-size:15px;
+        }
+        /* 为目标表格添加固定布局 */
+        #information, #huaxueTable, #wuliTable {
+            table-layout: fixed;
+            /* 可以添加 word-wrap 来处理可能溢出的长文本 */
+            word-wrap: break-word; /* 或者 overflow-wrap: break-word; */
+        }
+
+        /* 可以在这里为表格添加一些基本样式，例如边框，如果需要的话 */
+        /*
+        .table_box table, .table_box th, .table_box td {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        .table_box th {
+            background-color: #f2f2f2;
+        }
+        */
+
+		.root{
+            position: absolute;
+            top: 0;
+            background-color: white;
+            width: 100%;
+            height: 110px;
+        }
+		 .header {
+            background: #53a2f8;
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            margin: 50px 10px 10px 10px;
+            border-radius: 8px;}
+
+			      /* 为头部链接添加样式 */
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer; /* 添加手型光标，表示可点击 */
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+        }
+
+      /* --- 新增：统一设置指定表格的字体样式 --- */
+     #information td,
+     #huaxueTable td,
+     #wuliTable td {
+    font-size: 13px; /* 在这里设置你想要的字体大小，例如 14px */
+    font-family: "Microsoft YaHei", SimHei, Arial, sans-serif; /* 在这里设置你想要的字体，优先使用微软雅黑，然后是黑体，最后是无衬线字体 */
+}
+/* --- 结束新增 --- */
+    </style>
+</head>
+<body>
+	<div class="root">
+        <div class="header">
+            <!-- 初始href设为无操作，防止默认跳转 -->
+            <a href="javascript:void(0);" id="zbsPdfLink">点击搜索质保书</a>
+        </div>
+    </div>
+
+
+   <div class="box">
+     <div class="search_box">
+        <div class="search_inner_box">
+        </div>
+     </div>
+     <div class="content_box">
+         <div class="item_box">
+            <h3 class="table_title">标牌信息</h3>
+            <div class="table_box">
+               <table style="width:100%;" id="information">
+                   <!-- 7行4列表格 -->
+                   <tr>
+                       <td style="text-align: center;">产品名称</td>
+                       <td style="text-align: left;">热轧带肋钢筋</td>
+                       <td style="text-align: center;">执行标准</td>
+                       <td style="text-align: left;">GB 1499.2-2024</td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">批次号</td>
+                       <td style="text-align: left;">25303110BC0</td>
+                       <td style="text-align: center;">捆(卷)号</td>
+                       <td style="text-align: left;" id="kunHaoValue">05</td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">牌号</td>
+                       <td style="text-align: left;">HRB400E</td>
+                       <td style="text-align: center;">规格</td>
+                       <td style="text-align: left;">Φ10</td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">理重(kg)</td>
+                       <td style="text-align: left;">&nbsp;</td>
+                       <td style="text-align: center;">实重(kg)</td>
+                       <!-- **** 修改：添加了 id="shiZhongValue" **** -->
+                       <td style="text-align: left;" id="shiZhongValue">2135</td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">支数</td>
+                       <td style="text-align: left;">1</td>
+                       <td style="text-align: center;">定尺</td>
+                       <td style="text-align: left;"> </td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">生产日期</td>
+                       <td style="text-align: left;">2025-05-15</td>
+                       <td style="text-align: center;">尺寸精度</td>
+                       <td style="text-align: left;"> </td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">发货日期</td>
+                       <td style="text-align: left;">2025-05-15</td>
+                       <td style="text-align: center;"> </td>
+                       <td style="text-align: left;"> </td>
+                   </tr>
+               </table>
+            </div>
+                       <!-- ... (其他表格和内容保持不变) ... -->
+
+            <h3 class="table_title">化学成分</h3>
+            <div class="table_box">
+                <table class="huaxue_table" id="huaxueTable" style="width:100%;">
+                    <!-- 四行四列的表格，文本居中 -->
+                    <tr>
+                        <td style="text-align: center;">碳</td>
+                        <td style="text-align: center;">硅</td>
+                        <td style="text-align: center;">锰</td>
+                        <td style="text-align: center;">磷</td> <!-- 新增列 -->
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">0.24</td>
+                        <td style="text-align: center;">0.40</td>
+                        <td style="text-align: center;">1.45</td>
+                        <td style="text-align: center;">0.021</td> <!-- 新增列 -->
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">硫</td>
+                        <td style="text-align: center;">铬</td>
+                        <td style="text-align: center;">钒</td>
+                        <td style="text-align: center;">碳当量</td> <!-- 新增列 -->
+                    </tr>
+                  <tr>
+                        <td style="text-align: center;">0.026</td>
+                        <td style="text-align: center;"> </td>
+                        <td style="text-align: center;">0.002</td>
+                        <td style="text-align: center;">0.49</td>
+                        <!-- 新增列 -->
+                    </tr>
+                </table>
+            </div>
+
+            <!-- ... (物理性能表格代码保持不变) ... -->
+            <h3 class="table_title">物理性能</h3>
+            <div class="table_box">
+                <table class="wuliTable" id="wuliTable" style="width:100%;">
+                    <!-- 8行3列的表格，文本居中显示 -->
+                    <tr>
+                        <td style="text-align: center;">屈服强度</td>
+                        <td style="text-align: center;">抗拉强度</td>
+                        <td style="text-align: center;">断后伸长率</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">460,455</td>
+                        <td style="text-align: center;">680,680</td>
+                        <td style="text-align: center;"> </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">断面收缩率</td>
+                        <td style="text-align: center;">最大力总延伸率</td>
+                        <td style="text-align: center;">重量偏差</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;"> </td>
+                        <td style="text-align: center;">11.8,12.3</td>
+                        <td style="text-align: center;">&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">R⁰el/Rel</td>
+                        <td style="text-align: center;">R⁰m/R⁰el</td>
+                        <td style="text-align: center;">反向弯曲</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">1.15,1.13</td>
+                        <td style="text-align: center;">1.48,1.51</td>
+                        <td style="text-align: center;">合格</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">冷弯</td>
+                        <td style="text-align: center;">V型缺口冲击功</td>
+                        <td style="text-align: center;">V型缺口冲击功平均值</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">合格,合格</td>
+                        <td style="text-align: center;"> </td>
+                        <td style="text-align: center;"> </td>
+                    </tr>
+                </table>
+            </div>
+         </div>
+
+         <div class="company_box">
+		    <h3 class="table_title">意见反馈</h3>
+            <a href="https://csc.hbisco.com/miniprogram/open/" style="display:inline-block;margin:10px;font-size:14px;">点击此处</a>
+            <h3 class="table_title">河钢集团乐钢公司简介</h3>
+            <p>河钢乐亭钢铁有限公司是河钢集团以习近平新时代中国特色社会主义思想为指引，深入贯彻新时代发展理念，坚决落实省委、省政府决策部署，抢抓供给侧结构性改革、京津冀协同发展的战略机遇期，建设沿海钢铁基地实施产业升级和产能转移的具体实践。项目选址于河北省唐山市乐亭经济开发区，地处环渤海经济圈中心地带，背靠京唐港，毗邻曹妃甸，具有明显区位优势。项目于2018年3月1日开工建设，于2020年9月7日正式投产，产品定位为高端汽车板、家电板、建筑工程、海洋高强用钢。</p>
+            <p>公司以“绿色、智能、品牌化”行业未来工厂为目标，努力打造极具盈利能力、极具技术含量、极具产品高度、极具品牌效应的标志性项目，成为集团钢铁主业板块的一个新亮点。</p>
+            <p>绿色化——应用新型节能蓄热式加热炉、脱硫脱硝、综合水处理以及钢渣二次处理等130余项行业先进工艺及节能环保新技术，各工序能耗均优于国际先进指标，实现大气污染物低于《钢铁工业大气污染物超低排放标准》最低限值、工业废水全循环利用、工业固废资源化利用、危废100%安全处置及钢铁生产全过程节能减排。</p>
+            <p>智能化——全面对标国内外先进企业在智能制造方面的成功经验，积极引进产线智能机器人、轧制板型自动控制、超快冷技术、钢材组织性能预报系统以及线数据采集与视频融合技术等行业领先的新工艺和新技术，构建全流程一体化的生产管控系统，通过“三化融合”实现生产业务单元的自感知、自决策、自执行、自适应，形成纵向贯通、横向集成、协同联动的智能制造体系。</p>
+            <p>品牌化——瞄准高端汽车、工程机械、交通、制造等行业，坚持走高附加值、高技术含量的“双高”产品路线，打造河钢集团新的增长点、效益点和新的品牌。</p>
+            <h3 class="table_title">企业荣誉</h3>
+            <div class="company_image_box">
+                <image src="../static/images/qiyerongyu.png" height="300px;"></image>
+                <image src="../static/images/lvserenzheng.png" height="300px;"></image>
+            </div>
+            <h3 class="table_title">产品范围</h3>
+            <table border="1" style="margin:10px 0;">
+                <tr>
+                   <th width="80px">产品类别</th>
+                   <th>产品名称</th>
+
+                </tr><tr>
+                    <td>棒材</td>
+                    <td>普通热轧钢筋、细晶粒热轧钢筋、余热处理钢筋、预应力混凝土钢筋</td>
+                </tr>
+                <tr>
+                    <td>线材</td>
+                    <td>普通热轧钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、特种焊丝、优质碳素钢、预应力钢丝、钢绞线、冷镦钢</td>
+                </tr>
+                <tr>
+                    <td>型钢</td>
+                    <td>热轧矿用U型钢、热轧矿用工字钢、热轧轻轨/重轨、热轧等边角钢、热轧不等边角钢、热轧H型钢、铁道用鱼尾板、T型钢、电梯导轨钢、叉车门架型钢、履带型钢、槽钢、热轧工字钢</td>
+                </tr>
+            </table>
+            <h3 class="table_title">公司地址</h3>
+            <p>地址: 中国河北省唐山市乐亭经济开发区</p>
+            <h3 class="table_title">联系电话</h3>
+            <p>电话1: 0315-2702545</p>
+            <p>电话2: 0315-2702917</p>
+            <p>电话3: 0315-2703265</p>
+            <p>电话4: 0315-2703164</p>
+        </div>
+     </div>
+   </div>
+
+   <script>
+       // 定义一个函数，用于设置链接点击时刷新页面
+       function setLinkToRefresh(linkElement) {
+           if (linkElement) {
+               // 移除可能存在的 href 和 target 属性，避免干扰
+               linkElement.removeAttribute('href');
+               linkElement.removeAttribute('target');
+               // 设置 onclick 事件处理器来刷新页面
+               linkElement.onclick = function(event) {
+                   event.preventDefault(); // 阻止任何默认的链接跳转行为
+                   location.reload();    // 重新加载当前页面
+               };
+               console.log("链接行为已设置为：点击时刷新页面。");
+           }
+       }
+
+       // 页面加载完成后执行
+       window.onload = function() {
+           const urlParams = new URLSearchParams(window.location.search);
+
+           // --- 处理 'kh' 参数 (捆号) ---
+           const kunHao = urlParams.get('kh');
+           if (kunHao) {
+               const kunHaoElement = document.getElementById('kunHaoValue');
+               if (kunHaoElement) {
+                   kunHaoElement.textContent = kunHao;
+               }
+           }
+
+           // --- **** 新增：处理 'zl' 参数 (实重) **** ---
+           const shiZhong = urlParams.get('zl'); // 获取 'zl' 参数值
+           if (shiZhong) { // 检查参数是否存在
+               const shiZhongElement = document.getElementById('shiZhongValue');
+               if (shiZhongElement) { // 检查元素是否存在
+                   shiZhongElement.textContent = shiZhong; // 更新元素内容
+               } else {
+                    console.error("未找到 ID 为 'shiZhongValue' 的元素！"); // 可选：添加错误日志
+               }
+           }
+           // --- **** 结束新增 **** ---
+
+           // --- 处理 'pdf' 参数和质保书链接 ---
+           const pdfValue = urlParams.get('pdf'); // 获取 pdf 参数值
+           const pdfLinkElement = document.getElementById('zbsPdfLink'); // 获取链接元素
+
+           // 确保链接元素存在
+           if (pdfLinkElement) {
+               // 如果 URL 中存在 'pdf' 参数
+               if (pdfValue) {
+                   // 构建潜在的 PDF 文件 URL
+                   // 重要：请确保这里的相对路径计算符合您的服务器文件结构
+                   // '../pdf/' 指的是当前 HTML 文件所在目录的上一级目录中的 pdf 文件夹
+                   const targetPdfUrl = `../pdf/${pdfValue}.pdf`; // 假设文件扩展名是 .pdf
+
+                   console.log(`正在检查 PDF 文件是否存在于：${targetPdfUrl}`);
+
+                   // 使用 fetch 发送 HEAD 请求检查文件是否存在，不下载文件内容
+                   fetch(targetPdfUrl, { method: 'HEAD' })
+                       .then(response => {
+                           // response.ok 表示 HTTP 状态码在 200-299 范围内 (表示成功)
+                           if (response.ok) {
+                               // PDF 文件存在
+                               console.log("PDF 文件找到。设置链接指向该文件。");
+                               pdfLinkElement.href = targetPdfUrl;
+                               // 如果希望在新标签页打开 PDF，可以取消下面的注释
+                               // pdfLinkElement.target = "_blank";
+                               // 清除可能存在的 onclick 事件 (防止它执行刷新)
+                               pdfLinkElement.onclick = null;
+                           } else {
+                               // PDF 文件不存在 (例如 404 Not Found) 或其他错误状态码
+                               console.log(`PDF 文件未找到 (状态码: ${response.status})。设置链接为点击刷新。`);
+                               setLinkToRefresh(pdfLinkElement);
+                           }
+                       })
+                       .catch(error => {
+                           // 发生网络错误 (例如服务器无法访问、CORS 跨域问题 - 这里不太可能)
+                           console.error('检查 PDF 文件存在性时出错:', error);
+                           console.log("检查过程中发生错误。设置链接为点击刷新。");
+                           setLinkToRefresh(pdfLinkElement); // 出错也按文件不存在处理
+                       });
+               } else {
+                   // URL 中没有 'pdf' 参数
+                   console.log("URL 中未找到 'pdf' 参数。设置链接为点击刷新。");
+                   setLinkToRefresh(pdfLinkElement);
+               }
+           } else {
+               // 如果没找到 ID 为 'zbsPdfLink' 的元素
+               console.error("未找到 ID 为 'zbsPdfLink' 的链接元素！");
+           }
+       };
+   </script>
+</body>
+</html>
