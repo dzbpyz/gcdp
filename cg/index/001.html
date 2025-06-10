@@ -5,154 +5,102 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <script src="../static/js/boot.js" type="text/javascript"></script>
     <link href="../static/css/base.css" type="text/css" rel="stylesheet">
-    <!-- 新增的 CSS 样式 -->
     <style type="text/css">
-        /* 为ID为FHDATE的输入框设置placeholder样式 */
-        #FHDATE::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-            color: #cccccc; /* 浅灰色 */
-            opacity: 1; /* Firefox 需要这个来确保颜色被应用 */
-        }
-
-        #FHDATE:-ms-input-placeholder { /* Internet Explorer 10-11 */
-            color: #cccccc;
-        }
-
-        #FHDATE::-ms-input-placeholder { /* Microsoft Edge */
-            color: #cccccc;
-        }
-
-        /* 自定义模态对话框样式 */
-        #custom-modal-overlay {
-            display: none; /* 默认隐藏 */
-            position: fixed; /* 固定定位，覆盖整个视口 */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* 半透明黑色背景 */
-            z-index: 1000; /* 确保在其他内容之上 */
-        }
-
-        #custom-modal {
-            display: none; /* 默认隐藏 */
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%); /* 精确居中 */
-            background-color: #ffffff;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            z-index: 1001; /* 在遮罩层之上 */
-            min-width: 300px; /* 最小宽度 */
-            max-width: 90%;   /* 最大宽度，对于小屏幕友好 */
-            border: 1px solid #ccc;
-            text-align: left; /* 内部文本默认左对齐 */
-        }
-
-        #custom-modal-message {
-            margin-bottom: 20px;
-            font-size: 16px; /* 适中的字体大小 */
-            line-height: 1.5; /* 改善可读性的行高 */
-            color: #333333;   /* 深灰色文本 */
-            font-family: 宋体, Arial, sans-serif; /* 与页面风格统一 */
-        }
-
-        #custom-modal-close {
-            display: block; /* 使按钮成为块级元素，方便居中 */
-            margin: 0 auto; /* 水平居中按钮 */
-            padding: 10px 25px;
-            background-color: #2e9be2; /* 使用页面已有的主题蓝色 */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            font-family: 宋体, Arial, sans-serif;
-        }
-
-        #custom-modal-close:hover {
-            background-color: #257cb6; /* 鼠标悬停时颜色变深 */
-        }
-        /* 自定义模态对话框样式结束 */
+        #FHDATE::placeholder { color: #cccccc; opacity: 1; }
+        #FHDATE:-ms-input-placeholder { color: #cccccc; }
+        #FHDATE::-ms-input-placeholder { color: #cccccc; }
+        #custom-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 1000; }
+        #custom-modal { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); z-index: 1001; min-width: 300px; max-width: 90%; border: 1px solid #ccc; text-align: left; }
+        #custom-modal-message { margin-bottom: 20px; font-size: 16px; line-height: 1.5; color: #333333; font-family: 宋体, Arial, sans-serif; }
+        #custom-modal-close { display: block; margin: 0 auto; padding: 10px 25px; background-color: #2e9be2; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-family: 宋体, Arial, sans-serif; }
+        #custom-modal-close:hover { background-color: #257cb6; }
     </style>
 
     <script type="text/javascript">
         function validateCertificate() {
             var certificateNumberInput = document.getElementById('ZLZMSBH');
-            var certificateNumber = certificateNumberInput.value.trim(); // 获取输入值并去除首尾空格
+            var certificateNumber = certificateNumberInput.value.trim();
 
             if (certificateNumber === "") {
-                // 如果输入为空，可以提示用户，或者根据需求直接刷新
-                // alert("请输入质量证明书编号！");
-                // 或者，如果空输入也视为“未找到”并刷新：
-                window.location.reload();
-                return; // 如果输入为空，则停止后续操作
+                window.location.reload(); // 如果输入为空，刷新当前页
+                return;
             }
 
-            // 假设 search 文件夹中的文件都有 .html 后缀
-            // 如果文件名没有后缀，则改为: var targetFileName = certificateNumber;
-            // 如果是其他后缀，例如 .txt, 则改为: var targetFileName = certificateNumber + ".txt";
-            var targetFileName = certificateNumber + ".html";
+            var targetFileName = certificateNumber + ".html"; // 假设质保书文件都是 .html 后缀
             var targetUrl = "../search/" + targetFileName;
 
-            // 使用 fetch API 的 HEAD 方法检查文件是否存在
-            fetch(targetUrl, { method: 'HEAD' })
+            console.log("Attempting to fetch (GET):", targetUrl);
+
+            fetch(targetUrl, { method: 'GET' }) // 使用 GET 方法获取文件
                 .then(response => {
-                    if (response.ok) { // response.ok 为 true 表示状态码在 200-299 之间
-                        // 文件存在，跳转到该文件
-                        window.location.href = targetUrl;
-                    } else {
-                        // 文件不存在 (例如 404 错误) 或其他非成功响应
-                        // 刷新当前页面
+                    console.log("Response status:", response.status);
+                    console.log("Response ok:", response.ok);
+                    console.log("Response redirected:", response.redirected);
+                    console.log("Final response URL:", response.url);
+
+                    // 检查最终的 URL 是否与我们请求的 search 目录下的文件路径相符
+                    // (需要将 targetUrl 转换为绝对路径来比较，或检查 response.url 的路径部分)
+                    const finalPath = new URL(response.url, window.location.href).pathname;
+                    const expectedPathSuffix = "/search/" + targetFileName; // 期望的路径后缀
+
+                    // 如果状态码不是 OK (例如 404)，或者发生了我们不期望的重定向 (例如重定向到了首页)
+                    if (!response.ok || !finalPath.endsWith(expectedPathSuffix)) {
+                        console.log("File not found (e.g., 404) or redirected to an unexpected location. Refreshing.");
                         window.location.reload();
+                        return Promise.reject('File not found or unexpected redirect'); // 中断 Promise 链
+                    }
+
+                    // 如果状态码是 OK 且 URL 正确，则获取文本内容进行检查
+                    return response.text();
+                })
+                .then(fileContent => {
+                    if (fileContent === null || fileContent === undefined) return; // 已被中断
+
+                    // 定义一些关键字，这些关键字应该存在于真实的质保书文件中，
+                    // 而不太可能存在于服务器为不存在文件生成的通用 200 OK 页面中。
+                    // !!! 请根据您的实际质保书内容调整这些关键字 !!!
+                    const keywordsToVerify = [
+                        "产品质量证明书",
+                        "河钢股份有限公司承钢分公司", // 或者其他公司特有信息
+                        "批次编号",                  // 表格中的一些固定文本
+                        // "HRB400E"                 // 也可以是材质等信息，但要确保通用错误页没有
+                    ];
+
+                    let isValidFile = false;
+                    for (const keyword of keywordsToVerify) {
+                        if (fileContent.includes(keyword)) {
+                            isValidFile = true;
+                            break; // 找到一个关键字即可认为有效
+                        }
+                    }
+
+                    if (isValidFile) {
+                        console.log("File content seems valid. Navigating to:", targetUrl);
+                        window.location.href = targetUrl; // 跳转到质保书页面
+                    } else {
+                        console.log("File content does NOT seem like a valid certificate (missing keywords). Refreshing.");
+                        window.location.reload(); // 刷新当前页面
                     }
                 })
                 .catch(error => {
-                    // 发生网络错误或其他问题 (例如跨域问题，但 ../search/ 暗示同源)
-                    console.error("检查文件时出错:", error);
-                    // 出错时也刷新当前页面
-                    window.location.reload();
+                    // 捕获 fetch 网络错误，或者上面 Promise.reject 的情况
+                    console.error("Error during fetch or content validation:", error, ". Refreshing current page.");
+                    if (error !== 'File not found or unexpected redirect') { //避免重复打印刷新日志
+                         window.location.reload();
+                    }
                 });
         }
 
-        // 其他按钮的 JavaScript 函数 (确保它们存在以避免错误)
-        function online_print() {
-            console.log("online_print 被调用");
-            showCustomModal("在线打印功能正在开发中或需要特定权限。请联系客服经理获取打印权限。");
-        }
-
-        function online_fankui() {
-            console.log("online_fankui 被调用");
-            var fankuiLink = document.getElementById('online_fankui_link');
-            if (fankuiLink) {
-                window.open(fankuiLink.href, '_blank');
-            }
-        }
-
-        function showDialoghuaxue() {
-            showCustomModal("化学成分信息暂未提供。");
-        }
-        function showDialogwuli() {
-            showCustomModal("物理性能信息暂未提供。");
-        }
-
-        // 自定义模态框的 JavaScript 函数
-        function showCustomModal(message) {
-            document.getElementById('custom-modal-message').innerText = message;
-            document.getElementById('custom-modal-overlay').style.display = 'block';
-            document.getElementById('custom-modal').style.display = 'block';
-        }
-
-        function closeCustomModal() {
-            document.getElementById('custom-modal-overlay').style.display = 'none';
-            document.getElementById('custom-modal').style.display = 'none';
-        }
-
+        // 其他辅助函数保持不变
+        function online_print() { console.log("online_print 被调用"); showCustomModal("在线打印功能正在开发中或需要特定权限。请联系客服经理获取打印权限。"); }
+        function online_fankui() { console.log("online_fankui 被调用"); var link = document.getElementById('online_fankui_link'); if (link) window.open(link.href, '_blank');}
+        function showDialoghuaxue() { showCustomModal("化学成分信息暂未提供。"); }
+        function showDialogwuli() { showCustomModal("物理性能信息暂未提供。"); }
+        function showCustomModal(message) { document.getElementById('custom-modal-message').innerText = message; document.getElementById('custom-modal-overlay').style.display = 'block'; document.getElementById('custom-modal').style.display = 'block'; }
+        function closeCustomModal() { document.getElementById('custom-modal-overlay').style.display = 'none'; document.getElementById('custom-modal').style.display = 'none'; }
     </script>
 </head>
 <body>
-    <!-- 自定义模态对话框的 HTML (在 body 内添加一次) -->
     <div id="custom-modal-overlay"></div>
     <div id="custom-modal">
         <p id="custom-modal-message"></p>
@@ -160,190 +108,55 @@
     </div>
 
 		<div size="100%" showcollapsebutton="true"  style="border:10px solid #000">
-
 				   <form id="searchkey" method="post">
 				   		<table  border="0" cellpadding="0" cellspacing="0">
 				   	    <tr>
-				   	    	 <td>
-							 <img align="absmiddle" src="../static/picture/logo.png" style="text-align:left;"  />
-							 </td>
-							 <td colspan="4" style="text-align: center; ">
-							<font style="font-size:30px;vertical-align:middle;font-weight :bold;font-family: 宋体;"   >河钢股份有限公司承钢分公司</font>
-							</td>
+				   	    	 <td><img align="absmiddle" src="../static/picture/logo.png" style="text-align:left;" /></td>
+							 <td colspan="4" style="text-align: center; "><font style="font-size:30px;vertical-align:middle;font-weight :bold;font-family: 宋体;">河钢股份有限公司承钢分公司</font></td>
 				   	    </tr>
 				   	    </table>
 						<table class="mtable" border="0" cellpadding="1" cellspacing="2" >
+							<tr><td colspan="4" style="font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品基本信息</td></tr>
+							<tr><td style="text-align: center;font-size:20px;font-family: 宋体;">产品名称：</td><td colspan="3" >带肋盘螺</td></tr>
+							<tr><td style="font-size:20px;font-family: 宋体;">批次编号：</td><td style="text-align: left"  colspan="3">25Y200885M20250122020757 </td></tr>
+	                        <tr><td style="text-align: center;font-size:20px;font-family: 宋体;">捆  号：</td><td id="khValueCell" style="text-align: center">   <span id="khDynamicSuffix">2</span> </td><td style="text-align: center;font-size:20px;font-family: 宋体;">材  质：</td><td style="text-align: center">HRB400E </td></tr>
+							<tr><td style="text-align: center;font-size:20px;font-family: 宋体;">规  格：</td><td style="text-align: center">   Φ8.0</td><td style="text-align: center;font-size:20px;font-family: 宋体;">支  数：</td><td style="text-align: center"> </td></tr>
+							<tr><td style="text-align: center;font-size:20px;font-family: 宋体;">长  度(m)：</td><td style="text-align: center"> </td><td style="text-align: center;font-size:20px;font-family: 宋体;">理  重(kg)：</td><td style="text-align: center"> </td></tr>
+							<tr><td style="text-align: center;font-size:20px;font-family: 宋体;">实  重(kg)：</td><td style="text-align: center; min-width: 200px;"> <span id="szDynamicValue"> </span></td><td style="text-align: center;font-size:20px;font-family: 宋体;">产出日期：</td><td style="text-align: center; min-width: 200px;"> 2025-01-22</td></tr>
+							<tr><td colspan="4" style=";font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品质量证明书查验及在线打印</td></tr>
 							<tr>
-							<td colspan="4" style="font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品基本信息</td>
-							</tr>
-							 <tr>
-								<td style="text-align: center;font-size:20px;font-family: 宋体;">
-									产品名称：
-								</td>
-								<td colspan="3" >带肋盘螺</td>
-							</tr>
-							<tr>
-								<td style="font-size:20px;font-family: 宋体;">
-									批次编号：
-								</td>
-								<td style="text-align: left"  colspan="3">25Y200885M20250122020757 </td>
-							</tr>
-	                        <tr>
-								<td style="text-align: center;font-size:20px;font-family: 宋体;">
-									捆  号：
-							  </td>
-								<td id="khValueCell" style="text-align: center">   <span id="khDynamicSuffix">2</span> </td>
-								<td style="text-align: center;font-size:20px;font-family: 宋体;">
-									材  质：
-							  </td>
-								<td style="text-align: center">HRB400E </td>
+							    <td colspan="1" style="text-align: right;font-size:20px;font-family: 宋体;">质量证明书编号：</td>
+							    <td style="text-align: left"  colspan="2"><input id="ZLZMSBH" name="ZLZMSBH"  style="width: 100%" required="true" /></td>
+							    <td rowspan="2" style="text-align: left; vertical-align: middle;"><img src="../static/picture/chaxun.jpg" onclick="validateCertificate()" style="cursor:pointer;" alt="查询" /></td>
 							</tr>
 							<tr>
-								<td style="text-align: center;font-size:20px;font-family: 宋体;">
-									规  格：
-							  </td>
-								<td style="text-align: center">   Φ8.0</td>
-								<td style="text-align: center;font-size:20px;font-family: 宋体;">
-									支  数：
-							  </td>
-								<td style="text-align: center"> </td>
+							    <td  colspan="1" style="text-align: right;font-size:20px;font-family: 宋体;" >发货日期：</td>
+							    <td style="text-align: left"  colspan="2"><input id="FHDATE" name="FHDATE" placeholder="YYYY-MM-DD" vtype="date:yyyy-MM-dd" required="true"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" /></td>
 							</tr>
-							<tr>
-								<td style="text-align: center;font-size:20px;font-family: 宋体;">
-									长  度(m)：
-							  </td>
-								<td style="text-align: center"> </td>
-								<td style="text-align: center;font-size:20px;font-family: 宋体;">
-									理  重(kg)：
-							  </td>
-								<td style="text-align: center"> </td>
-							</tr>
-							<tr>
-								<td style="text-align: center;font-size:20px;font-family: 宋体;">
-									实  重(kg)：
-								</td>
-								 <td style="text-align: center; min-width: 200px;">
-                                 <span id="szDynamicValue"> </span>
-                                 </td>
-								<td style="text-align: center;font-size:20px;font-family: 宋体;">
-									产出日期：
-								</td>
-								<td style="text-align: center; min-width: 200px;">
-								   2025-01-22
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4" style=";font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品质量证明书查验及在线打印</td>
-							</tr>
-							<tr>
-							<td colspan="1" style="text-align: right;font-size:20px;font-family: 宋体;">
-								质量证明书编号：
-							</td>
-							<td style="text-align: left"  colspan="2">
-								<input id="ZLZMSBH" name="ZLZMSBH"  style="width: 100%" required="true" />
-							</td>
-							<td rowspan="2" style="text-align: left; vertical-align: middle;"> <!-- 确保图片垂直居中 -->
-							    <img src="../static/picture/chaxun.jpg" onclick="validateCertificate()" style="cursor:pointer;" alt="查询" />
-							</td>
-							</tr>
-							<tr>
-							<td  colspan="1" style="text-align: right;font-size:20px;font-family: 宋体;"  >
-								发货日期：
-							</td>
-							<td style="text-align: left"  colspan="2">
-								<input id="FHDATE" name="FHDATE" placeholder="YYYY-MM-DD" vtype="date:yyyy-MM-dd" required="true"  format="yyyy-MM-dd " showOkButton="true" showClearButton="false" style="width: 100%" />
-							</td>
-							</tr>
-							<tr>
-								<td colspan="2" style="font-size:15px;color:red;border-right:none"></td>
-								<td colspan="2" style="font-size:15px;color:red;border-left:none">※请输入所持证明书信息查验</td>
-							</tr>
-							<tr>
-								<td  colspan="1" style="font-family: 宋体;text-align: right;font-size:20px;height:40px;border-bottom:none;border-right:none">
-									质量证明书打印：
-								</td>
-								<td colspan="3" style="text-align: center;border-bottom:none;border-left:none"><input type="button" value="在线打印入口" onclick="online_print()"  style="width: 320px;height:100%;background: #2e9be2;color:#fff;font-size: 20px;font-family: 宋体;border:#ccc" />   请联系客服经理获取打印权限</td>
-							</tr>
-							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a  id = "online_print_link" href="http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do" target="_blank">http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do</a></td>
-							</tr>
-							<tr>
-								<td colspan="4" style="font-family: 宋体;font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品问题反馈</td>
-							</tr>
-							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:16px;height:40px;text-align: center;border-bottom:none">欢迎使用河钢客户服务中心信息反馈系统  
-								<img src="../static/picture/fankui.jpg" onclick="online_fankui()" style="cursor:pointer; vertical-align: middle;">
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a id="online_fankui_link" href="http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm" target="_blank">http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm</a></td>
-							</tr>
-							<tr>
-								<td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="化学成分" onclick="showDialoghuaxue()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size:26px;font-family: 宋体;border:#ccc" /></td>
-								<td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="物理性能" onclick="showDialogwuli()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size:26px;font-family: 宋体;border:#ccc" /></td>
-							</tr>
-							<tr>
-								<td colspan="4" style="font-family: 宋体;font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">企业简介——河钢承钢</td>
-							</tr>
-							<tr>
-								<td colspan="4" style="font-family: 宋体;text-indent: 2em;text-align: justify;border-bottom:none;border-top:none" > 河钢集团有限公司（简称“河钢集团”、“河钢”）于2008年6月30日组建成立，拥有直属子分公司20余家，目前已经发展成为以钢铁为主业，矿山资源、金融服务、装备制造、现代物流等相关产业协同发展的产业格局。2019年居世界500强第214位。目前，集团具备5000万吨世界先进装备水平、国内领先节能环保水平的钢铁产能。
-                            	</td>
-                            </tr>
-							<tr>
-								<td colspan="4" style="font-family: 宋体;text-indent: 2em;text-align: justify;border-bottom:none;border-top:none" > 河钢集团承钢公司（简称“河钢承钢”）1954年建厂，是国家“一五”期间苏联援建的156个项目之一，是世界500强企业河钢集团的一级骨干子公司。河钢承钢是依托承德地区丰富的钒钛磁铁矿资源、依靠自主创新建设发展起来的大型钒钛钢铁材料企业，是中国钒钛磁铁矿高炉冶炼和钒提取加工技术的发祥地，钒钛资源综合开发利用产业化技术处于世界领先水平,被誉为中国北方钒都。
-                         	 	</td>
-                            </tr>
-							<tr>
-								<td colspan="4" style="font-family: 宋体;font-family: 宋体;text-indent: 2em;text-align: justify;border-bottom:none;border-top:none" > 自二十世纪九十年代以来，河钢承钢不断加强了管理，严格按照管理体系标准，建立了质量、测量、能源、环境、职业健康安全、两化融合、知识产权管理体系，并以此持续改进管理。
-								</td>
-							</tr>
-							<tr>
-								<td colspan="4" style="text-indent: 2em;text-align: justify;border-top:none" > 河钢承钢含钒合金钢铁产品包括含钒棒、线、板、带四大系列，具有强度高、韧性好、耐腐蚀、易焊接、深冲性优等优良特性，多个产品被评为全国冶金产品实物质量金杯奖、冶金行业品质卓越产品、河北省名牌产品。河钢承钢是“燕山牌”螺纹钢产品的源产地，其生产的Φ6～Φ50mm全规格、全等级含钒高强螺纹钢筋产品全部荣获全国冶金产品实物质量“金杯奖”，产品广泛应用于国内外标志性建筑、超高层建筑、核电、大跨度桥梁、高铁等工程项目。</td>
-							</tr>
-							<tr>
-								<td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none ">企业荣誉</td>
-							</tr>
-							<tr>
-							<td colspan="4" style="text-indent: 2em;border-top:none" >
-							<img src="../static/picture/qyry.png" /></td>
-							</tr>
-							<tr>
-							<td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none">产品范围</td>
-							</tr>
-							<tr>
-							<td colspan="4" style="text-indent: 2em;border-top:none" >
-							<img src="../static/picture/cpfw.png" /></td>
-							</tr>
-							<tr>
-							<td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none;">联系我们</td>
-							</tr>
-							<tr>
-							<td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" >
-							<img align="absmiddle" src="../static/picture/hbis.png"  />
-							</td>
-							</tr>
-							<tr>
-							<td colspan="4" style="font-family: 宋体;font-size:15px;border-bottom:none;border-top:none" >
-							地址：河北省承德市双滦区滦河镇钢城路1号
-							</td>
-							</tr>
-							<tr>
-							<td colspan="4" style="font-family: 宋体;font-size:15px;border-bottom:none;border-top:none" >
-							网址：http：//www.cdsteel.cn
-							</td>
-							</tr>
-							<tr>
-							<td colspan="4" style="font-family: 宋体;font-size:15px;border-bottom:none;border-top:none" >
-							服务电话：+86-0314-4078888 客服专线：400-188-8286
-							</td>
-							</tr>
-                            <tr>
-							<td colspan="4" style="font-size:15px;" >
-							<img src="../static/picture/hbisewm.png" /></td>
-							</tr>
+							<tr><td colspan="2" style="font-size:15px;color:red;border-right:none"></td><td colspan="2" style="font-size:15px;color:red;border-left:none">※请输入所持证明书信息查验</td></tr>
+							<tr><td  colspan="1" style="font-family: 宋体;text-align: right;font-size:20px;height:40px;border-bottom:none;border-right:none">质量证明书打印：</td><td colspan="3" style="text-align: center;border-bottom:none;border-left:none"><input type="button" value="在线打印入口" onclick="online_print()"  style="width: 320px;height:100%;background: #2e9be2;color:#fff;font-size: 20px;font-family: 宋体;border:#ccc" />   请联系客服经理获取打印权限</td></tr>
+							<tr><td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a  id = "online_print_link" href="http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do" target="_blank">http://cgcgw.cdvt.com.cn:89/cgcg/checkLogin.do</a></td></tr>
+							<tr><td colspan="4" style="font-family: 宋体;font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">产品问题反馈</td></tr>
+							<tr><td colspan="4" style="font-weight:bold;font-size:16px;height:40px;text-align: center;border-bottom:none">欢迎使用河钢客户服务中心信息反馈系统  <img src="../static/picture/fankui.jpg" onclick="online_fankui()" style="cursor:pointer; vertical-align: middle;"></td></tr>
+							<tr><td colspan="4" style="font-weight:bold;font-size:12px;height:40px;text-align: center;border-top:none">电脑端网址：<a id="online_fankui_link" href="http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm" target="_blank">http://sale.hbistc.com/saleweb/crmWeChat/feedBack.htm</a></td></tr>
+							<tr><td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="化学成分" onclick="showDialoghuaxue()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size:26px;font-family: 宋体;border:#ccc" /></td><td colspan="2" style="text-align: center;border-bottom:none;border-left:none;"><input type="button" value="物理性能" onclick="showDialogwuli()"  style="width: 450px;height:40px;background: #0000FF;color:#fff;font-size:26px;font-family: 宋体;border:#ccc" /></td></tr>
+							<tr><td colspan="4" style="font-family: 宋体;font-weight:bold;font-size:26px;color: #fff;background-color: #2e9be2;height:40px;">企业简介——河钢承钢</td></tr>
+							<tr><td colspan="4" style="font-family: 宋体;text-indent: 2em;text-align: justify;border-bottom:none;border-top:none" > 河钢集团有限公司（简称“河钢集团”、“河钢”）于2008年6月30日组建成立，拥有直属子分公司20余家，目前已经发展成为以钢铁为主业，矿山资源、金融服务、装备制造、现代物流等相关产业协同发展的产业格局。2019年居世界500强第214位。目前，集团具备5000万吨世界先进装备水平、国内领先节能环保水平的钢铁产能。</td></tr>
+							<tr><td colspan="4" style="font-family: 宋体;text-indent: 2em;text-align: justify;border-bottom:none;border-top:none" > 河钢集团承钢公司（简称“河钢承钢”）1954年建厂，是国家“一五”期间苏联援建的156个项目之一，是世界500强企业河钢集团的一级骨干子公司。河钢承钢是依托承德地区丰富的钒钛磁铁矿资源、依靠自主创新建设发展起来的大型钒钛钢铁材料企业，是中国钒钛磁铁矿高炉冶炼和钒提取加工技术的发祥地，钒钛资源综合开发利用产业化技术处于世界领先水平,被誉为中国北方钒都。</td></tr>
+							<tr><td colspan="4" style="font-family: 宋体;font-family: 宋体;text-indent: 2em;text-align: justify;border-bottom:none;border-top:none" > 自二十世纪九十年代以来，河钢承钢不断加强了管理，严格按照管理体系标准，建立了质量、测量、能源、环境、职业健康安全、两化融合、知识产权管理体系，并以此持续改进管理。</td></tr>
+							<tr><td colspan="4" style="text-indent: 2em;text-align: justify;border-top:none" > 河钢承钢含钒合金钢铁产品包括含钒棒、线、板、带四大系列，具有强度高、韧性好、耐腐蚀、易焊接、深冲性优等优良特性，多个产品被评为全国冶金产品实物质量金杯奖、冶金行业品质卓越产品、河北省名牌产品。河钢承钢是“燕山牌”螺纹钢产品的源产地，其生产的Φ6～Φ50mm全规格、全等级含钒高强螺纹钢筋产品全部荣获全国冶金产品实物质量“金杯奖”，产品广泛应用于国内外标志性建筑、超高层建筑、核电、大跨度桥梁、高铁等工程项目。</td></tr>
+							<tr><td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none ">企业荣誉</td></tr>
+							<tr><td colspan="4" style="text-indent: 2em;border-top:none" ><img src="../static/picture/qyry.png" /></td></tr>
+							<tr><td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none">产品范围</td></tr>
+							<tr><td colspan="4" style="text-indent: 2em;border-top:none" ><img src="../static/picture/cpfw.png" /></td></tr>
+							<tr><td colspan="4" style="font-weight:bold;font-size:26px;border-bottom:none;">联系我们</td></tr>
+							<tr><td colspan="4" style="font-size:15px;border-bottom:none;border-top:none" ><img align="absmiddle" src="../static/picture/hbis.png"  /></td></tr>
+							<tr><td colspan="4" style="font-family: 宋体;font-size:15px;border-bottom:none;border-top:none" >地址：河北省承德市双滦区滦河镇钢城路1号</td></tr>
+							<tr><td colspan="4" style="font-family: 宋体;font-size:15px;border-bottom:none;border-top:none" >网址：http：//www.cdsteel.cn</td></tr>
+							<tr><td colspan="4" style="font-family: 宋体;font-size:15px;border-bottom:none;border-top:none" >服务电话：+86-0314-4078888 客服专线：400-188-8286</td></tr>
+                            <tr><td colspan="4" style="font-size:15px;" ><img src="../static/picture/hbisewm.png" /></td></tr>
 						</table>
 						</form>
 		</div>
-
 </body>
 </html>
