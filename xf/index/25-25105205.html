@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品信息</title>
+	<style type="text/css">
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            font-size: 17px; /* Base font size for desktop */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        /* --- Banner/Carousel Styles --- */
+        .banner {
+            background-color: #ccc;
+            position: relative;
+            overflow: hidden;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .carousel-images {
+            position: relative;
+            width: 100%;
+            padding-bottom: calc(100% * 560 / 1420);
+        }
+
+        .carousel-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.7s ease-in-out;
+        }
+
+        .carousel-image.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            z-index: 2;
+        }
+
+        .carousel-dots .dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        .carousel-dots .dot.active {
+            background-color: #fff;
+        }
+        /* --- End Banner/Carousel Styles --- */
+
+        .section {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .section-title > div:first-child {
+             display: flex;
+             align-items: center;
+        }
+
+        .section-title .title-content-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title .title-icon-left { /* Combined and retained best version */
+            width: 20px;
+            height: 20px;
+            margin-right: 8px; /* Provides spacing */
+            vertical-align: middle;
+        }
+
+        .section-title .toggle-arrow {
+            font-size: 16px;
+            color: #888;
+            margin-left: 10px;
+        }
+
+		.product-info-grid > div {
+          padding: 10px 12px;
+          background-color: #fff;
+          font-family:  "SimHei", "黑体", sans-serif;
+          font-size: 18px;
+		}
+
+        .product-info-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            row-gap: 1px;
+            background-color: #e0e0e0;
+            border: 1px solid #e0e0e0;
+        }
+
+        .product-info-grid > div.label {
+            font-weight: 500;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .product-info-grid > div.value {
+            text-align: left;
+            color: #333;
+            word-break: break-word;
+        }
+
+        .product-info-grid > div.label:nth-child(4n-3) {
+            background-color: #DCDCDC;
+        }
+        .product-info-grid > div.value:nth-child(4n-2) {
+            background-color: #f8f9fa;
+        }
+        .product-info-grid > div.label:nth-child(4n-1) {
+            background-color: #ffffff;
+        }
+        .product-info-grid > div.value:nth-child(4n) {
+            background-color: #ffffff;
+        }
+
+        .collapsible-content.hidden {
+            display: none;
+        }
+
+        .product-images-section {
+            padding: 15px 20px;
+            margin-bottom: 10px;
+        }
+
+        .title-icon { /* Icon for "产品图片" section title */
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            background-color: #d9534f;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border: 1px solid #eee;
+            box-sizing: border-box;
+        }
+
+        .product-images-section .section-title {
+            justify-content: flex-start;
+            cursor: default;
+        }
+
+        /* --- START: Mobile Responsive Styles --- */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+
+            .section,
+            .product-images-section {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .product-info-grid {
+                grid-template-columns: 120px 1fr;
+            }
+
+            .product-info-grid > div {
+                padding: 8px 6px;
+                font-size: 14px;
+            }
+            .product-info-grid > div.label {
+                justify-content: center;
+            }
+            .product-info-grid > div.value {
+                padding-left: 6px;
+            }
+
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 5px;
+            }
+        }
+        /* --- END: Mobile Responsive Styles --- */
+    </style>
+</head>
+<body>
+
+    <div class="banner">
+        <div class="carousel-images">
+            <img src="../static/images/01.png" alt="Banner Image 1" class="carousel-image active">
+            <img src="../static/images/02.png" alt="Banner Image 2" class="carousel-image">
+        </div>
+        <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-title" data-section-name="产品信息">
+                <div class="title-content-wrapper">
+                    <img src="../static/images/下载.png" alt="打印图标" class="title-icon-left">
+                    <span class="section-title-text">标牌打印</span>
+                </div>
+                <span class="toggle-arrow">▲</span>
+            </div>
+            <div class="product-info-grid collapsible-content">
+                <div class="label">公司</div><div class="value">抚顺新钢铁有限责任公司</div>
+                <div class="label">产品名称</div><div class="value">热轧带肋钢筋  </div>
+                <div class="label">生产许可证号</div><div class="value">(辽)XK05-001-00019</div>
+                <div class="label">产线</div><div class="value">棒材</div>
+                <div class="label">标准</div><div class="value">GB1499.2-2024</div>
+                <div class="label">炉批号</div><div class="value">25105205</div>
+                <div class="label">牌号</div><div class="value">HRB400E</div>
+                <div class="label">规格</div><div class="value">φ25mm</div>
+                <div class="label">长度  </div><div class="value">12米  </div>
+                <div class="label">支数</div><div class="value">70支</div>
+                <div class="label">重量 </div><div class="value">3.234 吨</div>
+                <div class="label">班次</div><div class="value">丙</div>                
+                <div class="label">日期</div><div class="value">2025-06-01</div>
+                <div class="label">&nbsp; 编号 </div><div class="value">2025060154375101810302305</div>
+            </div>
+        </div>
+
+       <section class="product-images-section">
+            <h2 class="section-title">
+                <span class="title-icon"></span>产品图片
+            </h2>
+            <div class="image-grid">
+                <div class="grid-item">
+                    <img src="../static/images/03.png" alt="钢筋生产线">
+                </div>
+                <div class="grid-item">
+                    <img src="../static/images/04.png" alt="钢筋捆">
+                </div>
+                <div class="grid-item">
+                    <img src="../static/images/05.png" alt="钢筋网片">
+                </div>
+                <div class="grid-item">
+                    <img src="../static/images/06.png" alt="钢筋细节">
+                </div>
+            </div>
+        </section>
+    </div> <!-- .container 结束 -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 轮播图脚本
+    const images = document.querySelectorAll('.carousel-image');
+    const dots = document.querySelectorAll('.carousel-dots .dot');
+    const banner = document.querySelector('.banner');
+    let currentIndex = 0;
+    const intervalTime = 3000;
+    let slideInterval;
+
+    function showImage(index) {
+        if (!images || images.length === 0) return;
+        if (index >= images.length) index = 0;
+        if (index < 0) index = images.length - 1;
+
+        images.forEach(img => img.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        if (images[index]) images[index].classList.add('active');
+        if (dots[index]) dots[index].classList.add('active');
+        currentIndex = index;
+    }
+
+    function nextImage() {
+        showImage((currentIndex + 1) % (images.length || 1) );
+    }
+
+    function startSlideShow() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextImage, intervalTime);
+    }
+
+    function stopSlideShow() {
+        clearInterval(slideInterval);
+    }
+
+    if (images.length > 0) {
+        showImage(0);
+        startSlideShow();
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                if (!isNaN(index)) {
+                    stopSlideShow();
+                    showImage(index);
+                    startSlideShow();
+                }
+            });
+        });
+
+        if (banner) {
+            banner.addEventListener('mouseenter', stopSlideShow);
+            banner.addEventListener('mouseleave', startSlideShow);
+        }
+    }
+
+    // 可折叠版块脚本
+    const sectionTitles = document.querySelectorAll('.section-title');
+
+    sectionTitles.forEach(title => {
+        const content = title.nextElementSibling;
+        const arrow = title.querySelector('.toggle-arrow');
+        const sectionName = title.dataset.sectionName;
+
+        if (!content || !arrow) {
+            return;
+        }
+
+        if (content.classList.contains('product-info-grid') || content.classList.contains('collapsible-content')) {
+            if (sectionName === '产品信息') {
+                content.style.display = 'grid';
+                arrow.textContent = '▲';
+            } else { // Default for other collapsible sections (if any were added)
+                // If we don't have other collapsible sections, this 'else' might not be strictly needed,
+                // but it's harmless and allows for future expansion.
+                content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+                arrow.textContent = '▲';
+            }
+
+            title.addEventListener('click', () => {
+                const isHidden = content.style.display === 'none';
+                if (isHidden) {
+                    content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+                    arrow.textContent = '▲';
+                } else {
+                    content.style.display = 'none';
+                    arrow.textContent = '▼';
+                }
+            });
+        }
+    });
+});
+</script>
+</body>
+</html>
