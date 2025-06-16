@@ -3,6 +3,7 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="../static/js/boot.js" type="text/javascript"></script>
     <link href="../static/css/base.css" type="text/css" rel="stylesheet">
     <!-- 新增的 CSS 样式 -->
     <style type="text/css">
@@ -80,7 +81,7 @@
 
 		<div size="100%" showcollapsebutton="true"  style="border:10px solid #000">
 
-				   <form id="searchkey" method="post" onsubmit="return false;"> <!-- 添加 onsubmit="return false;" 防止表单意外提交 -->
+				   <form id="searchkey" method="post">
 				   		<table  border="0" cellpadding="0" cellspacing="0">
 				   	    <tr>
 				   	    	 <td>
@@ -99,13 +100,13 @@
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									产品名称：
 								</td>
-								<td colspan="3" > </td>
+								<td colspan="3" >带肋盘螺</td>
 							</tr>
 							<tr>
 								<td style="font-size:20px;font-family: 宋体;">
 									批次编号：
 								</td>
-								<td style="text-align: left"  colspan="3">  </td>
+								<td style="text-align: left"  colspan="3">25Y200885M20250122020757 </td>
 							</tr>
 	                        <tr>
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
@@ -115,13 +116,13 @@
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									材  质：
 							  </td>
-								<td style="text-align: center"> </td>
+								<td style="text-align: center">HRB400E </td>
 							</tr>
 							<tr>
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									规  格：
 							  </td>
-								<td style="text-align: center">   </td>
+								<td style="text-align: center">   Φ8.0</td>
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									支  数：
 							  </td>
@@ -148,7 +149,7 @@
 									产出日期：
 								</td>
 								<td style="text-align: center; min-width: 200px;">
-								   
+								   2025-01-22
 								</td>
 							</tr>
 							<tr>
@@ -162,8 +163,7 @@
 								<input id="ZLZMSBH" name="ZLZMSBH"  style="width: 100%" required="true" />
 							</td>
 							<td rowspan="2" style="text-align: left;">
-                                <!-- *** 修改点 1: 给图片添加ID (已存在) *** -->
-							    <img id="search-button" src="../static/picture/chaxun.jpg"  style="cursor:pointer;" alt="查询" />
+							<img src="../static/picture/chaxun.jpg" onclick="location.reload();" style="cursor:pointer;" alt="查询" />
 							</td>
 							</tr>
 							<tr>
@@ -310,7 +310,7 @@ if (modalCloseButton) {
 function updateKhFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     const khSuffixFromUrl = urlParams.get('kh');
-    const defaultSuffix = "";
+    const defaultSuffix = "-";
     const khDynamicSuffixElement = document.getElementById('khDynamicSuffix');
 
     if (khDynamicSuffixElement) {
@@ -318,7 +318,7 @@ function updateKhFromUrl() {
     }
 
     const zlValueFromUrl = urlParams.get('zl');
-    const defaultZlValue = "";
+    const defaultZlValue = "-";
     const szDynamicValueElement = document.getElementById('szDynamicValue');
 
     if (szDynamicValueElement) {
@@ -337,70 +337,6 @@ function online_fankui(){
     const linkElement = document.getElementById("online_fankui_link");
     if (linkElement) linkElement.click();
 }
-
-// --- 新增：处理查询逻辑 ---
-function handleSearch() {
-    const zlzmsbhInput = document.getElementById('ZLZMSBH');
-    if (!zlzmsbhInput) {
-        console.error("ZLZMSBH input not found!");
-        showCustomAlert("发生内部错误，无法找到输入框。");
-        return;
-    }
-    const zlzmsbhValue = zlzmsbhInput.value.trim(); // 获取输入值并去除首尾空格
-
-    if (!zlzmsbhValue) {
-        showCustomAlert("请输入质量证明书编号！");
-        return;
-    }
-
-    // 假设当前HTML文件与search文件夹在同一父目录下
-    // 例如：当前页面是 /parent/this_page.html, search文件夹是 /parent/search/
-    const targetFileName = zlzmsbhValue + ".html";
-    const targetUrl = "../search/" + targetFileName; // 目标文件路径
-    const fallbackUrl = "k.html"; // 后备文件路径 (当前目录下)
-
-    // 使用 fetch API 的 HEAD 方法来检查文件是否存在，这样更高效，因为它只请求头部信息
-    fetch(targetUrl, { method: 'HEAD' })
-        .then(response => {
-            if (response.ok) { // response.ok 为 true 表示 HTTP 状态码在 200-299 范围内
-                // 文件存在，跳转到目标文件
-                window.location.href = targetUrl;
-            } else {
-                // 文件不存在 (例如 404 Not Found) 或其他非成功状态
-                // 跳转到后备文件 k.html
-                window.location.href = fallbackUrl;
-            }
-        })
-        .catch(error => {
-            // 网络错误或其他导致 fetch 失败的错误 (例如，如果服务器配置了严格的CORS策略，但对于同源相对路径通常没问题)
-            console.error('Error checking file existence:', error);
-            // 出现错误时，也跳转到后备文件 k.html
-            showCustomAlert('检查文件时发生网络错误，将尝试访问后备页面。');
-            window.location.href = fallbackUrl;
-        });
-}
-
-// 为查询按钮图片添加点击事件监听器
-const searchButton = document.getElementById('search-button');
-if (searchButton) {
-    searchButton.addEventListener('click', handleSearch);
-} else {
-    console.error("Search button (chaxun.jpg) not found by ID 'search-button'!");
-}
-// --- 新增：处理查询逻辑结束 ---
-
-// 模拟showDialoghuaxue和showDialogwuli函数，如果它们不存在
-if (typeof showDialoghuaxue !== 'function') {
-    window.showDialoghuaxue = function() {
-        showCustomAlert("化学成分功能暂未实现");
-    }
-}
-if (typeof showDialogwuli !== 'function') {
-    window.showDialogwuli = function() {
-        showCustomAlert("物理性能功能暂未实现");
-    }
-}
-
 </script>
 </body>
 </html>
