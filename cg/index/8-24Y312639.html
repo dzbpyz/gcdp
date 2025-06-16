@@ -112,7 +112,7 @@
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									捆  号：
 							  </td>
-								<td id="khValueCell" style="text-align: center">   <span id="khDynamicSuffix">2</span> </td>
+								<td id="khValueCell" style="text-align: center">   <span id="khDynamicSuffix">02</span> </td>
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									材  质：
 							  </td>
@@ -142,8 +142,7 @@
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									实  重(kg)：
 								</td>
-								 <td style="text-align: center; min-width: 200px;">
-                                 <span id="szDynamicValue"> </span>
+				<td style="text-align: center; min-width: 200px;"><span id="szDynamicValue"> </span>
                                  </td>
 								<td style="text-align: center;font-size:20px;font-family: 宋体;">
 									产出日期：
@@ -309,16 +308,14 @@ if (modalCloseButton) {
 // 获取URL参数并更新捆号和实重
 function updateKhFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
-    const khSuffixFromUrl = urlParams.get('kh');
-    const defaultSuffix = "-";
+    const khSuffixFromUrl = urlParams.get('kh');   
     const khDynamicSuffixElement = document.getElementById('khDynamicSuffix');
 
     if (khDynamicSuffixElement) {
         khDynamicSuffixElement.textContent = (khSuffixFromUrl !== null && khSuffixFromUrl.trim() !== "") ? khSuffixFromUrl : defaultSuffix;
     }
 
-    const zlValueFromUrl = urlParams.get('zl');
-    const defaultZlValue = "-";
+    const zlValueFromUrl = urlParams.get('zl');    
     const szDynamicValueElement = document.getElementById('szDynamicValue');
 
     if (szDynamicValueElement) {
