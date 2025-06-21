@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品信息查询</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', 'SimHei', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            padding-top: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .search-bar {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-bar input[type="text"] {
+            width: 350px; 
+            padding: 2px 10px; 
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-right: 10px;
+            margin-left: 80px; 
+        }
+
+        .search-bar button {
+            padding: 2px 20px; 
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .search-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        .search-bar input[readonly] {
+            background-color: #fafafa;
+            color: #888;
+            cursor: not-allowed;
+        }
+
+        .search-bar button:disabled {
+            background-color: #ADD8E6;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        .tabs {
+            display: flex;
+            width: 100%;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 0;
+            text-align: center;
+            font-family: 'Microsoft YaHei', serif; 
+            font-size: 25px;
+            font-weight: 400;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #tab-product {
+            background-color: #0044FF; 
+        }
+        #tab-quality {
+            background-color: #00D0FF; 
+        }
+        
+        .content {
+            padding: 25px 30px; 
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .company-name {
+            text-align: center;
+            font-size: 28px; 
+            color: #333;
+			margin-top: 1px;
+            margin-bottom: 30px; 
+            font-weight: 600;
+        }
+
+        .info-grid {
+            display: grid;
+            gap: 20px; 
+        }
+
+        #content-product .info-grid {
+            row-gap: 10px; 
+        }
+
+        .info-item {
+            display: flex;
+            align-items: baseline; 
+            font-size: 20px; 
+            color: #333;
+        }
+
+        .info-item .label {
+            font-weight: 500; 
+            color: #555;
+            min-width: 120px; 
+            text-align: left; 
+            padding-right: 5px; 
+        }
+        .info-item .value {
+            color: #000;
+            font-weight: 500;
+        }
+
+        .quality-header-info .info-item .label {
+            min-width: 170px; 
+        }
+
+        .custom-separator {
+            height: 1px;
+            background-color: #cccccc;
+            width: 95%;
+            margin-top: 20px;
+            margin-bottom: 25px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== CSS 修改点：为表格滚动容器添加样式 ===== */
+        .table-container {
+            overflow-x: auto; /* 核心：当内容超出容器宽度时，显示水平滚动条 */
+            margin-left: -10px; /* 轻微调整以优化视觉 */
+            margin-right: -10px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .quality-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px; 
+            min-width: 600px; /* 给表格一个最小宽度，确保在窄屏下不会被过度压缩 */
+        }
+        
+        .quality-table th, .quality-table td {
+            border: 1px solid #ccc;
+            padding: 3px 10px; 
+            text-align: center;
+        }
+        
+        .unified-header-style {
+            font-family: 'Microsoft YaHei', 'SimHei', Arial, sans-serif; 
+            font-size: 18px;          
+            font-weight: bold;        
+        }
+
+        .quality-table thead th {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .quality-table th.table-section-header {
+            text-align: left;
+            padding-top: 6px;
+            padding-bottom: 6px;
+        }
+
+        .quality-table td[rowspan] {
+            vertical-align: middle;
+        }
+        
+        #chem-header {
+            padding-left: 60px;
+        }
+        
+        #mech-header {
+            padding-left: 80px;
+        }
+        
+        #content-product .company-name,
+        #content-product .info-item {
+            font-family: 'SimHei', sans-serif;
+            font-size: 25px;
+        }
+        
+        #content-product .info-item .label,
+        #content-product .info-item .value {
+            font-weight: inherit;
+        }
+
+        /* ===== CSS 新增点：响应式设计，适配手机端 ===== */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 0; /* 移除顶部边距 */
+            }
+
+            .container {
+                width: 100%;    /* 容器占满全宽 */
+                box-shadow: none; /* 移除阴影，更简洁 */
+                max-width: 100%;
+            }
+
+            .search-bar {
+                padding: 10px 15px;
+            }
+
+            .search-bar input[type="text"] {
+                flex: 1; /* 输入框占据剩余空间 */
+                width: auto; /* 覆盖固定的宽度 */
+                margin-left: 0; /* 移除左边距 */
+                font-size: 14px;
+            }
+
+            .search-bar button {
+                padding: 2px 15px;
+                font-size: 14px;
+            }
+
+            .tab {
+                font-size: 18px; /* 缩小标签页字体 */
+                padding: 10px 0;
+            }
+
+            .content {
+                padding: 20px 15px; /* 减小内容区域的内边距 */
+            }
+
+            .company-name {
+                font-size: 22px; /* 缩小公司名字体 */
+                margin-bottom: 20px;
+            }
+            
+            /* 产品信息部分字体调整 */
+            #content-product .company-name,
+            #content-product .info-item {
+                font-size: 18px; /* 缩小产品信息字体 */
+            }
+
+            .info-item {
+                flex-direction: column; /* 关键：将label和value垂直堆叠 */
+                align-items: flex-start; /* 左对齐 */
+                gap: 4px; /* 在label和value之间添加一点间隙 */
+            }
+
+            .info-item .label {
+                min-width: auto; /* 移除最小宽度限制 */
+                font-weight: 600; /* 可以适当加粗标签，以示区分 */
+                color: #555;
+            }
+            
+            .info-grid {
+                gap: 15px; /* 调整项目之间的间距 */
+            }
+            
+            /* 质检信息表格字体调整 */
+            .quality-table {
+                font-size: 14px;
+            }
+            .unified-header-style {
+                font-size: 15px;
+            }
+            .quality-table th, .quality-table td {
+                padding: 2px 8px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="请输入查询码" readonly>
+            <button disabled>查询</button>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" id="tab-product">产品信息</div>
+            <div class="tab" id="tab-quality">质检信息</div>
+        </div>
+
+        <div class="content">
+            <div class="content-section active" id="content-product">
+                <h2 class="company-name">山西宏达钢铁集团有限公司</h2>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="label">品名：</span>
+                        <span class="value">热轧带肋钢筋</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">国际名称：</span>
+                        <span class="value">热轧带肋钢筋</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">许可证：</span>
+                        <span class="value">(晋)XK05-001-00013</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">标准：</span>
+                        <span class="value">GB1499.2-2024</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">牌号：</span>
+                        <span class="value">HRB400E</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">产品形态：</span>
+                        <span class="value">螺纹钢(线)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">炉号：</span>
+                        <span class="value" id="furnaceNumberValue">25104894</span>
+                    </div>
+					 <div class="info-item">
+                        <span class="label">件号：</span>
+                        <span class="value" id="itemNumberValue"><span id="itemNumberPart1"></span><span id="itemNumberPart2">213</span></span>
+                    </div>
+					 <div class="info-item">
+                        <span class="label">规格：</span>
+                        <span class="value">Φ8</span>
+                    </div>
+					<div class="info-item">
+                        <span class="label">理论重量：</span>
+                        <span class="value"><span id="weightValue"></span><span id="weightUnit">吨</span></span>
+                    </div>
+						 <div class="info-item">
+                        <span class="label">生产日期：</span>
+                        <span class="value">2025-06-13</span>
+                    </div>
+						 <div class="info-item">
+                        <span class="label">班组：</span>
+                        <span class="value">C</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section" id="content-quality">
+                <!-- ===== HTML 修改点：为表格添加一个可滚动的容器 ===== -->
+                <div class="table-container">
+                    <!-- 原始表格内容放在这个容器内 -->
+                    <table class="quality-table">
+                        <!-- 此处是您质检信息表格的完整内容，此处省略以保持简洁 -->
+                        <!-- 示例： -->
+                        <thead>
+                            <tr>
+                                <th colspan="5" class="table-section-header unified-header-style" id="chem-header">化学成分(%)</th>
+                            </tr>
+                            <tr>
+                                <th class="unified-header-style">C</th>
+                                <th class="unified-header-style">Si</th>
+                                <th class="unified-header-style">Mn</th>
+                                <th class="unified-header-style">P</th>
+                                <th class="unified-header-style">S</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0.21</td>
+                                <td>0.48</td>
+                                <td>1.45</td>
+                                <td>0.026</td>
+                                <td>0.015</td>
+                            </tr>
+                            <!-- ... 更多表格行 ... -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            // ==================== 新增的动态数据处理逻辑 START ====================
+
+            // 1. 获取 URL 查询参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const jhParam = urlParams.get('jh'); // 获取 'jh' 的值, e.g., '115'
+            const zlParam = urlParams.get('zl'); // 获取 'zl' 的值, e.g., '3'
+
+            // 2. 获取需要操作的页面元素
+            const furnaceNumberElement = document.getElementById('furnaceNumberValue');
+            const itemPart1Element = document.getElementById('itemNumberPart1');
+            const itemPart2Element = document.getElementById('itemNumberPart2');
+            const weightValueElement = document.getElementById('weightValue');
+            
+            // 3. 根据需求更新页面内容
+
+            // 需求1: 更新件号
+            if (furnaceNumberElement && itemPart1Element) {
+                itemPart1Element.textContent = furnaceNumberElement.textContent.trim();
+            }
+            if (jhParam && itemPart2Element) {
+                itemPart2Element.textContent = jhParam;
+            }
+
+            // 需求2: 更新理论重量
+            if (zlParam && weightValueElement) {
+                weightValueElement.textContent = zlParam;
+            }
+
+            // ==================== 新增的动态数据处理逻辑 END ======================
+
+
+            // 原有的逻辑：将拼接好的完整件号更新到顶部的搜索框中
+            const itemNumberElement = document.getElementById('itemNumberValue');
+            const searchInputElement = document.getElementById('searchInput');
+
+            if (itemNumberElement && searchInputElement) {
+                searchInputElement.value = itemNumberElement.textContent.trim();
+            }
+
+            // 原有的逻辑：处理选项卡切换
+            const tabProduct = document.getElementById('tab-product');
+            const tabQuality = document.getElementById('tab-quality');
+            const contentProduct = document.getElementById('content-product');
+            const contentQuality = document.getElementById('content-quality');
+
+            function showProductInfo() {
+                tabProduct.classList.add('active');
+                tabQuality.classList.remove('active');
+                
+                tabProduct.style.backgroundColor = '#0044FF'; 
+                tabQuality.style.backgroundColor = '#00D0FF'; 
+                
+                contentProduct.classList.add('active');
+                contentQuality.classList.remove('active');
+            }
+
+            function showQualityInfo() {
+                tabQuality.classList.add('active');
+                tabProduct.classList.remove('active');
+
+                // 注意：这里两个tab的颜色逻辑需要对调才能实现点击后颜色改变的预期效果
+                tabQuality.style.backgroundColor = '#0044FF'; 
+                tabProduct.style.backgroundColor = '#00D0FF'; 
+
+                contentQuality.classList.add('active');
+                contentProduct.classList.remove('active');
+            }
+
+            tabProduct.addEventListener('click', showProductInfo);
+            tabQuality.addEventListener('click', showQualityInfo);
+
+            // 修正原始逻辑中的一个视觉小问题：确保切换选项卡时，颜色正确切换。
+            // 您的原始代码在点击'质检信息'时，两个tab都变成了蓝色系，这里我调整了下。
+            // 并且，初始化时需要正确设置未激活的tab的颜色。
+            if (tabProduct.classList.contains('active')) {
+                tabProduct.style.backgroundColor = '#0044FF'; 
+                tabQuality.style.backgroundColor = '#00D0FF'; 
+            }
+        });
+    </script>
+</body>
+</html>
