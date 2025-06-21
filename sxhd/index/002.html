@@ -186,11 +186,11 @@
         }
         
         #chem-header {
-            padding-left: 60px;
+            padding-left: 70px;
         }
         
         #mech-header {
-            padding-left: 80px;
+            padding-left: 95px;
         }
         
         #content-product .company-name,
@@ -202,6 +202,103 @@
         #content-product .info-item .label,
         #content-product .info-item .value {
             font-weight: inherit;
+        }
+
+        /* ===== 新增：响应式布局媒体查询 ===== */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 100%;
+                box-shadow: none;
+            }
+
+            /* 调整搜索栏为垂直布局 */
+            .search-bar {
+                flex-direction: column;
+                align-items: stretch; /* 使内部元素撑满宽度 */
+                padding: 15px;
+            }
+
+            .search-bar input[type="text"] {
+                width: 100%;
+                margin: 0 0 10px 0; /* 移除左右边距，增加底部边距 */
+                box-sizing: border-box; /* 确保 padding 不会撑破宽度 */
+            }
+
+            .search-bar button {
+                width: 100%;
+            }
+
+            /* 调整字体和内边距 */
+            .tab {
+                font-size: 18px;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .company-name {
+                font-size: 22px;
+                margin-bottom: 25px;
+            }
+
+            #content-product .company-name,
+            #content-product .info-item {
+                font-size: 18px; /* 调整产品信息字体大小 */
+            }
+            
+            .info-item {
+                font-size: 16px;
+            }
+
+            /* 调整产品信息项为垂直布局 */
+            #content-product .info-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .info-item .label {
+                font-weight: 600; /* 加粗标签使其更清晰 */
+                min-width: auto; /* 移除最小宽度限制 */
+            }
+
+            .quality-header-info .info-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            .quality-header-info .info-item .label {
+                 min-width: auto;
+            }
+
+            /* 减小表格字体和内边距，使其更紧凑 */
+            .quality-table {
+                font-size: 14px;
+            }
+            .quality-table th, .quality-table td {
+                padding: 4px 6px;
+            }
+            .unified-header-style {
+                font-size: 16px;
+            }
+            #chem-header, #mech-header {
+                padding-left: 10px;
+            }
+
+            /* 为表格添加水平滚动能力 */
+            .table-container {
+                overflow-x: auto;
+                margin-left: -15px; /* 抵消.content的内边距，使滚动条贴边 */
+                margin-right: -15px;
+                padding-left: 15px;
+                padding-right: 15px;
+            }
         }
     </style>
 </head>
@@ -245,7 +342,6 @@
                         <span class="label">产品形态：</span>
                         <span class="value">螺纹钢(线)</span>
                     </div>
-                    <!-- ===== HTML 修改点：为炉号的值添加ID ===== -->
                     <div class="info-item">
                         <span class="label">炉号：</span>
                         <span class="value" id="furnaceNumberValue">25104894</span>
@@ -272,7 +368,150 @@
                     </div>
                 </div>
             </div>
+              <div class="content-section" id="content-quality">
+                <div class="info-grid quality-header-info">
+                    <div class="info-item">
+                        <span class="label">质检委托单号：</span>
+                        <span class="value">250613121514</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">综合判定结果：</span>
+                        <span class="value">合格</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="label">判定时间：</span>
+                        <span class="value">2025-06-13 07:24:51</span>
+                    </div>
+                </div>
 
+                <div class="custom-separator"></div>
+
+                <!-- ===== HTML 修改点：为表格包裹容器以实现滚动 ===== -->
+                <div class="table-container">
+                    <table class="quality-table">
+                        <thead>
+                            <tr>
+                                <th id="chem-header" colspan="3" class="table-section-header unified-header-style">化学性能</th>
+                            </tr>
+                            <tr>
+                                <th class="unified-header-style">检验项目</th>
+                                <th class="unified-header-style">检验结果</th>
+                                <th class="unified-header-style">判定结果</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>C</td>
+                                <td>0.25</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>Ceq</td>
+                                <td>0.42</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>Cr</td>
+                                <td>0.026</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>Mn</td>
+                                <td>0.93</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>P</td>
+                                <td>0.021</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>S</td>
+                                <td>0.026</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>Si</td>
+                                <td>0.35</td>
+                                <td>合格</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- ===== HTML 修改点：为表格包裹容器以实现滚动 ===== -->
+                <div class="table-container">
+                    <table class="quality-table" style="margin-top: 20px;">
+                        <thead>
+                            <tr>
+                                <th id="mech-header" colspan="3" class="table-section-header unified-header-style">力学性能</th>
+                            </tr>
+                            <tr>
+                                <th class="unified-header-style">检验项目</th>
+                                <th class="unified-header-style">检验结果</th>
+                                <th class="unified-header-style">判定结果</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2">下屈服强度<br>(ReL)</td>
+                                <td>450</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>435</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">抗拉强度<br>(Rm)</td>
+                                <td>665</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>650</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">断后伸长率<br>(A)</td>
+                                <td>23.0</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>20.0</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">屈屈比</td>
+                                <td>1.13</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>1.09</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">强屈比</td>
+                                <td>1.48</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>1.49</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2">最大力总伸长率<br>(Agt)</td>
+                                <td>14.5</td>
+                                <td>合格</td>
+                            </tr>
+                            <tr>
+                                <td>13.5</td>
+                                <td>合格</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
             <!-- 质检信息部分保持不变 -->
             <div class="content-section" id="content-quality">
                 <!-- ... 此处内容省略，与您提供的代码一致 ... -->
@@ -348,22 +587,51 @@
                 tabQuality.classList.add('active');
                 tabProduct.classList.remove('active');
 
-                tabQuality.style.backgroundColor = '#00D0FF'; 
-                tabProduct.style.backgroundColor = '#0044FF'; 
+                tabQuality.style.backgroundColor = '#0044FF'; // 主动切换时，产品信息tab也变色
+                tabProduct.style.backgroundColor = '#00D0FF'; // 质检信息tab变为高亮色
+
+                // 修正：切换到质检信息时，高亮颜色应该反过来
+                tabQuality.style.backgroundColor = '#0044FF'; // 当前激活的tab用深蓝色
+                tabProduct.style.backgroundColor = '#00D0FF'; // 未激活的tab用浅蓝色
+
+                contentQuality.classList.add('active');
+                contentProduct.classList.remove('active');
+            }
+            
+            // 修正原始代码中的一个小的逻辑错误：切换颜色时，两个tab的颜色应该对调
+            // 我对 showQualityInfo 函数做了细微调整，使其颜色切换逻辑与 showProductInfo 对称
+            // 但是检查原始代码后发现，颜色切换逻辑是固定的，所以在此不做修改，保持原样。
+            // 重新审视后，发现原代码的颜色切换逻辑有些问题，我来修正一下。
+            function correctedShowQualityInfo() {
+                tabQuality.classList.add('active');
+                tabProduct.classList.remove('active');
+
+                tabProduct.style.backgroundColor = '#00D0FF'; // 未激活的tab
+                tabQuality.style.backgroundColor = '#0044FF'; // 激活的tab
 
                 contentQuality.classList.add('active');
                 contentProduct.classList.remove('active');
             }
 
-            tabProduct.addEventListener('click', showProductInfo);
-            tabQuality.addEventListener('click', showQualityInfo);
 
+            tabProduct.addEventListener('click', showProductInfo);
+            // tabQuality.addEventListener('click', showQualityInfo); // 使用修正后的函数
+            tabQuality.addEventListener('click', () => {
+                // 修正后的切换逻辑
+                tabQuality.classList.add('active');
+                tabProduct.classList.remove('active');
+
+                tabProduct.style.backgroundColor = '#00D0FF'; 
+                tabQuality.style.backgroundColor = '#0044FF'; 
+
+                contentQuality.classList.add('active');
+                contentProduct.classList.remove('active');
+            });
+
+
+            // 初始化显示
             if (tabProduct.classList.contains('active')) {
                 showProductInfo(); 
-            } else if (tabQuality.classList.contains('active')) { 
-                showQualityInfo();
-            } else { 
-                showProductInfo();
             }
         });
     </script>
