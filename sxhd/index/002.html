@@ -219,14 +219,14 @@
             /* 调整搜索栏为垂直布局 */
             .search-bar {
                 flex-direction: column;
-                align-items: stretch; /* 使内部元素撑满宽度 */
+                align-items: stretch;
                 padding: 15px;
             }
 
             .search-bar input[type="text"] {
                 width: 100%;
-                margin: 0 0 10px 0; /* 移除左右边距，增加底部边距 */
-                box-sizing: border-box; /* 确保 padding 不会撑破宽度 */
+                margin: 0 0 10px 0;
+                box-sizing: border-box;
             }
 
             .search-bar button {
@@ -246,38 +246,44 @@
                 font-size: 22px;
                 margin-bottom: 25px;
             }
-
-            #content-product .company-name,
-            #content-product .info-item {
-                font-size: 18px; /* 调整产品信息字体大小 */
-            }
             
+            /* ===== 修改点：信息项适配 ===== */
+
+            /* 1. 让包含信息项的网格容器可以水平滚动 */
+            .info-grid {
+                overflow-x: auto; /* 核心：允许水平滚动 */
+                padding-bottom: 8px;  /* 为滚动条留出一点空间，更美观 */
+            }
+
+            /* 为滚动条设置一个不那么突兀的样式 (在支持的浏览器中) */
+            .info-grid::-webkit-scrollbar {
+                height: 4px;
+            }
+            .info-grid::-webkit-scrollbar-thumb {
+                background: #ccc;
+                border-radius: 2px;
+            }
+
+            /* 2. 强制每个信息项内容不换行，保持单行显示 */
             .info-item {
+                white-space: nowrap; /* 核心：防止文本换行 */
                 font-size: 16px;
             }
 
-            /* 调整产品信息项为垂直布局 */
+            /* 3. 调整产品信息部分的字体和标签宽度 */
+            #content-product .company-name,
             #content-product .info-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
+                font-size: 18px;
             }
-
-            .info-item .label {
-                font-weight: 600; /* 加粗标签使其更清晰 */
-                min-width: auto; /* 移除最小宽度限制 */
-            }
-
-            .quality-header-info .info-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
+            #content-product .info-item .label {
+                 min-width: 95px; /* 在手机上可以适当减小标签的最小宽度 */
             }
             .quality-header-info .info-item .label {
-                 min-width: auto;
+                 min-width: 130px; /* 在手机上可以适当减小标签的最小宽度 */
             }
+            
+            /* ===== 表格适配保持不变 ===== */
 
-            /* 减小表格字体和内边距，使其更紧凑 */
             .quality-table {
                 font-size: 14px;
             }
@@ -290,11 +296,10 @@
             #chem-header, #mech-header {
                 padding-left: 10px;
             }
-
-            /* 为表格添加水平滚动能力 */
+            
             .table-container {
                 overflow-x: auto;
-                margin-left: -15px; /* 抵消.content的内边距，使滚动条贴边 */
+                margin-left: -15px;
                 margin-right: -15px;
                 padding-left: 15px;
                 padding-right: 15px;
@@ -386,7 +391,6 @@
 
                 <div class="custom-separator"></div>
 
-                <!-- ===== HTML 修改点：为表格包裹容器以实现滚动 ===== -->
                 <div class="table-container">
                     <table class="quality-table">
                         <thead>
@@ -439,7 +443,6 @@
                     </table>
                 </div>
 
-                <!-- ===== HTML 修改点：为表格包裹容器以实现滚动 ===== -->
                 <div class="table-container">
                     <table class="quality-table" style="margin-top: 20px;">
                         <thead>
@@ -512,61 +515,41 @@
                 </div>
 
             </div>
-            <!-- 质检信息部分保持不变 -->
-            <div class="content-section" id="content-quality">
-                <!-- ... 此处内容省略，与您提供的代码一致 ... -->
-            </div>
+            <!-- 这个 div 是重复的，为了代码整洁可以移除，但为了与您提供的原始结构完全一致，我暂时保留。 -->
+            <!-- <div class="content-section" id="content-quality"></div> -->
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+       document.addEventListener('DOMContentLoaded', function () {
             
-            // ==================== 新增的动态数据处理逻辑 START ====================
-
-            // 1. 获取 URL 查询参数
             const urlParams = new URLSearchParams(window.location.search);
-            const jhParam = urlParams.get('jh'); // 获取 'jh' 的值, e.g., '115'
-            const zlParam = urlParams.get('zl'); // 获取 'zl' 的值, e.g., '3'
+            const jhParam = urlParams.get('jh');
+            const zlParam = urlParams.get('zl'); 
 
-            // 2. 获取需要操作的页面元素
             const furnaceNumberElement = document.getElementById('furnaceNumberValue');
             const itemPart1Element = document.getElementById('itemNumberPart1');
             const itemPart2Element = document.getElementById('itemNumberPart2');
             const weightValueElement = document.getElementById('weightValue');
             
-            // 3. 根据需求更新页面内容
-
-            // 需求1: 更新件号
-            // 将炉号的值赋给件号的第一部分
             if (furnaceNumberElement && itemPart1Element) {
                 itemPart1Element.textContent = furnaceNumberElement.textContent.trim();
             }
-            // 如果URL中存在'jh'参数，则将其值赋给件号的第二部分
             if (jhParam && itemPart2Element) {
                 itemPart2Element.textContent = jhParam;
             }
 
-            // 需求2: 更新理论重量
-            // 如果URL中存在'zl'参数，则将其值赋给理论重量的数值部分
             if (zlParam && weightValueElement) {
                 weightValueElement.textContent = zlParam;
             }
 
-            // ==================== 新增的动态数据处理逻辑 END ======================
-
-
-            // 原有的逻辑：将拼接好的完整件号更新到顶部的搜索框中
-            // 这段代码必须在上面的逻辑执行完之后运行，才能获取到最新的件号
             const itemNumberElement = document.getElementById('itemNumberValue');
             const searchInputElement = document.getElementById('searchInput');
 
             if (itemNumberElement && searchInputElement) {
-                // .textContent 会自动合并内部 span 的内容
                 searchInputElement.value = itemNumberElement.textContent.trim();
             }
 
-            // 原有的逻辑：处理选项卡切换
             const tabProduct = document.getElementById('tab-product');
             const tabQuality = document.getElementById('tab-quality');
             const contentProduct = document.getElementById('content-product');
@@ -587,52 +570,18 @@
                 tabQuality.classList.add('active');
                 tabProduct.classList.remove('active');
 
-                tabQuality.style.backgroundColor = '#0044FF'; // 主动切换时，产品信息tab也变色
-                tabProduct.style.backgroundColor = '#00D0FF'; // 质检信息tab变为高亮色
-
-                // 修正：切换到质检信息时，高亮颜色应该反过来
-                tabQuality.style.backgroundColor = '#0044FF'; // 当前激活的tab用深蓝色
-                tabProduct.style.backgroundColor = '#00D0FF'; // 未激活的tab用浅蓝色
-
-                contentQuality.classList.add('active');
-                contentProduct.classList.remove('active');
-            }
-            
-            // 修正原始代码中的一个小的逻辑错误：切换颜色时，两个tab的颜色应该对调
-            // 我对 showQualityInfo 函数做了细微调整，使其颜色切换逻辑与 showProductInfo 对称
-            // 但是检查原始代码后发现，颜色切换逻辑是固定的，所以在此不做修改，保持原样。
-            // 重新审视后，发现原代码的颜色切换逻辑有些问题，我来修正一下。
-            function correctedShowQualityInfo() {
-                tabQuality.classList.add('active');
-                tabProduct.classList.remove('active');
-
-                tabProduct.style.backgroundColor = '#00D0FF'; // 未激活的tab
-                tabQuality.style.backgroundColor = '#0044FF'; // 激活的tab
-
-                contentQuality.classList.add('active');
-                contentProduct.classList.remove('active');
-            }
-
-
-            tabProduct.addEventListener('click', showProductInfo);
-            // tabQuality.addEventListener('click', showQualityInfo); // 使用修正后的函数
-            tabQuality.addEventListener('click', () => {
-                // 修正后的切换逻辑
-                tabQuality.classList.add('active');
-                tabProduct.classList.remove('active');
-
                 tabProduct.style.backgroundColor = '#00D0FF'; 
                 tabQuality.style.backgroundColor = '#0044FF'; 
 
                 contentQuality.classList.add('active');
                 contentProduct.classList.remove('active');
-            });
-
-
-            // 初始化显示
-            if (tabProduct.classList.contains('active')) {
-                showProductInfo(); 
             }
+
+            tabProduct.addEventListener('click', showProductInfo);
+            tabQuality.addEventListener('click', showQualityInfo);
+            
+            // 页面加载时默认显示产品信息
+            showProductInfo();
         });
     </script>
 </body>
