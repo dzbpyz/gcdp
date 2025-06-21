@@ -1,0 +1,294 @@
+/* File: css/style.css */
+body {
+    font-family: 'Microsoft YaHei', 'SimHei', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.container {
+    width: 90%;
+    max-width: 700px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.search-bar {
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.search-bar input[type="text"] {
+    width: 350px; 
+    padding: 2px 10px; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-right: 10px;
+    margin-left: 80px; 
+}
+
+.search-bar button {
+    padding: 2px 20px; 
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.search-bar button:hover {
+    background-color: #0056b3;
+}
+
+.search-bar input[readonly] {
+    background-color: #fafafa;
+    color: #888;
+    cursor: not-allowed;
+}
+
+.search-bar button:disabled {
+    background-color: #ADD8E6;
+    color: white;
+    cursor: not-allowed;
+}
+
+.tabs {
+    display: flex;
+    width: 100%;
+}
+
+.tab {
+    flex: 1;
+    padding: 12px 0;
+    text-align: center;
+    font-family: 'Microsoft YaHei', serif; 
+    font-size: 25px;
+    font-weight: 400;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#tab-product {
+    background-color: #0044FF; 
+}
+#tab-quality {
+    background-color: #00D0FF; 
+}
+
+.content {
+    padding: 25px 30px; 
+}
+
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.company-name {
+    text-align: center;
+    font-size: 28px; 
+    color: #333;
+    margin-top: 1px;
+    margin-bottom: 30px; 
+    font-weight: 600;
+}
+
+.info-grid {
+    display: grid;
+    gap: 20px; 
+}
+
+#content-product .info-grid {
+    row-gap: 10px; 
+}
+
+.info-item {
+    display: flex;
+    align-items: baseline; 
+    font-size: 20px; 
+    color: #333;
+}
+
+.info-item .label {
+    font-weight: 500; 
+    color: #555;
+    min-width: 120px; 
+    text-align: left; 
+    padding-right: 5px; 
+}
+.info-item .value {
+    color: #000;
+    font-weight: 500;
+}
+
+.quality-header-info .info-item .label {
+    min-width: 170px; 
+}
+
+.custom-separator {
+    height: 1px;
+    background-color: #cccccc;
+    width: 95%;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.quality-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px; 
+}
+
+.quality-table th, .quality-table td {
+    border: 1px solid #ccc;
+    padding: 3px 10px; 
+    text-align: center;
+}
+
+.unified-header-style {
+    font-family: 'Microsoft YaHei', 'SimHei', Arial, sans-serif; 
+    font-size: 18px;          
+    font-weight: bold;        
+}
+
+.quality-table thead th {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.quality-table th.table-section-header {
+    text-align: left;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.quality-table td[rowspan] {
+    vertical-align: middle;
+}
+
+#chem-header {
+    padding-left: 70px;
+}
+
+#mech-header {
+    padding-left: 95px;
+}
+
+#content-product .company-name,
+#content-product .info-item {
+    font-family: 'SimHei', sans-serif;
+    font-size: 25px;
+}
+
+#content-product .info-item .label,
+#content-product .info-item .value {
+    font-weight: inherit;
+}
+
+/* ===== 响应式布局媒体查询 ===== */
+@media (max-width: 768px) {
+    body {
+        padding-top: 0;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 100%;
+        box-shadow: none;
+    }
+    
+    /* ===== 修改点：搜索栏适配 ===== */
+
+    /* 1. 调整搜索栏内边距 */
+    .search-bar {
+        padding: 15px;
+    }
+
+    /* 2. 让输入框自适应宽度并移除大左边距 */
+    .search-bar input[type="text"] {
+        flex: 1; /* 核心：让输入框占据所有剩余空间 */
+        width: auto; /* 覆盖桌面端的固定宽度 */
+        margin-left: 0; /* 移除桌面端的大左边距 */
+    }
+
+    /* 3. 确保按钮宽度由内容决定 */
+    .search-bar button {
+        width: auto;
+    }
+
+
+    /* 调整字体和内边距 */
+    .tab {
+        font-size: 18px;
+    }
+
+    .content {
+        padding: 20px 15px;
+    }
+
+    .company-name {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+    
+    /* 信息项适配保持不变 */
+    .info-grid {
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+    .info-grid::-webkit-scrollbar {
+        height: 4px;
+    }
+    .info-grid::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 2px;
+    }
+    .info-item {
+        white-space: nowrap;
+        font-size: 16px;
+    }
+    #content-product .company-name,
+    #content-product .info-item {
+        font-size: 18px;
+    }
+    #content-product .info-item .label {
+         min-width: 95px;
+    }
+    .quality-header-info .info-item .label {
+         min-width: 130px;
+    }
+    
+    /* 表格适配保持不变 */
+    .quality-table {
+        font-size: 14px;
+    }
+    .quality-table th, .quality-table td {
+        padding: 4px 6px;
+    }
+    .unified-header-style {
+        font-size: 16px;
+    }
+    #chem-header, #mech-header {
+        padding-left: 10px;
+    }
+    .table-container {
+        overflow-x: auto;
+        margin-left: -15px;
+        margin-right: -15px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
