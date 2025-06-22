@@ -17,7 +17,7 @@ body {
 }
 
 .search-bar {
-    padding: 15px 20px;
+    padding: 15px 20px 10px 20px; /* 修改这里：上15px, 右20px, 下5px, 左20px */;
     display: flex;
     align-items: center;
     border-bottom: 1px solid #eee;
@@ -28,7 +28,7 @@ body {
     padding: 2px 10px; 
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 12px;
     margin-right: 10px;
     margin-left: 80px; 
 }
@@ -40,7 +40,7 @@ body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 12px;
 }
 
 .search-bar button:hover {
@@ -66,10 +66,10 @@ body {
 
 .tab {
     flex: 1;
-    padding: 12px 0;
+    padding: 6px 0;
     text-align: center;
     font-family: 'Microsoft YaHei', serif; 
-    font-size: 25px;
+    font-size: 16px;
     font-weight: 400;
     color: white;
     cursor: pointer;
@@ -84,7 +84,7 @@ body {
 }
 
 .content {
-    padding: 25px 30px; 
+    padding: 15px 30px; 
 }
 
 .content-section {
@@ -106,7 +106,7 @@ body {
 
 .info-grid {
     display: grid;
-    gap: 20px; 
+    gap: 10px; 
 }
 
 #content-product .info-grid {
@@ -137,9 +137,9 @@ body {
 }
 
 .custom-separator {
-    height: 1px;
+    height: 2px;
     background-color: #cccccc;
-    width: 95%;
+    width: 100%;
     margin-top: 20px;
     margin-bottom: 25px;
     margin-left: auto;
@@ -291,4 +291,8 @@ body {
         padding-left: 15px;
         padding-right: 15px;
     }
+}
+/* 使用这段更精确的代码 */
+#content-quality .info-item {
+    font-family:  'SimHei', sans-serif;
 }
