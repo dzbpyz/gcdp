@@ -1,0 +1,232 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    font-size: 16px; /* 基准字体大小 */
+}
+
+.container {
+    max-width: 750px;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+
+.warranty-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #e8e8e8;
+    cursor: pointer;
+}
+
+.warranty-info .id {
+    font-weight: bold;
+    font-size: 1.1em; /* 桌面端大小 */
+    margin-bottom: 5px;
+    color: #1f1f1f;
+}
+
+.warranty-info .date {
+    font-size: 0.9em; /* 桌面端大小 */
+    color: #595959;
+}
+
+.dropdown-arrow {
+    --arrow-color: #8c8c8c;
+    --arrow-rotation: 0deg;
+    --arrow-font-size: 1.7em;
+    --arrow-font-weight: normal;
+    font-size: var(--arrow-font-size);
+}
+
+.arrow-char {
+    display: inline-block;
+    color: var(--arrow-color);
+    transform: rotate(var(--arrow-rotation));
+    font-weight: var(--arrow-font-weight);
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out, font-size 0.2s ease-in-out, font-weight 0.2s ease-in-out;
+}
+
+.warranty-item.active .dropdown-arrow {
+     --arrow-color: #007bff;
+     --arrow-rotation: 180deg;
+     --arrow-font-size: 1.4em;
+     --arrow-font-weight: bold;
+}
+
+.warranty-details {
+    display: none;
+    padding: 10px 15px 20px 15px; /* Default padding */
+    border-bottom: 1px solid #e8e8e8;
+    background-color: #fdfdfd;
+    font-size: 0.9em;
+}
+
+.warranty-details.expanded {
+    display: block;
+}
+
+/* CSS for the full-width image area */
+.full-width-image-area {
+    padding: 5px 0; /* 5px padding top/bottom, 0 padding left/right. Adjust 5px as needed. */
+}
+
+.warranty-details > p {
+    margin: 4px 0;
+    line-height: 1.3;
+    color: #333;
+}
+
+.section-title {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-top: 20px;
+    margin-bottom: 24px;
+    color: #1f1f1f;
+}
+.warranty-details > p + .section-title {
+     margin-top: 15px;
+}
+.warranty-details > .section-title:first-child {
+    margin-top: 0;
+}
+
+
+.title-divider {
+    border: 0;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin-top: 0px;
+    margin-bottom: 1px;
+}
+
+.details-list {
+    margin-bottom: 15px;
+}
+
+.detail-entry {
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr;
+    gap: 8px;
+    padding: 3px 0;
+    align-items: center;
+    line-height: 1.2;
+}
+
+.entry-value {
+    text-align: left;
+}
+.entry-status {
+    text-align: center;
+}
+
+.detail-entry span {
+    display: block;
+}
+
+.entry-label {
+    text-align: left;
+    word-break: break-word;
+}
+
+
+.detail-header .entry-label,
+.detail-header .entry-value,
+.detail-header .entry-status {
+    font-weight: bold;
+    color: #595959;
+}
+
+.certificate-image-container {
+    padding: 10px 0;
+}
+
+.full-width-image-area .certificate-image-container {
+    padding: 0;
+}
+
+.certificate-image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.contact-section {
+    padding: 20px 15px;
+    background-color: #ffffff;
+}
+
+.contact-section .title {
+    font-size: 1.0em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #1f1f1f;
+}
+
+.contact-section p {
+    margin: 8px 0;
+    line-height: 1.6;
+    font-size: 0.95em;
+    color: #333;
+}
+
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.lightbox-overlay.is-scrollable {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+}
+
+.lightbox-overlay img {
+    display: block;
+    width: 100vh; 
+    height: auto;
+    max-width: 95vw;
+    max-height: 95vh;
+    margin: auto;
+    box-shadow: none;
+    cursor: pointer;
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out, max-width 0.3s ease-in-out, max-height 0.3s ease-in-out;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.lightbox-overlay img.lightbox-image-zoomed {
+    height: 100vh;
+    width: auto;
+    max-width: none;
+    box-shadow: none;
+    flex-shrink: 0;
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .warranty-info .id {
+        font-size: 0.9em;
+    }
+    .warranty-info .date {
+        font-size: 0.85em;
+    }
+    .contact-section .title {
+        font-size: 1.0em;
+    }
+    .contact-section p {
+        font-size: 0.88em;
+    }
+}
