@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>质保书</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+            /* background: #f8f8f8; */
+            margin: 0;
+            padding: 0;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: #468cf4;
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            margin: 50px 10px 10px 10px;
+            border-radius: 8px;
+        }
+        .root{
+            position: absolute;
+            top: 0;
+            background-color: white;
+            width: 100%;
+            height: 110px;
+        }
+
+        /* Added style for the link inside header */
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            /* Optional: remove underline */
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+            /* Optional: underline on hover */
+        }
+
+        .section {
+            background: #fff;
+            margin: 0px 0px;
+            padding: 10px 15px 15px 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
+
+        .add-margin-top {
+            background: #fff;
+            margin: 0px 0px;
+            margin-top: 15px;
+            box-shadow: 0 2px 8px rgba(102, 102, 102, 0.1);
+            padding: 10px 15px 15px 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
+
+        /* 隐藏 Webkit 浏览器的滚动条 */
+        .section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 14px;
+            color: #222;
+            margin: 8px 0 12px 0;
+            border: none;
+            padding-left: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: #409eff;
+            border-radius: 2px;
+            margin-right: 6px;
+            vertical-align: middle;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #666666;
+            padding: 5px 6px;
+            text-align: center;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .custom-table .table-header {
+            background: #fff;
+            color: #222;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            text-align: left;
+            padding: 10px 0 6px 4px;
+        }
+
+        .sub-table th,
+        .sub-table td {
+            border: none;
+            text-align: left;
+            padding: 4px 8px;
+        }
+
+        .contact-list {
+            font-size: 14px;
+            margin-left: 8px;
+            margin-top: 8px;
+            line-height: 1.6;
+        }
+
+        /* .section-title rule is duplicated, can be removed if identical, keeping one */
+        /* .section rule is duplicated, can be removed if identical, keeping one */
+
+        .triple-line-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            background: #fff;
+        }
+
+        .triple-line-table th,
+        .triple-line-table td {
+            border: none;
+            padding: 8px 12px;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .triple-line-table th {
+            font-weight: bold;
+            background: none;
+            color: #222;
+        }
+
+        .triple-line-table-v2 {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+            background: #fff;
+            font-size: 16px;
+        }
+
+        .triple-line-table-v2 th,
+        .triple-line-table-v2 td {
+            border: none;
+            padding: 8px 16px 8px 8px;
+            text-align: left;
+            font-weight: normal;
+            background: none;
+        }
+
+        .triple-line-table-v2 th {
+            font-weight: bold;
+        }
+
+        .section-title[data-bar-width]::before {
+            width: var(--bar-width, 4px);
+        }
+
+        .bar-wide::before {
+            content: "";
+            display: inline-block;
+            width: 6px;
+            /* 竖线宽度 */
+            height: 24px;
+            /* 竖线高度，可根据字体大小调整 */
+            background: #409eff;
+            border-radius: 2px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .td4,
+        .td5,
+        .td6 {
+            width: 60px;
+            min-width: 60px;
+            max-width: 80px;
+        }
+
+        .left-35 {
+            width: 35% !important;
+            max-width: 35% !important;
+            min-width: 35% !important;
+        }
+
+        .right-65 {
+            width: 65% !important;
+            max-width: 65% !important;
+            min-width: 65% !important;
+        }
+
+        .flex-table {
+            width: 100%;
+            border: 1px solid #666666;
+            background: #fff;
+            margin-bottom: 15px;
+        }
+
+        .flex-row {
+            display: flex;
+            border-bottom: 1px solid #666666;
+        }
+
+        .flex-cell {
+            padding: 6px 8px;
+            font-size: 15px;
+            border-right: 1px solid #666666;
+            box-sizing: border-box;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        /* 标牌信息和边框上下、左右边框距离大小*/
+        .flex-row:last-child {
+            border-bottom: none;
+        }
+
+        .flex-cell:last-child {
+            border-right: none;
+        }
+
+        .flex-cell[style*="font-weight: 600"] {
+            font-size: 13px !important;
+            font-weight: 600;
+        }
+
+        .flex-35 {
+            flex: 0 0 35%;
+            font-weight: bold;
+            color: #000;
+            font-size: 13px;
+        }
+
+        .flex-65 {
+            flex: 0 0 65%;
+        }
+
+        .flex-25 {
+            flex: 0 0 25%;
+            box-sizing: border-box;
+            width: 25%;
+            min-width: 25%;
+            max-width: 25%;
+        }
+
+        .equal-table {
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .equal-table th,
+        .equal-table td {
+            width: auto;
+            text-align: center;
+        }
+
+        .performance-table {
+            width: 100%;
+            border: 1px solid #666666;
+            background: #fff;
+            margin-bottom: 15px;
+        }
+
+        .performance-row {
+            display: flex;
+            border-bottom: 1px solid #666666;
+        }
+
+        .performance-row:last-child {
+            border-bottom: none;
+        }
+
+        .performance-cell {
+            flex: 1 1 0;
+            padding: 5px 6px;
+            font-size: 12px;
+            border-right: 1px solid #666666;
+            box-sizing: border-box;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .performance-cell:last-child {
+            border-right: none;
+        }
+
+        .performance-cell.th {
+            font-weight: bold;
+            /* background: #f5f7fa; */
+        }
+
+        /* --- 专门调整"产品范围"表格单元格的上下内边距 --- */
+        #product-range-table .flex-cell {
+            padding-top: 6px;
+            /* 将上内边距调整为 10px (您可以修改这个值) */
+            padding-bottom: 6px;
+            /* 将下内边距调整为 10px (您可以修改这个值) */
+            /* 左右内边距 (padding-left 和 padding-right) 将保持原样 (即继承自 .flex-cell 的 12px) */
+            white-space: normal;
+            word-break: break-all;
+            text-align: left;
+        }
+
+        #product-range-table .flex-cell.flex-35 {
+            text-align: center;
+        }
+          #product-range-table .flex-row:first-child .flex-cell.flex-65 {
+        text-align: center; /* 仅将表头的“产品名称”居中 */
+    }
+		
+	
+        /* 调整公司简介部分的样式 */
+        .section h5 {
+            margin: 0 0 8px 0;
+            font-size: 13px;
+        }
+
+        .section div[style*="font-size:10px"] {
+            font-size: 11px !important;
+            line-height: 1.5;
+        }
+
+        /* 调整公司地址和联系电话部分的样式 */
+        .section div[style*="font-size:15px"] {
+            font-size: 12px !important;
+        }
+
+        /* 隐藏 Webkit 浏览器的滚动条 */
+        .section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .flex-table,
+        .performance-table {
+            min-width: 100%;
+            width: auto;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="root">
+        <div class="header">
+            <a href="#" id="zbsPdfLink">点击搜索质保书</a>
+        </div>
+    </div>
+
+    <div class="section add-margin-top" style="margin-top: 120px;">
+        <div class="section-title bar-wide">标牌信息</div>
+        <div class="flex-table">
+            <div class="flex-row">
+                <div class="flex-cell flex-35">产品名称</div>
+                <div class="flex-cell flex-65">热轧带肋钢筋</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">执行标准</div>
+                <div class="flex-cell flex-65">GB 1499.2-2024</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">批次号</div>
+                <div class="flex-cell flex-65">25201821BD0</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">捆（卷）号</div>
+                <div class="flex-cell flex-65" id="kunJuanHaoValue"> </div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">牌号</div>
+                <div class="flex-cell flex-25">HRB400E</div>
+                <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">规格(mm)</div>
+                <div class="flex-cell flex-25">Φ10</div>
+            </div>
+			
+            <div class="flex-row">
+                <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">理重（kg）</div>
+                <div class="flex-cell flex-25"> </div>
+                <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">实重（kg）</div>
+                <!-- *** HTML MODIFICATION: Added id="shizhongValue" *** -->
+                <div class="flex-cell flex-25" id="shizhongValue"> </div>
+            </div>
+			
+            <div class="flex-row">
+                <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">根数（支）</div>
+                <div class="flex-cell flex-25"> </div>
+                <div class="flex-cell flex-25" style="font-weight: 600;font-size: 15px;">定尺（mm）</div>
+                <div class="flex-cell flex-25"> </div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">生产日期</div>
+                <div class="flex-cell flex-65">2025-06-18</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">发货日期</div>
+                <div class="flex-cell flex-65">2025-06--18</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">化学成分</div>
+        <table style="width:100%;border-collapse:collapse;background:#fff;">
+            <tr>
+                <th>碳C/%</th>
+                <th>锰Mn/%</th>
+                <th>硫S/%</th>
+                <th>磷P/%</th>
+            </tr>
+            <tr>
+                <td>0.241</td>
+                <td>1.19</td>
+                <td>0.019</td>
+                <td>0.029</td>
+            </tr>
+            <tr>
+                <th>硅Si/%</th>
+                <th>钒V/%</th>
+                <th colspan="2">碳当量Ceq/%</th>
+            </tr>
+            <tr>
+                <td>0.32</td>
+                <td>0.001</td>
+                <td colspan="2">0.441</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <div class="section-title">物理性能</div>
+        <div class="performance-table">
+            <div class="performance-row">
+                <div class="performance-cell th">屈服强度/MPa</div>
+                <div class="performance-cell th">抗拉强度/MPa</div>
+                <div class="performance-cell th">断后伸长率/%</div>
+            </div>
+            <div class="performance-row">
+                <div class="performance-cell">459,454</div>
+                <div class="performance-cell">661,654</div>
+                <div class="performance-cell">---</div>
+            </div>
+            <div class="performance-row">
+                <div class="performance-cell th">最大力总延伸率/%</div>
+                <div class="performance-cell th">重量偏差/%</div>
+            </div>
+            <div class="performance-row">
+                <div class="performance-cell">14.3,14.3</div>
+                <div class="performance-cell">-0.2</div>
+            </div>
+            <div class="performance-row">
+                <div class="performance-cell th">R'eL/ReL</div>
+                <div class="performance-cell th">R'm/R'eL</div>
+                <div class="performance-cell th">反向弯曲</div>
+            </div>
+            <div class="performance-row">
+                <div class="performance-cell">1.15,1.13</div>
+                <div class="performance-cell">1.44,1.344</div>
+                <div class="performance-cell">合格</div>
+            </div>
+            <div class="performance-row">
+                <div class="performance-cell th">180°弯曲试验</div>
+                <div class="performance-cell th">合格,合格</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div>
+            <h5>河北唐银钢铁有限公司简介</h5>
+        </div>
+        <div style="font-size:10px;line-height:1.8;">
+            河北唐银钢铁有限公司（简称唐银）是由河北钢铁集团唐钢公司和河北银水集团共同出资组建的大型全流程钢铁联合企业，其中唐钢集团占股51%，银水集团占股49%。公司于2006年10月6日正式成立，2020年积极响应国家环保要求，化简钢铁产能。实行退城搬迁，唐银公司新厂址位于河北省唐山市曹妃甸装备制造园区内，项目总投资为395.36亿元，配套综合原料堆场1座、1500万吨来料高炉2座、100吨转炉2座、265平米带式烧结机2台、4.0×42米链篦机、5.0×35米中球团120万吨。配套定值于棒材、热轧带钢等高强度、高性能、高质量钢材产品，广泛应用于汽车、家电、建筑、包装等传统领域。公司地理位置优越，位于环渤海经济圈内，且可延伸至西北地区，在环渤海和东部沿海深水港布局上位置适中。公司经过16年积累与发展，继承了唐钢及银水公司勇于担当、勤奋务实的优良传统，始终秉承"质量第一，用户至上，合作共赢"的销售理念，竭诚为广大用户提供优质的产品和服务，新厂投产后，我们以客户需求为出发点，在终端直发、产品定制、多模式销售等方面为客户提供更多元化的产品与服务，和谐共赢，并肩前行。
+        </div>
+    </div>
+
+    <div class="section add-margin-top">
+        <div class="section-title">产品范围</div>
+        <div class="flex-table" id="product-range-table"> <!-- 添加一个 ID -->
+            <div class="flex-row">
+                <div class="flex-cell flex-35">产品类型</div>
+                <div class="flex-cell flex-65">产品名称</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">棒材</div>
+                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">线材</div>
+                <div class="flex-cell flex-65">普通热轧带肋钢筋、细晶粒热轧钢筋、光圆钢筋、焊丝、焊线、优质碳素钢、预应力钢丝、钢绞线、普线</div>
+            </div>
+            <div class="flex-row">
+                <div class="flex-cell flex-35">带钢</div>
+                <div class="flex-cell flex-65">碳素结构钢、优质碳素结构钢、低合金高强度结构钢、耐候钢</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section add-margin-top">
+        <div class="section-title">公司地址</div>
+        <div style="font-size:15px;line-height:1.8;">
+            地址：中国河北省唐山市曹妃甸装备制造园区
+        </div>
+    </div>
+    <div class="section add-margin-top">
+        <div class="section-title">联系电话</div>
+        <div class="contact-list">
+            <div>电话1：0315-5250875</div>
+            <div>电话2：0315-5250822</div>
+            <div>电话3：0315-5250765</div>
+			<div style="height: 1px;"></div> <!-- 1px 可以根据需要调整 -->
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT MODIFIED HERE -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search); // Define urlParams once
+
+            // --- Handle 'kh' parameter for 捆（卷）号 ---
+            const khValue = urlParams.get('kh');
+            const kunJuanHaoElement = document.getElementById('kunJuanHaoValue');
+
+            if (kunJuanHaoElement && khValue !== null) { // Check if element exists and kh parameter is present
+                kunJuanHaoElement.textContent = khValue;
+            }
+            // --- MODIFICATION END for kh ---
+
+            // --- *** JAVASCRIPT MODIFICATION: Handle 'zl' parameter for 实重（kg） *** ---
+            const zlParamValue = urlParams.get('zl'); // Get 'zl' parameter value
+            const shizhongElement = document.getElementById('shizhongValue'); // Get the element
+
+            if (shizhongElement && zlParamValue !== null) { // Check if element exists and zl parameter is present
+                shizhongElement.textContent = zlParamValue;
+            }
+            // --- *** MODIFICATION END for zl *** ---
+
+
+            // --- PDF Link logic (modified from zbsPdfLink to use 'pdf' parameter) ---
+            const zbsPdfLinkElement = document.getElementById('zbsPdfLink'); // The element ID in HTML is still 'zbsPdfLink'
+            if (!zbsPdfLinkElement) {
+                // console.error('Element with ID "zbsPdfLink" not found.');
+            } else {
+                const pdfParamValue = urlParams.get('pdf'); // MODIFIED: Get 'pdf' parameter value instead of 'zbs'
+
+                if (pdfParamValue) { // MODIFIED: Check for pdfParamValue
+                    const pdfFileName = pdfParamValue + '.pdf'; // MODIFIED: Use pdfParamValue to construct file name
+                    const pdfUrl = `../pdf/${pdfFileName}`;
+
+                    zbsPdfLinkElement.addEventListener('click', async function (event) {
+                        event.preventDefault();
+                        try {
+                            const response = await fetch(pdfUrl, { method: 'HEAD' });
+                            if (response.ok) {
+                                window.location.href = pdfUrl;
+                            } else {
+                                console.warn(`PDF file not found or inaccessible: ${pdfUrl}, status: ${response.status}`);
+                                window.location.reload();
+                            }
+                        } catch (error) {
+                            console.error('Error trying to fetch PDF status:', error);
+                            window.location.reload();
+                        }
+                    });
+                } else {
+                    // 'pdf' parameter is missing
+                    zbsPdfLinkElement.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        console.warn('URL parameter "pdf" is missing.'); // MODIFIED: Updated warning message
+                        window.location.reload();
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
