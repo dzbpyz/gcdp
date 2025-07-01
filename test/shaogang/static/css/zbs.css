@@ -1,0 +1,106 @@
+html{
+    font-size:62.5%;
+}
+body {
+    font:normal 100% Arial,sans-serif;
+    font-size:1.4rem;
+    text-align: center;
+    padding: 0% 2%;
+    padding-bottom: 2%;
+    background-color: #04243E;
+} 
+img { 
+    width:100%; 
+    -ms-interpolation-mode: bicubic;
+    border-radius: 5px;
+} 
+a:link{color:#FF7F00;}
+.tr-style{
+    display: block;
+    margin: 0.3rem 0;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px transparent solid;
+    border-image: linear-gradient(to right, #23b7cb, transparent) 1 10;
+}
+.span-title{
+    font-size:2rem;
+    color:#ffffff;
+    font-weight:bold;
+}
+.div-title{
+    background: linear-gradient(
+        to right,
+        rgba(8, 202, 210, 0) 0%,
+        rgba(8, 202, 210, 0.5) 30%,
+        rgba(8, 202, 210, 0.8) 50%,
+        rgba(8, 202, 210, 0.5) 80%,
+        rgba(8, 202, 210, 0) 100%
+      );
+}
+.td-style{
+    color: white;
+    font-size: 1.3rem;
+    display: inline;
+    white-space:nowrap;
+}
+.td-center{
+    display: block;
+    text-align: center;
+}
+.span-red{
+    color: red;
+    font-size: 1rem;
+}
+table{
+    padding: 0.5rem;
+    margin-top: 1rem;
+}
+#aui-slide{
+    padding: 2px;
+    width: 100%;
+    margin: 0 auto;
+    margin-left: -2px;
+    border: 1px transparent solid;
+    background: linear-gradient(
+        to right,
+        rgba(255, 127, 0, 0.4) 0%,
+        rgba(255, 127, 0, 0.7) 20%,
+        rgba(255, 127, 0, 1) 50%,
+        rgba(255, 127, 0, 0.7) 80%, 
+        rgba(255, 127, 0, 0.4) 100%) no-repeat;
+    border-radius: 10px;
+}
+.gradient-border {
+  --borderWidth: 2px;
+  background: #04243E;
+  position: relative;
+  border-radius: var(--borderWidth);
+}
+.gradient-border:after {
+  content: '';
+  position: absolute;
+  top: calc(-1 * var(--borderWidth));
+  left: calc(-1 * var(--borderWidth));
+  height: calc(100% + var(--borderWidth) * 2);
+  width: calc(100% + var(--borderWidth) * 2);
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  border-radius: calc(2 * var(--borderWidth));
+  z-index: -1;
+  animation: animatedgradient 3s ease alternate infinite;
+  background-size: 300% 300%;
+}
+@keyframes animatedgradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+.span-blue{
+    color: #00CFFF;
+    font-weight:bold;
+}

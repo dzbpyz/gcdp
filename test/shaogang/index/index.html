@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>    
+    <title>韶钢产品详细信息</title>
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	<meta http-equiv="description" content="This is my page">
+	<meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../static/css/zbs.css" type="text/css"></link>
+  
+  <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+  <style type="text/css">
+    #image_container{
+        padding: 2px;
+        width: 100%;
+        margin: 0 auto;
+        margin-left: -2px;
+        border: 1px transparent solid;
+        background: linear-gradient(
+            to right,
+            rgba(255, 127, 0, 0.4) 0%,
+            rgba(255, 127, 0, 0.7) 20%,
+            rgba(255, 127, 0, 1) 50%,
+            rgba(255, 127, 0, 0.7) 80%, 
+            rgba(255, 127, 0, 0.4) 100%) no-repeat;
+        border-radius: 10px;
+    }
+  </style>
+  </head>
+  
+  <body>
+      <div id="title" class="div-title">
+        <span class="span-title">韶钢产品详细信息</span>
+    </div>
+    <div id='image_container'></div>
+  	<!-- <div><img alt='' src='images/shaogang1.jpg' style="width:100%; height:350px;"></div> -->
+  	
+  	<div><img alt='' src='../static/images/20230920154110.jpg' style="margin-top:2px; width:100%; height:150px;"></div> 
+  	
+  	 <table id="table" class="gradient-border" width="100%" cellpadding="0" cellspacing="0">
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">产品名称：</span>钢筋混凝土用热轧带肋钢筋直条</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">检验批号：</span>G54066980</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">件 &nbsp编&nbsp 号：</span>4-15</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">规　　格： </span>32*12000</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">执行标准：</span>GB 1499.2-2024</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">牌　　号：</span>HRB400E</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">生产日期：</span>2025-07-22</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">重　　量：</span>3202 kg</td>
+      </tr>
+         
+	  <tr class="tr-style">
+		  <td class="td-style"><span class="span-blue">许可证号：</span>（粤）XK05-001-00002</td>
+      </tr>
+       
+      <tr class="tr-style">
+          <td class="td-style">
+              <span><span class="span-blue">码 &nbsp单&nbsp 号：</span>C315623045</span>
+              <span class="span-red">(此码单号应对应质保书中的码单号)</span>
+          </td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style">
+              <span><span class="span-blue">证 &nbsp书&nbsp 号：</span>LB2506230262</span>
+              <span class="span-red">(此证书号应对应质保书中的证书号)</span>
+          </td>
+      </tr>
+      
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">炉　　号：</span>5G405699</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style"><span class="span-blue">特殊说明：</span></td>
+      </tr>
+      
+      <tr class="tr-style">
+          <td class="td-style td-center">技术支持:&nbsp<a href="http://www.kluntech.com">广东昆仑信息科技有限公司</a></td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style td-center">地址：广东省韶关市曲江区马坝</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style td-center">售后服务热线：0751-8788929</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style td-center">售后服务传真：0751-8788929</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style td-center">邮编：512123</td>
+      </tr>
+      <tr class="tr-style">
+          <td class="td-style td-center"><span style="font-family: 黑体 ;font-size: 1rem;">All Rights Reserved Copyright 2014 Collect from 昆仑科技</span></td>
+      </tr>
+</table>
+  </body>
+  <script type="text/javascript">
+  	$(function(){
+  		var t_w = $('#table').width();
+  		var i_c = $('#image_container');
+        var ic_w=i_c.width();
+        if(ic_w<t_w){
+        	i_c.width(t_w + 10);
+        	ic_w=i_c.width();
+        	$('#title').width(t_w+10);
+        }
+        i_c.height((ic_w*3/5));
+        var ic_h=i_c.height();		
+        var p_path= "../static/images/001.jpg";       
+          var hl="<img alt='产品图片' src='"+p_path+"' width='"+ic_w+"' height='"+ic_h+"'>";
+        i_c.html(hl);      
+  	});
+  
+  </script>
+</html>
