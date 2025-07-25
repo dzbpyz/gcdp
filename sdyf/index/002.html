@@ -2,7 +2,6 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <!-- 关键的meta标签，用于移动设备适配 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>永锋电子商务平台</title>
     <style>
@@ -14,24 +13,24 @@
         }
 
         body {
-            background-color: #f0f2f5; /* 页面背景色 */
+            background-color: #f0f2f5;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
-            -webkit-font-smoothing: antialiased; /* 字体抗锯齿，更清晰 */
+            -webkit-font-smoothing: antialiased;
         }
         
-        /* --- 1. 顶部主导航栏 --- */
+        /* --- 1. 顶部主导航栏 (无变化) --- */
         .main-header {
-            position: fixed; /* 固定在屏幕顶部 */
+            position: fixed;
             top: 0;
             left: 0;
             right: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 60px; /* 固定高度 */
+            height: 60px;
             padding: 0 15px;
             background-color: #fff;
-            z-index: 100; /* 确保在最上层 */
+            z-index: 100;
         }
         .header-icon {
             width: 24px;
@@ -50,20 +49,29 @@
             color: #86909c;
         }
 
-        /* --- 2. 二级控制栏 --- */
+        /* --- 2. 二级控制栏 (样式核心改动) --- */
         .controls-bar {
-            position: fixed; /* 固定在主导航栏下方 */
-            top: 60px; /* 主导航栏的高度 */
+            position: fixed;
+            top: 60px;
             left: 0;
             right: 0;
             display: flex;
-            justify-content: space-between;
+            /* 关键改动：从 space-between 改为 center，实现整体居中 */
+            justify-content: center; 
             align-items: center;
-            height: 48px; /* 固定高度 */
+            height: 48px;
             padding: 0 15px;
             background-color: #fff;
-            border-bottom: 1px solid #f0f0f0; /* 截图中的细线 */
+            border-bottom: 1px solid #f0f0f0;
             z-index: 99;
+        }
+        
+        /* 新增一个容器来包裹所有控件，方便设置它们之间的间距 */
+        .controls-group {
+            display: flex;
+            align-items: center;
+            /* 使用 gap 在“页码区”和“缩放区”之间创建间距 */
+            gap: 24px; 
         }
 
         .page-info, .zoom-button-group {
@@ -109,10 +117,8 @@
             background-color: #e9e9e9;
         }
         
-        /* --- 3. 主要内容区域 --- */
+        /* --- 3. 主要内容区域 (无变化) --- */
         .content-area {
-            /* 关键：为内容区域设置上边距，防止被两个固定导航栏遮挡 */
-            /* 60px (主导航) + 48px (控制栏) = 108px */
             padding-top: 108px;
             padding-bottom: 20px;
         }
@@ -128,36 +134,25 @@
 </head>
 <body>
 
-    <!-- 顶部主导航栏 -->
-    <header class="main-header">
-        <div class="header-icon">
-            <!-- Close Icon (X) -->
-            <svg viewBox="0 0 1024 1024" fill="currentColor"><path d="M764.288 214.592L512 466.88 259.712 214.592a31.936 31.936 0 00-45.12 45.12L466.88 512 214.592 764.288a31.936 31.936 0 1045.12 45.12L512 557.12l252.288 252.288a31.936 31.936 0 0045.12-45.12L557.12 512l252.288-252.288a31.936 31.936 0 00-45.12-45.12z"></path></svg>
-        </div>
-        <div class="header-center">
-            <h1>永锋电子商务平台</h1>
-            <p>pcweb.yfsteel.net.cn</p>
-        </div>
-        <div class="header-icon">
-            <!-- More Icon (...) -->
-            <svg viewBox="0 0 1024 1024" fill="currentColor"><path d="M176 511a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0zm280 0a56 56 0 10112 0 56 56 0 10-112 0z"></path></svg>
-        </div>
-    </header>
+    <!-- 顶部主导航栏 (无变化) -->
+   
 
-    <!-- 二级控制栏 -->
+    <!-- HTML 结构调整: 将所有控件包裹在一个居中容器内 -->
     <div class="controls-bar">
-        <div class="page-info">
-            <input type="text" id="page-input" value="1" readonly>
-            <span class="page-total">/ 1</span>
-        </div>
-        <div class="zoom-button-group">
-            <button id="zoom-out-btn">缩小</button>
-            <div class="divider"></div>
-            <button id="zoom-in-btn">放大</button>
+        <div class="controls-group">
+            <div class="page-info">
+                <input type="text" id="page-input" value="1" readonly>
+                <span class="page-total">/ 1</span>
+            </div>
+            <div class="zoom-button-group">
+                <button id="zoom-out-btn">缩小</button>
+                <div class="divider"></div>
+                <button id="zoom-in-btn">放大</button>
+            </div>
         </div>
     </div>
 
-    <!-- 主要内容区域 -->
+    <!-- 主要内容区域 (无变化) -->
     <main class="content-area">
         <img id="main-image" src="../img/003.png" alt="产品质量证明书">
     </main>
