@@ -115,15 +115,13 @@
              text-align: center;
         }
 
+        /* --- 修改开始 --- */
+        /* 移除了为td设置等宽字体的规则，使其继承body字体，解决显示不一致问题 */
+        /* 
         .centered-table td {
             font-family: Consolas, 'Courier New', Courier, monospace, sans-serif;
-        }
-        
-        /* --- 修改开始 --- */
-        /* 为数据单元格设置更深的颜色以匹配视觉效果 */
-        .centered-table td:not(.header-cell) {
-            color: #333;
-        }
+        } 
+        */
         /* --- 修改结束 --- */
 
         .centered-table .header-cell {
@@ -347,8 +345,10 @@
             $('.block-header').on('click', function() {
                 var $infoBlock = $(this).closest('.info-block');
                 
+                // 切换 .collapsed 类，CSS会根据这个类来旋转图标
                 $infoBlock.toggleClass('collapsed');
                 
+                // 使用slideToggle平滑地显示或隐藏内容区域
                 $infoBlock.find('.block-content').slideToggle(300);
             });
         });
