@@ -148,49 +148,14 @@
                 padding: 0;
             }
             
-            /* 将顶部表格的单元格转为块级元素，实现垂直堆叠 */
-            .top-table td {
-                display: block;
-                width: 100% !important; /* 强制宽度为100% */
-                box-sizing: border-box; /* 确保padding和border包含在宽度内 */
-                text-align: left !important;
-                border-left: none;
-                border-right: none;
-            }
-
-            /* 调整标签和数据单元格的样式 */
-            .top-table .label-cell {
-                font-weight: bold;
-                padding-left: 8px;
-                border-top: 1px solid #99D2FF; /* 只保留上边框作为分隔 */
-            }
-            
-            .top-table .data-cell {
-                padding-left: 20px; /* 数据进行缩进 */
-                background-color: #ffffff !important;
-                border-top: none; /* 数据单元格顶部不需要边框 */
-                border-bottom: 1px solid #99D2FF;
-            }
-
-            /* 特殊处理第一行标签的顶部边框 */
-            .top-table tr:first-child .label-cell {
-                border-top: none;
-            }
-
-            /* 移除最后一行最后一个单元格的底边框 */
-            .top-table tr:last-child .data-cell:last-of-type {
-                border-bottom: none;
-            }
-            
-            /* 合并单元格的特殊处理 */
-            .top-table .data-cell[colspan="3"] {
-                 border-bottom: 1px solid #99D2FF;
-            }
-             .top-table tr:last-child .data-cell[colspan="3"] {
-                border-bottom: none;
-            }
+            /* 
+             * --- 修改开始 ---
+             * 移除了之前所有针对 .top-table 的特殊手机端样式。
+             * 现在所有表格都会由浏览器自动缩放以适应屏幕，保持布局一致。
+             * --- 修改结束 ---
+            */
              
-            /* 调整其他表格的字体大小 */
+            /* 调整其他表格和文字的字体大小 */
             .centered-table td {
                 font-size: 12px;
                 padding: 3px 6px;
