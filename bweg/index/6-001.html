@@ -118,6 +118,13 @@
         .centered-table td {
             font-family: Consolas, 'Courier New', Courier, monospace, sans-serif;
         }
+        
+        /* --- 修改开始 --- */
+        /* 为数据单元格设置更深的颜色以匹配视觉效果 */
+        .centered-table td:not(.header-cell) {
+            color: #333;
+        }
+        /* --- 修改结束 --- */
 
         .centered-table .header-cell {
             background-color: #DBEFFF !important;
@@ -137,25 +144,17 @@
             margin: 5px 0;
         }
 
-        /* --- 手机端适配样式开始 --- */
+        /* 手机端适配样式 */
         @media (max-width: 768px) {
             body {
                 padding: 12px;
-                -webkit-text-size-adjust: 100%; /* 防止iOS字体自动放大 */
+                -webkit-text-size-adjust: 100%;
             }
 
             .container {
                 padding: 0;
             }
-            
-            /* 
-             * --- 修改开始 ---
-             * 移除了之前所有针对 .top-table 的特殊手机端样式。
-             * 现在所有表格都会由浏览器自动缩放以适应屏幕，保持布局一致。
-             * --- 修改结束 ---
-            */
              
-            /* 调整其他表格和文字的字体大小 */
             .centered-table td {
                 font-size: 12px;
                 padding: 3px 6px;
@@ -165,7 +164,6 @@
                 font-size: 12px;
             }
         }
-        /* --- 手机端适配样式结束 --- */
     </style>
 </head>
 <body>
@@ -349,10 +347,8 @@
             $('.block-header').on('click', function() {
                 var $infoBlock = $(this).closest('.info-block');
                 
-                // 切换 .collapsed 类，CSS会根据这个类来旋转图标
                 $infoBlock.toggleClass('collapsed');
                 
-                // 使用slideToggle平滑地显示或隐藏内容区域
                 $infoBlock.find('.block-content').slideToggle(300);
             });
         });
