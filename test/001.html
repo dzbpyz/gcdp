@@ -32,12 +32,13 @@
             padding: 0 15px; /* 调整卡片左右内边距 */
         }
 
-        .report-header {
+        /* 修改点1：提升 .report-header 的选择器优先级 */
+        .report-card .report-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 6px 0;
-            border-bottom: 1px solid #ebeef5;
+            border-bottom: 1px solid #dcdfe6; /* 将颜色也统一加深，与下方一致 */
         }
 
         .report-title-group {
@@ -57,15 +58,16 @@
             color: #333;
         }
 
-        .info-item {
+        /* 修改点2：提升 .info-item 的选择器优先级 */
+        .report-body .info-item {
             display: flex; /* 保持flex布局 */
             align-items: flex-start; /* 新增：确保标签和值在文本换行时顶部对齐 */
-            padding: 2px 0; /* 修改：调整内边距，移除左侧多余内边距 */
-            border-bottom: 1.5px solid #dcdfe6;
+            padding: 2px 0; /* 您期望的上下间距 */
+            border-bottom: 1.5px solid #dcdfe6; /* 您期望的分割线样式 */
             line-height: 1.6; /* 修改：调整行高，让换行文本更易读 */
         }
 
-        .info-item:last-child {
+        .report-body .info-item:last-child {
             border-bottom: none;
         }
 
@@ -182,7 +184,6 @@
             </div>
             <div class="info-item">
                 <span class="info-label">检测结果:</span>
-                <!-- 修改：将中文括号（）替换为英文括号 () 以匹配图片 -->
                 <span class="info-value">该样品所检参数符合《钢筋混凝土用钢第2部分：热轧带肋钢筋》(GB 1499.2-2024) 要求。</span>
             </div>
             <div class="info-item">
