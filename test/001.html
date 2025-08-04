@@ -7,8 +7,6 @@
     <!-- 链接到您提供的原始CSS文件 (保留) -->
     <link rel="stylesheet" href="app.bd7238cebe5e5d166e6052ccc22c13a7.css">
     <style>
-        /* --- 以下是修改后的样式 --- */
-        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
             background-color: #f7f7f7;
@@ -21,7 +19,6 @@
             box-sizing: border-box;
         }
 
-		
         .report-card {
             background-color: #fff;
             border-radius: 8px;
@@ -62,7 +59,7 @@
             align-items: flex-start;
             padding: 5px 0;
             border-bottom: 1px solid #ebeef5;
-            line-height: 1.6; /* 这个是父级的行高，控制项与项之间的高度感 */
+            line-height: 1.6;
         }
 
         .info-label {
@@ -109,8 +106,7 @@
             border-color: #e1f3d8;
         }
         
-        /* --- 响应式设计：针对移动端优化 --- */
-        /* 当屏幕宽度小于等于600px时，应用以下样式 */
+        /* --- 响应式设计：针对移动端优化 (全新修订版) --- */
         @media (max-width: 600px) {
             .report-title-group h2 {
                 font-size: 18px;
@@ -124,22 +120,34 @@
                 font-size: 14px;
             }
 
-            .report-body .info-item {
-                display: block; 
-            }
-            
-            /* --- 修正后的代码 --- */
-            /* 使用更具体的选择器来提高优先级，确保此样式生效 */
-            .report-body .info-value {
-                line-height: 0; /* 这个行高专门控制内容换行后的紧凑程度 */
-            }
-            /* --- 修正结束 --- */
-        }
+            /* --- 以下是解决问题的核心修改 --- */
 
+            /* 1. 让每个信息项有更多垂直空间 */
+            .report-body .info-item {
+                display: block; /* 确认容器是块级 */
+                padding: 10px 0; /* 增大每个条目上下的间距，使其不拥挤 */
+            }
+
+            /* 2. 让标签单独占一行 */
+            .info-label {
+                display: block;     /* 关键：让标签成为块级元素，强制换行 */
+                margin-bottom: 4px; /* 在标签和值之间增加一点小间距 */
+                margin-right: 0;    /* 取消桌面端用的右边距 */
+            }
+
+            /* 3. 让值单独占一行，并精确控制其行高 */
+            .info-value {
+                display: block;     /* 关键：让值也成为块级元素，确保布局稳定 */
+                
+                /* 核心修复：现在这个 line-height 会 100% 生效 */
+                /* 您可以改成 0.1 或 3.0 来测试，会看到非常明显的变化 */
+                line-height: 0.5;
+            }
+        }
     </style>
 </head>
 <body>
-
+    <!-- HTML 部分保持不变 -->
     <div class="report-card">
         <div class="report-header">
             <div class="report-title-group">
@@ -212,6 +220,5 @@
             </div>
         </div>
     </div>
-
 </body>
 </html>
