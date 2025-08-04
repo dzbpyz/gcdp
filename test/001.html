@@ -60,9 +60,9 @@
         .report-body .info-item {
             display: flex;
             align-items: flex-start;
-            padding: 5px 0; /* 微调了下手机和桌面的通用上下间距，您可以按需修改 */
-            border-bottom: 1px solid #ebeef5; /* 恢复成稍细的线，更协调 */
-            line-height: 1.6;
+            padding: 5px 0;
+            border-bottom: 1px solid #ebeef5;
+            line-height: 1.6; /* 这个是父级的行高，控制项与项之间的高度感 */
         }
 
         .info-label {
@@ -113,28 +113,27 @@
         /* 当屏幕宽度小于等于600px时，应用以下样式 */
         @media (max-width: 600px) {
             .report-title-group h2 {
-                font-size: 18px; /* 缩小主标题字体 */
+                font-size: 18px;
             }
 
             .report-body {
-                font-size: 16px; /* 缩小列表项的基础字体 */
+                font-size: 16px;
             }
             
             .el-tag {
-                font-size: 14px; /* 缩小标签字体 */
+                font-size: 14px;
             }
 
-            /* 改变列表项的布局方式，取消flex布局 */
             .report-body .info-item {
                 display: block; 
             }
             
-            /* --- 新增代码开始 --- */
-            /* 专门为手机端内容换行设置更紧凑的行高 */
-            .info-value {
-                line-height: 0.6; /* 您可以调整这个值，比如1.3更紧凑，1.5更宽松 */
+            /* --- 修正后的代码 --- */
+            /* 使用更具体的选择器来提高优先级，确保此样式生效 */
+            .report-body .info-value {
+                line-height: 0.6; /* 这个行高专门控制内容换行后的紧凑程度 */
             }
-            /* --- 新增代码结束 --- */
+            /* --- 修正结束 --- */
         }
 
     </style>
