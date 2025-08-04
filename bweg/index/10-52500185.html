@@ -115,17 +115,16 @@
              text-align: center;
         }
 
-        /* --- 修改开始 --- */
         /* 移除了为td设置等宽字体的规则，使其继承body字体，解决显示不一致问题 */
         /* 
         .centered-table td {
             font-family: Consolas, 'Courier New', Courier, monospace, sans-serif;
         } 
         */
-        /* --- 修改结束 --- */
-
+        
         .centered-table .header-cell {
-            background-color: #DBEFFF !important;
+            /* --- 本次修改 --- */
+            background-color: #ffffff !important; /* 将背景色从 #DBEFFF 改为 #ffffff */
             color: #000000;
             font-size: 13px;
         }
@@ -191,27 +190,25 @@
                         </tr>
                         <tr class="row-white">
                             <td class="label-cell">轧制号:</td>
-                            <td class="data-cell" colspan="3">4250545306000</td>
+                            <td class="data-cell" colspan="3">5250018506001</td>
                         </tr>
                         <tr class="row-blue">
                             <td class="label-cell">牌号:</td>
                             <td class="data-cell">HRB400E</td>
                             <td class="label-cell">规格:</td>
-                            <td class="data-cell">6</td>
+                            <td class="data-cell">10</td>
                         </tr>
                         <tr class="row-white">
                             <td class="label-cell">捆号:</td>
-                            <!-- 修改1: 为“捆号”的值单元格添加id -->
-                            <td class="data-cell" id="bundle-number">16</td>
+                            <td class="data-cell" id="bundle-number">-&nbsp;</td>
                             <td class="label-cell">支数:</td>
-                            <td class="data-cell">0</td>
+                            <td class="data-cell">0&nbsp;</td>
                         </tr>
                         <tr class="row-blue">
                             <td class="label-cell">定尺:</td>
-                            <td class="data-cell">0</td>
+                            <td class="data-cell">0&nbsp;</td>
                             <td class="label-cell">重量:</td>
-                            <!-- 修改2: 为“重量”的值单元格添加id -->
-                            <td class="data-cell" id="weight">2.428</td>
+                            <td class="data-cell" id="weight">-</td>
                         </tr>
                         <tr class="row-white">
                             <td class="label-cell">检验:</td>
@@ -219,10 +216,9 @@
                         </tr>
                         <tr class="row-blue">
                             <td class="label-cell">炉号:</td>
-                            <td class="data-cell">42505453</td>
+                            <td class="data-cell">52500185</td>
                             <td class="label-cell">生产日期:</td>
-                            <!-- 修改3: 为“生产日期”的值单元格添加id -->
-                            <td class="data-cell" id="production-date">20241014</td>
+                            <td class="data-cell" id="production-date">-&nbsp;</td>
                         </tr>
                     </tbody>
                 </table>
@@ -249,12 +245,12 @@
                         </tr>
                         <tr class="row-blue">
                             <td>碳</td>
-                            <td>0.24</td>
+                            <td>0.22</td>
                             <td>合格</td>
                         </tr>
                         <tr class="row-white">
                             <td>硅</td>
-                            <td>0.39</td>
+                            <td>0.35</td>
                             <td>合格</td>
                         </tr>
                         <tr class="row-blue">
@@ -274,7 +270,7 @@
                         </tr>
                         <tr class="row-white">
                             <td>碳当量</td>
-                            <td>0.48</td>
+                            <td>0.46</td>
                             <td>合格</td>
                         </tr>
                     </tbody>
@@ -301,11 +297,11 @@
                         </tr>
                         <tr class="row-blue">
                             <td>屈服强度</td>
-                            <td>465/470</td>
+                            <td>460/460</td>
                         </tr>
                         <tr class="row-white">
                             <td>抗拉强度</td>
-                            <td>720/685</td>
+                            <td>685/680</td>
                         </tr>
                         <tr class="row-blue">
                             <td>断后伸长率</td>
@@ -313,7 +309,7 @@
                         </tr>
                         <tr class="row-white">
                             <td>总伸长率</td>
-                            <td>15.9/15.7</td>
+                            <td>15.5/15.5</td>
                         </tr>
                         <tr class="row-blue">
                             <td>弯曲试验(冷弯)</td>
@@ -346,40 +342,26 @@
     <script>
         $(document).ready(function() {
             
-            // --- 新增代码开始 ---
-            // 创建一个URLSearchParams对象来处理URL查询参数
+            // --- URL参数动态更新功能 ---
             const urlParams = new URLSearchParams(window.location.search);
+            const kh = urlParams.get('kh');
+            const zl = urlParams.get('zl');
+            const rq = urlParams.get('rq');
 
-            // 获取 'kh', 'zl', 'rq' 参数
-            const kh = urlParams.get('kh'); // 捆号
-            const zl = urlParams.get('zl'); // 重量
-            const rq = urlParams.get('rq'); // 日期
-
-            // 如果URL中存在 'kh' 参数，则更新捆号
             if (kh) {
                 $('#bundle-number').text(kh);
             }
-
-            // 如果URL中存在 'zl' 参数，则更新重量
             if (zl) {
                 $('#weight').text(zl);
             }
-            
-            // 如果URL中存在 'rq' 参数，则更新生产日期
             if (rq) {
                 $('#production-date').text(rq);
             }
-            // --- 新增代码结束 ---
 
-
-            // 这是您原有的折叠功能代码，保持不变
+            // --- 折叠功能 ---
             $('.block-header').on('click', function() {
                 var $infoBlock = $(this).closest('.info-block');
-                
-                // 切换 .collapsed 类，CSS会根据这个类来旋转图标
                 $infoBlock.toggleClass('collapsed');
-                
-                // 使用slideToggle平滑地显示或隐藏内容区域
                 $infoBlock.find('.block-content').slideToggle(300);
             });
         });

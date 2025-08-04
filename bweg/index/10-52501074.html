@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品质量信息</title>
+    <style>
+        body {
+            font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
+            background-color: #F7FAFF;
+            margin: 0;
+            padding: 24px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .info-block {
+            background-color: #ffffff;
+            border: 1px solid #C0DCFF;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .block-header {
+            padding: 4px 12px 4px 15px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #2F80ED;
+            background-color: #DBEFFF;
+            line-height: 20px;
+            border-bottom: 1px solid #99D2FF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .header-controls .toggle-btn {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .header-controls .toggle-btn:focus {
+            outline: none;
+        }
+
+        .arrow-icon {
+            color: #000000; 
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 1;
+            display: inline-block;
+            transition: transform 0.3s ease;
+            transform: rotate(-90deg);
+        }
+
+        .info-block.collapsed .arrow-icon {
+            transform: rotate(90deg);
+        }
+        
+        .block-content {
+            display: block; 
+        }
+
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .top-table {
+            table-layout: fixed;
+        }
+
+        .content-table td {
+            border-right: 1px solid #99D2FF;
+            border-top: 1px solid #99D2FF;
+            padding: 4px 8px;
+            line-height: 18px;
+            vertical-align: middle;
+        }
+        
+        .content-table tr td:first-child {
+            border-left: 1px solid #99D2FF;
+        }
+
+        .content-table tr:last-child td {
+             border-bottom: 1px solid #99D2FF;
+        }
+
+        .row-white td { background-color: #ffffff; }
+        .row-blue td { background-color: #EFF8FF; }
+
+        .top-table .label-cell {
+            background-color: #EFF8FF !important;
+            text-align: center; 
+        }
+
+        .row-white .label-cell {
+            background-color: #ffffff !important;
+        }
+
+        .top-table .data-cell {
+            text-align: center;
+        }
+
+        .centered-table {
+             text-align: center;
+        }
+
+        /* 移除了为td设置等宽字体的规则，使其继承body字体，解决显示不一致问题 */
+        /* 
+        .centered-table td {
+            font-family: Consolas, 'Courier New', Courier, monospace, sans-serif;
+        } 
+        */
+        
+        .centered-table .header-cell {
+            /* --- 本次修改 --- */
+            background-color: #ffffff !important; /* 将背景色从 #DBEFFF 改为 #ffffff */
+            color: #000000;
+            font-size: 13px;
+        }
+        
+        .footer-info {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+            padding-left: 0px;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        .footer-info p {
+            margin: 5px 0;
+        }
+
+        /* 手机端适配样式 */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+                -webkit-text-size-adjust: 100%;
+            }
+
+            .container {
+                padding: 0;
+            }
+             
+            .centered-table td {
+                font-size: 12px;
+                padding: 3px 6px;
+            }
+
+            .footer-info {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- 标牌信息 -->
+        <div class="info-block">
+            <div class="block-header">
+                <span>标牌信息</span>
+                <div class="header-controls">
+                    <button class="toggle-btn">
+                        <span class="arrow-icon">≫</span>
+                    </button>
+                </div>
+            </div>
+            <div class="block-content">
+                <table class="content-table top-table">
+                    <tbody>
+                        <tr class="row-white">
+                            <td class="label-cell">产品名称:</td>
+                            <td class="data-cell" colspan="3">盘条螺纹</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td class="label-cell">标准:</td>
+                            <td class="data-cell" colspan="3">GB 1499.2-2024</td>
+                        </tr>
+                        <tr class="row-white">
+                            <td class="label-cell">轧制号:</td>
+                            <td class="data-cell" colspan="3">5250107410000</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td class="label-cell">牌号:</td>
+                            <td class="data-cell">HRB400E</td>
+                            <td class="label-cell">规格:</td>
+                            <td class="data-cell">10</td>
+                        </tr>
+                        <tr class="row-white">
+                            <td class="label-cell">捆号:</td>
+                            <td class="data-cell" id="bundle-number">-&nbsp;</td>
+                            <td class="label-cell">支数:</td>
+                            <td class="data-cell">0&nbsp;</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td class="label-cell">定尺:</td>
+                            <td class="data-cell">0&nbsp;</td>
+                            <td class="label-cell">重量:</td>
+                            <td class="data-cell" id="weight">-&nbsp;</td>
+                        </tr>
+                        <tr class="row-white">
+                            <td class="label-cell">检验:</td>
+                            <td class="data-cell" colspan="3"></td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td class="label-cell">炉号:</td>
+                            <td class="data-cell">52501074</td>
+                            <td class="label-cell">生产日期:</td>
+                            <td class="data-cell" id="production-date">-&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 成分信息 -->
+        <div class="info-block">
+            <div class="block-header">
+                <span>成分信息</span>
+                <div class="header-controls">
+                    <button class="toggle-btn">
+                        <span class="arrow-icon">≫</span>
+                    </button>
+                </div>
+            </div>
+            <div class="block-content">
+                <table class="content-table centered-table">
+                    <tbody>
+                        <tr>
+                            <td class="header-cell">成分</td>
+                            <td class="header-cell">结果</td>
+                            <td class="header-cell">判定</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td>碳</td>
+                            <td>0.23</td>
+                            <td>合格</td>
+                        </tr>
+                        <tr class="row-white">
+                            <td>硅</td>
+                            <td>0.36</td>
+                            <td>合格</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td>锰</td>
+                            <td>1.25</td>
+                            <td>合格</td>
+                        </tr>
+                        <tr class="row-white">
+                            <td>磷</td>
+                            <td>0.023</td>
+                            <td>合格</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td>硫</td>
+                            <td>0.012</td>
+                            <td>合格</td>
+                        </tr>
+                        <tr class="row-white">
+                            <td>碳当量</td>
+                            <td>0.47</td>
+                            <td>合格</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 物理特性 -->
+        <div class="info-block">
+            <div class="block-header">
+                <span>物理特性</span>
+                <div class="header-controls">
+                    <button class="toggle-btn">
+                        <span class="arrow-icon">≫</span>
+                    </button>
+                </div>
+            </div>
+            <div class="block-content">
+                <table class="content-table centered-table">
+                    <tbody>
+                        <tr>
+                            <td class="header-cell">项目</td>
+                            <td class="header-cell">结果</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td>屈服强度</td>
+                            <td>460/460</td>
+                        </tr>
+                        <tr class="row-white">
+                            <td>抗拉强度</td>
+                            <td>715/680</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td>断后伸长率</td>
+                            <td>28.0/28.0</td>
+                        </tr>
+                        <tr class="row-white">
+                            <td>总伸长率</td>
+                            <td>15.5/15.6</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td>弯曲试验(冷弯)</td>
+                            <td>合格</td>
+                        </tr>
+                        <tr class="row-white">
+                            <td>弯曲试验(反弯)</td>
+                            <td>合格</td>
+                        </tr>
+                        <tr class="row-blue">
+                            <td>金相组织</td>
+                            <td>合格</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 底部信息 -->
+        <div class="footer-info">
+            <p>委托企业/产地: 宝武集团鄂城钢铁有限公司/鄂州</p>
+            <p>被委托企业/产地: 四川盛泉钢铁集团有限公司/绵竹</p>
+            <p>生产许可证号: （川）XK05-001-00013</p>
+        </div>
+
+    </div>
+    
+    <!-- 引入jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            
+            // --- URL参数动态更新功能 ---
+            const urlParams = new URLSearchParams(window.location.search);
+            const kh = urlParams.get('kh');
+            const zl = urlParams.get('zl');
+            const rq = urlParams.get('rq');
+
+            if (kh) {
+                $('#bundle-number').text(kh);
+            }
+            if (zl) {
+                $('#weight').text(zl);
+            }
+            if (rq) {
+                $('#production-date').text(rq);
+            }
+
+            // --- 折叠功能 ---
+            $('.block-header').on('click', function() {
+                var $infoBlock = $(this).closest('.info-block');
+                $infoBlock.toggleClass('collapsed');
+                $infoBlock.find('.block-content').slideToggle(300);
+            });
+        });
+    </script>
+
+</body>
+</html>

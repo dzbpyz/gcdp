@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- 修改: 将title内容设置为空格，避免微信显示标题和网址 -->
-    <title> </title>
+    <title>产品质量信息</title>
     <style>
         body {
             font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimSun, sans-serif;
@@ -14,19 +13,6 @@
             font-size: 14px;
             color: #666;
         }
-
-        /* --- 新增样式 --- */
-        .page-header {
-            text-align: center;
-            padding-bottom: 15px;
-        }
-        .page-title {
-            font-size: 22px;
-            font-weight: 600;
-            color: #000000;
-            margin: 0;
-        }
-        /* --- 新增样式结束 --- */
 
         .container {
             max-width: 1200px;
@@ -128,9 +114,17 @@
         .centered-table {
              text-align: center;
         }
+
+        /* 移除了为td设置等宽字体的规则，使其继承body字体，解决显示不一致问题 */
+        /* 
+        .centered-table td {
+            font-family: Consolas, 'Courier New', Courier, monospace, sans-serif;
+        } 
+        */
         
         .centered-table .header-cell {
-            background-color: #ffffff !important;
+            /* --- 本次修改 --- */
+            background-color: #ffffff !important; /* 将背景色从 #DBEFFF 改为 #ffffff */
             color: #000000;
             font-size: 13px;
         }
@@ -154,15 +148,6 @@
                 -webkit-text-size-adjust: 100%;
             }
 
-            /* --- 新增样式 --- */
-            .page-header {
-                padding-bottom: 10px;
-            }
-            .page-title {
-                font-size: 20px;
-            }
-            /* --- 新增样式结束 --- */
-
             .container {
                 padding: 0;
             }
@@ -180,11 +165,6 @@
 </head>
 <body>
 
-    <!-- 新增: 在页面内创建一个自己的标题 -->
-    <div class="page-header">
-        <h1 class="page-title">产品质量信息</h1>
-    </div>
-    
     <div class="container">
 
         <!-- 标牌信息 -->
@@ -210,25 +190,25 @@
                         </tr>
                         <tr class="row-white">
                             <td class="label-cell">轧制号:</td>
-                            <td class="data-cell" colspan="3">4250545306000</td>
+                            <td class="data-cell" colspan="3">5240215500205</td>
                         </tr>
                         <tr class="row-blue">
                             <td class="label-cell">牌号:</td>
                             <td class="data-cell">HRB400E</td>
                             <td class="label-cell">规格:</td>
-                            <td class="data-cell">10</td>
+                            <td class="data-cell">20</td>
                         </tr>
                         <tr class="row-white">
                             <td class="label-cell">捆号:</td>
-                            <td class="data-cell" id="bundle-number">-</td>
+                            <td class="data-cell" id="bundle-number">-&nbsp;</td>
                             <td class="label-cell">支数:</td>
-                            <td class="data-cell">0</td>
+                            <td class="data-cell">115&nbsp;</td>
                         </tr>
                         <tr class="row-blue">
                             <td class="label-cell">定尺:</td>
-                            <td class="data-cell">0</td>
+                            <td class="data-cell">9&nbsp;</td>
                             <td class="label-cell">重量:</td>
-                            <td class="data-cell" id="weight">2.428</td>
+                            <td class="data-cell" id="weight">2.556</td>
                         </tr>
                         <tr class="row-white">
                             <td class="label-cell">检验:</td>
@@ -236,9 +216,9 @@
                         </tr>
                         <tr class="row-blue">
                             <td class="label-cell">炉号:</td>
-                            <td class="data-cell">42505453</td>
+                            <td class="data-cell">52402155</td>
                             <td class="label-cell">生产日期:</td>
-                            <td class="data-cell" id="production-date">-</td>
+                            <td class="data-cell" id="production-date">-&nbsp;</td>
                         </tr>
                     </tbody>
                 </table>
@@ -265,7 +245,7 @@
                         </tr>
                         <tr class="row-blue">
                             <td>碳</td>
-                            <td>0.25</td>
+                            <td>0.22</td>
                             <td>合格</td>
                         </tr>
                         <tr class="row-white">
@@ -275,7 +255,7 @@
                         </tr>
                         <tr class="row-blue">
                             <td>锰</td>
-                            <td>1.23</td>
+                            <td>1.25</td>
                             <td>合格</td>
                         </tr>
                         <tr class="row-white">
@@ -290,7 +270,7 @@
                         </tr>
                         <tr class="row-white">
                             <td>碳当量</td>
-                            <td>0.47</td>
+                            <td>0.48</td>
                             <td>合格</td>
                         </tr>
                     </tbody>
@@ -317,11 +297,11 @@
                         </tr>
                         <tr class="row-blue">
                             <td>屈服强度</td>
-                            <td>460/460</td>
+                            <td>460/465</td>
                         </tr>
                         <tr class="row-white">
                             <td>抗拉强度</td>
-                            <td>680/685</td>
+                            <td>715/680</td>
                         </tr>
                         <tr class="row-blue">
                             <td>断后伸长率</td>
@@ -329,7 +309,7 @@
                         </tr>
                         <tr class="row-white">
                             <td>总伸长率</td>
-                            <td>15.5/15.8</td>
+                            <td>15.5/15.7</td>
                         </tr>
                         <tr class="row-blue">
                             <td>弯曲试验(冷弯)</td>
