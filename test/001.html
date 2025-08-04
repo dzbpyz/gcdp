@@ -9,7 +9,6 @@
     <style>
         /* --- 以下是修改后的样式 --- */
         
-        /* 用于复现整体页面布局的自定义样式 */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
             background-color: #f7f7f7;
@@ -29,16 +28,15 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             width: 100%;
             max-width: 800px;
-            padding: 0 15px; /* 调整卡片左右内边距 */
+            padding: 0 15px;
         }
 
-        /* 修改点1：提升 .report-header 的选择器优先级 */
         .report-card .report-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 6px 0;
-            border-bottom: 1px solid #dcdfe6; /* 将颜色也统一加深，与下方一致 */
+            border-bottom: 1px solid #dcdfe6;
         }
 
         .report-title-group {
@@ -47,40 +45,36 @@
         }
 
         .report-title-group h2 {
-            font-size: 18px; /* 修改：调整标题字号以匹配图片 */
+            font-size: 18px;
             color: #303133;
             margin: 0 0 0 8px;
-            font-weight: 600; /* 修改：加粗标题以匹配图片 */
+            font-weight: 600;
         }
 
         .report-body {
-            font-size: 16px; /* 修改：调整基础字号以匹配图片 */
+            font-size: 16px;
             color: #333;
+            padding-bottom: 20px;
         }
 
-        /* 修改点2：提升 .info-item 的选择器优先级 */
         .report-body .info-item {
-            display: flex; /* 保持flex布局 */
-            align-items: flex-start; /* 新增：确保标签和值在文本换行时顶部对齐 */
-            padding: 2px 0; /* 您期望的上下间距 */
-            border-bottom: 1.5px solid #dcdfe6; /* 您期望的分割线样式 */
-            line-height: 1.6; /* 修改：调整行高，让换行文本更易读 */
-        }
-
-        .report-body .info-item:last-child {
-            border-bottom: none;
+            display: flex;
+            align-items: flex-start;
+            padding: 2px 0;
+            border-bottom: 1.5px solid #dcdfe6;
+            line-height: 1.6;
         }
 
         .info-label {
-            color: #606266; /* 修改：标签颜色变浅一些以作区分 */
+            color: #606266;
             white-space: nowrap;
-            width: 5.5em; /* 新增：设置固定宽度，使所有值垂直对齐 */
-            flex-shrink: 0; /* 新增：防止标签在flex布局中被压缩 */
-            margin-right: 10px; /* 修改：调整标签和值的间距 */
+            width: 5.5em;
+            flex-shrink: 0;
+            margin-right: 10px;
         }
 
         .info-value {
-            color: #303133; /* 修改：值的颜色 */
+            color: #303133;
             text-align: left;
             flex: 1;
         }
@@ -94,13 +88,12 @@
             text-decoration: underline;
         }
 
-        /* Element UI标签样式 */
         .el-tag {
             border-radius: 4px;
-            padding: 0 10px; /* 修改：调整标签内边距 */
+            padding: 0 10px;
             line-height: 22px;
-            height: 24px; /* 修改：调整标签高度 */
-            font-size: 13px; /* 修改：调整标签字号 */
+            height: 24px;
+            font-size: 13px;
             border: 1px solid;
             display: inline-flex;
             align-items: center;
@@ -111,9 +104,25 @@
             color: #409eff;
         }
         .el-tag--success {
-            background-color: #f0f9eb; /* 修改：微调成功标签背景色 */
-            color: #67c23a; /* 修改：微调成功标签文字颜色 */
-            border-color: #e1f3d8; /* 修改：微调成功标签边框颜色 */
+            background-color: #f0f9eb;
+            color: #67c23a;
+            border-color: #e1f3d8;
+        }
+        
+        /* --- 响应式设计：针对移动端优化 --- */
+        /* 当屏幕宽度小于等于600px时，应用以下样式 */
+        @media (max-width: 600px) {
+            .report-title-group h2 {
+                font-size: 16px; /* 缩小主标题字体 */
+            }
+
+            .report-body {
+                font-size: 14px; /* 缩小列表项的基础字体 */
+            }
+            
+            .el-tag {
+                font-size: 12px; /* 缩小标签字体 */
+            }
         }
 
     </style>
