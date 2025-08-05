@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>检测报告详情-四川省建设工程质量检测监管平台</title>
+    <!-- 链接到您提供的原始CSS文件 (保留) -->
+    <link rel="stylesheet" href="app.bd7238cebe5e5d166e6052ccc22c13a7.css">
+    <style>
+        /* --- 以下是修改后的样式 --- */
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+		
+        .report-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 800px;
+            padding: 0 15px;
+        }
+
+        .report-card .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid #dcdfe6;
+        }
+
+        .report-title-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .report-title-group h2 {
+            font-size: 18px;
+            color: #303133;
+            margin: 0 0 0 8px;
+            font-weight: 600;
+        }
+
+        .report-body {
+            font-size: 16px;
+            color: #333;
+            padding-bottom: 20px;
+        }
+
+        .report-body .info-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 5px 0;
+            border-bottom: 1px solid #ebeef5;
+            line-height: 1.6; /* 这个是父级的行高，控制项与项之间的高度感 */
+        }
+
+        .info-label {
+            color: #606266;
+            white-space: nowrap;
+            width: 5.5em;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+
+        .info-value {
+            color: #303133;
+            text-align: left;
+            flex: 1;
+        }
+        
+        .info-value a {
+            color: #007aff;
+            text-decoration: none;
+        }
+        
+        .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        .el-tag {
+            border-radius: 4px;
+            padding: 0 10px;
+            line-height: 22px;
+            height: 24px;
+            font-size: 13px;
+            border: 1px solid;
+            display: inline-flex;
+            align-items: center;
+        }
+        .el-tag--primary {
+            background-color: #ecf5ff;
+            border-color: #b3d8ff;
+            color: #409eff;
+        }
+        .el-tag--success {
+            background-color: #f0f9eb;
+            color: #67c23a;
+            border-color: #e1f3d8;
+        }
+        
+        /* --- 响应式设计：针对移动端优化 --- */
+        /* 当屏幕宽度小于等于600px时，应用以下样式 */
+        @media (max-width: 600px) {
+            .report-title-group h2 {
+                font-size: 18px;
+            }
+
+            .report-body {
+                font-size: 16px;
+            }
+            
+            .el-tag {
+                font-size: 14px;
+            }
+
+            .report-body .info-item {
+                display: block; 
+            }
+            
+            /* --- 修改开始 --- */
+            /*
+              原有的 `line-height: 0` 会导致文本重叠，这里修改为 1.4。
+              这个值只作用于 .info-value 元素，覆盖了从 .info-item 继承来的 1.6，
+              使得内容在换行时，行间距更紧凑、更像一个自然的段落。
+            */
+            .report-body .info-value {
+                line-height: 1.0; /* 这个行高专门控制内容换行后的紧凑程度 */
+                margin-top: 2px;  /* (可选) 增加标签和内容间的垂直间距 */
+            }
+            /* --- 修改结束 --- */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="report-card">
+        <div class="report-header">
+            <div class="report-title-group">
+                <span class="el-tag el-tag--primary">宜宾市</span>
+                <h2>检测报告详情</h2>
+            </div>
+            <span class="el-tag el-tag--success">合格</span>
+        </div>
+
+        <div class="report-body">
+            <div class="info-item">
+                <span class="info-label">检测机构:</span>
+                <span class="info-value">宜宾市建业工程质量检测有限责任公司</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">工程名称:</span>
+                <span class="info-value">新建重庆至昆明高速铁路“四电”系统集成及相关工程</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">委托单位:</span>
+                <span class="info-value">中国铁建电气化局集团有限公司渝昆高铁川渝段四电系统集成项目经理部</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">见证取样:</span>
+                <span class="info-value">是</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">见证员:</span>
+                <span class="info-value">刘建锋</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">主检人:</span>
+                <span class="info-value">唐国亮</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">校核人:</span>
+                <span class="info-value">廖弘忠</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">审批人:</span>
+                <span class="info-value">查柱涛</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">报告编号:</span>
+                <span class="info-value">YBJY-GL2025-01415</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">设备编号:</span>
+                <span class="info-value">0262-bh-000005</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">检测日期:</span>
+                <span class="info-value">2025年2月23日</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">报告日期:</span>
+                <span class="info-value">2025年2月24日</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">检测项目:</span>
+                <span class="info-value">反向弯曲,重量偏差,弯曲性能,抗拉强度,最大总伸长率,屈服强度</span>
+            </div>
+            <div class="info-item">
+                <span class="info-label">检测结果:</span>
+                <span class="info-value">该样品所检参数符合《钢筋混凝土用钢第2部分：热轧带肋钢筋》(GB 1499.2-2024) 要求。</span>
+            </div>          
+        </div>
+    </div>
+
+</body>
+</html>
