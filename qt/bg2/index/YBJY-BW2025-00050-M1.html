@@ -21,7 +21,6 @@
             box-sizing: border-box;
         }
 
-		
         .report-card {
             background-color: #fff;
             border-radius: 8px;
@@ -62,7 +61,7 @@
             align-items: flex-start;
             padding: 5px 0;
             border-bottom: 1px solid #ebeef5;
-            line-height: 1.6; /* 这个是父级的行高，控制项与项之间的高度感 */
+            line-height: 1.6;
         }
 
         .info-label {
@@ -109,36 +108,24 @@
             border-color: #e1f3d8;
         }
         
-        /* --- 响应式设计：针对移动端优化 --- */
-        /* 当屏幕宽度小于等于600px时，应用以下样式 */
+        /* --- 响应式设计 --- */
         @media (max-width: 600px) {
             .report-title-group h2 {
                 font-size: 18px;
             }
-
             .report-body {
                 font-size: 16px;
             }
-            
             .el-tag {
                 font-size: 14px;
             }
-
             .report-body .info-item {
                 display: block; 
             }
-            
-            /* --- 修改开始 --- */
-            /*
-              原有的 `line-height: 0` 会导致文本重叠，这里修改为 1.4。
-              这个值只作用于 .info-value 元素，覆盖了从 .info-item 继承来的 1.6，
-              使得内容在换行时，行间距更紧凑、更像一个自然的段落。
-            */
             .report-body .info-value {
-                line-height: 1.0; /* 这个行高专门控制内容换行后的紧凑程度 */
-                margin-top: 2px;  /* (可选) 增加标签和内容间的垂直间距 */
+                line-height: 1.0;
+                margin-top: 2px;
             }
-            /* --- 修改结束 --- */
         }
 
     </style>
@@ -213,42 +200,25 @@
             </div>
             <div class="info-item">
                 <span class="info-label">检测报告:</span>
-                <!-- *** 修改点 1: 为<a>标签添加 id="pdf-link" *** -->
-                <span class="info-value"><a href="#" id="pdf-link">查看pdf报告</a></span>
+                <span class="info-value">
+                    <a id="pdf-link" href="#">查看pdf报告</a>
+                </span>
             </div>
         </div>
     </div>
 
-    <!-- *** 修改点 2: 添加 JavaScript 脚本 *** -->
     <script>
-        // 等待整个页面的HTML结构加载完成后再执行
-        document.addEventListener('DOMContentLoaded', function() {
-            // 创建一个URLSearchParams对象来处理URL查询参数
-            // 注意: 您的示例 URL ...index/001.html&pdf=1001 格式不标准，
-            // 标准格式应为 ...index/001.html?pdf=1001。
-            // 为了更好的兼容性，我们先将URL中的'&'替换为'?'
-            const queryString = window.location.search ? window.location.search : window.location.href.slice(window.location.href.indexOf('&'));
-            const urlParams = new URLSearchParams(queryString.replace('&','?'));
+        // 获取 pdf 参数
+        const params = new URLSearchParams(window.location.search);
+        const pdfName = params.get('pdf');
 
-
-            // 从URL参数中获取名为 'pdf' 的值
-            const pdfFileName = urlParams.get('pdf');
-
-            // 检查 'pdf' 参数是否存在
-            if (pdfFileName) {
-                // 如果存在，找到id为 'pdf-link' 的链接元素
-                const pdfLink = document.getElementById('pdf-link');
-
-                // 确保找到了这个元素
-                if (pdfLink) {
-                    // 构建新的链接地址，指向上一级目录的 'pdf' 文件夹下的对应文件
-                    const newHref = `../pdf/${pdfFileName}.pdf`;
-
-                    // 更新链接的 href 属性
-                    pdfLink.href = newHref;
-                }
-            }
-        });
+        if (pdfName) {
+            const currentPath = window.location.pathname;
+            const parentDir = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            const pdfUrl = parentDir + '/../pdf/' + pdfName + '.pdf';
+            document.getElementById('pdf-link').href = pdfUrl;
+        }
     </script>
+
 </body>
 </html>
