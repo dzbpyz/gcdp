@@ -215,7 +215,7 @@
         if (pdfName) {
             const currentPath = window.location.pathname;
             const parentDir = currentPath.substring(0, currentPath.lastIndexOf('/'));
-            const pdfUrl = parentDir + '/../pdf/' + pdfName + '.pdf';
+			const pdfUrl = './' + pdfName + '.pdf';
             document.getElementById('pdf-link').href = pdfUrl;
         }
     </script>
