@@ -1,0 +1,789 @@
+<html lang="en" class="no-js">
+
+<head>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>石横特钢集团-产品质量证明书</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Login and Registration Form with HTML5 and CSS3">
+    <meta name="keywords" content="html5, css3, form, switch, animation, :target, pseudo-class">
+    <meta name="author" content="Codrops">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="../static/css/demo.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/animate-custom.css">
+    
+    <style type="text/css">
+        /* ---------------------------------- */
+        /*      页面基本样式                  */
+        /* ---------------------------------- */
+        p {
+            text-indent: 1em
+        }
+
+        span {
+            width: 200px;
+            float: right;
+            text-align: right;
+            margin-right: 3%
+        }
+
+        .img_a {
+            float-top: 7px;
+        }
+
+        #a {
+            width: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #a1 {
+            width: 35%;
+            float: left;
+            text-align: right;
+            line-height: 20%
+        }
+
+        #a2 {
+            width: 63%;
+            float: right;
+            text-align: left;
+            line-height: 250%
+        }
+
+        #main {
+            display: none;
+        }
+
+        #report_holder {
+            background-color: rgb(254, 254, 254) !important;
+        }
+
+        #report_holder2 {
+            background-color: rgb(254, 254, 254) !important;
+        }
+
+
+        /* ---------------------------------- */
+        /*      表格和布局样式 (Grid CSS 0)    */
+        /* ---------------------------------- */
+        .-gr-fs1 { font: 21px 宋体; }
+        .-gr-fs0 { font: 14px 宋体; }
+        .-gr-section18 { height: 197px; }
+        .-gr-section17 { height: 98px; }
+        .-gr-section16 { height: 98px; }
+        .-gr-section15 { height: 23px; }
+        .-gr-section14 { height: 242px; }
+        .-gr-section13 { height: 33px; }
+        .-gr-section12 { height: 36.61px; }
+        .-gr-section11 { height: 37.39px; }
+        .-gr-section10 { height: 8px; }
+        .-gr-section9 { height: 21px; }
+        .-gr-section8 { height: 9px; }
+        .-gr-section7 { height: 27px; }
+        .-gr-section6 { height: 30px; }
+        .-gr-section5 { height: 26px; }
+        .-gr-section4 { height: 14px; }
+        .-gr-section3 { background-color: rgba(255, 255, 255, 0); border-bottom: 1px solid #000000; }
+        .-gr-section2 {}
+        .-gr-section1 { height: 30px; }
+        .-gr-section0 { height: 30px; }
+        .-gr-cell9 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border-right: 1px solid #000000; border-bottom: 1px solid #000000; }
+        .-gr-cell8 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border: 1px solid #000000; }
+        .-gr-cell7 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border-right: 1px solid #000000; border-top: 1px solid #000000; border-bottom: 1px solid #000000; }
+        .-gr-cell6 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border: 1px solid #000000; }
+        .-gr-cell5 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border-right: 1px solid #000000; border-bottom: 1px solid #000000; }
+        .-gr-cell4 { border: 1px solid #000000; }
+        .-gr-cell3 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border: 1px solid #000000; }
+        .-gr-cell2 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000; }
+        .-gr-cell1 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border: 1px solid #000000; }
+        .-gr-cell0 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border: 1px solid #000000; }
+        .-gr-ctrl19 { position: absolute; padding: 0px; }
+        .-gr-ctrl18 { position: absolute; padding: 1px 1px 1px 2px; text-align: left; white-space: normal; }
+        .-gr-ctrl17 { position: absolute; padding: 1px 1px 1px 2px; text-align: left; white-space: normal; }
+        .-gr-ctrl16 { position: absolute; padding: 1px 1px 1px 2px; border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: left; white-space: normal; }
+        .-gr-ctrl15 { position: absolute; padding: 1px 1px 1px 2px; border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: left; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl14 { position: absolute; padding: 1px 1px 1px 2px; border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: left; white-space: normal; }
+        .-gr-ctrl13 { position: absolute; padding: 1px 1px 1px 2px; border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: left; white-space: normal; }
+        .-gr-ctrl12 { position: absolute; padding: 1px 1px 1px 2px; text-align: right; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl11 { position: absolute; padding: 1px 1px 1px 2px; border-left: 1px solid #000000; border-bottom: 1px solid #000000; text-align: left; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl10 { padding: 0px; border: 1px solid #000000; }
+        .-gr-ctrl9 { position: absolute; padding: 1px 1px 1px 2px; border-right: 1px solid #000000; text-align: left; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl8 { position: absolute; padding: 1px 1px 1px 2px; text-align: left; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl7 { position: absolute; padding: 1px 1px 1px 2px; border-right: 1px solid #000000; border-top: 1px solid #000000; text-align: center; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl6 { position: absolute; padding: 1px 1px 1px 2px; border-left: 1px solid #000000; border-right: 1px solid #000000; text-align: center; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl5 { position: absolute; padding: 1px 1px 1px 2px; border-left: 1px solid #000000; border-top: 1px solid #000000; text-align: center; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl4 { padding: 0px; }
+        .-gr-ctrl3 { padding: 1px 1px 1px 2px; text-align: left; vertical-align: middle; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl2 { padding: 1px 1px 1px 2px; text-align: center; vertical-align: top; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl1 { padding: 1px 1px 1px 2px; text-align: left; vertical-align: top; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl0 { padding: 1px 1px 1px 2px; text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; }
+        .-gr-cs0 { border: 1px solid #000000; }
+        ._grdg { table-layout: fixed; }
+        ._grdg>tbody>tr:hover:not(._grcsssh) { background-color: #eee; color: #000; }
+        ._grdg>tbody>tr>td:hover:not(._grcsssh) { background-color: #eee; color: #000; }
+        ._grcsssh { background-color: rgba(20, 20, 127, 1); color: rgba(255, 255, 255, 1); }
+
+
+        /* ---------------------------------- */
+        /*      表格和布局样式 (Grid CSS 1)    */
+        /* ---------------------------------- */
+        .-gr-fs1-1 { font: 21px 宋体; }
+        .-gr-fs0-1 { font: 14px 宋体; }
+        .-gr-section15-1 { height: 144px; }
+        .-gr-section14-1 { height: 61px; }
+        .-gr-section13-1 { height: 14px; }
+        .-gr-section12-1 { height: 30px; }
+        .-gr-section11-1 { height: 9px; }
+        .-gr-section10-1 { height: 23px; }
+        .-gr-section9-1 { height: 23px; }
+        .-gr-section8-1 { height: 166px; }
+        .-gr-section7-1 { height: 11px; }
+        .-gr-section6-1 { height: 34px; }
+        .-gr-section5-1 { height: 11px; }
+        .-gr-section4-1 { height: 12px; }
+        .-gr-section3-1 { height: 22px; }
+        .-gr-section2-1 { height: 38px; }
+        .-gr-section1-1 { height: 26px; }
+        .-gr-section0-1 { height: 30px; }
+        .-gr-cell0-1 { text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; padding: 1px 1px 1px 2px; border: 1px solid #000000; }
+        .-gr-ctrl4-1 { padding: 1px 1px 1px 2px; border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: left; vertical-align: middle; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl3-1 { padding: 1px 1px 1px 2px; border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl2-1 { padding: 1px 1px 1px 2px; border-left: 1px solid #000000; border-right: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl1-1 { padding: 1px 1px 1px 2px; text-align: left; vertical-align: middle; overflow: hidden; white-space: nowrap; }
+        .-gr-ctrl0-1 { padding: 1px 1px 1px 2px; text-align: center; vertical-align: middle; overflow: hidden; white-space: nowrap; }
+
+
+        /* ---------------------------------- */
+        /*      水印 (Mask Div) 样式 (优化版)  */
+        /* ---------------------------------- */
+
+        /* 所有水印的通用样式 */
+        .mask_div {
+            transform: rotate(-15deg);
+            position: absolute;
+            overflow: hidden;
+            z-index: 1029;
+            pointer-events: none;
+            opacity: 0.5;
+            font-size: 15px;
+            font-family: 微软雅黑, sans-serif;
+            color: rgb(215, 215, 215);
+            text-align: center;
+            width: 500px;
+            height: 50px;
+            display: block;
+        }
+    </style>
+
+</head>
+
+<body id="main_body">
+
+    <div id="report_holder" class="-gr-fs0" style="width: 1360px; margin: 20px; background-color: rgba(255, 255, 255, 0);">
+        <table class="-gr-section14" style="border-collapse:collapse;width:1351px;">
+            <colgroup>
+                <col style="width:0.96%;">
+                <col style="width:6.14%;">
+                <col style="width:1.55%;">
+                <col style="width:16.77%;">
+                <col style="width:9.06%;">
+                <col style="width:3.63%;">
+                <col style="width:0.89%;">
+                <col style="width:5.85%;">
+                <col style="width:0.96%;">
+                <col style="width:4.96%;">
+                <col style="width:0.67%;">
+                <col style="width:7.4%;">
+                <col style="width:13.25%;">
+                <col style="width:1.04%;">
+                <col style="width:6.07%;">
+                <col style="width:3.85%;">
+                <col style="width:3.26%;">
+                <col style="width:0.89%;">
+                <col style="width:0.67%;">
+                <col style="width:3.26%;">
+                <col style="width:7.92%;">
+                <col style="width:0.96%;">
+            </colgroup>
+            <tbody>
+                <tr class="-gr-section4">
+                    <td colspan="22"></td>
+                </tr>
+                <tr class="-gr-section5">
+                    <td class="-gr-ctrl4" style="text-align:center;vertical-align:middle;" colspan="2" rowspan="3"><img height="76" src="..//static/picture/shtg.png"></td>
+                    <td></td>
+                    <td class="-gr-ctrl0 -gr-fs1" colspan="13">石横特钢集团有限公司</td>
+                    <td colspan="3"></td>
+                    <td class="-gr-ctrl4" style="text-align:center;vertical-align:middle;" colspan="2" rowspan="3"><img height="76" src="../static/picture/xuke.png"></td>
+                    <td></td>
+                </tr>
+                <tr class="-gr-section6">
+                    <td></td>
+                    <td class="-gr-ctrl2 -gr-fs1" colspan="13">产品质量证明书</td>
+                    <td colspan="3"></td>
+                    <td></td>
+                </tr>
+                <tr class="-gr-section7">
+                    <td colspan="17"></td>
+                    <td></td>
+                </tr>
+                <tr class="-gr-section8">
+                    <td></td>
+                    <td class="-gr-ctrl3" rowspan="3">产品名称：</td>
+                    <td class="-gr-ctrl3" colspan="2" rowspan="3">钢筋混凝土用热轧带肋钢筋</td>
+                    <td colspan="9"></td>
+                    <td class="-gr-ctrl1" colspan="7" rowspan="2">生产地址：中国 山东 肥城<br></td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr class="-gr-section9">
+                    <td></td>
+                    <td></td>
+                    <td class="-gr-ctrl3" colspan="4" rowspan="2">生产许可证编号：</td>
+                    <td class="-gr-ctrl3" colspan="3" rowspan="2">（鲁）XK05-001-00105</td>
+                    <td></td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr class="-gr-section10">
+                    <td></td>
+                    <td></td>
+                    <td colspan="10"></td>
+                </tr>
+                <tr class="-gr-section11">
+                    <td></td>
+                    <td class="-gr-ctrl3">技术条件：</td>
+                    <td class="-gr-ctrl3" colspan="2">GB 1499.2-2024</td>
+                    <td></td>
+                    <td class="-gr-ctrl3" colspan="2">车号：</td>
+                    <td id="ch_1" class="-gr-ctrl3"></td>
+                    <td></td>
+                    <td class="-gr-ctrl3" colspan="2">开单日期：</td>
+                    <td id="rq_1" class="-gr-ctrl3">&nbsp;</td>
+                    <td colspan="2"></td>
+                    <td class="-gr-ctrl3" colspan="4">JL/ST-G08-005-05</td>
+                    <td colspan="4"></td>
+                </tr>
+                <tr class="-gr-section12">
+                    <td></td>
+                    <td class="-gr-ctrl3">购货单位：</td>
+                    <td class="-gr-ctrl3" colspan="2">肥城中盈贸易有限公司（QG）</td>
+                    <td colspan="10"></td>
+                    <td class="-gr-ctrl3" colspan="6">电&nbsp;&nbsp;&nbsp;&nbsp;话: 0538-3696012</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr class="-gr-section13">
+                    <td colspan="14"></td>
+                    <td class="-gr-ctrl3">发货日期：</td>
+                    <td id="rq_2" class="-gr-ctrl3" colspan="2">&nbsp;</td>
+                    <td colspan="5"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="_grdg" style="border-collapse:collapse;width:1351px;" id="_griddg0">
+            <colgroup>
+                <col style="width:7.25%;">
+                <col style="width:6.14%;">
+                <col style="width:2.81%;">
+                <col style="width:3.4%;">
+                <col style="width:3.92%;">
+                <col style="width:5.03%;">
+                <col style="width:6.14%;">
+                <col style="width:6.22%;">
+                <col style="width:6.22%;">
+                <col style="width:6.22%;">
+                <col style="width:6.14%;">
+                <col style="width:6.14%;">
+                <col style="width:6.14%;">
+                <col style="width:6.14%;">
+                <col style="width:6%;">
+                <col style="width:5.55%;">
+                <col style="width:4.89%;">
+                <col style="width:5.63%;">
+            </colgroup>
+            <thead>
+                <tr class="-gr-section2">
+                    <th class="-gr-cell6" rowspan="3">批号</th>
+                    <th class="-gr-cell7" rowspan="3">牌号</th>
+                    <th class="-gr-cell7" rowspan="3">规<br>格<br>(mm)</th>
+                    <th class="-gr-cell7" rowspan="3">定<br>尺<br>(m)</th>
+                    <th class="-gr-cell7" rowspan="3">件<br>数</th>
+                    <th class="-gr-cell7" rowspan="3">重<br>量<br>(t)</th>
+                    <th class="-gr-cell7" colspan="12">力学性能</th>
+                </tr>
+                <tr class="-gr-section2">
+                    <th class="-gr-cell8" colspan="4">屈服强度 R<sup>o</sup>eL(MPa)</th>
+                    <th class="-gr-cell8" colspan="4">抗拉强度 R<sup>o</sup>m(MPa)</th>
+                    <th class="-gr-cell9" colspan="4">最大力总延伸率 A<sub>gt</sub>(%)</th>
+                </tr>
+                <tr class="-gr-section2">
+                    <th class="-gr-cell3">屈服强度1</th>
+                    <th class="-gr-cell3">屈服强度2</th>
+                    <th class="-gr-cell3">屈服强度3</th>
+                    <th class="-gr-cell3">屈服强度4</th>
+                    <th class="-gr-cell3">抗拉强度1</th>
+                    <th class="-gr-cell3">抗拉强度2</th>
+                    <th class="-gr-cell3">抗拉强度3</th>
+                    <th class="-gr-cell3">抗拉强度4</th>
+                    <th class="-gr-cell3">总延伸率1</th>
+                    <th class="-gr-cell3">总延伸率2</th>
+                    <th class="-gr-cell3">总延伸率3</th>
+                    <th class="-gr-cell3">总延伸率4</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="-gr-section0" _grrecno="0">
+                    <td id="ph_source" class="-gr-cell2">H25088385</td>
+                    <td class="-gr-cell3">HRB400E</td>
+                    <td class="-gr-cell3">10</td>
+                    <td class="-gr-cell4" style="padding:0px;">
+                        <table style="border-collapse:collapse;width:100%;">
+                            <colgroup>
+                                <col style="width:100%;">
+                            </colgroup>
+                            <tbody>
+                                <tr class="-gr-section1">
+                                    <td class="-gr-ctrl0">/</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td class="-gr-cell3">1</td>
+                    <td id="zl_1" class="-gr-cell3">&nbsp;</td>
+                    <td class="-gr-cell5">440</td>
+                    <td class="-gr-cell5">440</td>
+                    <td class="-gr-cell5">440</td>
+                    <td class="-gr-cell5">440</td>
+                    <td class="-gr-cell5">585</td>
+                    <td class="-gr-cell5">585</td>
+                    <td class="-gr-cell5">580</td>
+                    <td class="-gr-cell5">585</td>
+                    <td class="-gr-cell5">11.3</td>
+                    <td class="-gr-cell5">11.2</td>
+                    <td class="-gr-cell5">11.3</td>
+                    <td class="-gr-cell5">11.4</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="-gr-section15" style="position:relative;">
+            <span class="-gr-ctrl9" style="left:1.5px;top:0px;width:1344px;height:21px;line-height:21px;">&nbsp;&nbsp;&nbsp;</span>
+            <span class="-gr-ctrl8" style="left:363px;top:0px;width:1045px;height:28px;line-height:28px;"></span>
+            <span id="zl_2" class="-gr-ctrl7" style="left:318px;top:0px;width:64px;height:20px;line-height:20px;">&nbsp;</span>
+            <span class="-gr-ctrl6" style="left:265px;top:0px;width:48px;height:21.06px;line-height:21.06px;">1</span>
+            <span class="-gr-ctrl5" style="left:0px;top:0px;width:93px;height:20px;line-height:20px;">合计：</span>
+        </div>
+        <table class="-gr-section17" style="border-collapse:collapse;width:1351px;">
+            <colgroup>
+                <col style="width:100%;">
+            </colgroup>
+            <tbody>
+                <tr class="-gr-section16">
+                    <td style="padding:0px;">
+                        <table style="border:1px solid #000000;border-collapse:collapse;width:100%;">
+                            <colgroup>
+                                <col style="width:6.88%;">
+                                <col style="width:4.36%;">
+                                <col style="width:5.25%;">
+                                <col style="width:5.47%;">
+                                <col style="width:4.81%;">
+                                <col style="width:3.85%;">
+                                <col style="width:4.59%;">
+                                <col style="width:3.92%;">
+                                <col style="width:3.85%;">
+                                <col style="width:6.07%;">
+                                <col style="width:5.99%;">
+                                <col style="width:6.21%;">
+                                <col style="width:5.18%;">
+                                <col style="width:5.33%;">
+                                <col style="width:5.18%;">
+                                <col style="width:5.62%;">
+                                <col style="width:6.51%;">
+                                <col style="width:5.7%;">
+                                <col style="width:5.25%;">
+                            </colgroup>
+                            <tbody>
+                                <tr style="height:21.92px;">
+                                    <td class="-gr-cell0" rowspan="3">批号</td>
+                                    <td class="-gr-cell0" colspan="11">力学性能</td>
+                                    <td class="-gr-cell0" colspan="6">化学成分（%）</td>
+                                    <td class="-gr-cell0" rowspan="3">实物标记</td>
+                                </tr>
+                                <tr style="height:30px;">
+                                    <td class="-gr-cell1" colspan="4" rowspan="2">R<sup>o</sup>m/R<sup>o</sup>eL</td>
+                                    <td class="-gr-cell1" colspan="4" rowspan="2">R<sup>o</sup>eL/ ReL</td>
+                                    <td class="-gr-cell0" colspan="2">弯曲</td>
+                                    <td class="-gr-cell0" rowspan="2">反弯<br>试验</td>
+                                    <td class="-gr-cell0" rowspan="2">C</td>
+                                    <td class="-gr-cell0" rowspan="2">Si</td>
+                                    <td class="-gr-cell0" rowspan="2">Mn</td>
+                                    <td class="-gr-cell0" rowspan="2">P</td>
+                                    <td class="-gr-cell0" rowspan="2">S</td>
+                                    <td class="-gr-cell0" rowspan="2">Ceq</td>
+                                </tr>
+                                <tr style="height:21.92px;">
+                                    <td class="-gr-cell0">D</td>
+                                    <td class="-gr-cell0">180度</td>
+                                </tr>
+                                <tr style="height:21.92px;">
+                                    <td id="ph_target" class="-gr-cell0">H25088385</td>
+                                    <td class="-gr-cell0">1.30</td>
+                                    <td class="-gr-cell0">1.31</td>
+                                    <td class="-gr-cell0">1.31</td>
+                                    <td class="-gr-cell0">1.31</td>
+                                    <td class="-gr-cell0">1.11</td>
+                                    <td class="-gr-cell0">1.11</td>
+                                    <td class="-gr-cell0">1.11</td>
+                                    <td class="-gr-cell0">1.11</td>
+                                    <td class="-gr-cell0">4d</td>
+                                    <td class="-gr-cell0">合格</td>
+                                    <td class="-gr-cell0">合格</td>
+                                    <td class="-gr-cell0">0.23</td>
+                                    <td class="-gr-cell0">0.18</td>
+                                    <td class="-gr-cell0">0.67</td>
+                                    <td class="-gr-cell0">0.030</td>
+                                    <td class="-gr-cell0">0.023</td>
+                                    <td class="-gr-cell0">0.40</td>
+                                    <td id="swbj_target" class="-gr-cell0">&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="-gr-section18" style="position:relative;">
+            <span class="-gr-ctrl19" style="left:401px;top:121px;width:76px;height:30px;text-align:center;vertical-align:middle;"><img height="30" src="../static/picture/002.png"></span>
+            <span class="-gr-ctrl19" style="left:91px;top:121px;width:75px;height:30px;text-align:center;vertical-align:middle;"><img height="30" src="../static/picture/001.png"></span>
+            <span class="-gr-ctrl19" style="left:129px;top:8px;width:158px;height:90px;text-align:center;vertical-align:middle;"><img height="90" src="../static/picture/cz.png"></span>
+            <span class="-gr-ctrl8" style="left:1028px;top:8px;width:171px;height:20px;line-height:20px;">备注：</span>
+            <span class="-gr-ctrl18" style="left:305px;top:4px;width:282px;height:73.59px;">兹证明此材料采用转炉冶炼（HRB500E、HRBF500E、HRB600炉外精炼），经热轧加工，钢材表面质量、外形尺寸、重量偏差、金相组织等检验合格。</span>
+            <span class="-gr-ctrl17" style="left:12px;top:1px;width:163px;height:20px;display:table;"><span style="display:table-cell;vertical-align:middle;">质量检验专用章：</span></span>
+            <span class="-gr-ctrl8" style="left:610px;top:60px;width:254px;height:29px;line-height:29px;"> 交货状态：热轧</span>
+            <span class="-gr-ctrl8" style="left:610px;top:19px;width:277px;height:20px;line-height:20px;">产厂名、牌号、规格、批号等。</span>
+            <span class="-gr-ctrl8" style="left:610px;top:0px;width:307px;height:21px;line-height:21px;">产品标识说明：每件挂两个标牌并注明商标、生</span>
+            <span class="-gr-ctrl8" style="left:1028px;top:68px;width:171px;height:21px;line-height:21px;">同行法律效应。</span>
+            <span class="-gr-ctrl8" style="left:1026px;top:38px;width:170px;height:21px;line-height:21px;">质量证明书复印件不具有</span>
+            <span id="zmsbh_1" class="-gr-ctrl8" style="left:1048px;top:129px;width:232px;height:20px;line-height:20px;">&nbsp;</span>
+            <span class="-gr-ctrl16" style="left:1020px;top:0px;width:328.6px;height:103px;"></span>
+            <span class="-gr-ctrl15" style="left:602px;top:53px;width:417.42px;height:50px;line-height:50px;"></span>
+            <span class="-gr-ctrl14" style="left:602px;top:1px;width:417px;height:49px;display:table;"><span style="display:table-cell;vertical-align:middle;"></span></span>
+            <span class="-gr-ctrl13" style="left:303px;top:1px;width:294px;height:102px;"></span>
+            <span class="-gr-ctrl12" style="left:905px;top:129px;width:103px;height:20px;line-height:20px;">证明书编号：</span>
+            <span class="-gr-ctrl8" style="left:302px;top:113px;width:81px;height:29px;line-height:29px;">制表：</span>
+            <span class="-gr-ctrl8" style="left:15px;top:121px;width:65px;height:21px;line-height:21px;">审核：</span>
+            <span class="-gr-ctrl11" style="left:0px;top:1px;width:298px;height:102px;"></span>
+        </div>
+    </div>
+
+    <div id="report_holder2" class="-gr-fs0-1" style="margin-top: 20px; margin-left: 20px; transform: rotate(0deg); width: 1360px; background-color: rgba(255, 255, 255, 0);">
+        <table class="-gr-section8-1" style="border-collapse:collapse;width:1348.54px;">
+            <colgroup>
+                <col style="width:1.63%;">
+                <col style="width:5.93%;">
+                <col style="width:0.82%;">
+                <col style="width:17.95%;">
+                <col style="width:11.2%;">
+                <col style="width:18.54%;">
+                <col style="width:16.61%;">
+                <col style="width:5.86%;">
+                <col style="width:4.45%;">
+                <col style="width:14.39%;">
+                <col style="width:2.64%;">
+            </colgroup>
+            <tbody>
+                <tr class="-gr-section2-1">
+                    <td colspan="11"></td>
+                </tr>
+                <tr class="-gr-section3-1">
+                    <td colspan="3"></td>
+                    <td class="-gr-ctrl0-1 -gr-fs1-1" colspan="6">石横特钢集团有限公司钢材发货配料单</td>
+                    <td colspan="2"></td>
+                </tr>
+                <tr class="-gr-section4-1">
+                    <td colspan="11"></td>
+                </tr>
+                <tr class="-gr-section2-1">
+                    <td></td>
+                    <td class="-gr-ctrl1-1">仓&nbsp;&nbsp;库：</td>
+                    <td class="-gr-ctrl1-1" colspan="2">第二高线仓库</td>
+                    <td colspan="3"></td>
+                    <td class="-gr-ctrl1-1">单&nbsp;&nbsp;&nbsp;号：</td>
+                    <td id="zmsbh_2" class="-gr-ctrl1-1" colspan="2">&nbsp;</td>
+                    <td></td>
+                </tr>
+                <tr class="-gr-section5-1">
+                    <td></td>
+                    <td class="-gr-ctrl1-1" rowspan="2">收货单位：</td>
+                    <td class="-gr-ctrl1-1" colspan="2" rowspan="2">肥城中盈贸易有限公司（QG）</td>
+                    <td colspan="7"></td>
+            <tr class="-gr-section6"><td></td><td></td>
+                <td class="-gr-ctrl0">
+            <span id="fhtime-date" style="float: none; width: auto; margin: 0;">&nbsp;</span>
+            <span id="fhtime-0" style="float: none; width: auto; margin: 0;">00:00:00</span></td><td></td>
+                <td class="-gr-ctrl1">车&nbsp;&nbsp;&nbsp;号：</td>
+                <td class="-gr-ctrl1" colspan="2" id="car_number">&nbsp;</td><td></td></tr>
+                <tr class="-gr-section7-1">
+                    <td colspan="11"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="_grdg" style="border:1px solid #000000;border-collapse:collapse;width:1348.54px;" id="_griddg0-1">
+            <colgroup>
+                <col style="width:13.37%;">
+                <col style="width:8.42%;">
+                <col style="width:8.42%;">
+                <col style="width:8.42%;">
+                <col style="width:8.42%;">
+                <col style="width:10.25%;">
+                <col style="width:8.39%;">
+                <col style="width:10.1%;">
+                <col style="width:8.99%;">
+                <col style="width:15.22%;">
+            </colgroup>
+            <thead>
+                <tr class="-gr-section1-1">
+                    <th class="-gr-cell0-1" rowspan="2">产品名称</th>
+                    <th class="-gr-cell0-1" rowspan="2">长度</th>
+                    <th class="-gr-cell0-1" rowspan="2">计量方式</th>
+                    <th class="-gr-cell0-1" rowspan="2">单位</th>
+                    <th class="-gr-cell0-1" colspan="2">请发</th>
+                    <th class="-gr-cell0-1" colspan="3">实发</th>
+                    <th class="-gr-cell0-1" rowspan="2">备注</th>
+                </tr>
+                <tr class="-gr-section1-1">
+                    <th class="-gr-cell0-1">件数</th>
+                    <th class="-gr-cell0-1">数量</th>
+                    <th class="-gr-cell0-1">件数</th>
+                    <th class="-gr-cell0-1">支数</th>
+                    <th class="-gr-cell0-1">实发数量</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="-gr-section0-1" _grrecno="0">
+                    <td class="-gr-cell0-1">螺纹钢(盘卷)HRB400E-10</td>
+                    <td class="-gr-cell0-1"></td>
+                    <td class="-gr-cell0-1">实重</td>
+                    <td class="-gr-cell0-1">吨</td>
+                    <td id="js_1" class="-gr-cell0-1">&nbsp;</td>
+                    <td id="qfzl_1" class="-gr-cell0-1">&nbsp;</td>
+                    <td id="js_2" class="-gr-cell0-1">&nbsp;</td>
+                    <td class="-gr-cell0-1">0</td>
+                    <td id="sfzl_1" class="-gr-cell0-1">&nbsp;</td>
+                      <td class="-gr-cell0" style="text-align: left; padding-left: 5px;">
+                        <span id="bz_prefix" style="float: none; width: auto; margin: 0;">SHTG-YX-MM-JC-F-</span><span id="bz_value" style="float: none; width: auto; margin: 0;"></span>
+                  </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="-gr-section10-1" style="border-collapse:collapse;width:1348.54px;">
+            <colgroup>
+                <col style="width:46.98%;">
+                <col style="width:10.23%;">
+                <col style="width:8.38%;">
+                <col style="width:10.08%;">
+                <col style="width:8.97%;">
+                <col style="width:15.2%;">
+            </colgroup>
+            <tbody>
+                <tr class="-gr-section9-1">
+                    <td class="-gr-ctrl2-1">重量合计:</td>
+                    <td id="qfzl_2" class="-gr-ctrl3-1">&nbsp;</td>
+                    <td class="-gr-ctrl4-1">&nbsp;&nbsp;</td>
+                    <td class="-gr-ctrl4-1"> </td>
+                    <td id="sfzl_2" class="-gr-ctrl3-1">&nbsp;</td>
+                    <td class="-gr-ctrl4-1"> </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="-gr-section15-1" style="border-collapse:collapse;width:1348.54px;">
+            <colgroup>
+                <col style="width:0.59%;">
+                <col style="width:6.67%;">
+                <col style="width:22.47%;">
+                <col style="width:2.74%;">
+                <col style="width:3.93%;">
+                <col style="width:24.62%;">
+                <col style="width:7.27%;">
+                <col style="width:16.24%;">
+                <col style="width:15.46%;">
+            </colgroup>
+            <tbody>
+                <tr class="-gr-section11-1">
+                    <td colspan="9"></td>
+                </tr>
+             <tr class="-gr-section12"><td></td>
+            <td class="-gr-ctrl1">制单人：</td><td></td>
+            <td class="-gr-ctrl1" colspan="2">发货人：</td><td></td>
+            <td class="-gr-ctrl1">发货时间：</td>
+        <td class="-gr-ctrl1">
+            <span id="fhsj-date" style="float: none; width: auto; margin: 0;">&nbsp;</span>
+			<span id="fhsj-time" style="float: none; width: auto; margin: 0;">&nbsp;</span>
+			  </td><td></td></tr>
+                <tr class="-gr-section13-1">
+                    <td colspan="9"></td>
+                </tr>
+                <tr class="-gr-section12-1">
+                    <td></td>
+                    <td class="-gr-ctrl1-1" colspan="3">本车钢材确认无弯曲、锈蚀、油污缺陷。客户确认签字：</td>
+                    <td colspan="5"></td>
+                </tr>
+                <tr class="-gr-section14-1">
+                    <td colspan="9"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="mask_div00" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 10px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div01" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 10px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div02" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 10px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div10" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 110px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div11" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 110px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div12" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 110px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div20" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 210px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div21" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 210px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div22" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 210px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div30" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 310px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div31" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 310px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div32" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 310px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div40" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 410px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div41" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 410px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div42" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 410px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div50" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 510px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div51" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 510px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div52" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 510px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div60" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 610px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div61" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 610px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div62" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 610px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div70" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 710px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div71" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 710px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div72" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 710px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div80" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 810px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div81" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 810px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div82" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 810px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div90" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 910px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div91" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 910px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div92" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 910px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div100" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 1010px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div101" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 1010px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div102" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 1010px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div110" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 10px; top: 1110px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div111" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 560px; top: 1110px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    <div id="mask_div112" class="mask_div" style="transform: rotate(-15deg); position: absolute; left: 1110px; top: 1110px; overflow: hidden; z-index: 1029; pointer-events: none; opacity: 0.5; font-size: 15px; font-family: 微软雅黑; color: rgb(215, 215, 215); text-align: center; width: 500px; height: 50px; display: block;">该页面只用于浏览查看，打印无效</div>
+    
+    <script type="text/javascript">
+        window.onload = function() {
+            // Helper function to get URL parameters
+            function getUrlParameter(name) {
+                name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+                var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+                var results = regex.exec(location.search);
+                return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+            }
+
+            // 1. Copy batch number (批号)
+            var phSource = document.getElementById('ph_source');
+            var phTarget = document.getElementById('ph_target');
+            if (phSource && phTarget) {
+                phTarget.textContent = phSource.textContent;
+            }
+
+            // 2. Set vehicle number (车号) from 'ch' parameter
+            var ch = getUrlParameter('ch');
+            if (ch) {
+                var ch1 = document.getElementById('ch_1');
+                var carNumber = document.getElementById('car_number');
+                if (ch1) ch1.textContent = ch;
+                if (carNumber) carNumber.textContent = ch;
+            }
+            
+            // 3. Set date (日期) from 'rq' parameter. Can handle one or two comma-separated dates.
+            var rq = getUrlParameter('rq');
+            if (rq) {
+                var dates = rq.split(',');
+                var date1 = dates[0];
+                var date2 = dates.length > 1 ? dates[1] : date1; // Use second date if provided, otherwise fallback to first.
+
+                var rq1 = document.getElementById('rq_1');
+                var rq2 = document.getElementById('rq_2');
+                if (rq1) rq1.textContent = date1;
+                if (rq2) rq2.textContent = date1;
+                
+                var fhtimeDate = document.getElementById('fhtime-date');
+                var fhsjDate = document.getElementById('fhsj-date');
+                if (fhtimeDate) fhtimeDate.textContent = date2;
+                if (fhsjDate) fhsjDate.textContent = date2;
+            }
+
+            // 4. Set weight (重量) from 'zl' parameter
+            var zl = getUrlParameter('zl');
+            if (zl) {
+                var zl1 = document.getElementById('zl_1');
+                var zl2 = document.getElementById('zl_2');
+                if (zl1) zl1.textContent = zl;
+                if (zl2) zl2.textContent = zl;
+            }
+
+            // 5. Set physical mark (实物标记) from 'swbj' parameter
+            var swbj = getUrlParameter('swbj');
+            var swbjTarget = document.getElementById('swbj_target');
+            if (swbj && swbjTarget) {
+                swbjTarget.textContent = swbj;
+            }
+
+            // 6. Set certificate number (证明书编号) from 'zmsbh' parameter
+            var zmsbh = getUrlParameter('zmsbh');
+            if (zmsbh) {
+                var zmsbh1 = document.getElementById('zmsbh_1');
+                var zmsbh2 = document.getElementById('zmsbh_2');
+                if (zmsbh1) zmsbh1.textContent = zmsbh;
+                if (zmsbh2) zmsbh2.textContent = zmsbh;
+            }
+
+            // 7. Set pieces count (件数) from 'js' parameter
+            var js = getUrlParameter('js');
+            if (js) {
+                var js1 = document.getElementById('js_1');
+                var js2 = document.getElementById('js_2');
+                if (js1) js1.textContent = js;
+                if (js2) js2.textContent = js;
+            }
+            
+            // 8. Set requested weight (请发重量) from 'qfzl' parameter
+            var qfzl = getUrlParameter('qfzl');
+            if (qfzl) {
+                var qfzl1 = document.getElementById('qfzl_1');
+                var qfzl2 = document.getElementById('qfzl_2');
+                if (qfzl1) qfzl1.textContent = qfzl;
+                if (qfzl2) qfzl2.textContent = qfzl;
+            }
+
+            // 9. Set actual weight (实发重量) from 'sfzl' parameter
+            var sfzl = getUrlParameter('sfzl');
+            if (sfzl) {
+                var sfzl1 = document.getElementById('sfzl_1');
+                var sfzl2 = document.getElementById('sfzl_2');
+                if (sfzl1) sfzl1.textContent = sfzl;
+                if (sfzl2) sfzl2.textContent = sfzl;
+            }
+
+            // 10. Set delivery time (发货时间) from 'fhsj' parameter
+            var fhsj = getUrlParameter('fhsj');
+            var fhsjTime = document.getElementById('fhsj-time');
+            if (fhsj && fhsjTime) {
+                fhsjTime.textContent = fhsj;
+            }
+
+            // 11. Set remark value (备注) from 'bz' parameter
+            var bz = getUrlParameter('bz');
+            var bzValue = document.getElementById('bz_value');
+            if (bz && bzValue) {
+                bzValue.textContent = bz;
+            }
+        };
+    </script>
+
+</body>
+
+</html>
