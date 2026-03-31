@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 关键点1：Viewport元标签，这是移动端适配的核心 -->
+    <!-- content="width=device-width" 表示视口宽度应等于设备宽度 -->
+    <!-- initial-scale=1.0" 表示初始缩放比例为100%，不缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>钢材查询</title>
+    <style>
+        /* CSS重置和基础样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #fff;
+            color: #333;
+            /* 关键点2：禁止用户选中文字，优化滑动体验 */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            /* 为固定的底部元素留出空间，防止内容被遮挡 */
+            padding-bottom: 95px; 
+        }
+
+        /* 头部 */
+        .header {
+            background-color: #d9001b;
+            color: white;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: bold;
+            /* 关键点3：粘性定位，使标题栏在滚动时固定在顶部，这是移动端常见模式 */
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* 主要内容和滑动区域 */
+        .slider-container {
+            width: 100%; /* 宽度为100%，自动适应屏幕宽度 */
+            overflow: hidden;
+            cursor: grab;
+        }
+        .slider-container.grabbing {
+             cursor: grabbing;
+        }
+
+        .slider-wrapper {
+            /* 关键点4：使用Flexbox布局，这是现代响应式设计的利器 */
+            display: flex;
+            /* 宽度为300%，因为它包含3个100%宽度的页面 */
+            width: 300%;
+        }
+
+        .slide {
+            /* 每个滑动页占据父容器(slider-wrapper)的1/3，即整个屏幕的宽度 */
+            width: 33.3333%;
+            padding: 15px;
+        }
+
+        /* 信息区块样式 */
+        .info-section {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #f0f0f0;
+            position: relative;
+            height: 62px;
+        }
+        
+        .section-icon {
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .section-title {
+            color: #888;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title::before,
+        .section-title::after {
+            content: '—';
+            margin: 0 10px;
+        }
+
+        .info-row {
+            /* 关键点5：行内也使用Flexbox，确保标签和内容对齐且能自适应空间 */
+            display: flex;
+            padding: 14px 15px;
+            font-size: 15px;
+        }
+        
+        .info-row:nth-child(odd) {
+            background-color: #e6f7ff;
+        }
+        
+        .info-label {
+            width: 160px; /* 固定标签宽度，让对齐更美观 */
+            color: #666;
+            flex-shrink: 0; /* 防止标签被压缩 */
+        }
+
+        .info-value {
+            flex-grow: 1; /* 内容区域自动填充剩余空间 */
+            color: #333;
+            /* 关键点6：处理可能出现的长文本，让其自动换行 */
+            word-break: break-all;
+        }
+
+        /* 版权信息样式 */
+        .copyright {
+            /* 关键点7：固定定位，使其始终在页面底部（导航栏之上） */
+            position: fixed;
+            bottom: 54px; /* 54px 是下方导航栏的大致高度 */
+            left: 0;
+            width: 100%;
+            z-index: 5;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            padding: 10px 0;
+        }
+
+        /* 底部导航栏 */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            background-color: #fff;
+            border-top: 1px solid #e0e0e0;
+            z-index: 10;
+        }
+
+        .nav-item {
+            flex: 1; /* Flexbox的flex: 1让每个导航项平分宽度 */
+            text-align: center;
+            padding: 8px 0;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .nav-item svg {
+            width: 24px;
+            height: 24px;
+            margin-bottom: 2px;
+        }
+
+        .nav-item-text {
+            font-size: 11px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        钢材查询
+    </header>
+
+    <main class="slider-container" id="sliderContainer">
+        <div class="slider-wrapper" id="sliderWrapper">
+            <!-- 滑动页1: 铭牌信息 -->
+            <div class="slide">
+                <section class="info-section">
+                    <div class="section-header">
+                        <h2 class="section-title">铭牌信息</h2>
+                        <svg class="section-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="#d9001b" d="M512 0C229.2 0 0 229.2 0 512s229.2 512 512 512 512-229.2 512-512S794.8 0 512 0zm0 961.5C263.9 961.5 62.5 760.1 62.5 512S263.9 62.5 512 62.5s449.5 201.4 449.5 449.5-201.4 449.5-449.5 449.5z"/><path fill="#d9001b" d="M686.9 319.4c-6.1-2.4-12.7 0-16.8 5.1L546.3 462c-2.4 3-3.6 6.8-3.6 10.7v241.2c0 17.2-14 31.2-31.2 31.2s-31.2-14-31.2-31.2V519.2c0-17.2-14-31.2-31.2-31.2s-31.2 14-31.2 31.2v163.5c0 17.2-14 31.2-31.2 31.2s-31.2-14-31.2-31.2V418.9c0-17.2-14-31.2-31.2-31.2s-31.2 14-31.2 31.2v241.2c0 51.7 41.9 93.7 93.7 93.7s93.7-41.9 93.7-93.7V564.4c0-3.9 1.3-7.7 3.6-10.7l123.8-137.5c4.1-5.1 7.7-6.2 13.8-3.7 20.2 8.1 36.9-10.7 29.3-30.7-3.9-9.9-14.2-16.1-25.1-12.4z"/></svg>
+                    </div>
+                    <div class="section-content">
+                        <div class="info-row"><span class="info-label">产品名称：</span><span class="info-value">钢筋混凝土用热轧带肋钢筋</span></div>
+                        <div class="info-row"><span class="info-label">执行标准：</span><span class="info-value">GB 1499.2-2024</span></div>
+                        <div class="info-row"><span class="info-label">牌&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</span><span class="info-value">HRB400E</span></div>
+                        <!-- 修改点 3.1: 为源批号添加ID -->
+                        <div class="info-row"><span class="info-label">批&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</span><span class="info-value" id="sourceBatchNumber">260315018</span></div>
+                        <div class="info-row"><span class="info-label">规&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;格：</span><span class="info-value">φ10mm</span></div>
+                        <!-- 修改点 1: 拆分重量值并为数字部分添加ID -->
+                        <div class="info-row"><span class="info-label">重量/支：</span><span class="info-value"><span id="weightValue"></span><span>Kg/卷</span></span></div>
+                        <!-- 修改点 2: 为检验值添加ID -->
+                        <div class="info-row"><span class="info-label">检&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;验：</span></div>
+                        <div class="info-row"><span class="info-label">日&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;期：</span><span class="info-value"> </span>2026-03-15</div>
+                        <div class="info-row"><span class="info-label">生产单位：</span><span class="info-value">陕西龙门钢铁有限责任公司</span></div>
+                        <div class="info-row"><span class="info-label">许可证号：</span><span class="info-value">(陕) XK05-001-00614</span></div>
+                        <div class="info-row"><span class="info-label">生产地址：</span><span class="info-value">陕西省韩城市龙门镇下峪口村</span></div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 滑动页2: 质检信息 -->
+            <div class="slide">
+                <section class="info-section">
+                    <div class="section-header">
+                        <h2 class="section-title">质检信息</h2>
+                       <svg class="section-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="#d9001b" d="M512 0C229.2 0 0 229.2 0 512s229.2 512 512 512 512-229.2 512-512S794.8 0 512 0zm0 961.5C263.9 961.5 62.5 760.1 62.5 512S263.9 62.5 512 62.5s449.5 201.4 449.5 449.5-201.4 449.5-449.5 449.5z"/><path fill="#d9001b" d="M686.9 319.4c-6.1-2.4-12.7 0-16.8 5.1L546.3 462c-2.4 3-3.6 6.8-3.6 10.7v241.2c0 17.2-14 31.2-31.2 31.2s-31.2-14-31.2-31.2V519.2c0-17.2-14-31.2-31.2-31.2s-31.2 14-31.2 31.2v163.5c0 17.2-14 31.2-31.2 31.2s-31.2-14-31.2-31.2V418.9c0-17.2-14-31.2-31.2-31.2s-31.2 14-31.2 31.2v241.2c0 51.7 41.9 93.7 93.7 93.7s93.7-41.9 93.7-93.7V564.4c0-3.9 1.3-7.7 3.6-10.7l123.8-137.5c4.1-5.1 7.7-6.2 13.8-3.7 20.2 8.1 36.9-10.7 29.3-30.7-3.9-9.9-14.2-16.1-25.1-12.4z"/></svg>
+                    </div>
+                    <div class="section-content">
+                        <!-- 修改点 3.2: 为目标批号添加ID，并清空初始值，等待JS填充 -->
+                        <div class="info-row"><span class="info-label">批号：</span><span class="info-value" id="targetBatchNumber"></span></div>
+                        <div class="info-row"><span class="info-label">牌号：</span><span class="info-value">HRB400E</span></div>
+                        <div class="info-row"><span class="info-label">直径：</span><span class="info-value">10</span></div>
+                        <div class="info-row"><span class="info-label">R0el/或Rp0.2Mpa：</span><span class="info-value">445</span></div>
+                        <div class="info-row"><span class="info-label">Rm/Mpa：</span><span class="info-value">625</span></div>
+                        <div class="info-row"><span class="info-label">A%：</span><span class="info-value">23.0</span></div>
+                        <div class="info-row"><span class="info-label">Agt%：</span><span class="info-value">15.0</span></div>
+                        <div class="info-row"><span class="info-label">R°m/Rel：</span><span class="info-value">1.48</span></div>
+                        <div class="info-row"><span class="info-label">R°el/Rel：</span><span class="info-value">1.07</span></div>
+                        <div class="info-row"><span class="info-label">弯曲：</span><span class="info-value">完好</span></div>
+                        <div class="info-row"><span class="info-label">反弯：</span><span class="info-value">完好</span></div>
+                        <div class="info-row"><span class="info-label">碳 C：</span><span class="info-value">0.23</span></div>
+                        <div class="info-row"><span class="info-label">硅 Si：</span><span class="info-value">0.32</span></div>
+						<div class="info-row"><span class="info-label">锰 Mn：</span><span class="info-value">1.25</span></div>
+						<div class="info-row"><span class="info-label">硫 S：</span><span class="info-value">0.031</span></div>
+						<div class="info-row"><span class="info-label">磷 P：</span><span class="info-value">0.025</span></div>
+						<div class="info-row"><span class="info-label">铌(Nb)：</span><span class="info-value">0.012</span></div>
+						<div class="info-row"><span class="info-label">钒(V)：</span><span class="info-value">0.005</span></div>
+						<div class="info-row"><span class="info-label">CEQ(碳当量)：</span><span class="info-value">0.48</span></div>
+						<div class="info-row"><span class="info-label">镍(Ni)：</span><span class="info-value"></span></div>
+						<div class="info-row"><span class="info-label">疲劳试验：</span><span class="info-value">/</span></div>
+						<div class="info-row"><span class="info-label">金相检测：</span><span class="info-value">合格</span></div>
+						<div class="info-row"><span class="info-label">尺寸及表面质量：</span><span class="info-value">合格</span></div>
+						<div class="info-row"><span class="info-label">重量偏差：</span><span class="info-value">合格</span></div>
+						
+                    </div>
+                </section>
+            </div>
+
+            <!-- 滑动页3: 防伪信息 -->
+            <div class="slide">
+                <section class="info-section">
+                    <div class="section-header">
+                        <h2 class="section-title">防伪信息</h2>
+                         <svg class="section-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="#d9001b" d="M512 0C229.2 0 0 229.2 0 512s229.2 512 512 512 512-229.2 512-512S794.8 0 512 0zm0 961.5C263.9 961.5 62.5 760.1 62.5 512S263.9 62.5 512 62.5s449.5 201.4 449.5 449.5-201.4 449.5-449.5 449.5z"/><path fill="#d9001b" d="M686.9 319.4c-6.1-2.4-12.7 0-16.8 5.1L546.3 462c-2.4 3-3.6 6.8-3.6 10.7v241.2c0 17.2-14 31.2-31.2 31.2s-31.2-14-31.2-31.2V519.2c0-17.2-14-31.2-31.2-31.2s-31.2 14-31.2 31.2v163.5c0 17.2-14 31.2-31.2 31.2s-31.2-14-31.2-31.2V418.9c0-17.2-14-31.2-31.2-31.2s-31.2 14-31.2 31.2v241.2c0 51.7 41.9 93.7 93.7 93.7s93.7-41.9 93.7-93.7V564.4c0-3.9 1.3-7.7 3.6-10.7l123.8-137.5c4.1-5.1 7.7-6.2 13.8-3.7 20.2 8.1 36.9-10.7 29.3-30.7-3.9-9.9-14.2-16.1-25.1-12.4z"/></svg>
+                    </div>
+                    <div class="section-content">
+                        <div class="info-row"><span class="info-label">防伪码：</span><span class="info-value">陕西龙门钢铁有限责任公司</span></div>
+                        <div class="info-row"><span class="info-label">中转信息：</span><span class="info-value"></span></div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <div class="copyright">
+        版权信息：陕西钢铁集团有限公司
+    </div>
+
+    <footer class="footer-nav">
+        <div class="nav-item">
+            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M946.5 505L534.6 93.4a31.93 31.93 0 0 0-45.2 0L77.5 505c-12 12-18.8 28.3-18.8 45.3v300c0 35.3 28.7 64 64 64h184v-132c0-35.3 28.7-64 64-64h192c35.3 0 64 28.7 64 64v132h184c35.3 0 64-28.7 64-64V550.3c0-17-6.8-33.3-18.8-45.3z"></path></svg>
+            <div class="nav-item-text">首页</div>
+        </div>
+        <div class="nav-item">
+            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M858.5 763.6a374 374 0 0 0-80.6-119.5 375.63 375.63 0 0 0-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2-.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 0 0-80.6 119.5A371.7 371.7 0 0 0 136 901.8a8 8 0 0 0 8 8.2h724a8 8 0 0 0 8-8.2c0-47.8-9.9-94.9-27.5-138.2zM512 564c-114.9 0-208-93.1-208-208s93.1-208 208-208 208 93.1 208 208-93.1 208-208 208z"></path></svg>
+            <div class="nav-item-text">我们</div>
+        </div>
+    </footer>
+
+    <script>
+        // --- 修改点：新增的逻辑，用于处理URL参数和同步数据 ---
+        // 使用 DOMContentLoaded 事件确保在操作DOM之前，HTML已完全加载并解析
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. 获取URL参数
+            const urlParams = new URLSearchParams(window.location.search);
+            const zlParam = urlParams.get('zl'); // 获取 'zl' 参数
+            const jyParam = urlParams.get('jy'); // 获取 'jy' 参数
+
+            // 2. 根据URL参数更新页面内容
+            // 更新重量值
+            if (zlParam) {
+                const weightValueEl = document.getElementById('weightValue');
+                if (weightValueEl) {
+                    weightValueEl.textContent = zlParam;
+                }
+            }
+            // 更新检验值
+            if (jyParam) {
+                const inspectionValueEl = document.getElementById('inspectionValue');
+                if (inspectionValueEl) {
+                    inspectionValueEl.textContent = jyParam;
+                }
+            }
+
+            // 3. 同步两个批号的值
+            const sourceBatchEl = document.getElementById('sourceBatchNumber');
+            const targetBatchEl = document.getElementById('targetBatchNumber');
+            if (sourceBatchEl && targetBatchEl) {
+                targetBatchEl.textContent = sourceBatchEl.textContent;
+            }
+        });
+
+
+        // --- 以下是您原有的滑动逻辑，保持不变 ---
+        
+        // --- DOM元素获取 ---
+        const sliderContainer = document.getElementById('sliderContainer');
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const slideCount = sliderContainer.querySelectorAll('.slide').length;
+
+        // --- 状态变量 ---
+        let currentIndex = 0;
+        let startX = 0;
+        let currentTranslate = 0;
+        let prevTranslate = 0;
+        let isDragging = false;
+        
+        let autoSlideInterval;
+        let direction = 1; // 1 表示向左滑动, -1 表示向右滑动
+
+        // --- 事件监听 ---
+        // 关键点8：同时监听触摸和鼠标事件，确保在手机和电脑上都能操作
+        // 触摸事件
+        sliderContainer.addEventListener('touchstart', dragStart);
+        sliderContainer.addEventListener('touchmove', dragMove);
+        sliderContainer.addEventListener('touchend', dragEnd);
+        // 鼠标事件
+        sliderContainer.addEventListener('mousedown', dragStart);
+        sliderContainer.addEventListener('mousemove', dragMove);
+        sliderContainer.addEventListener('mouseup', dragEnd);
+        sliderContainer.addEventListener('mouseleave', dragEnd);
+
+        // --- 函数定义 ---
+        function dragStart(e) {
+            stopAutoSlide(); // 用户开始手动滑动时，停止自动播放
+            startX = getPositionX(e);
+            isDragging = true;
+            sliderWrapper.style.transition = 'none'; // 拖动时移除动画
+            sliderContainer.classList.add('grabbing');
+        }
+
+        function dragMove(e) {
+            if (isDragging) {
+                // 在触摸设备上阻止页面默认的上下滚动行为，优化左右滑动体验
+                if (e.type.includes('touch')) {
+                    e.preventDefault();
+                }
+                const currentPosition = getPositionX(e);
+                currentTranslate = prevTranslate + currentPosition - startX;
+                setSliderPosition(currentTranslate);
+            }
+        }
+
+        function dragEnd(e) {
+            if (!isDragging) return;
+            isDragging = false;
+            sliderContainer.classList.remove('grabbing');
+            
+            const movedBy = currentTranslate - prevTranslate;
+
+            // 根据滑动距离判断是否切换页面
+            if (movedBy < -50 && currentIndex < slideCount - 1) {
+                currentIndex += 1;
+            }
+            if (movedBy > 50 && currentIndex > 0) {
+                currentIndex -= 1;
+            }
+            
+            goToSlide(currentIndex);
+            startAutoSlide(); // 用户结束手动滑动时，重新开始自动播放
+        }
+        
+        // 兼容触摸和鼠标事件，获取X坐标
+        function getPositionX(e) {
+            return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        }
+
+        // 仅设置位置，无动画
+        function setSliderPosition(x) {
+            sliderWrapper.style.transform = `translateX(${x}px)`;
+        }
+
+        // 跳转到指定幻灯片（带动画）
+        function goToSlide(index) {
+            sliderWrapper.style.transition = 'transform 0.4s ease-in-out';
+            // 关键点9：滑动距离基于容器的实际宽度计算，因此在任何屏幕宽度下都正确
+            currentTranslate = index * -sliderContainer.offsetWidth;
+            prevTranslate = currentTranslate;
+            setSliderPosition(currentTranslate);
+        }
+
+        // 自动滑动函数
+        function startAutoSlide() {
+            stopAutoSlide(); // 先清除，防止重复设置
+            autoSlideInterval = setInterval(() => {
+                // 判断是否到达边界，如果到达则改变方向
+                if (direction === 1 && currentIndex === slideCount - 1) {
+                    direction = -1; // 到达最右端，改为向右滑动
+                } else if (direction === -1 && currentIndex === 0) {
+                    direction = 1; // 到达最左端，改为向左滑动
+                }
+                
+                // 根据方向更新索引
+                currentIndex += direction;
+                
+                // 跳转到新页面
+                goToSlide(currentIndex);
+
+            }, 3000); // 间隔3秒
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        // --- 页面加载后初始化 ---
+        startAutoSlide(); // 页面加载后开始自动滑动
+
+    </script>
+
+</body>
+</html>
