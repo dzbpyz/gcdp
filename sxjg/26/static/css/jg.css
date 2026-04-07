@@ -1,0 +1,193 @@
+/*@charset "utf-8"*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #3b5998;
+}
+
+    a:hover {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+ul li, ol li {
+    list-style: none;
+}
+
+img {
+    border: none;
+    width: 100%;
+}
+
+html, body {
+    font-size: 0.9rem;
+    font-family: "Arial","Microsoft YaHei";
+    color: #343434;
+    background: #fff;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+/*标牌信息*/
+.signboard {
+}
+
+    .signboard h3, .component h3, .physics h3, .company h3 {
+        background: #3595DA;
+        color: white;
+        /*background: #ebebeb;*/
+        font-size: 16px;
+        padding: 10px 0;
+        text-indent: 20px;
+        margin-top: 20px;
+    }
+
+    .signboard p {
+        border-bottom: 1px solid #d9d9d9;
+        line-height: 40px;
+        padding: 0 4%;
+        color: #808080;
+    }
+
+    .signboard ul li {
+        float: left;
+        width: 42%;
+        border-bottom: 1px solid #d9d9d9;
+        line-height: 40px;
+        padding: 0 4%;
+        color: #808080;
+    }
+
+        .signboard ul li span, .signboard p span {
+            color: #343434;
+        }
+
+    .signboard td, .signboard th {
+        font-size: 20px;
+    }
+
+    .signboard div {
+        font-size: 20px;
+    }
+
+    .signboard th {
+        background-color: #B5C6EA;
+    }
+/*标牌信息*/
+.eleboard {
+}
+
+    .eleboard h3, .component h3, .physics h3, .company h3 {
+        background-color: #B5C6EA;
+        font-size: 20px;
+        text-align: center;
+        margin-top: 20px;
+        border: 2px solid black;
+    }
+
+
+    .eleboard td {
+        font-size: 20px;
+    }
+
+    .eleboard div {
+        font-size: 20px;
+    }
+
+    .eleboard th {
+        background-color: #B5C6EA;
+        font-size: 20px;
+    }
+/*成分信息*/
+.component li, .physics li {
+    float: left;
+    width: 25.3%;
+    border-bottom: 1px solid #d9d9d9;
+    line-height: 40px;
+    padding: 0 4%;
+    color: #808080;
+}
+
+.component .component_fr {
+    text-align: right;
+    color: #343434;
+}
+
+.component .component_center {
+    text-align: center;
+}
+
+/*物理特性*/
+.physics table {
+    width: 100%;
+    color: #808080;
+}
+
+    .physics table td {
+        border-bottom: 1px solid #d9d9d9;
+        padding: 3%;
+        width: 30%;
+    }
+
+    .physics table .physics_center {
+        text-align: center;
+    }
+
+    .physics table .physics_right {
+        text-align: right;
+        color: #343434;
+    }
+
+.physics img {
+    margin-top: 10px;
+}
+
+.company p {
+    border-bottom: 1px solid #d9d9d9;
+    text-indent: 26px;
+    padding: 2% 4%;
+    line-height: 24px;
+    font-size: 0.9rem;
+}
+
+.company li {
+    padding: 0 4%;
+    line-height: 30px;
+}
+
+.company img {
+    width: 50%;
+    padding: 4%;
+}
+
+.ExpBox {
+    padding: 10px 0;
+    background: rgba(255, 255, 0, .8);
+    font-size: 18px;
+    text-indent: 20px;
+    color: red;
+    height: 200px;
+}
