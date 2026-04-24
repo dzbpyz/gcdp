@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN"> <!-- 修改语言为中文 -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="../static/css/bq01.css">
+    <style>
+        .search_btn{
+            width:100%;
+            height:100%;
+            text-align: center;
+            /* background:#53a2f8; */
+            color:#fff;
+            border-radius:10px;
+            line-height: 50px;
+            font-size:15px;
+        }
+        /* 为目标表格添加固定布局 */
+        #information, #huaxueTable, #wuliTable {
+            table-layout: fixed;
+            /* 可以添加 word-wrap 来处理可能溢出的长文本 */
+            word-wrap: break-word; /* 或者 overflow-wrap: break-word; */
+        }
+
+        /* 可以在这里为表格添加一些基本样式，例如边框，如果需要的话 */
+        /*
+        .table_box table, .table_box th, .table_box td {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            padding: 5px;
+        }
+        .table_box th {
+            background-color: #f2f2f2;
+        }
+        */
+
+		.root{
+            position: absolute;
+            top: 0;
+            background-color: white;
+            width: 100%;
+            height: 110px;
+        }
+		 .header {
+            background: #53a2f8;
+            color: #fff;
+            text-align: center;
+            padding: 12px 0;
+            font-size: 14px;
+            margin: 50px 10px 10px 10px;
+            border-radius: 8px;}
+
+			      /* 为头部链接添加样式 */
+        .header a {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer; /* 添加手型光标，表示可点击 */
+        }
+
+        .header a:hover {
+            text-decoration: underline;
+        }
+
+      /* --- 新增：统一设置指定表格的字体样式 --- */
+     #information td,
+     #huaxueTable td,
+     #wuliTable td {
+    font-size: 13px; /* 在这里设置你想要的字体大小，例如 14px */
+    font-family: "Microsoft YaHei", SimHei, Arial, sans-serif; /* 在这里设置你想要的字体，优先使用微软雅黑，然后是黑体，最后是无衬线字体 */
+}
+/* --- 结束新增 --- */
+    </style>
+</head>
+<body>
+	<div class="root">
+        <div class="header">
+            <!-- 初始href设为无操作，防止默认跳转 -->
+            <a href="javascript:void(0);" id="zbsPdfLink">点击搜索质保书</a>
+        </div>
+    </div>
+
+
+   <div class="box">
+     <div class="search_box">
+        <div class="search_inner_box">
+        </div>
+     </div>
+     <div class="content_box">
+         <div class="item_box">
+            <h3 class="table_title">标牌信息</h3>
+            <div class="table_box">
+               <table style="width:100%;" id="information">
+                   <!-- 7行4列表格 -->
+                   <tr>
+                       <td style="text-align: center;">产品名称</td>
+                       <td style="text-align: left;">热轧光圆钢筋</td>
+                       <td style="text-align: center;">执行标准</td>
+                       <td style="text-align: left;">GB 1499.1-2024</td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">批次号</td>
+                       <td style="text-align: left;">26031128BC0</td>
+                       <td style="text-align: center;">捆(卷)号</td>
+                       <!-- ==================== HTML 修改处 ==================== -->
+                       <!-- 有效范围，方便随时修改 -->
+                       <td style="text-align: left;" id="kunHaoValue" data-min-value="1" data-max-value="17">-</td>
+                       <!-- ====================================================== -->
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">牌号</td>
+                       <td style="text-align: left;">HPB300</td>
+                       <td style="text-align: center;">规格</td>
+                       <td style="text-align: left;">Φ8</td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">理重(kg)</td>
+                       <td style="text-align: left;">&nbsp;</td>
+                       <td style="text-align: center;">实重(kg)</td>
+                       <td style="text-align: left;" id="shiZhongValue">-</td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">支数</td>
+                       <td style="text-align: left;">1</td>
+                       <td style="text-align: center;">定尺</td>
+                       <td style="text-align: left;"> </td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">生产日期</td>
+                       <td style="text-align: left;">2026-04-05</td>
+                       <td style="text-align: center;">尺寸精度</td>
+                       <td style="text-align: left;"> </td>
+                   </tr>
+                   <tr>
+                       <td style="text-align: center;">发货日期</td>
+                       <td style="text-align: left;">2026-04-05</td>
+                       <td style="text-align: center;"> </td>
+                       <td style="text-align: left;"> </td>
+                   </tr>
+               </table>
+            </div>
+            <!-- ... (其他内容保持不变) ... -->
+            <h3 class="table_title">化学成分</h3>
+            <div class="table_box">
+                <table class="huaxue_table" id="huaxueTable" style="width:100%;">
+                    <!-- 四行四列的表格，文本居中 -->
+                    <tr>
+                        <td style="text-align: center;">碳</td>
+                        <td style="text-align: center;">硅</td>
+                        <td style="text-align: center;">锰</td>
+                        <td style="text-align: center;">磷</td> <!-- 新增列 -->
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">0.21</td>
+                        <td style="text-align: center;">0.37</td>
+                        <td style="text-align: center;">1.45</td>
+                        <td style="text-align: center;">0.022</td> <!-- 新增列 -->
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">硫</td>
+                        <td style="text-align: center;">铬</td>
+                        <td style="text-align: center;">钒</td>
+                        <td style="text-align: center;">碳当量</td> <!-- 新增列 -->
+                    </tr>
+                  <tr>
+                        <td style="text-align: center;">0.026</td>
+                        <td style="text-align: center;"> </td>
+                        <td style="text-align: center;">0.002</td>
+                        <td style="text-align: center;">0.49</td>
+                        <!-- 新增列 -->
+                    </tr>
+                </table>
+            </div>
+            <h3 class="table_title">物理性能</h3>
+            <div class="table_box">
+                <table class="wuliTable" id="wuliTable" style="width:100%;">
+                    <!-- 8行3列的表格，文本居中显示 -->
+                    <tr>
+                        <td style="text-align: center;">屈服强度</td>
+                        <td style="text-align: center;">抗拉强度</td>
+                        <td style="text-align: center;">断后伸长率</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">450,450</td>
+                        <td style="text-align: center;">650,660</td>
+                        <td style="text-align: center;"> </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">断面收缩率</td>
+                        <td style="text-align: center;">最大力总延伸率</td>
+                        <td style="text-align: center;">重量偏差</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;"> </td>
+                        <td style="text-align: center;">11.8,12.3</td>
+                        <td style="text-align: center;">3.4</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">R⁰el/Rel</td>
+                        <td style="text-align: center;">R⁰m/R⁰el</td>
+                        <td style="text-align: center;">反向弯曲</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">1.15,1.15</td>
+                        <td style="text-align: center;">1.48,1.51</td>
+                        <td style="text-align: center;">合格</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">冷弯</td>
+                        <td style="text-align: center;">V型缺口冲击功</td>
+                        <td style="text-align: center;">V型缺口冲击功平均值</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">合格,合格</td>
+                        <td style="text-align: center;"> </td>
+                        <td style="text-align: center;"> </td>
+                    </tr>
+                </table>
+            </div>
+         </div>
+         <div class="company_box">
+            <!-- ... (公司信息等其他内容保持不变) ... -->
+         </div>
+     </div>
+   </div>
+
+   <!-- ==================== SCRIPT 部分已修改 ==================== -->
+   <script>
+       function setLinkToRefresh(linkElement) {
+           if (linkElement) {
+               linkElement.removeAttribute('href');
+               linkElement.removeAttribute('target');
+               linkElement.onclick = function(event) {
+                   event.preventDefault();
+                   location.reload();
+               };
+               console.log("链接行为已设置为：点击时刷新页面。");
+           }
+       }
+
+       window.onload = function() {
+           const urlParams = new URLSearchParams(window.location.search);
+
+           // --- **** 修改开始：从HTML的data属性读取范围并验证 **** ---
+           const kunHaoElement = document.getElementById('kunHaoValue');
+
+           if (kunHaoElement) {
+               // 1. 从HTML元素上读取范围配置
+               // .dataset.minValue 对应 data-min-value 属性
+               // .dataset.maxValue 对应 data-max-value 属性
+               const minKunHao = parseInt(kunHaoElement.dataset.minValue, 10);
+               const maxKunHao = parseInt(kunHaoElement.dataset.maxValue, 10);
+               
+               const kunHao = urlParams.get('kh');
+
+               if (kunHao) {
+                   const kunHaoNumber = parseInt(kunHao, 10);
+
+                   // 2. 使用从HTML读取的范围进行验证
+                   if (!isNaN(kunHaoNumber) && kunHaoNumber >= minKunHao && kunHaoNumber <= maxKunHao) {
+                       kunHaoElement.textContent = kunHao;
+                   } else {
+                       kunHaoElement.textContent = '捆号不存在';
+                   }
+               }
+           } else {
+                console.error("未找到 ID 为 'kunHaoValue' 的元素！");
+           }
+           // --- **** 修改结束 **** ---
+
+           // --- 处理 'zl' 参数 (实重)，此部分保持不变 ---
+           const shiZhong = urlParams.get('zl');
+           if (shiZhong) {
+               const shiZhongElement = document.getElementById('shiZhongValue');
+               if (shiZhongElement) {
+                   shiZhongElement.textContent = shiZhong;
+               } else {
+                    console.error("未找到 ID 为 'shiZhongValue' 的元素！");
+               }
+           }
+
+           // --- 处理 'pdf' 参数和质保书链接，此部分保持不变 ---
+           const pdfValue = urlParams.get('pdf');
+           const pdfLinkElement = document.getElementById('zbsPdfLink'); 
+           if (pdfLinkElement) {
+               if (pdfValue) {
+                   const targetPdfUrl = `../pdf/${pdfValue}.pdf`; 
+                   fetch(targetPdfUrl, { method: 'HEAD' })
+                       .then(response => {
+                           if (response.ok) {
+                               pdfLinkElement.href = targetPdfUrl;
+                               pdfLinkElement.onclick = null;
+                           } else {
+                               setLinkToRefresh(pdfLinkElement);
+                           }
+                       })
+                       .catch(error => {
+                           console.error('检查 PDF 文件存在性时出错:', error);
+                           setLinkToRefresh(pdfLinkElement);
+                       });
+               } else {
+                   setLinkToRefresh(pdfLinkElement);
+               }
+           } else {
+               console.error("未找到 ID 为 'zbsPdfLink' 的链接元素！");
+           }
+       };
+   </script>
+</body>
+</html>
