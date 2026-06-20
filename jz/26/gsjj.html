@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>质保书</title>
+    <link rel="stylesheet" href="assets/index-CYK4cD5I.css">
+    <link rel="stylesheet" href="assets/index-BQ2DAolX.css">
+</head>
+<body>
+    <div id="app" data-v-app="">
+        <div data-v-9a157e00="" class="about">
+            <!-- 语言切换 Tab -->
+            <div data-v-9a157e00="" class="tab">
+                <div data-v-9a157e00="" class="isActive" data-lang="zh" id="tabZh">中文</div>
+                <div data-v-9a157e00="" data-lang="en" id="tabEn">English</div>
+            </div>
+
+            <!-- 背景容器：默认中文背景 bg2_img1 -->
+            <div data-v-9a157e00="" class="bg2 bg2_img1" id="bgContainer">
+                <!-- 分隔/证书图片（保持不变） -->
+                <div data-v-9a157e00="" class="el-image separate">
+                    <img src="assets/separate-DeyazY99.png" class="el-image__inner" alt="证书">
+                </div>
+
+                <!-- 6 个展示图片 -->
+                <div data-v-9a157e00="" class="content" id="itemContainer">
+                    <div data-v-9a157e00="" class="el-image item">
+                        <img src="Chinese/item1.png" class="el-image__inner" data-index="1" alt="item1">
+                    </div>
+                    <div data-v-9a157e00="" class="el-image item">
+                        <img src="Chinese/item2.png" class="el-image__inner" data-index="2" alt="item2">
+                    </div>
+                    <div data-v-9a157e00="" class="el-image item">
+                        <img src="Chinese/item3.png" class="el-image__inner" data-index="3" alt="item3">
+                    </div>
+                    <div data-v-9a157e00="" class="el-image item">
+                        <img src="Chinese/item4.png" class="el-image__inner" data-index="4" alt="item4">
+                    </div>
+                    <div data-v-9a157e00="" class="el-image item">
+                        <img src="Chinese/item5.png" class="el-image__inner" data-index="5" alt="item5">
+                    </div>
+                    <div data-v-9a157e00="" class="el-image item">
+                        <img src="Chinese/item6.png" class="el-image__inner" data-index="6" alt="item6">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ========== 你可以修改这个数值来调整英文页面图片下移距离（单位：px） ==========
+        const enOffsetPx = 380; // 例如 200，改为你想要的数值
+        // ======================================================================
+
+        // DOM 元素
+        const tabZh = document.getElementById('tabZh');
+        const tabEn = document.getElementById('tabEn');
+        const bgContainer = document.getElementById('bgContainer');
+        const itemImages = document.querySelectorAll('.item img');
+        const separate = document.querySelector('.separate');
+        const content = document.querySelector('.content');
+
+        // 当前语言状态
+        let currentLang = 'zh';
+
+        /**
+         * 切换语言
+         * @param {string} lang - 'zh' 或 'en'
+         */
+        function switchLanguage(lang) {
+            if (lang === currentLang) return;
+            currentLang = lang;
+
+            // 1. 切换 Tab 激活状态
+            if (lang === 'zh') {
+                tabZh.classList.add('isActive');
+                tabEn.classList.remove('isActive');
+            } else {
+                tabEn.classList.add('isActive');
+                tabZh.classList.remove('isActive');
+            }
+
+            // 2. 切换背景图类
+            if (lang === 'zh') {
+                bgContainer.classList.remove('bg2_img2');
+                bgContainer.classList.add('bg2_img1');
+            } else {
+                bgContainer.classList.remove('bg2_img1');
+                bgContainer.classList.add('bg2_img2');
+            }
+
+            // 3. 切换 6 个展示图片的路径
+            const folder = lang === 'zh' ? 'Chinese' : 'English';
+            itemImages.forEach(function(img) {
+                const index = img.getAttribute('data-index');
+                if (index) {
+                    img.src = folder + '/item' + index + '.png';
+                } else {
+                    const src = img.getAttribute('src');
+                    const match = src.match(/\/(item\d+\.png)$/);
+                    if (match) {
+                        img.src = folder + '/' + match[1];
+                    }
+                }
+            });
+
+            // ========== 4. 动态调整英文页面图片位置（新增） ==========
+            if (lang === 'en') {
+                // 英文：覆盖 top 值为原值 + 偏移量（单位 px）
+                separate.style.top = 'calc(133vw + ' + enOffsetPx + 'px)';
+                content.style.top = 'calc(190vw + ' + enOffsetPx + 'px)';
+            } else {
+                // 中文：清除内联样式，恢复 CSS 默认值
+                separate.style.top = '';
+                content.style.top = '';
+            }
+        }
+
+        // 点击事件绑定
+        tabZh.addEventListener('click', function() {
+            switchLanguage('zh');
+        });
+        tabEn.addEventListener('click', function() {
+            switchLanguage('en');
+        });
+
+        // 初始化：确保默认状态为中文
+        switchLanguage('zh');
+
+        // 暴露切换函数到全局（可选）
+        window.switchLang = switchLanguage;
+    })();
+</script>
+
+</body>
+</html>

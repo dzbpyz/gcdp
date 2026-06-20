@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+    background: #fff;
+    color: #555;
+    font-size: 14px;
+    font-family: Arial, "Microsoft YaHei", "黑体", "宋体", sans-serif;
+}
+#app {
+    height: 100%;
+    width: 100%;
+}
+.report {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    flex-shrink: 0;
+}
+.link {
+    font-size: 16px;
+    font-weight: 700;
+    padding: 6px 12px;
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.link:hover {
+    color: #4a6fcc;
+}
+
+/* ====== 修复 iOS 上链接颜色 ====== */
+/* 强制公司简介链接在所有状态下均为蓝色 + 下划线 */
+.flex a.company-link,
+.flex a.company-link:link,
+.flex a.company-link:visited,
+.flex a.company-link:hover,
+.flex a.company-link:active {
+    color: #6985FF !important;
+    text-decoration: underline !important;
+}
+/* 悬停时颜色可加深（可选） */
+.flex a.company-link:hover {
+    color: #4a6fcc !important;
+}
+
+/* PDF 内容区域 */
+.content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+.iframe-main {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: none;
+}

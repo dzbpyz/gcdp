@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>质保书</title>
+    <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body>
+    <div id="app">
+        <div class="report">
+            <!-- 顶部导航栏 -->
+            <div class="flex">
+                <a href="./gsjj.html" class="link company-link">公司简介</a>
+                <span class="link" id="exportBtn" style="padding-right: 10px; color: #6985FF; cursor: pointer;">导出PDF</span>
+            </div>
+            <!-- PDF 展示区域 -->
+            <div class="content">
+                <iframe id="pdfFrame" class="iframe-main" style="border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+    <script src="./assets/main.js"></script>
+</body>
+</html>
