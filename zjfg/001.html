@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浙江富钢集团有限公司</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        body {
+            background: #fff;
+        }
+
+        /* 顶部红色标题栏（已调浅） */
+        .header-bar {
+            background-color: #dc2626;
+            color: #fff;
+            text-align: center;
+            padding: 80px 15px 25px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        /* 轮播容器 - 整图显示 */
+        .banner-container {
+            width: 100%;
+            overflow: hidden;
+            background-color: #000;
+            position: relative;
+            margin-bottom: 0;
+        }
+        .banner-wrapper {
+            display: flex;
+            transition: transform 0.8s ease;
+        }
+        .banner-img {
+            width: 100%;
+            flex-shrink: 0;
+            display: block;
+            height: auto;
+            object-fit: cover;
+        }
+
+        /* 生产批号上方的红色分割条（已调浅，与顶部一致） */
+        .red-divider {
+            width: 100%;
+            background-color: #dc2626;
+            height: 15px;
+        }
+
+        /* 生产批号 */
+        .batch-text {
+            font-size: 28px;
+            padding: 20px;
+            color: #333;
+        }
+
+        /* 防伪表格图片区域 */
+        .anti-img {
+            width: 96%;
+            margin: 0 auto 30px;
+            text-align: center;
+        }
+        .anti-img img {
+            width: 100%;
+            max-width: 1200px;
+            height: auto;
+            display: inline-block;
+        }
+
+        /* 底部联系方式 */
+        .contact-box {
+            padding: 20px;
+            font-size: 22px;
+            line-height: 1.8;
+            color: #333;
+        }
+        .contact-box .tit {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部公司名称 -->
+    <div class="header-bar">
+        浙江富钢集团有限公司
+    </div>
+
+    <!-- 顶部整图轮播：每2秒切换一张 -->
+    <div class="banner-container">
+        <div class="banner-wrapper" id="bannerWrap">
+            <img src="img/1.jpg" class="banner-img" alt="banner1">
+            <img src="img/2.jpg" class="banner-img" alt="banner2">
+            <img src="img/3.jpg" class="banner-img" alt="banner3">
+            <img src="img/4.jpg" class="banner-img" alt="banner4">
+            <img src="img/5.jpg" class="banner-img" alt="banner5">
+            <img src="img/6.jpg" class="banner-img" alt="banner6">
+            <img src="img/7.jpg" class="banner-img" alt="banner7">
+        </div>
+    </div>
+
+    <!-- 红色分割条 -->
+    <div class="red-divider"></div>
+
+    <!-- 生产批号 -->
+    <div class="batch-text">生产批号：2605312330</div>
+
+    <!-- 防伪表格图片 -->
+    <div class="anti-img">
+        <img src="img/anti.bmp" alt="产品防伪标识">
+    </div>
+
+    <!-- 联系信息 -->
+    <div class="contact-box">
+        <div class="tit">建筑用热轧产品技术服务及销售热线</div>
+        <p>联系人：朱先生</p>
+        <p>手机号码：15968288593</p>
+        <p>座机号码：0572-3519079</p>
+
+        <br>
+        <div class="tit">特殊钢产品技术服务热线</div>
+        <p>联系人：钱先生</p>
+        <p>手机号码：13819241233</p>
+
+        <br>
+        <div class="tit">环氧树脂涂层/不锈钢钢筋产品技术服务热线</div>
+        <p>联系人：潘先生</p>
+        <p>手机号码：13735105818</p>
+    </div>
+
+<script>
+const wrap = document.getElementById('bannerWrap');
+const imgs = wrap.querySelectorAll('.banner-img');
+let index = 0;
+const total = imgs.length;
+
+// 获取当前容器宽度
+function getContainerWidth() {
+    return document.querySelector('.banner-container').offsetWidth;
+}
+
+// 初始化轮播宽度
+let containerWidth = getContainerWidth();
+
+// 窗口变化时更新轮播宽度和位置
+window.addEventListener('resize', () => {
+    containerWidth = getContainerWidth();
+    wrap.style.transition = 'none';
+    wrap.style.transform = `translateX(-${containerWidth * index}px)`;
+    setTimeout(() => {
+        wrap.style.transition = 'transform 0.8s ease';
+    }, 50);
+});
+
+// 每2秒切换一张
+setInterval(() => {
+    index++;
+    if (index >= total) {
+        // 无缝回到第一张
+        wrap.style.transition = 'none';
+        wrap.style.transform = 'translateX(0)';
+        index = 0;
+        // 强制重绘后恢复动画
+        setTimeout(() => {
+            wrap.style.transition = 'transform 0.8s ease';
+        }, 50);
+    } else {
+        wrap.style.transform = `translateX(-${containerWidth * index}px)`;
+    }
+}, 2000);
+</script>
+</body>
+</html>
