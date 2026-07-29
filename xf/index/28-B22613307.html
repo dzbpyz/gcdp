@@ -147,6 +147,7 @@
             color: #333;
             word-break: break-word;
 
+
         }
 
         .product-info-grid > div.label:nth-child(4n-3) {
@@ -272,7 +273,8 @@
                 <div class="label">长度  </div><div class="value">12米  </div>
                 <div class="label">支数</div><div class="value">50 支</div>
                 <div class="label">重量 </div><div class="value">2.898 吨</div>
-                <div class="label">班次</div><div class="value" id="banCiValue">&nbsp;</div>
+                <!-- 移除id，写死文字乙，不再被JS覆盖 -->
+                <div class="label">班次</div><div class="value">乙</div>
                 <div class="label">日期</div><div class="value" id="riQiValue">2026-05-13</div>
                 <div class="label">&nbsp; 编号 </div>
 				<div class="value" id="bianHaoValue"></div>
@@ -302,17 +304,11 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // ==========URL参数赋值【优化版本】==========
+    // ==========URL参数赋值【只保留编号bh，删除班次bc相关代码】==========
     const urlSearch = new URLSearchParams(window.location.search);
-    const bcVal = urlSearch.get("bc");
     const bhVal = urlSearch.get("bh");
 
-    const banCiElement = document.getElementById('banCiValue');
     const bianHaoElement = document.getElementById('bianHaoValue');
-
-    if(banCiElement){
-        banCiElement.textContent = bcVal ?? "";
-    }
     if(bianHaoElement){
         bianHaoElement.textContent = bhVal ?? "";
     }
