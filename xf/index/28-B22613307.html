@@ -302,33 +302,22 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // URL 参数解析函数
-    function getUrlParams() {
-        const params = {};
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        for (const [key, value] of urlParams.entries()) {
-            params[key] = value;
-        }
-        return params;
-    }
+    // ==========URL参数赋值【优化版本】==========
+    const urlSearch = new URLSearchParams(window.location.search);
+    const bcVal = urlSearch.get("bc");
+    const bhVal = urlSearch.get("bh");
 
-    // 获取 URL 参数
-    const urlParams = getUrlParams();
-
-    // 更新对应的元素内容
     const banCiElement = document.getElementById('banCiValue');
     const bianHaoElement = document.getElementById('bianHaoValue');
 
-    if (banCiElement && urlParams.bc) {
-        banCiElement.textContent = decodeURIComponent(urlParams.bc);
+    if(banCiElement){
+        banCiElement.textContent = bcVal ?? "";
     }
-    if (bianHaoElement && urlParams.bh) {
-        bianHaoElement.textContent = decodeURIComponent(urlParams.bh);
+    if(bianHaoElement){
+        bianHaoElement.textContent = bhVal ?? "";
     }
 
-
-    // 轮播图脚本
+    // 轮播图脚本（原样保留，无需改动）
     const images = document.querySelectorAll('.carousel-image');
     const dots = document.querySelectorAll('.carousel-dots .dot');
     const banner = document.querySelector('.banner');
@@ -399,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (sectionName === '产品信息') {
                 content.style.display = 'grid';
                 arrow.textContent = '▲';
-            } else { // Default for other collapsible sections (if any were added)
+            } else {
                 content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
                 arrow.textContent = '▲';
             }
@@ -417,6 +406,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
 </script>
 </body>
 </html>
