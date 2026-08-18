@@ -1,0 +1,225 @@
+body {
+    font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #333;
+    font-size: 15px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.top-bar {
+    background-color: #f8f8f8;
+    color: #333;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.top-bar .top-bar-code {
+    font-weight: bold;
+    font-size: 18px;
+    color: #2c3e50;
+}
+
+.top-bar .industrial-internet-logo-text-container {
+    background-color: #e6f3ff;
+    color: #3b82f6;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+/* --- Banner轮播样式 --- */
+.banner {
+    max-width: 1200px;
+    height: 220px;
+    background-color: #ccc;
+    position: relative;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carousel-images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.7s ease-in-out;
+}
+
+.carousel-image.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 1;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    z-index: 2;
+}
+
+.carousel-dots .dot {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    margin: 0 4px;
+    cursor: pointer;
+}
+.carousel-dots .dot.active {
+    background-color: #fff;
+}
+
+/* --- 折叠板块通用样式 --- */
+.section {
+    padding: 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+.section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: normal;
+    margin-bottom: 0;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    background-color: #f8f8f8;
+    padding: 12px 15px;
+}
+.section-title .toggle-arrow {
+    font-size: 14px;
+    color: #888;
+    margin-left: 10px;
+}
+
+/* --- 产品信息表格 --- */
+.product-info-grid {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    row-gap: 1px;
+    background-color: #e0e0e0;
+    border: 1px solid #e0e0e0;
+    border-top: none;
+}
+
+.product-info-grid > div {
+    padding: 10px 12px;
+    background-color: #fff;
+    font-family: "SimHei", "黑体", sans-serif;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.product-info-grid > div.label {
+    font-weight: normal;
+    color: #333;
+    justify-content: center;
+    text-align: center;
+}
+.product-info-grid > div.value {
+    text-align: left;
+    color: #333;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+/* 表格隔行底色 */
+.product-info-grid > div.label:nth-child(4n-3) {
+    background-color: #f0f0f0;
+}
+.product-info-grid > div.value:nth-child(4n-2) {
+    background-color: #fff;
+}
+.product-info-grid > div.label:nth-child(4n-1) {
+    background-color: #fff;
+}
+.product-info-grid > div.value:nth-child(4n) {
+    background-color: #fff;
+}
+
+/* 客户须知文本 */
+.customer-notice {
+    background-color: transparent !important;
+    padding: 0;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+    width: 100%;
+}
+.customer-notice ol {
+    padding-left: 18px;
+    margin: 0;
+    list-style-type: none;
+}
+.customer-notice li {
+    margin-bottom: 5px;
+}
+
+/* 图片展示区域 */
+.image-gallery-section {
+    padding: 15px 0;
+    background-color: #fff;
+}
+.image-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.image-gallery img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* 底部公司图片 */
+.company- {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.company- img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* 折叠隐藏类 */
+.collapsible-content.hidden {
+    display: none;
+}

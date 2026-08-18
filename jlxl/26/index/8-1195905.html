@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>盘螺</title>
+    <!-- 引入上层css文件夹样式 -->
+    <link rel="stylesheet" href="../css/steel-cert.css">
+    <!-- 仅保留页面独有下载按钮样式 -->
+    <style>
+        .mc-wrap.f14 {font-size: 14px;}
+        .stylebox-item {
+            background-color: rgb(145, 165, 187);
+            text-align: center;
+            color: #ffffff;
+            padding: 24px 0;
+            cursor: pointer;
+        }
+        .icon-menu-self {
+            width:36px;
+            height:36px;
+            display:grid;
+            grid-template-columns: 1fr 1fr;
+            gap:4px;
+            margin:0 auto 8px;
+        }
+        .icon-menu-self>div{
+            background:#fff;
+            border-radius:4px;
+        }
+        .stylebox-item .title {
+            font-size: 14px;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <span class="top-bar-code">88.210.88/XG-LOADING-LOADING</span>
+        <div class="industrial-internet-logo-text-container">国家工业互联网标识</div>
+    </div>
+
+    <div class="banner">
+        <div class="carousel-images">
+            <img src="../image/01.png" alt="Banner Image 1" class="carousel-image active">
+            <img src="../image/02.jpg" alt="Banner Image 2" class="carousel-image">
+            <img src="../image/03.jpg" alt="Banner Image 3" class="carousel-image">
+            <img src="../image/04.jpg" alt="Banner Image 4" class="carousel-image">
+        </div>
+        <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-title" data-section-name="产品信息">产品信息 <span class="toggle-arrow">▲</span></div>
+            <div class="product-info-grid collapsible-content">
+                <div class="label">产品名称</div><div class="value">盘螺</div>
+                <div class="label">产品条码</div><div class="value">TCTOGGLE-XLJG-NEW</div>
+                <div class="label">产品分类</div><div class="value">其他制造业</div>
+                <div class="label">生产许可证</div><div class="value">(黑) XK05-001-00706</div>
+                <div class="label">炉批号</div><div class="value">1195905</div>
+                <div class="label">捆号</div><div class="value">&nbsp;</div>
+                <div class="label">熔炼号</div><div class="value">1195905 </div>
+                <div class="label">牌号</div><div class="value">HRB400E</div>
+                <div class="label">标准</div><div class="value">GB1499.2-2024</div>
+                <div class="label">规格</div><div class="value">Φ8</div>
+                <div class="label">生产日期</div><div class="value">2026-08-03</div>
+                <div class="label">重量</div><div class="value"><span id="weight-integer">&nbsp;</span><span id="weight-decimal">.000</span></div>
+                <div class="label">支数</div><div class="value">1</div>
+                <div class="label">客户名称</div><div class="value">0</div>
+                <div class="label">出库日期</div><div class="value">2026-06-18</div>
+                <div class="label">出库车号</div><div class="value"></div>
+                <div class="label">销售热线</div><div class="value">0458-3789405</div>
+                <div class="label">质量咨询</div><div class="value">0458-3788204,3788308</div>
+                <div class="label">致顾客</div>
+                <div class="value">
+                    <div class="customer-notice">
+                        <ol>
+                            <li>1.标识信息必须通过国家标识解析网站上进行统一查询，网站的质检信息代表《产品合格证》。2.质量异议请持证明书与经销商联系处理，来函请提供证明书编号、产品名称、牌号、规格、熔炼号等信息。3.请注意核对钢材实物上的标牌和标识与产品标识系统所示信息是否一致，谨防假冒。</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title" data-section-name="物理性能">物理性能 <span class="toggle-arrow">▼</span></div>
+            <div class="product-info-grid collapsible-content hidden">
+                <div class="label">弯曲试验</div><div class="value">完好/完好</div>
+                <div class="label">R0eL/Rel</div><div class="value">1.11/1.10/1.10</div>
+                <div class="label">反向弯曲</div><div class="value">完好</div>
+                <div class="label">Rm</div><div class="value">615/625/625</div>
+                <div class="label">Rel</div><div class="value">455/440/455</div>
+                <div class="label">R0m/R0eL</div><div class="value">1.35/1.35/1.36</div>
+                <div class="label">Agt</div><div class="value">	13.6/13.5/13.2</div>
+                <div class="label">A</div><div class="value">18/17/18</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title" data-section-name="化学成分">化学成分<span class="toggle-arrow">▼</span></div>
+            <div class="product-info-grid collapsible-content hidden">
+                <div class="label">CEppm</div><div class="value"> </div>
+                <div class="label">S</div><div class="value">0.025</div>
+                <div class="label">Zr</div><div class="value"></div>
+                <div class="label">Sn</div><div class="value">0.0041</div>
+                <div class="label">Mn</div><div class="value">1.32</div>
+                <div class="label">Nb</div><div class="value">0.0040</div>
+                <div class="label">N</div><div class="value"></div>
+                <div class="label">CEllw</div><div class="value"></div>
+                <div class="label">Ni</div><div class="value">0.019</div>
+                <div class="label">Ti</div><div class="value">0.0013</div>
+                <div class="label">Bs</div><div class="value"></div>
+                <div class="label">V</div><div class="value">0.0252</div>
+                <div class="label">Cu</div><div class="value">0.021</div>
+                <div class="label">Zn</div><div class="value"></div>
+                <div class="label">Ca</div><div class="value"></div>
+                <div class="label">B</div><div class="value">0.0008</div>
+                <div class="label">CE</div><div class="value"></div>
+                <div class="label">P</div><div class="value">0.036</div>
+                <div class="label">Mo</div><div class="value">0.003</div>
+                <div class="label">Als</div><div class="value"></div>
+                <div class="label">Co</div><div class="value"></div>
+                <div class="label">Al</div><div class="value">0.0020</div>
+                <div class="label">Cr</div><div class="value">0.058</div>
+                <div class="label">Sb</div><div class="value">0.0010</div>
+                <div class="label">C+1/6Mn</div><div class="value">0.47</div>
+                <div class="label">As</div><div class="value">0.0060</div>
+                <div class="label">Bi</div><div class="value">0.0020</div>
+                <div class="label">C</div><div class="value">0.25</div>
+                <div class="label">总量</div><div class="value">0.02</div>
+                <div class="label">W</div><div class="value">0.0030</div>
+                <div class="label">Pcm</div><div class="value"></div>
+                <div class="label">Si</div><div class="value">0.50</div>
+                <div class="label">CEV</div><div class="value"></div>
+                <div class="label">Ceq</div><div class="value">0.48</div>
+                <div class="label">Pb</div><div class="value">0.0010</div>
+            </div>
+        </div>
+
+        <div class="mc-wrap f14">
+            <div class="stylebox-item" id="pdfDownloadBtn">
+                <div class="icon-menu-self">
+                    <div></div><div></div>
+                    <div></div><div></div>
+                </div>
+                <div class="title">质保书</div>
+            </div>
+        </div>
+
+        <div class="section image-gallery-section">
+            <div class="image-gallery">
+                <img src="../image/1510201933049237504.png" alt="Product Image Details">
+            </div>
+        </div>
+    </div>
+
+    <div class="company-">
+        <img src="../image/05.png" alt="Company Information">
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Carousel script
+    const images = document.querySelectorAll('.carousel-image');
+    const dots = document.querySelectorAll('.carousel-dots .dot');
+    const banner = document.querySelector('.banner');
+    let currentIndex = 0;
+    const intervalTime = 3000;
+    let slideInterval;
+
+    function showImage(index) {
+        if (!images || images.length === 0) return;
+        if (index >= images.length) index = 0;
+        if (index < 0) index = images.length - 1;
+
+        images.forEach(img => img.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+
+        if (images[index]) images[index].classList.add('active');
+        if (dots[index]) dots[index].classList.add('active');
+        currentIndex = index;
+    }
+
+    function nextImage() {
+        showImage((currentIndex + 1) % images.length);
+    }
+
+    function startSlideShow() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextImage, intervalTime);
+    }
+
+    function stopSlideShow() {
+        clearInterval(slideInterval);
+    }
+
+    if (images.length > 0) {
+        showImage(0);
+        startSlideShow();
+    }
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', function() {
+            const index = parseInt(this.dataset.index);
+            if (!isNaN(index)) {
+                stopSlideShow();
+                showImage(index);
+                startSlideShow();
+            }
+        });
+    });
+
+    if (banner) {
+        banner.addEventListener('mouseenter', stopSlideShow);
+        banner.addEventListener('mouseleave', startSlideShow);
+    }
+
+    // Collapsible sections script
+    const sectionTitles = document.querySelectorAll('.section-title');
+    sectionTitles.forEach(title => {
+        const content = title.nextElementSibling;
+        const arrow = title.querySelector('.toggle-arrow');
+        const sectionName = title.dataset.sectionName;
+
+        if (!content || !arrow || !content.classList.contains('collapsible-content')) {
+            return;
+        }
+
+        if (sectionName === '产品信息') {
+            content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+            arrow.textContent = '▲';
+            content.classList.remove('hidden');
+        } else {
+            content.style.display = 'none';
+            arrow.textContent = '▼';
+        }
+
+        title.addEventListener('click', () => {
+            const isHidden = content.style.display === 'none';
+            if (isHidden) {
+                content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+                arrow.textContent = '▲';
+                content.classList.remove('hidden');
+            } else {
+                content.style.display = 'none';
+                arrow.textContent = '▼';
+                content.classList.add('hidden');
+            }
+        });
+    });
+
+    // URL参数赋值
+    function updateValuesFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const labels = document.querySelectorAll('.product-info-grid .label');
+
+        const kunhaoParam = urlParams.get('kh');
+        if (kunhaoParam && kunhaoParam.trim() !== "") {
+            labels.forEach(label => {
+                if (label.textContent.trim() === '捆号') {
+                    const valueElement = label.nextElementSibling;
+                    if (valueElement && valueElement.classList.contains('value')) {
+                        valueElement.textContent = kunhaoParam;
+                    }
+                }
+            });
+        }
+
+        const zhongliangParam = urlParams.get('zl');
+        if (zhongliangParam && zhongliangParam.trim() !== "") {
+            const weightIntegerElement = document.getElementById('weight-integer');
+            if (weightIntegerElement) {
+                weightIntegerElement.textContent = zhongliangParam;
+            }
+        }
+    }
+
+    // 联动字段更新
+    function updateDependentFields() {
+        const allLabels = document.querySelectorAll('.product-info-grid .label');
+        let luPiHaoValue = '';
+        let kunHaoValue = '';
+        let rongLianHaoValueElement = null;
+
+        allLabels.forEach(label => {
+            const labelText = label.textContent.trim();
+            const valueElement = label.nextElementSibling;
+
+            if (valueElement && valueElement.classList.contains('value')) {
+                if (labelText === '炉批号') {
+                    luPiHaoValue = valueElement.textContent.trim();
+                } else if (labelText === '捆号') {
+                    kunHaoValue = valueElement.textContent.trim();
+                } else if (labelText === '熔炼号') {
+                    rongLianHaoValueElement = valueElement;
+                }
+            }
+        });
+
+        if (rongLianHaoValueElement && luPiHaoValue) {
+            rongLianHaoValueElement.textContent = luPiHaoValue;
+        } else if (rongLianHaoValueElement) {
+            rongLianHaoValueElement.textContent = 'N/A';
+        }
+
+        const topBarCodeElement = document.querySelector('.top-bar .top-bar-code');
+        if (topBarCodeElement) {
+            if (luPiHaoValue && kunHaoValue) {
+                topBarCodeElement.textContent = `88.210.88/XG-${luPiHaoValue}-${kunHaoValue}`;
+            } else {
+                console.warn("炉批号 or 捆号 not found for top-bar-code update.");
+            }
+        }
+    }
+
+    // PDF下载：检测文件存在才下载，不存在无任何动作
+    const pdfBtn = document.getElementById('pdfDownloadBtn');
+    if(pdfBtn){
+        pdfBtn.addEventListener('click', async function(){
+            const urlParams = new URLSearchParams(window.location.search);
+            const pdfId = urlParams.get('pdf');
+            if(!pdfId || pdfId.trim() === ''){
+                return;
+            }
+            const pdfUrl = `./${pdfId}.pdf`;
+            try {
+                const res = await fetch(pdfUrl, { method: 'HEAD' });
+                if(res.ok){
+                    const a = document.createElement('a');
+                    a.href = pdfUrl;
+                    a.download = `${pdfId}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            } catch (err) {
+                return;
+            }
+        })
+    }
+
+    updateValuesFromURL();
+    updateDependentFields();
+});
+</script>
+</body>
+</html>
