@@ -12,7 +12,7 @@
             padding: 0;
             background-color: #f0f2f5;
             color: #333;
-            font-size: 17px; /* Base font size for desktop */
+            font-size: 17px; 
         }
 
         .container {
@@ -22,7 +22,7 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
-        /* --- Banner/Carousel Styles --- */
+       
         .banner {
             background-color: #ccc;
             position: relative;
@@ -35,7 +35,7 @@
         .carousel-images {
             position: relative;
             width: 100%;
-            padding-bottom: calc(100% * 560 / 1420);
+            padding-bottom: calc(100% * 560 / 1420); 
         }
 
         .carousel-image {
@@ -107,10 +107,10 @@
             align-items: center;
         }
 
-        .section-title .title-icon-left { /* Combined and retained best version */
+        .section-title .title-icon-left { 
             width: 20px;
             height: 20px;
-            margin-right: 8px; /* Provides spacing */
+            margin-right: 8px;
             vertical-align: middle;
         }
 
@@ -170,7 +170,7 @@
             margin-bottom: 10px;
         }
 
-        .title-icon { /* Icon for "产品图片" section title */
+        .title-icon { 
             display: inline-block;
             width: 4px;
             height: 16px;
@@ -198,7 +198,7 @@
             cursor: default;
         }
 
-        /* --- START: Mobile Responsive Styles --- */
+       
         @media (max-width: 768px) {
             body {
                 font-size: 14px;
@@ -234,7 +234,7 @@
                 gap: 5px;
             }
         }
-        /* --- END: Mobile Responsive Styles --- */
+       
     </style>
 </head>
 <body>
@@ -265,15 +265,19 @@
                 <div class="label">生产许可证号</div><div class="value">(辽)XK05-001-00019</div>
                 <div class="label">产线</div><div class="value">盘螺</div>
                 <div class="label">标准</div><div class="value">GB1499.1-2024</div>
-                <div class="label">炉批号</div><div class="value">2908105</div>
+                <div class="label">炉批号</div><div class="value">2903011</div>
                 <div class="label">牌号</div><div class="value">HPB300</div>
                 <div class="label">规格</div><div class="value">φ6 mm</div>
                 <div class="label">长度  </div><div class="value"> </div>
-                <div class="label">支数</div><div class="value">&nbsp;</div>
-                <div class="label">重量 </div><div class="value">2.305 吨</div>
-                <div class="label">班次</div><div class="value">丙</div>                
+                <div class="label">支数</div><div class="value"> </div>
+                <div class="label">重量 </div>
+                <div class="value">
+                    <span id="dynamicWeightValue">2.305</span> <!-- ID for dynamic update -->
+                    <span> 吨</span> <!-- Unit -->
+                </div>
+                <div class="label">班次</div><div class="value" id="dynamicBanCiValue">丙</div>                
                 <div class="label">日期</div><div class="value">2026-08-25</div>
-                <div class="label">&nbsp; 编号 </div><div class="value">2026011704375100595160453 </div>
+                <div class="label">  编号 </div><div class="value" id="dynamicBianHaoValue">2026011704375100595160453 </div>
             </div>
         </div>
 
@@ -300,7 +304,42 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // 轮播图脚本
+    const urlParams = new URLSearchParams(window.location.search);
+
+    
+    try {
+        const zlParam = urlParams.get('zl'); 
+        const weightValueElement = document.getElementById('dynamicWeightValue');
+
+        if (zlParam !== null && weightValueElement) { 
+            weightValueElement.textContent = zlParam;
+        } else if (weightValueElement) {
+            
+        }
+    } catch (error) {
+        console.error("Error processing URL parameters for weight:", error);
+    }
+    
+    try {
+        const bcParam = urlParams.get('bc'); 
+        const bhParam = urlParams.get('bh'); 
+
+        const banCiValueElement = document.getElementById('dynamicBanCiValue');
+        const bianHaoValueElement = document.getElementById('dynamicBianHaoValue');
+
+        if (bcParam !== null && banCiValueElement) {
+            banCiValueElement.textContent = bcParam;
+        }
+       
+        if (bhParam !== null && bianHaoValueElement) {
+            bianHaoValueElement.textContent = bhParam;
+        }
+        
+
+    } catch (error) {
+        console.error("Error processing URL parameters for 班次 and 编号:", error);
+    }
+   
     const images = document.querySelectorAll('.carousel-image');
     const dots = document.querySelectorAll('.carousel-dots .dot');
     const banner = document.querySelector('.banner');
@@ -326,6 +365,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function startSlideShow() {
+        if (images.length <= 1) return; 
         clearInterval(slideInterval);
         slideInterval = setInterval(nextImage, intervalTime);
     }
@@ -335,8 +375,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (images.length > 0) {
-        showImage(0);
-        startSlideShow();
+        showImage(0); 
+        startSlideShow(); 
 
         dots.forEach(dot => {
             dot.addEventListener('click', function() {
@@ -344,7 +384,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (!isNaN(index)) {
                     stopSlideShow();
                     showImage(index);
-                    startSlideShow();
+                    startSlideShow(); 
                 }
             });
         });
@@ -355,40 +395,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 可折叠版块脚本
+
+    
     const sectionTitles = document.querySelectorAll('.section-title');
 
     sectionTitles.forEach(title => {
         const content = title.nextElementSibling;
         const arrow = title.querySelector('.toggle-arrow');
-        const sectionName = title.dataset.sectionName;
+        const sectionName = title.dataset.sectionName; 
 
-        if (!content || !arrow) {
+        
+        if (!content || !arrow || !content.classList.contains('collapsible-content')) {
             return;
         }
 
-        if (content.classList.contains('product-info-grid') || content.classList.contains('collapsible-content')) {
-            if (sectionName === '产品信息') {
-                content.style.display = 'grid';
-                arrow.textContent = '▲';
-            } else { // Default for other collapsible sections (if any were added)
-                // If we don't have other collapsible sections, this 'else' might not be strictly needed,
-                // but it's harmless and allows for future expansion.
+       
+        if (sectionName === '产品信息') { 
+           
+            content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+            arrow.textContent = '▲'; 
+        } else {
+           
+            content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
+            arrow.textContent = '▲';
+        }
+
+        title.addEventListener('click', () => {
+            const isHidden = content.style.display === 'none';
+            if (isHidden) {
                 content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
                 arrow.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                arrow.textContent = '▼';
             }
-
-            title.addEventListener('click', () => {
-                const isHidden = content.style.display === 'none';
-                if (isHidden) {
-                    content.style.display = content.classList.contains('product-info-grid') ? 'grid' : 'block';
-                    arrow.textContent = '▲';
-                } else {
-                    content.style.display = 'none';
-                    arrow.textContent = '▼';
-                }
-            });
-        }
+        });
     });
 });
 </script>
